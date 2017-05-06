@@ -1,0 +1,199 @@
+---
+output:
+  html_document:
+    toc: yes
+  html_notebook:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r init}
+## global chunk option ##
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
+```
+
+# Plotting with base-R and ggplot
+
+This chapter compares various method to plotting using base-R and ggplot.
+
+## Library used
+
+- Loading necessary library as below:
+- Base R library already included functions: ** hist, plot, barplot, boxplot**
+
+```{r}
+library(ggplot2)    ## ggplot, qplot
+```
+
+
+## Sample Data
+This chapter uses the sample data generate with below code. The idea is to simulate two categorical-alike feature, and two numeric value feature:  
+
+- **dept** is random character between 'D1', 'D2', 'D3', 'D4' and 'D5'  
+- **grp** is random character with randomly generated 'G1', 'G2'  
+- **value1** represents numeric value, normally distributed at mean 50  
+- **value2** is numeric value, normally distributed at mean 25  
+
+```{r}
+set.seed(1234)
+my.df = data.frame(
+  dept = paste('D',sample(1:5, 100, replace = T),sep=''),
+  grp  = paste('G',sample(1:2, 100, replace = T),sep=''),
+  value1 = rnorm(1:100, mean = 50, sd = 5),
+  value2 = rnorm(1:100, mean = 20, sd = 3),
+  stringsAsFactors = F
+)
+head(my.df)
+```
+
+## Histogram
+
+### Single Dimension Data
+- Require **x** as numerical data
+- In **hist**, **binwidth** setting is not available, only breaks (number of bins) can be specified
+- Default hist/ggplot/qplot number of bins is **30**
+- In **qplot**, single x numerical variable **default to histogram**
+- You can't specify both **bins/breaks** and **bindwidth** together, as it implies each other
+
+```{r, fig.width=9}
+par(mfrow=c(1,2))
+hist  (my.df$value1) # default breaks = 30
+hist  (my.df$value1, breaks=3)
+```
+
+```{r}
+qplot (data = my.df, x=value1)
+qplot (data = my.df, x=value1, geom='histogram')
+qplot (data = my.df, x=value1, bins=15)
+ggplot(data = my.df, aes(x=value1)) + geom_histogram() # default bins = 30
+ggplot(data = my.df, aes(x=value1)) + geom_histogram(bins = 15)
+ggplot(data = my.df, aes(x=value1)) + geom_histogram(binwidth = 10)
+```
+
+
+### Two Dimension Data
+- x = numerical data  
+- fill = categorica-alike data
+```{r, fig.width=4}
+qplot (data = my.df, x=value1,  fill=grp, geom='histogram')
+ggplot(data = my.df, aes(x=value1, fill=grp)) + geom_histogram()
+```
+
+
+## Scatter Plot
+### Two Dimension Data
+- Use scatter plot to represent **correlation** between two numeric variables
+- x = number, y = number  
+- qplot default to **geom_point** when two numerical value is supplied for x and y
+
+```{r, fig.width=8}
+plot  (my.df$value1, my.df$value2)
+```
+
+```{r}
+qplot (data = my.df, x = value1, y = value2)
+qplot (data = my.df, x = value1, y = value2, geom='point')
+ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point()
+```
+
+
+### Two + One Dimension Data
+- Base-R does not support extra dimension visualization
+- In **qplot/ggplot**, the third dimension of data can be represented by assigning **color** parameter to the third variable
+- Note that **fill has not effect** on scatter plot. **fill** should only be used for bar like chart eg. **geom_hist** or **gem_bar**
+
+```{r, fig.width=8}
+plot  (my.df$value1, my.df$value2)
+```
+
+```{r}
+qplot (data = my.df, x = value1, y = value2, color = grp, geom='point')
+ggplot(data = my.df, aes(x=value1, y=value2, color = grp)) + geom_point()
+ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point()
+```
+
+
+## Bar Chart
+
+### Single Dimension Data
+- Use bar to repfresent **frequency** chart
+- **plot** requre a factor to plot frequency chart
+- **barplot** require conversion of vector into **table** for plotting
+- **qplot** default to **geom_bar** when **single categorical-alike** feature is used
+
+```{r,fig.width=8}
+par(mfrow=c(1,2))
+plot(as.factor(my.df$dept))
+barplot(table(my.df$dept))
+```
+
+```{r}
+qplot (data = my.df, x=dept)
+qplot (data = my.df, x=dept, geom='bar')
+ggplot(data = my.df, aes(x=dept)) + geom_bar()
+```
+
+### Two + One Dimension Data
+- Use **fill**  to introduce extra variable visualizion in filling the bar
+- Use **color** to have the extra variable represented with **border** color
+```{r}
+qplot (data = my.df, dept, fill = grp)
+qplot (data = my.df, x = dept, fill = grp, geom='bar')
+ggplot(data = my.df, aes(x = dept, fill = grp)) + geom_bar()
+ggplot(data = my.df, aes(x = dept, color= grp)) + geom_bar()
+```
+
+### Positioning
+- qplot does not support positioning
+- Default position is **stack**
+- position = 'dodge' similar to **position = position_dodge()**, however the later is more flexible with ability to adjust overlapping level between sub-bar (default is 0.9)
+
+```{r}
+g = ggplot(data = my.df, aes(x=dept, fill=grp)) 
+g + geom_bar(position='stack') # default position
+g + geom_bar(position='dodge')
+g + geom_bar(position=position_dodge()) # default 0.9
+g + geom_bar(position=position_dodge(0.5))
+g + geom_bar(position=position_dodge(1.0))
+```
+
+## Box Plot
+
+### One Dimension Data
+
+- In **ggplot/qplot**, variable variable y is the actual value, variable x is the group variable
+- In **ggplot/qplog** case of one dimension, use x='' when no grouping is desired
+
+
+```{r, message=FALSE, warning=FALSE, fig.show='hold', fig.width=2.5,fig.height=2.5}
+boxplot(my.df$value1)
+qplot  (data = my.df, x = '' ,  y = value1, geom='boxplot')
+ggplot (data = my.df, aes( x= '', y=value1 )) + geom_boxplot()
+```
+
+
+### Two Dimension Data
+- In **boxplot**, use ~ to specify **y~x**, where **x** is grouping variable
+
+```{r, echo=TRUE,fig.width=2.5, fig.height=2.5,fig.show='hold',message=FALSE}
+boxplot(data = my.df, value1~grp)
+qplot  (data = my.df, x = grp , y = value1, geom='boxplot')
+ggplot (data = my.df, aes(x=grp, y=value1)) + geom_boxplot()
+```
+
+### Two + One Dimension Data
+- Extra dimension can be included in for **x-axis**
+- In **boxplot**, use **+** to specify extra dimension
+- In **qplot/ggplot**, use **interaction** to specify extra dimension
+
+```{r, fig.width=8}
+boxplot(data = my.df, value1~grp+dept)
+```
+
+```{r, fig.width=8}
+qplot  (data = my.df, x=interaction(grp,dept) , y=value1, geom='boxplot')
+ggplot (data = my.df, aes(x=interaction(grp,dept) , y=value1)) + geom_boxplot()
+```
+
+## Pie Chart

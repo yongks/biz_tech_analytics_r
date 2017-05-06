@@ -1,0 +1,5 @@
+book_filename: "biz_tech_analytics_r"
+language:
+ui:
+chapter_name: "Chapter "
+output_dir: docs

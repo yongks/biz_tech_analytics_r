@@ -1,0 +1,15 @@
+--- 
+title: "Business and Technical Analytics with R"
+author: "Yong Keh Soon"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::git_book
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is a study and reference notes to solving various business analytics problems using R."
+---
+
+# Preface

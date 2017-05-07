@@ -2,12 +2,28 @@ bookdown::gitbook:
   css: style.css
   config:
     toc:
+      collapse: section
+      scroll_highlight: yes
       before: |
         <li><a href="./">Business and Technical Analytics /R</a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/rstudio/bookdown-demo/edit/master/%s
-    download: ["pdf", "epub"]
+      after: null
+    toolbar:
+      position: fixed
+    edit: https://github.com/yongks/biz_tech_analytics_r/edit/master/%s
+    download: ["pdf", "epub", "mobi"]
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    sharing:
+      facebook: yes
+      twitter: yes
+      google: no
+      weibo: no
+      instapper: no
+      vk: no
+      all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']
+
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

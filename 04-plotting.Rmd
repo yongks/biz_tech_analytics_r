@@ -1,19 +1,9 @@
----
-output:
-  html_document:
-    toc: yes
-  html_notebook:
-    toc: yes
-  pdf_document:
-    toc: yes
----
-
 ```{r init}
 ## global chunk option ##
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
 ```
 
-# Plotting with base-R and ggplot
+# Graphic Visualization
 
 This chapter compares various method to plotting using base-R and ggplot.
 
@@ -144,9 +134,22 @@ ggplot(data = my.df, aes(x = dept, fill = grp)) + geom_bar()
 ggplot(data = my.df, aes(x = dept, color= grp)) + geom_bar()
 ```
 
+### Reordering
+
+```{r,fig.width=8}
+
+```
+
+```{r}
+qplot (data = my.df, x=dept)
+qplot (data = my.df, x=dept, geom='bar')
+ggplot(data = my.df, aes(x=dept)) + geom_bar()
+```
+
+
 ### Positioning
-- qplot does not support positioning
-- Default position is **stack**
+- **qplot does not** support positioning
+- For **ggplot/qplot**, default position is **stack**
 - position = 'dodge' similar to **position = position_dodge()**, however the later is more flexible with ability to adjust overlapping level between sub-bar (default is 0.9)
 
 ```{r}
@@ -158,15 +161,17 @@ g + geom_bar(position=position_dodge(0.5))
 g + geom_bar(position=position_dodge(1.0))
 ```
 
+### In-Bar Text Labeling
+
+
 ## Box Plot
 
 ### One Dimension Data
 
-- In **ggplot/qplot**, variable variable y is the actual value, variable x is the group variable
-- In **ggplot/qplog** case of one dimension, use x='' when no grouping is desired
+- In boxplot(), only single variable need to be supplied
+- In **ggplot/qplot**, variable x and y is required. Variable y is the actual value, variable x is the group variable. Case of one dimension, use x='' when no grouping is desired
 
-
-```{r, message=FALSE, warning=FALSE, fig.show='hold', fig.width=2.5,fig.height=2.5}
+```{r}
 boxplot(my.df$value1)
 qplot  (data = my.df, x = '' ,  y = value1, geom='boxplot')
 ggplot (data = my.df, aes( x= '', y=value1 )) + geom_boxplot()
@@ -176,7 +181,7 @@ ggplot (data = my.df, aes( x= '', y=value1 )) + geom_boxplot()
 ### Two Dimension Data
 - In **boxplot**, use ~ to specify **y~x**, where **x** is grouping variable
 
-```{r, echo=TRUE,fig.width=2.5, fig.height=2.5,fig.show='hold',message=FALSE}
+```{r}
 boxplot(data = my.df, value1~grp)
 qplot  (data = my.df, x = grp , y = value1, geom='boxplot')
 ggplot (data = my.df, aes(x=grp, y=value1)) + geom_boxplot()
@@ -187,11 +192,11 @@ ggplot (data = my.df, aes(x=grp, y=value1)) + geom_boxplot()
 - In **boxplot**, use **+** to specify extra dimension
 - In **qplot/ggplot**, use **interaction** to specify extra dimension
 
-```{r, fig.width=8}
+```{r, fig.width=8.05}
 boxplot(data = my.df, value1~grp+dept)
 ```
 
-```{r, fig.width=8}
+```{r, fig.width=8.05}
 qplot  (data = my.df, x=interaction(grp,dept) , y=value1, geom='boxplot')
 ggplot (data = my.df, aes(x=interaction(grp,dept) , y=value1)) + geom_boxplot()
 ```

@@ -35,43 +35,44 @@ This chapter explore multiple methods to group data columns and computes value w
 
 ### aggretate - base R
 
-**aggregate** takes in a **data.frame**, computes and **output new data.frame**.  
+**aggregate** takes in a **list/data.frame**, computes and **output new data.frame**.  
 It groups categorical variable(s) and compute value variable(s) based on function FUN.  
 FUN can be **min, max, mean, sd, sum or length (frequency count)**.  
 **ONLY ONE function** is supported, and it applies to all value variables !!!
 
-#### Basic Syntax (formula method)
-**aggregate (data=..., formula, FUN=function)  **
+#### Basic Syntax (formula method) - data source is data.frame
+The formula method use **'data'** parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names
+
+> **aggregate (data = df, formula, FUN = function)  **  
 Formula in the form: **value~categorical**   
-Parameter **data** is required. This eliminates the need to specify dataframe name for each variables.
 
 > one value variable ~ one categorical variable
 ```{r}
-aggregate (data=my.df, value1~grp, FUN=length)
+aggregate (data = my.df, value1 ~ grp, FUN = length)
 ```
 
 > one value variable ~ multiple categorical variables
 ```{r}
-aggregate (data=my.df, value1~grp+dept, FUN=length)
+aggregate (data = my.df, value1 ~ grp + dept, FUN = length)
 ```
 
 > multiple value variables ~ one categorical variable, **use cbind()**
 ```{r}
-aggregate (data=my.df, cbind(value1,value2)~grp, FUN=length)
+aggregate (data = my.df, cbind(value1,value2) ~ grp, FUN = length)
 ```
 
 > multiple value variables ~ multiple categorical variable
 ```{r}
-aggregate (data=my.df, cbind(value1,value2)~grp+dept, FUN=length)
+aggregate (data = my.df, cbind(value1,value2) ~ grp + dept, FUN = length)
 ```
 
 > **ALL** value variables ~ multiple categorical variable, **use dot notation**  
 Change from FUN=length to sum results in **error** because sum() cannot be applied to non-numerical variable 'team'
 ```{r}
-aggregate (data=my.df, .~grp+dept, FUN=length)
+aggregate (data = my.df, . ~ grp + dept, FUN = length)
 ```
 
-#### Advance Syntax (by method)
+#### Advance Syntax (by method) - data source is either list or data.frame
 
 The **advantage** of 'by method' is that it can
 

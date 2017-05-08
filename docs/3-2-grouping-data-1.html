@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-05-08">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="3-1-sample-data.html">
+<link rel="next" href="4-sort-and-filter-data.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-intro.html"><a href="1-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="2-random-data-generation.html"><a href="2-random-data-generation.html"><i class="fa fa-check"></i><b>2</b> Random Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-grouping-data.html"><a href="3-grouping-data.html"><i class="fa fa-check"></i><b>3</b> Grouping Data</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-1-sample-data.html"><a href="3-1-sample-data.html"><i class="fa fa-check"></i><b>3.1</b> Sample Data</a></li>
+<li class="chapter" data-level="3.2" data-path="3-2-grouping-data-1.html"><a href="3-2-grouping-data-1.html"><i class="fa fa-check"></i><b>3.2</b> Grouping Data</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-2-grouping-data-1.html"><a href="3-2-grouping-data-1.html#aggretate---base-r"><i class="fa fa-check"></i><b>3.2.1</b> aggretate - base R</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-2-grouping-data-1.html"><a href="3-2-grouping-data-1.html#group_by---dplyr-package"><i class="fa fa-check"></i><b>3.2.2</b> group_by - dplyr Package</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-sort-and-filter-data.html"><a href="4-sort-and-filter-data.html"><i class="fa fa-check"></i><b>4</b> Sort and Filter Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-1-sorting-data.html"><a href="4-1-sorting-data.html"><i class="fa fa-check"></i><b>4.1</b> Sorting Data</a></li>
+<li class="chapter" data-level="4.2" data-path="4-2-filtering-data.html"><a href="4-2-filtering-data.html"><i class="fa fa-check"></i><b>4.2</b> Filtering Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-graphic-visualization.html"><a href="5-graphic-visualization.html"><i class="fa fa-check"></i><b>5</b> Graphic Visualization</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-1-library-used.html"><a href="5-1-library-used.html"><i class="fa fa-check"></i><b>5.1</b> Library used</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-sample-data-1.html"><a href="5-2-sample-data-1.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-histogram.html"><a href="5-3-histogram.html"><i class="fa fa-check"></i><b>5.3</b> Histogram</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-histogram.html"><a href="5-3-histogram.html#single-dimension-data"><i class="fa fa-check"></i><b>5.3.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-histogram.html"><a href="5-3-histogram.html#two-dimension-data"><i class="fa fa-check"></i><b>5.3.2</b> Two Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-4-scatter-plot.html"><a href="5-4-scatter-plot.html"><i class="fa fa-check"></i><b>5.4</b> Scatter Plot</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-scatter-plot.html"><a href="5-4-scatter-plot.html#two-dimension-data-1"><i class="fa fa-check"></i><b>5.4.1</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="5.4.2" data-path="5-4-scatter-plot.html"><a href="5-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>5.4.2</b> Two + One Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html"><i class="fa fa-check"></i><b>5.5</b> Bar Chart</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#single-dimension-data-1"><i class="fa fa-check"></i><b>5.5.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#two-one-dimension-data-1"><i class="fa fa-check"></i><b>5.5.2</b> Two + One Dimension Data</a></li>
+<li class="chapter" data-level="5.5.3" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#reordering"><i class="fa fa-check"></i><b>5.5.3</b> Reordering</a></li>
+<li class="chapter" data-level="5.5.4" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#positioning"><i class="fa fa-check"></i><b>5.5.4</b> Positioning</a></li>
+<li class="chapter" data-level="5.5.5" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#in-bar-text-labeling"><i class="fa fa-check"></i><b>5.5.5</b> In-Bar Text Labeling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html"><i class="fa fa-check"></i><b>5.6</b> Box Plot</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html#one-dimension-data"><i class="fa fa-check"></i><b>5.6.1</b> One Dimension Data</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>5.6.2</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html#two-one-dimension-data-2"><i class="fa fa-check"></i><b>5.6.3</b> Two + One Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-pie-chart.html"><a href="5-7-pie-chart.html"><i class="fa fa-check"></i><b>5.7</b> Pie Chart</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-clustering.html"><a href="6-clustering.html"><i class="fa fa-check"></i><b>6</b> Clustering</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-1-introduction.html"><a href="6-1-introduction.html"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.2" data-path="6-2-application.html"><a href="6-2-application.html"><i class="fa fa-check"></i><b>6.2</b> Application</a></li>
+<li class="chapter" data-level="6.3" data-path="6-3-choosing-the-right-algorithm.html"><a href="6-3-choosing-the-right-algorithm.html"><i class="fa fa-check"></i><b>6.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="6.4" data-path="6-4-hierarchical-clustering.html"><a href="6-4-hierarchical-clustering.html"><i class="fa fa-check"></i><b>6.4</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="6.5" data-path="6-5-k-mean-clustering.html"><a href="6-5-k-mean-clustering.html"><i class="fa fa-check"></i><b>6.5</b> K-Mean Clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-classification.html"><a href="7-classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-1-introduction-1.html"><a href="7-1-introduction-1.html"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="7-2-application-1.html"><a href="7-2-application-1.html"><i class="fa fa-check"></i><b>7.2</b> Application</a></li>
+<li class="chapter" data-level="7.3" data-path="7-3-choosing-the-right-algorithm-1.html"><a href="7-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>7.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="7.4" data-path="7-4-logistic-regression.html"><a href="7-4-logistic-regression.html"><i class="fa fa-check"></i><b>7.4</b> Logistic Regression</a></li>
+<li class="chapter" data-level="7.5" data-path="7-5-decision-tree-regression.html"><a href="7-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>7.5</b> Decision Tree Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-regression.html"><a href="8-regression.html"><i class="fa fa-check"></i><b>8</b> Regression</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-1-introduction-2.html"><a href="8-1-introduction-2.html"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="8-2-application-2.html"><a href="8-2-application-2.html"><i class="fa fa-check"></i><b>8.2</b> Application</a></li>
+<li class="chapter" data-level="8.3" data-path="8-3-choosing-the-right-algorithm-2.html"><a href="8-3-choosing-the-right-algorithm-2.html"><i class="fa fa-check"></i><b>8.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="8.4" data-path="8-4-linear-regression.html"><a href="8-4-linear-regression.html"><i class="fa fa-check"></i><b>8.4</b> LInear Regression</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="grouping-data-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> Grouping Data</h2>
+<p>This chapter explore multiple methods to group data columns and computes value within groups.</p>
+<div id="aggretate---base-r" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> aggretate - base R</h3>
+<p><strong>Aggregate</strong> is a very useful base R function and provides quick way to group data and values:</p>
+<ul>
+<li>Input in <strong>list/data.frame</strong>, computes and <strong>output new data.frame</strong>.<br />
+</li>
+<li>It groups categorical variable(s) and compute value variable(s) based on function FUN.<br />
+</li>
+<li>FUN can be <strong>min, max, mean, sd, sum or length (frequency count)</strong>.<br />
+</li>
+<li><strong>ONLY ONE function</strong> is supported, and it applies to all value variables !!!</li>
+</ul>
+<div id="basic-syntax-formula-method---data-source-is-data.frame" class="section level4">
+<h4><span class="header-section-number">3.2.1.1</span> Basic Syntax (formula method) - data source is data.frame</h4>
+<p>The <strong>formula method</strong> use <strong>‘data’</strong> parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names</p>
+<blockquote>
+<p><strong>aggregate (data = df, formula, FUN = function) </strong><br />
+Formula in the form: <strong>value~categorical</strong></p>
+</blockquote>
+<blockquote>
+<p>one value variable ~ one categorical variable</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data =</span> my.df, value1 <span class="op">~</span><span class="st"> </span>grp, <span class="dt">FUN =</span> length)</code></pre></div>
+<pre><code>##   grp value1
+## 1  G1     48
+## 2  G2     52</code></pre>
+<blockquote>
+<p>one value variable ~ multiple categorical variables</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data =</span> my.df, value1 <span class="op">~</span><span class="st"> </span>grp <span class="op">+</span><span class="st"> </span>dept, <span class="dt">FUN =</span> length)</code></pre></div>
+<pre><code>##   grp dept value1
+## 1  G1   D1     23
+## 2  G2   D1     26
+## 3  G1   D2     14
+## 4  G2   D2     12
+## 5  G1   D3     11
+## 6  G2   D3     14</code></pre>
+<blockquote>
+<p>multiple value variables ~ one categorical variable, <strong>use cbind()</strong></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data =</span> my.df, <span class="kw">cbind</span>(value1,value2) <span class="op">~</span><span class="st"> </span>grp, <span class="dt">FUN =</span> length)</code></pre></div>
+<pre><code>##   grp value1 value2
+## 1  G1     48     48
+## 2  G2     52     52</code></pre>
+<blockquote>
+<p>multiple value variables ~ multiple categorical variable</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data =</span> my.df, <span class="kw">cbind</span>(value1,value2) <span class="op">~</span><span class="st"> </span>grp <span class="op">+</span><span class="st"> </span>dept, <span class="dt">FUN =</span> length)</code></pre></div>
+<pre><code>##   grp dept value1 value2
+## 1  G1   D1     23     23
+## 2  G2   D1     26     26
+## 3  G1   D2     14     14
+## 4  G2   D2     12     12
+## 5  G1   D3     11     11
+## 6  G2   D3     14     14</code></pre>
+<blockquote>
+<p><strong>ALL</strong> value variables ~ multiple categorical variable, <strong>use dot notation</strong><br />
+Change from FUN=length to sum results in <strong>error</strong> because sum() cannot be applied to non-numerical variable ‘team’</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data =</span> my.df, . <span class="op">~</span><span class="st"> </span>grp <span class="op">+</span><span class="st"> </span>dept, <span class="dt">FUN =</span> length)</code></pre></div>
+<pre><code>##   grp dept team value1 value2 value3
+## 1  G1   D1   23     23     23     23
+## 2  G2   D1   26     26     26     26
+## 3  G1   D2   14     14     14     14
+## 4  G2   D2   12     12     12     12
+## 5  G1   D3   11     11     11     11
+## 6  G2   D3   14     14     14     14</code></pre>
+</div>
+<div id="advance-syntax-by-method---data-source-is-either-list-or-data.frame" class="section level4">
+<h4><span class="header-section-number">3.2.1.2</span> Advance Syntax (by method) - data source is either list or data.frame</h4>
+<p>The <strong>advantage</strong> of ’<strong>by method’</strong> are:</p>
+<ul>
+<li>Can use list/data.frame subset method to choose column to display, hence flexible<br />
+</li>
+<li>Can customize output column names (list subset method only)<br />
+</li>
+<li>Flexibility to use multiple data sources, hence <strong>‘data’ is not used</strong> and has no effect if specified</li>
+</ul>
+<blockquote>
+<p>Using <strong>list subseting:</strong> column name is not preserved, hence must specify meaningful column names. If not supplied, generic names and undesirable column names derived from data value will be used as column name<br />
+<em><strong>aggregate (x = list(…value_variables…), by = list(…categorical_variables…), FUN = function)</strong></em></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">x =</span>  <span class="kw">list</span>( <span class="dt">v1_mean =</span> my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2 ), 
+           <span class="dt">by =</span> <span class="kw">list</span>( my.df<span class="op">$</span>grp, <span class="dt">DEPT =</span> my.df<span class="op">$</span>dept), <span class="dt">FUN=</span>mean)</code></pre></div>
+<pre><code>##   Group.1 DEPT  v1_mean
+## 1      G1   D1 50.31850
+## 2      G2   D1 51.87504
+## 3      G1   D2 51.13119
+## 4      G2   D2 47.15365
+## 5      G1   D3 50.85523
+## 6      G2   D3 51.50880
+##   c.21.3107917311184..23.1803717164621..21.3565711895861..21.9895958470612..
+## 1                                                                   20.08096
+## 2                                                                   19.98123
+## 3                                                                   21.17846
+## 4                                                                   20.67360
+## 5                                                                   18.63134
+## 6                                                                   20.35175</code></pre>
+<blockquote>
+<p>Using <strong>data.frame subseting:</strong> column names are preserved and no option to change. Notice attempt below to change the column name does not succeed<br />
+<em><strong><em>aggregate( x = df[,c(…)], by = df[,c(…)]), FUN = function) </em></strong></em><br />
+<em><strong><em>aggregate( x = df[, p:q], by = df[,s:t]), FUN = function) </em></strong></em></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span>(<span class="dt">x=</span>my.df[, <span class="kw">c</span>(<span class="dt">v1_mean=</span><span class="st">&#39;value1&#39;</span>, <span class="st">&#39;value2&#39;</span>)], <span class="dt">by=</span>my.df[,<span class="kw">c</span>(<span class="dt">GRP=</span><span class="st">&#39;grp&#39;</span>, <span class="st">&#39;dept&#39;</span>)], <span class="dt">FUN=</span>mean)
+<span class="co"># aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above</span></code></pre></div>
+<pre><code>##   grp dept   value1   value2
+## 1  G1   D1 50.31850 20.08096
+## 2  G2   D1 51.87504 19.98123
+## 3  G1   D2 51.13119 21.17846
+## 4  G2   D2 47.15365 20.67360
+## 5  G1   D3 50.85523 18.63134
+## 6  G2   D3 51.50880 20.35175</code></pre>
+</div>
+</div>
+<div id="group_by---dplyr-package" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> group_by - dplyr Package</h3>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="3-1-sample-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="4-sort-and-filter-data.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/03-grouping.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

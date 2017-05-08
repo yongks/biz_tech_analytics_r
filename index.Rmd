@@ -12,4 +12,4 @@ github-repo: yongks/biz_tech_analytics_r
 description: "This is a study and reference notes to solving various business analytics problems using R."
 ---
 
-# Preface
+# Preface {-}

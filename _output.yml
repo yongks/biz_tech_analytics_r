@@ -23,6 +23,7 @@ bookdown::gitbook:
       instapper: no
       vk: no
       all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']
+  split_by: section+number
 
 bookdown::pdf_book:
   includes:

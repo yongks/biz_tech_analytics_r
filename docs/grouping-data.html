@@ -175,13 +175,19 @@ my.df =<span class="st"> </span><span class="kw">data.frame</span>(
 <p>This chapter explore multiple methods to group data columns and computes value within groups.</p>
 <div id="aggretate---base-r" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> aggretate - base R</h3>
-<p><strong>aggregate</strong> takes in a <strong>list/data.frame</strong>, computes and <strong>output new data.frame</strong>.<br />
-It groups categorical variable(s) and compute value variable(s) based on function FUN.<br />
-FUN can be <strong>min, max, mean, sd, sum or length (frequency count)</strong>.<br />
-<strong>ONLY ONE function</strong> is supported, and it applies to all value variables !!!</p>
+<p><strong>Aggregate</strong> is a very useful base R function and provides quick way to group data and values:</p>
+<ul>
+<li>Input in <strong>list/data.frame</strong>, computes and <strong>output new data.frame</strong>.<br />
+</li>
+<li>It groups categorical variable(s) and compute value variable(s) based on function FUN.<br />
+</li>
+<li>FUN can be <strong>min, max, mean, sd, sum or length (frequency count)</strong>.<br />
+</li>
+<li><strong>ONLY ONE function</strong> is supported, and it applies to all value variables !!!</li>
+</ul>
 <div id="basic-syntax-formula-method---data-source-is-data.frame" class="section level4">
 <h4><span class="header-section-number">4.2.1.1</span> Basic Syntax (formula method) - data source is data.frame</h4>
-<p>The formula method use <strong>‘data’</strong> parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names</p>
+<p>The <strong>formula method</strong> use <strong>‘data’</strong> parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names</p>
 <blockquote>
 <p><strong>aggregate (data = df, formula, FUN = function) </strong><br />
 Formula in the form: <strong>value~categorical</strong></p>
@@ -237,13 +243,13 @@ Change from FUN=length to sum results in <strong>error</strong> because sum() ca
 </div>
 <div id="advance-syntax-by-method---data-source-is-either-list-or-data.frame" class="section level4">
 <h4><span class="header-section-number">4.2.1.2</span> Advance Syntax (by method) - data source is either list or data.frame</h4>
-<p>The <strong>advantage</strong> of ‘by method’ is that it can</p>
+<p>The <strong>advantage</strong> of ’<strong>by method’</strong> are:</p>
 <ul>
-<li>Use list/data.frame subset method to choose column to display, hence flexible<br />
+<li>Can use list/data.frame subset method to choose column to display, hence flexible<br />
 </li>
-<li>customize output column names (list subset method only)<br />
+<li>Can customize output column names (list subset method only)<br />
 </li>
-<li>Flexible to use multiple data sources, hence <strong>‘data’ is not used</strong> and has no effect if specified</li>
+<li>Flexibility to use multiple data sources, hence <strong>‘data’ is not used</strong> and has no effect if specified</li>
 </ul>
 <blockquote>
 <p>Using <strong>list subseting:</strong> column name is not preserved, hence must specify meaningful column names. If not supplied, generic names and undesirable column names derived from data value will be used as column name<br />

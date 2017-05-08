@@ -35,13 +35,15 @@ This chapter explore multiple methods to group data columns and computes value w
 
 ### aggretate - base R
 
-**aggregate** takes in a **list/data.frame**, computes and **output new data.frame**.  
-It groups categorical variable(s) and compute value variable(s) based on function FUN.  
-FUN can be **min, max, mean, sd, sum or length (frequency count)**.  
-**ONLY ONE function** is supported, and it applies to all value variables !!!
+**Aggregate** is a very useful base R function and provides quick way to group data and values:  
+
+- Input in **list/data.frame**, computes and **output new data.frame**.  
+- It groups categorical variable(s) and compute value variable(s) based on function FUN.  
+- FUN can be **min, max, mean, sd, sum or length (frequency count)**.  
+- **ONLY ONE function** is supported, and it applies to all value variables !!!
 
 #### Basic Syntax (formula method) - data source is data.frame
-The formula method use **'data'** parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names
+The **formula method** use **'data'** parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names
 
 > **aggregate (data = df, formula, FUN = function)  **  
 Formula in the form: **value~categorical**   
@@ -74,11 +76,11 @@ aggregate (data = my.df, . ~ grp + dept, FUN = length)
 
 #### Advance Syntax (by method) - data source is either list or data.frame
 
-The **advantage** of 'by method' is that it can
+The **advantage** of '**by method'** are:
 
-- Use list/data.frame subset method to choose column to display, hence flexible  
-- customize output column names (list subset method only)  
-- Flexible to use multiple data sources, hence **'data' is not used** and has no effect if specified  
+- Can use list/data.frame subset method to choose column to display, hence flexible  
+- Can customize output column names (list subset method only)  
+- Flexibility to use multiple data sources, hence **'data' is not used** and has no effect if specified  
 
 > Using **list subseting:** column name is not preserved, hence must specify meaningful column names. If not supplied, generic names and undesirable column names derived from data value will be used as column name  
 _**aggregate (x = list(...value_variables...), by = list(...categorical_variables...), FUN = function)**_

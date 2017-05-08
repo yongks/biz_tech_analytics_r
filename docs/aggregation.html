@@ -33,8 +33,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="random-data-generation.html">
+<link rel="prev" href="random-data-generation.html">
+<link rel="next" href="sort-and-filter-data.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -107,11 +107,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="random-data-generation.html"><a href="random-data-generation.html"><i class="fa fa-check"></i><b>3</b> Random Data Generation</a></li>
-<li class="chapter" data-level="4" data-path="grouping-data.html"><a href="grouping-data.html"><i class="fa fa-check"></i><b>4</b> Grouping Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="grouping-data.html"><a href="grouping-data.html#sample-data"><i class="fa fa-check"></i><b>4.1</b> Sample Data</a></li>
-<li class="chapter" data-level="4.2" data-path="grouping-data.html"><a href="grouping-data.html#grouping-data-1"><i class="fa fa-check"></i><b>4.2</b> Grouping Data</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="grouping-data.html"><a href="grouping-data.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.2.1</b> aggretate() - base R</a></li>
-<li class="chapter" data-level="4.2.2" data-path="grouping-data.html"><a href="grouping-data.html#group_by---dplyr-package"><i class="fa fa-check"></i><b>4.2.2</b> group_by - dplyr Package</a></li>
+<li class="chapter" data-level="4" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>4</b> Aggregation</a><ul>
+<li class="chapter" data-level="4.1" data-path="aggregation.html"><a href="aggregation.html#sample-data"><i class="fa fa-check"></i><b>4.1</b> Sample Data</a></li>
+<li class="chapter" data-level="4.2" data-path="aggregation.html"><a href="aggregation.html#grouping-data"><i class="fa fa-check"></i><b>4.2</b> Grouping Data</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="aggregation.html"><a href="aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.2.1</b> aggretate() - base R</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="sort-and-filter-data.html"><a href="sort-and-filter-data.html"><i class="fa fa-check"></i><b>5</b> Sort and Filter Data</a><ul>
@@ -180,187 +179,97 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Introduction</h1>
-<p>You can label chapter and section titles using <code>{#label}</code> after them, e.g., we can reference Chapter <a href="intro.html#intro">2</a>. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter <a href="#methods"><strong>??</strong></a>.</p>
-<p>Figures and tables with captions will be placed in <code>figure</code> and <code>table</code> environments, respectively.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))
-<span class="kw">plot</span>(pressure, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
-<img src="biz_tech_analytics_r_files/figure-html/nice-fig-1.png" alt="Here is a nice figure!" width="80%" />
-<p class="caption">
-Figure 2.1: Here is a nice figure!
-</p>
+<div id="aggregation" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Aggregation</h1>
+<p>This capter explore manipulating table-like, summarization and aggregation.</p>
+<div id="sample-data" class="section level2">
+<h2><span class="header-section-number">4.1</span> Sample Data</h2>
+<p>Sample data used simulate two categorical-alike feature, and two numeric value feature:</p>
+<ul>
+<li><strong>dept</strong> is random character between ‘D1’, ‘D2’ and ‘D3’<br />
+</li>
+<li><strong>grp</strong> is random character with randomly generated ‘G1’, ‘G2’<br />
+</li>
+<li><strong>value1</strong> represents numeric value, normally distributed at mean 50<br />
+</li>
+<li><strong>value2</strong> is numeric value, normally distributed at mean 25</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+my.df =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">dept =</span> <span class="kw">paste</span>(<span class="st">&#39;D&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
+  <span class="dt">grp  =</span> <span class="kw">paste</span>(<span class="st">&#39;G&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
+  <span class="dt">team =</span> <span class="kw">paste</span>(<span class="st">&#39;T&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
+  <span class="dt">value1 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">5</span>),
+  <span class="dt">value2 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>),
+  <span class="dt">value3 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>),
+  <span class="dt">stringsAsFactors =</span> F
+)
+<span class="kw">head</span>(my.df)</code></pre></div>
+<pre><code>##   dept grp team   value1   value2   value3
+## 1   D1  G1   T2 48.11381 21.31079 2.683964
+## 2   D2  G2   T2 50.48810 23.18037 5.562472
+## 3   D2  G1   T1 58.19372 21.35657 4.216225
+## 4   D2  G1   T2 45.62204 21.98960 4.773946
+## 5   D3  G1   T2 50.60880 16.59088 3.412897
+## 6   D2  G1   T2 56.81065 18.88851 5.547524</code></pre>
 </div>
-<p>Reference a figure by its code chunk label with the <code>fig:</code> prefix, e.g., see Figure <a href="intro.html#fig:nice-fig">2.1</a>. Similarly, you can reference tables generated from <code>knitr::kable()</code>, e.g., see Table <a href="intro.html#tab:nice-tab">2.1</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
-  <span class="kw">head</span>(iris, <span class="dv">20</span>), <span class="dt">caption =</span> <span class="st">&#39;Here is a nice table!&#39;</span>,
-  <span class="dt">booktabs =</span> <span class="ot">TRUE</span>
-)</code></pre></div>
-<table>
-<caption><span id="tab:nice-tab">Table 2.1: </span>Here is a nice table!</caption>
-<thead>
-<tr class="header">
-<th align="right">Sepal.Length</th>
-<th align="right">Sepal.Width</th>
-<th align="right">Petal.Length</th>
-<th align="right">Petal.Width</th>
-<th align="left">Species</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">5.1</td>
-<td align="right">3.5</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">4.9</td>
-<td align="right">3.0</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">4.7</td>
-<td align="right">3.2</td>
-<td align="right">1.3</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">4.6</td>
-<td align="right">3.1</td>
-<td align="right">1.5</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">5.0</td>
-<td align="right">3.6</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">5.4</td>
-<td align="right">3.9</td>
-<td align="right">1.7</td>
-<td align="right">0.4</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">4.6</td>
-<td align="right">3.4</td>
-<td align="right">1.4</td>
-<td align="right">0.3</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">5.0</td>
-<td align="right">3.4</td>
-<td align="right">1.5</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">4.4</td>
-<td align="right">2.9</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">4.9</td>
-<td align="right">3.1</td>
-<td align="right">1.5</td>
-<td align="right">0.1</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">5.4</td>
-<td align="right">3.7</td>
-<td align="right">1.5</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">4.8</td>
-<td align="right">3.4</td>
-<td align="right">1.6</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">4.8</td>
-<td align="right">3.0</td>
-<td align="right">1.4</td>
-<td align="right">0.1</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">4.3</td>
-<td align="right">3.0</td>
-<td align="right">1.1</td>
-<td align="right">0.1</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">5.8</td>
-<td align="right">4.0</td>
-<td align="right">1.2</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">5.7</td>
-<td align="right">4.4</td>
-<td align="right">1.5</td>
-<td align="right">0.4</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">5.4</td>
-<td align="right">3.9</td>
-<td align="right">1.3</td>
-<td align="right">0.4</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">5.1</td>
-<td align="right">3.5</td>
-<td align="right">1.4</td>
-<td align="right">0.3</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">5.7</td>
-<td align="right">3.8</td>
-<td align="right">1.7</td>
-<td align="right">0.3</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">5.1</td>
-<td align="right">3.8</td>
-<td align="right">1.5</td>
-<td align="right">0.3</td>
-<td align="left">setosa</td>
-</tr>
-</tbody>
-</table>
-<p>You can write citations, too. For example, we are using the <strong>bookdown</strong> package <span class="citation">(Xie <a href="#ref-R-bookdown">2016</a>)</span> in this sample book, which was built on top of R Markdown and <strong>knitr</strong> <span class="citation">(Soon <a href="#ref-xie2015">2017</a>)</span>.</p>
+<div id="grouping-data" class="section level2">
+<h2><span class="header-section-number">4.2</span> Grouping Data</h2>
+<p>This chapter explore multiple methods to group data columns and computes value within groups.</p>
+<div id="aggretate---base-r" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> aggretate() - base R</h3>
+<p><strong>aggregate</strong> takes in <strong>data.frame</strong> variable, computes and <strong>output new data.frame</strong><br />
+grouping can computes function based on <strong>min, max, mean, sd, sum or length (frequency count)</strong></p>
+<blockquote>
+<p>one value variable ~ one categorical variable</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data=</span>my.df, value1<span class="op">~</span>grp, <span class="dt">FUN=</span>length)</code></pre></div>
+<pre><code>##   grp value1
+## 1  G1     48
+## 2  G2     52</code></pre>
+<blockquote>
+<p>one value variable ~ multiple categorical variables</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data=</span>my.df, value1<span class="op">~</span>grp<span class="op">+</span>dept, <span class="dt">FUN=</span>length)</code></pre></div>
+<pre><code>##   grp dept value1
+## 1  G1   D1     23
+## 2  G2   D1     26
+## 3  G1   D2     14
+## 4  G2   D2     12
+## 5  G1   D3     11
+## 6  G2   D3     14</code></pre>
+<blockquote>
+<p>multiple value variables ~ one categorical variable, <strong>use cbind()</strong></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data=</span>my.df, <span class="kw">cbind</span>(value1,value2)<span class="op">~</span>grp, <span class="dt">FUN=</span>length)</code></pre></div>
+<pre><code>##   grp value1 value2
+## 1  G1     48     48
+## 2  G2     52     52</code></pre>
+<blockquote>
+<p>multiple value variables ~ multiple categorical variable</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data=</span>my.df, <span class="kw">cbind</span>(value1,value2)<span class="op">~</span>grp<span class="op">+</span>dept, <span class="dt">FUN=</span>length)</code></pre></div>
+<pre><code>##   grp dept value1 value2
+## 1  G1   D1     23     23
+## 2  G2   D1     26     26
+## 3  G1   D2     14     14
+## 4  G2   D2     12     12
+## 5  G1   D3     11     11
+## 6  G2   D3     14     14</code></pre>
+<blockquote>
+<p><strong>ALL</strong> value variables ~ multiple categorical variable, <strong>use dot notation</strong><br />
+Change from FUN=length to sum results in <strong>error</strong> because sum() cannot be applied to non-numerical variable ‘team’</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">data=</span>my.df, .<span class="op">~</span>grp<span class="op">+</span>dept, <span class="dt">FUN=</span>length)</code></pre></div>
+<pre><code>##   grp dept team value1 value2 value3
+## 1  G1   D1   23     23     23     23
+## 2  G2   D1   26     26     26     26
+## 3  G1   D2   14     14     14     14
+## 4  G2   D2   12     12     12     12
+## 5  G1   D3   11     11     11     11
+## 6  G2   D3   14     14     14     14</code></pre>
 
 </div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-R-bookdown">
-<p>Xie, Yihui. 2016. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</p>
-</div>
-<div id="ref-xie2015">
-<p>Soon, Yong Keh. 2017. <em>Dynamic Documents with R and Knitr</em>. Draft. Boca Raton, Florida: Chapman; Hall/CRC.</p>
 </div>
 </div>
             </section>
@@ -368,8 +277,8 @@ Figure 2.1: Here is a nice figure!
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="random-data-generation.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="random-data-generation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sort-and-filter-data.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -397,7 +306,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/01-intro.Rmd",
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/03-grouping.Rmd",
 "text": "Edit"
 },
 "download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],

@@ -1,0 +1,21 @@
+# R Fundamentals {#fundamentals}
+
+## Data Types
+
+## Conditioinal Decision
+
+## Looping
+
+## Apply Family
+
+### Overview
+
+- Apply and its family is a useful function
+
+### apply
+
+### sapply
+
+### tapply
+
+

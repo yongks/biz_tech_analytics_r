@@ -24,6 +24,14 @@ bookdown::gitbook:
       vk: no
       all: ['facebook', 'google', 'twitter', 'weibo', 'instapaper']
   split_by: section+number
+  highlight: tango
+
+bookdown::html_book:
+  toc: true
+  toc_dept: 3
+  toc_float: true
+  css: toc.css
+  theme: united
 
 bookdown::pdf_book:
   includes:
@@ -31,4 +39,5 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
+
 bookdown::epub_book: default

@@ -1,0 +1,35 @@
+# Statistics
+
+## Sample Data
+This chapter uses the sample data generate with below code. The idea is to simulate two categorical-alike feature, and two numeric value feature:  
+
+- **dept** is random character between 'D1', 'D2', 'D3', 'D4' and 'D5'  
+- **grp** is random character with randomly generated 'G1', 'G2'  
+- **value1** represents numeric value, normally distributed at mean 50  
+- **value2** is numeric value, normally distributed at mean 25  
+
+```{r}
+set.seed(1234)
+my.df = data.frame(
+  dept = paste('D',sample(1:5, 100, replace = T),sep=''),
+  grp  = paste('G',sample(1:2, 100, replace = T),sep=''),
+  value1 = rnorm(1:100, mean = 50, sd = 5),
+  value2 = rnorm(1:100, mean = 20, sd = 3),
+  stringsAsFactors = F
+)
+my.df$dept = as.factor(my.df$dept)
+my.df$grp = as.factor(my.df$grp)
+head(my.df)
+```
+
+## Descriptive Summary
+
+```{r}
+summary(my.df)
+
+```
+
+## T-Test
+
+## Correlation
+

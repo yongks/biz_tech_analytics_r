@@ -26,15 +26,15 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-05-08">
+<meta name="date" content="2017-05-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-1-introduction-1.html">
-<link rel="next" href="7-3-choosing-the-right-algorithm-1.html">
+<link rel="prev" href="7-5-k-mean-clustering.html">
+<link rel="next" href="8-1-introduction-1.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,38 +55,38 @@
 div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
 code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
 code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -105,7 +105,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="1-intro.html"><a href="1-intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a><ul>
+<li class="chapter" data-level="1.1" data-path="1-1-data-types.html"><a href="1-1-data-types.html"><i class="fa fa-check"></i><b>1.1</b> Data Types</a></li>
+<li class="chapter" data-level="1.2" data-path="1-2-conditioinal-decision.html"><a href="1-2-conditioinal-decision.html"><i class="fa fa-check"></i><b>1.2</b> Conditioinal Decision</a></li>
+<li class="chapter" data-level="1.3" data-path="1-3-looping.html"><a href="1-3-looping.html"><i class="fa fa-check"></i><b>1.3</b> Looping</a></li>
+<li class="chapter" data-level="1.4" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html"><i class="fa fa-check"></i><b>1.4</b> Apply Family</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#overview"><i class="fa fa-check"></i><b>1.4.1</b> Overview</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#apply"><i class="fa fa-check"></i><b>1.4.2</b> apply</a></li>
+<li class="chapter" data-level="1.4.3" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#sapply"><i class="fa fa-check"></i><b>1.4.3</b> sapply</a></li>
+<li class="chapter" data-level="1.4.4" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#tapply"><i class="fa fa-check"></i><b>1.4.4</b> tapply</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="2-random-data-generation.html"><a href="2-random-data-generation.html"><i class="fa fa-check"></i><b>2</b> Random Data Generation</a></li>
 <li class="chapter" data-level="3" data-path="3-grouping-data.html"><a href="3-grouping-data.html"><i class="fa fa-check"></i><b>3</b> Grouping Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="3-1-sample-data.html"><a href="3-1-sample-data.html"><i class="fa fa-check"></i><b>3.1</b> Sample Data</a></li>
@@ -143,25 +153,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="5-7-pie-chart.html"><a href="5-7-pie-chart.html"><i class="fa fa-check"></i><b>5.7</b> Pie Chart</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="6-clustering.html"><a href="6-clustering.html"><i class="fa fa-check"></i><b>6</b> Clustering</a><ul>
-<li class="chapter" data-level="6.1" data-path="6-1-introduction.html"><a href="6-1-introduction.html"><i class="fa fa-check"></i><b>6.1</b> Introduction</a></li>
-<li class="chapter" data-level="6.2" data-path="6-2-application.html"><a href="6-2-application.html"><i class="fa fa-check"></i><b>6.2</b> Application</a></li>
-<li class="chapter" data-level="6.3" data-path="6-3-choosing-the-right-algorithm.html"><a href="6-3-choosing-the-right-algorithm.html"><i class="fa fa-check"></i><b>6.3</b> Choosing The Right Algorithm</a></li>
-<li class="chapter" data-level="6.4" data-path="6-4-hierarchical-clustering.html"><a href="6-4-hierarchical-clustering.html"><i class="fa fa-check"></i><b>6.4</b> Hierarchical Clustering</a></li>
-<li class="chapter" data-level="6.5" data-path="6-5-k-mean-clustering.html"><a href="6-5-k-mean-clustering.html"><i class="fa fa-check"></i><b>6.5</b> K-Mean Clustering</a></li>
+<li class="chapter" data-level="6" data-path="6-statistics.html"><a href="6-statistics.html"><i class="fa fa-check"></i><b>6</b> Statistics</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-1-sample-data-2.html"><a href="6-1-sample-data-2.html"><i class="fa fa-check"></i><b>6.1</b> Sample Data</a></li>
+<li class="chapter" data-level="6.2" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html"><i class="fa fa-check"></i><b>6.2</b> Descriptive Summary</a></li>
+<li class="chapter" data-level="6.3" data-path="6-3-t-test.html"><a href="6-3-t-test.html"><i class="fa fa-check"></i><b>6.3</b> T-Test</a></li>
+<li class="chapter" data-level="6.4" data-path="6-4-correlation.html"><a href="6-4-correlation.html"><i class="fa fa-check"></i><b>6.4</b> Correlation</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="7-classification.html"><a href="7-classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a><ul>
-<li class="chapter" data-level="7.1" data-path="7-1-introduction-1.html"><a href="7-1-introduction-1.html"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
-<li class="chapter" data-level="7.2" data-path="7-2-application-1.html"><a href="7-2-application-1.html"><i class="fa fa-check"></i><b>7.2</b> Application</a></li>
-<li class="chapter" data-level="7.3" data-path="7-3-choosing-the-right-algorithm-1.html"><a href="7-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>7.3</b> Choosing The Right Algorithm</a></li>
-<li class="chapter" data-level="7.4" data-path="7-4-logistic-regression.html"><a href="7-4-logistic-regression.html"><i class="fa fa-check"></i><b>7.4</b> Logistic Regression</a></li>
-<li class="chapter" data-level="7.5" data-path="7-5-decision-tree-regression.html"><a href="7-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>7.5</b> Decision Tree Regression</a></li>
+<li class="chapter" data-level="7" data-path="7-clustering.html"><a href="7-clustering.html"><i class="fa fa-check"></i><b>7</b> Clustering</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-1-introduction.html"><a href="7-1-introduction.html"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="7-2-application.html"><a href="7-2-application.html"><i class="fa fa-check"></i><b>7.2</b> Application</a></li>
+<li class="chapter" data-level="7.3" data-path="7-3-choosing-the-right-algorithm.html"><a href="7-3-choosing-the-right-algorithm.html"><i class="fa fa-check"></i><b>7.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="7.4" data-path="7-4-hierarchical-clustering.html"><a href="7-4-hierarchical-clustering.html"><i class="fa fa-check"></i><b>7.4</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="7.5" data-path="7-5-k-mean-clustering.html"><a href="7-5-k-mean-clustering.html"><i class="fa fa-check"></i><b>7.5</b> K-Mean Clustering</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="8-regression.html"><a href="8-regression.html"><i class="fa fa-check"></i><b>8</b> Regression</a><ul>
-<li class="chapter" data-level="8.1" data-path="8-1-introduction-2.html"><a href="8-1-introduction-2.html"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
-<li class="chapter" data-level="8.2" data-path="8-2-application-2.html"><a href="8-2-application-2.html"><i class="fa fa-check"></i><b>8.2</b> Application</a></li>
-<li class="chapter" data-level="8.3" data-path="8-3-choosing-the-right-algorithm-2.html"><a href="8-3-choosing-the-right-algorithm-2.html"><i class="fa fa-check"></i><b>8.3</b> Choosing The Right Algorithm</a></li>
-<li class="chapter" data-level="8.4" data-path="8-4-linear-regression.html"><a href="8-4-linear-regression.html"><i class="fa fa-check"></i><b>8.4</b> LInear Regression</a></li>
+<li class="chapter" data-level="8" data-path="8-classification.html"><a href="8-classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-1-introduction-1.html"><a href="8-1-introduction-1.html"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="8-2-application-1.html"><a href="8-2-application-1.html"><i class="fa fa-check"></i><b>8.2</b> Application</a></li>
+<li class="chapter" data-level="8.3" data-path="8-3-choosing-the-right-algorithm-1.html"><a href="8-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>8.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="8.4" data-path="8-4-logistic-regression.html"><a href="8-4-logistic-regression.html"><i class="fa fa-check"></i><b>8.4</b> Logistic Regression</a></li>
+<li class="chapter" data-level="8.5" data-path="8-5-decision-tree-regression.html"><a href="8-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>8.5</b> Decision Tree Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-regression.html"><a href="9-regression.html"><i class="fa fa-check"></i><b>9</b> Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="9-1-introduction-2.html"><a href="9-1-introduction-2.html"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="9-2-application-2.html"><a href="9-2-application-2.html"><i class="fa fa-check"></i><b>9.2</b> Application</a></li>
+<li class="chapter" data-level="9.3" data-path="9-3-choosing-the-right-algorithm-2.html"><a href="9-3-choosing-the-right-algorithm-2.html"><i class="fa fa-check"></i><b>9.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="9.4" data-path="9-4-linear-regression.html"><a href="9-4-linear-regression.html"><i class="fa fa-check"></i><b>9.4</b> LInear Regression</a></li>
 </ul></li>
 </ul>
 
@@ -180,16 +196,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="application-1" class="section level2">
-<h2><span class="header-section-number">7.2</span> Application</h2>
+<div id="classification" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Classification</h1> 
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-1-introduction-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="7-3-choosing-the-right-algorithm-1.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="7-5-k-mean-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-1-introduction-1.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -217,7 +233,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/07-classification.Rmd",
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/09-classification.Rmd",
 "text": "Edit"
 },
 "download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],

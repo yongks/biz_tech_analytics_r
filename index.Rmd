@@ -3,7 +3,7 @@ title: "Business and Technical Analytics with R"
 author: "Yong Keh Soon"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::git_book
+output: bookdown::html_book
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike

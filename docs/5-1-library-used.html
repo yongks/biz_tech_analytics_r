@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Business and Technical Analytics with R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Business and Technical Analytics with R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-05-27">
+<meta name="date" content="2017-05-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +34,6 @@
   
 <link rel="prev" href="5-graphic-visualization.html">
 <link rel="next" href="5-2-sample-data-1.html">
-
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -95,6 +93,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <body>
 
 
+
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
 
     <div class="book-summary">
@@ -106,14 +105,19 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a><ul>
-<li class="chapter" data-level="1.1" data-path="1-1-data-types.html"><a href="1-1-data-types.html"><i class="fa fa-check"></i><b>1.1</b> Data Types</a></li>
-<li class="chapter" data-level="1.2" data-path="1-2-conditioinal-decision.html"><a href="1-2-conditioinal-decision.html"><i class="fa fa-check"></i><b>1.2</b> Conditioinal Decision</a></li>
-<li class="chapter" data-level="1.3" data-path="1-3-looping.html"><a href="1-3-looping.html"><i class="fa fa-check"></i><b>1.3</b> Looping</a></li>
-<li class="chapter" data-level="1.4" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html"><i class="fa fa-check"></i><b>1.4</b> Apply Family</a><ul>
-<li class="chapter" data-level="1.4.1" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#overview"><i class="fa fa-check"></i><b>1.4.1</b> Overview</a></li>
-<li class="chapter" data-level="1.4.2" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#apply"><i class="fa fa-check"></i><b>1.4.2</b> apply</a></li>
-<li class="chapter" data-level="1.4.3" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#sapply"><i class="fa fa-check"></i><b>1.4.3</b> sapply</a></li>
-<li class="chapter" data-level="1.4.4" data-path="1-4-apply-family.html"><a href="1-4-apply-family.html#tapply"><i class="fa fa-check"></i><b>1.4.4</b> tapply</a></li>
+<li class="chapter" data-level="1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html"><i class="fa fa-check"></i><b>1.1</b> Package Management</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html#packages-listing"><i class="fa fa-check"></i><b>1.1.1</b> Packages Listing</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-installation-and-removal"><i class="fa fa-check"></i><b>1.1.2</b> Package Installation and Removal</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-update"><i class="fa fa-check"></i><b>1.1.3</b> Package Update</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a></li>
+<li class="chapter" data-level="1.3" data-path="1-3-conditioinal-decision.html"><a href="1-3-conditioinal-decision.html"><i class="fa fa-check"></i><b>1.3</b> Conditioinal Decision</a></li>
+<li class="chapter" data-level="1.4" data-path="1-4-looping.html"><a href="1-4-looping.html"><i class="fa fa-check"></i><b>1.4</b> Looping</a></li>
+<li class="chapter" data-level="1.5" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html"><i class="fa fa-check"></i><b>1.5</b> Apply Family</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#overview"><i class="fa fa-check"></i><b>1.5.1</b> Overview</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#apply"><i class="fa fa-check"></i><b>1.5.2</b> apply</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#sapply"><i class="fa fa-check"></i><b>1.5.3</b> sapply</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#tapply"><i class="fa fa-check"></i><b>1.5.4</b> tapply</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-random-data-generation.html"><a href="2-random-data-generation.html"><i class="fa fa-check"></i><b>2</b> Random Data Generation</a></li>
@@ -155,28 +159,42 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-statistics.html"><a href="6-statistics.html"><i class="fa fa-check"></i><b>6</b> Statistics</a><ul>
 <li class="chapter" data-level="6.1" data-path="6-1-sample-data-2.html"><a href="6-1-sample-data-2.html"><i class="fa fa-check"></i><b>6.1</b> Sample Data</a></li>
-<li class="chapter" data-level="6.2" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html"><i class="fa fa-check"></i><b>6.2</b> Descriptive Summary</a></li>
+<li class="chapter" data-level="6.2" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html"><i class="fa fa-check"></i><b>6.2</b> Descriptive Summary</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html#single-vector"><i class="fa fa-check"></i><b>6.2.1</b> Single Vector</a></li>
+<li class="chapter" data-level="6.2.2" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html#multiple-vectors"><i class="fa fa-check"></i><b>6.2.2</b> Multiple Vectors</a></li>
+<li class="chapter" data-level="6.2.3" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html#custom-function"><i class="fa fa-check"></i><b>6.2.3</b> Custom Function</a></li>
+</ul></li>
 <li class="chapter" data-level="6.3" data-path="6-3-t-test.html"><a href="6-3-t-test.html"><i class="fa fa-check"></i><b>6.3</b> T-Test</a></li>
-<li class="chapter" data-level="6.4" data-path="6-4-correlation.html"><a href="6-4-correlation.html"><i class="fa fa-check"></i><b>6.4</b> Correlation</a></li>
+<li class="chapter" data-level="6.4" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html"><i class="fa fa-check"></i><b>6.4</b> Covariance / Correlation</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html#covariance"><i class="fa fa-check"></i><b>6.4.1</b> Covariance</a></li>
+<li class="chapter" data-level="6.4.2" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html#correlation"><i class="fa fa-check"></i><b>6.4.2</b> Correlation</a></li>
+<li class="chapter" data-level="6.4.3" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html#correlation-test-for-significance"><i class="fa fa-check"></i><b>6.4.3</b> Correlation Test for significance</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-clustering.html"><a href="7-clustering.html"><i class="fa fa-check"></i><b>7</b> Clustering</a><ul>
 <li class="chapter" data-level="7.1" data-path="7-1-introduction.html"><a href="7-1-introduction.html"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
 <li class="chapter" data-level="7.2" data-path="7-2-application.html"><a href="7-2-application.html"><i class="fa fa-check"></i><b>7.2</b> Application</a></li>
-<li class="chapter" data-level="7.3" data-path="7-3-choosing-the-right-algorithm.html"><a href="7-3-choosing-the-right-algorithm.html"><i class="fa fa-check"></i><b>7.3</b> Choosing The Right Algorithm</a></li>
-<li class="chapter" data-level="7.4" data-path="7-4-hierarchical-clustering.html"><a href="7-4-hierarchical-clustering.html"><i class="fa fa-check"></i><b>7.4</b> Hierarchical Clustering</a></li>
-<li class="chapter" data-level="7.5" data-path="7-5-k-mean-clustering.html"><a href="7-5-k-mean-clustering.html"><i class="fa fa-check"></i><b>7.5</b> K-Mean Clustering</a></li>
+<li class="chapter" data-level="7.3" data-path="7-3-general-steps-in-cluster-analysis.html"><a href="7-3-general-steps-in-cluster-analysis.html"><i class="fa fa-check"></i><b>7.3</b> General Steps in Cluster Analysis</a></li>
+<li class="chapter" data-level="7.4" data-path="7-4-distance-algorithm.html"><a href="7-4-distance-algorithm.html"><i class="fa fa-check"></i><b>7.4</b> Distance Algorithm</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="7-4-distance-algorithm.html"><a href="7-4-distance-algorithm.html#euclidean-distance-n-dimension"><i class="fa fa-check"></i><b>7.4.1</b> Euclidean Distance (n dimension)</a></li>
+<li class="chapter" data-level="7.4.2" data-path="7-4-distance-algorithm.html"><a href="7-4-distance-algorithm.html#manhattan-distance-n-dimension"><i class="fa fa-check"></i><b>7.4.2</b> Manhattan Distance (n dimension)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="7-5-clustering-algorithm.html"><a href="7-5-clustering-algorithm.html"><i class="fa fa-check"></i><b>7.5</b> Clustering Algorithm</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="7-5-clustering-algorithm.html"><a href="7-5-clustering-algorithm.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.5.1</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="7.5.2" data-path="7-5-clustering-algorithm.html"><a href="7-5-clustering-algorithm.html#k-mean-clustering"><i class="fa fa-check"></i><b>7.5.2</b> K-Mean Clustering</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="8-classification.html"><a href="8-classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a><ul>
 <li class="chapter" data-level="8.1" data-path="8-1-introduction-1.html"><a href="8-1-introduction-1.html"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
 <li class="chapter" data-level="8.2" data-path="8-2-application-1.html"><a href="8-2-application-1.html"><i class="fa fa-check"></i><b>8.2</b> Application</a></li>
-<li class="chapter" data-level="8.3" data-path="8-3-choosing-the-right-algorithm-1.html"><a href="8-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>8.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="8.3" data-path="8-3-choosing-the-right-algorithm.html"><a href="8-3-choosing-the-right-algorithm.html"><i class="fa fa-check"></i><b>8.3</b> Choosing The Right Algorithm</a></li>
 <li class="chapter" data-level="8.4" data-path="8-4-logistic-regression.html"><a href="8-4-logistic-regression.html"><i class="fa fa-check"></i><b>8.4</b> Logistic Regression</a></li>
 <li class="chapter" data-level="8.5" data-path="8-5-decision-tree-regression.html"><a href="8-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>8.5</b> Decision Tree Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-regression.html"><a href="9-regression.html"><i class="fa fa-check"></i><b>9</b> Regression</a><ul>
 <li class="chapter" data-level="9.1" data-path="9-1-introduction-2.html"><a href="9-1-introduction-2.html"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
 <li class="chapter" data-level="9.2" data-path="9-2-application-2.html"><a href="9-2-application-2.html"><i class="fa fa-check"></i><b>9.2</b> Application</a></li>
-<li class="chapter" data-level="9.3" data-path="9-3-choosing-the-right-algorithm-2.html"><a href="9-3-choosing-the-right-algorithm-2.html"><i class="fa fa-check"></i><b>9.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="9.3" data-path="9-3-choosing-the-right-algorithm-1.html"><a href="9-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>9.3</b> Choosing The Right Algorithm</a></li>
 <li class="chapter" data-level="9.4" data-path="9-4-linear-regression.html"><a href="9-4-linear-regression.html"><i class="fa fa-check"></i><b>9.4</b> LInear Regression</a></li>
 </ul></li>
 </ul>
@@ -211,7 +229,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
       </div>
 <a href="5-graphic-visualization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="5-2-sample-data-1.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
@@ -253,6 +272,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

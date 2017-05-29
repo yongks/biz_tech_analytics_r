@@ -1,5 +1,43 @@
 # R Fundamentals {#fundamentals}
 
+
+## Package Management
+
+Use `installed.packages() : return matrix` to list all installed package  
+
+
+### Packages Listing
+
+Below are the column names and number for filtering purpose
+```{r}
+dimnames( installed.packages() ) [2]
+```
+
+Perform filter based on dimension names when necessary. Set **priority = 'NA'** will filter out all base R packages  
+```{r}
+installed.packages( priority='NA' ) [,c(3,2)]
+```
+
+Set **priority = 'high'** will display all base R packages  
+```{r}
+installed.packages( priority='high' ) [,c(3,2)]
+```
+
+### Package Install / Remove
+
+```{r eval=FALSE}
+install.packages( c('ggplot', 'ggExtra'))
+```
+
+### Package Update
+
+```{r eval=FALSE}
+old.packages()           ## list all old packages, their old version and available new version
+update.packages()             ## need to input y/n/c for each old package to update
+update.packages( ask=FALSE )  ## automatically update all packages without asking
+```
+
+
 ## Data Types
 
 ## Conditioinal Decision

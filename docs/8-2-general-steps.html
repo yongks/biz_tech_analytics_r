@@ -148,7 +148,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="4-data-preprocessing.html"><a href="4-data-preprocessing.html"><i class="fa fa-check"></i><b>4</b> Data Preprocessing</a><ul>
-<li class="chapter" data-level="4.1" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html"><i class="fa fa-check"></i><b>4.1</b> Handling Missing Data</a></li>
+<li class="chapter" data-level="4.1" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html"><i class="fa fa-check"></i><b>4.1</b> Handling Missing Data</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html#detecting-missing-data"><i class="fa fa-check"></i><b>4.1.1</b> Detecting Missing Data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>4.1.2</b> Removing Missing Data</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="4-2-scaling-data.html"><a href="4-2-scaling-data.html"><i class="fa fa-check"></i><b>4.2</b> Scaling Data</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="4-2-scaling-data.html"><a href="4-2-scaling-data.html#sample-data-1"><i class="fa fa-check"></i><b>4.2.1</b> Sample Data</a></li>
 <li class="chapter" data-level="4.2.2" data-path="4-2-scaling-data.html"><a href="4-2-scaling-data.html#z-score-scaling"><i class="fa fa-check"></i><b>4.2.2</b> Z-Score Scaling</a></li>
@@ -206,8 +209,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.4.1" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#euclidean-distance"><i class="fa fa-check"></i><b>8.4.1</b> Euclidean Distance</a></li>
 <li class="chapter" data-level="8.4.2" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#manhattan-distance-n-dimension"><i class="fa fa-check"></i><b>8.4.2</b> Manhattan Distance (n dimension)</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="8-5-clustering-algorithm.html"><a href="8-5-clustering-algorithm.html"><i class="fa fa-check"></i><b>8.5</b> Clustering Algorithm</a><ul>
-<li class="chapter" data-level="8.5.1" data-path="8-5-clustering-algorithm.html"><a href="8-5-clustering-algorithm.html#hierarchical-clustering"><i class="fa fa-check"></i><b>8.5.1</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="8.5" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html"><i class="fa fa-check"></i><b>8.5</b> Hierarchical Clustering</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#clustering-process"><i class="fa fa-check"></i><b>8.5.1</b> Clustering Process</a></li>
+<li class="chapter" data-level="8.5.2" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#cluster-distance"><i class="fa fa-check"></i><b>8.5.2</b> Cluster Distance</a></li>
+<li class="chapter" data-level="8.5.3" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#visualiasing-h-cluster"><i class="fa fa-check"></i><b>8.5.3</b> Visualiasing H-Cluster</a></li>
+<li class="chapter" data-level="8.5.4" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#evaluate-optimum-number-of-clusters-k"><i class="fa fa-check"></i><b>8.5.4</b> Evaluate Optimum Number of Clusters (K) ?**</a></li>
+<li class="chapter" data-level="8.5.5" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#finalize-number-of-cluster-k"><i class="fa fa-check"></i><b>8.5.5</b> Finalize Number of Cluster, K</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-classification.html"><a href="9-classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a><ul>
@@ -271,13 +278,18 @@ Popular scaling methods are:
 <ul>
 <li>Outliers can distort results. Screen to remove them <br><br></li>
 </ul></li>
-<li><strong>Calculate Distance</strong>
+<li><strong>Calculate Data Point Distances</strong>
 <ul>
 <li>Popular measure of distance between two data point is Euclidean distance</li>
 <li>Others are Manhattan, Canberra, Asymmetric Binary, Maximum and Minkowski also available <br><br></li>
 </ul></li>
-<li><p><strong>Chosoe a Clustering Alrorithm</strong></p></li>
-<li><p><strong>Try few Clustering Solutions</strong></p></li>
+<li><p><strong>Chosoe a Clustering Alrorithm, and Inter-Custer Distance Method</strong></p></li>
+<li><p><strong>Try few Clustering Solutions</strong></p>
+<ul>
+<li>Decide the best clustering algorithm, cluster distance method and <strong>number of cluster, K</strong><br />
+</li>
+<li>Use <code>NbClus</code> as a tool to guide choosing K (number of cluster)</li>
+</ul></li>
 <li><strong>Visualize the result</strong>
 <ul>
 <li>Visualization can help you determine the meaning and usefulness of the cluster solution<br />

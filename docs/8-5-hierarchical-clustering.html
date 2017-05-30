@@ -148,7 +148,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="4-data-preprocessing.html"><a href="4-data-preprocessing.html"><i class="fa fa-check"></i><b>4</b> Data Preprocessing</a><ul>
-<li class="chapter" data-level="4.1" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html"><i class="fa fa-check"></i><b>4.1</b> Handling Missing Data</a></li>
+<li class="chapter" data-level="4.1" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html"><i class="fa fa-check"></i><b>4.1</b> Handling Missing Data</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html#detecting-missing-data"><i class="fa fa-check"></i><b>4.1.1</b> Detecting Missing Data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="4-1-handling-missing-data.html"><a href="4-1-handling-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>4.1.2</b> Removing Missing Data</a></li>
+</ul></li>
 <li class="chapter" data-level="4.2" data-path="4-2-scaling-data.html"><a href="4-2-scaling-data.html"><i class="fa fa-check"></i><b>4.2</b> Scaling Data</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="4-2-scaling-data.html"><a href="4-2-scaling-data.html#sample-data-1"><i class="fa fa-check"></i><b>4.2.1</b> Sample Data</a></li>
 <li class="chapter" data-level="4.2.2" data-path="4-2-scaling-data.html"><a href="4-2-scaling-data.html#z-score-scaling"><i class="fa fa-check"></i><b>4.2.2</b> Z-Score Scaling</a></li>
@@ -206,8 +209,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.4.1" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#euclidean-distance"><i class="fa fa-check"></i><b>8.4.1</b> Euclidean Distance</a></li>
 <li class="chapter" data-level="8.4.2" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#manhattan-distance-n-dimension"><i class="fa fa-check"></i><b>8.4.2</b> Manhattan Distance (n dimension)</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="8-5-clustering-algorithm.html"><a href="8-5-clustering-algorithm.html"><i class="fa fa-check"></i><b>8.5</b> Clustering Algorithm</a><ul>
-<li class="chapter" data-level="8.5.1" data-path="8-5-clustering-algorithm.html"><a href="8-5-clustering-algorithm.html#hierarchical-clustering"><i class="fa fa-check"></i><b>8.5.1</b> Hierarchical Clustering</a></li>
+<li class="chapter" data-level="8.5" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html"><i class="fa fa-check"></i><b>8.5</b> Hierarchical Clustering</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#clustering-process"><i class="fa fa-check"></i><b>8.5.1</b> Clustering Process</a></li>
+<li class="chapter" data-level="8.5.2" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#cluster-distance"><i class="fa fa-check"></i><b>8.5.2</b> Cluster Distance</a></li>
+<li class="chapter" data-level="8.5.3" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#visualiasing-h-cluster"><i class="fa fa-check"></i><b>8.5.3</b> Visualiasing H-Cluster</a></li>
+<li class="chapter" data-level="8.5.4" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#evaluate-optimum-number-of-clusters-k"><i class="fa fa-check"></i><b>8.5.4</b> Evaluate Optimum Number of Clusters (K) ?**</a></li>
+<li class="chapter" data-level="8.5.5" data-path="8-5-hierarchical-clustering.html"><a href="8-5-hierarchical-clustering.html#finalize-number-of-cluster-k"><i class="fa fa-check"></i><b>8.5.5</b> Finalize Number of Cluster, K</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-classification.html"><a href="9-classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a><ul>
@@ -240,20 +247,27 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-algorithm" class="section level2">
-<h2><span class="header-section-number">8.5</span> Clustering Algorithm</h2>
-<div id="hierarchical-clustering" class="section level3">
-<h3><span class="header-section-number">8.5.1</span> Hierarchical Clustering</h3>
-<div id="clustering-process" class="section level4">
-<h4><span class="header-section-number">8.5.1.1</span> Clustering Process</h4>
+<div id="hierarchical-clustering" class="section level2">
+<h2><span class="header-section-number">8.5</span> Hierarchical Clustering</h2>
+<ul>
+<li>Hierarchical clustering is a widely used data analysis tool<br />
+</li>
+<li>The idea is to build a binary tree of the data that successively merges similar groups of points<br />
+</li>
+<li>Number of clusters (K) is not required initially<br />
+</li>
+<li>It is an unsupervised learning</li>
+</ul>
+<div id="clustering-process" class="section level3">
+<h3><span class="header-section-number">8.5.1</span> Clustering Process</h3>
 <p>This is how Hierarchical Clustering works:<br />
 1. Initially, put each data point in <strong>its own cluster</strong><br />
 2. <strong>Calucate the distances</strong> between each cluster and all other clusters<br />
 3. <strong>Combine the two clusters</strong> with the smallest distance - This reduce cluster number by one<br />
 4. Repeat step (2) and (3) until all clusters have been <strong>merged into single cluster</strong> <br><br></p>
 </div>
-<div id="cluster-distance" class="section level4">
-<h4><span class="header-section-number">8.5.1.2</span> Cluster Distance</h4>
+<div id="cluster-distance" class="section level3">
+<h3><span class="header-section-number">8.5.2</span> Cluster Distance</h3>
 <p>Once distance for all data points has been measured, decide which of the five (5) methods below to measure distance between clusters:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Single Linkage</strong>:<br />
@@ -269,22 +283,66 @@ Average distance between all points in one cluster with all points the another c
 Find the centroid of each cluster and calculate the distance between centroids between both</li>
 </ol>
 <blockquote>
-<p><code>hclust (d, method =</code>)<br />
+<p><code>hclust (d, method ='complete</code>)<br />
 <span class="math inline">\(\quad\)</span> `method = ‘single’, ‘complete’, ‘average’, ‘centroid’</p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c1 =<span class="st"> </span><span class="kw">hclust</span> (d1)
-c1
-<span class="kw">plot</span>(c1)</code></pre></div>
-<pre><code>## 
-## Call:
-## hclust(d = d1)
-## 
-## Cluster method   : complete 
-## Distance         : euclidean 
-## Number of objects: 15</code></pre>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-69-1.png" width="256.6656" /> ### K-Mean Clustering</p>
-
+<p>Visualize the hierachical cluster using dendrogram, which displays how items are combined into clusters and is read from the bottom up.</p>
+<p>As you can see, if the number of observations are very large, the dendrogram will be cluttered.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.complete =<span class="st"> </span><span class="kw">hclust</span> (d1)  <span class="co"># default method: &#39;complete&#39;</span>
+fit.average  =<span class="st"> </span><span class="kw">hclust</span> (d1, <span class="dt">method=</span><span class="st">&#39;average&#39;</span>)
+fit.single   =<span class="st"> </span><span class="kw">hclust</span> (d1, <span class="dt">method=</span><span class="st">&#39;single&#39;</span>)
+fit.centroid =<span class="st"> </span><span class="kw">hclust</span> (d1, <span class="dt">method=</span><span class="st">&#39;centroid&#39;</span>)</code></pre></div>
 </div>
+<div id="visualiasing-h-cluster" class="section level3">
+<h3><span class="header-section-number">8.5.3</span> Visualiasing H-Cluster</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(fit.complete, <span class="dt">main=</span><span class="st">&#39;HCluster, Complete-Linkage&#39;</span>)
+<span class="kw">plot</span>(fit.average,  <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage&#39;</span>)
+<span class="kw">plot</span>(fit.single,   <span class="dt">main=</span><span class="st">&#39;HCluster, Single-Linkage&#39;</span>)
+<span class="kw">plot</span>(fit.centroid, <span class="dt">main=</span><span class="st">&#39;HCluster, Centroid-Linkage&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-70-1.png" width="864" /></p>
+</div>
+<div id="evaluate-optimum-number-of-clusters-k" class="section level3">
+<h3><span class="header-section-number">8.5.4</span> Evaluate Optimum Number of Clusters (K) ?**</h3>
+<ul>
+<li><code>NbClust</code> package offers numerous 26 indices for determining the best number of clusters in a cluster analysis<br />
+</li>
+<li>There is no guarantee that they will agree with each other. In fact, they probably won’t<br />
+</li>
+<li>However, use this as a guidine and test few highest criteria score to determinee final number of cluster</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(NbClust)
+nbc =<span class="st"> </span><span class="kw">NbClust</span>(data.scaled, <span class="dt">distance=</span><span class="st">&quot;euclidean&quot;</span>, <span class="dt">min.nc=</span><span class="dv">2</span>, <span class="dt">max.nc=</span><span class="dv">8</span>, <span class="dt">method=</span><span class="st">&quot;average&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-71-1.png" width="864" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-71-2.png" width="864" /></p>
+<p>Clearly NMbClust suggest three (3) clusters, it most criteria suggested so.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>( nc<span class="op">$</span>Best.n[<span class="dv">1</span>,] )
+<span class="kw">barplot</span>( <span class="kw">table</span>(nc<span class="op">$</span>Best.n[<span class="dv">1</span>,] ),
+  <span class="dt">xlab=</span><span class="st">&quot;Numer of Clusters&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Number of Criteria&quot;</span>,
+  <span class="dt">main=</span><span class="st">&quot;Number of Clusters Chosen by 26 Criteria&quot;</span>)</code></pre></div>
+<pre><code>## 
+##  0  1  2  3  5  6  7  8 
+##  2  1  2 14  2  1  2  2</code></pre>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-72-1.png" width="864" /></p>
+</div>
+<div id="finalize-number-of-cluster-k" class="section level3">
+<h3><span class="header-section-number">8.5.5</span> Finalize Number of Cluster, K</h3>
+<p>Once K has been finalized, use <code>cutree</code> to produce a <strong>vector</strong> of cluster group number (in this example: 1,2,3 of total 3 groups) for all observations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">clusters =<span class="st"> </span><span class="kw">cutree</span> (fit.average, <span class="dt">k=</span><span class="dv">3</span>)
+clusters          <span class="co"># is a vector, marking cluster number for each observation</span></code></pre></div>
+<pre><code>##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 
+##     1     1     1     1     2     2     2     2     2     2     3     3 
+## ID_13 ID_14 ID_15 
+##     3     3     3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(clusters)     <span class="co"># is a vector</span></code></pre></div>
+<pre><code>##  Named int [1:15] 1 1 1 1 2 2 2 2 2 2 ...
+##  - attr(*, &quot;names&quot;)= chr [1:15] &quot;ID_1&quot; &quot;ID_2&quot; &quot;ID_3&quot; &quot;ID_4&quot; ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) <span class="co"># frequency for each cluster</span></code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-73-1.png" width="864" /></p>
+<p>Combination of <code>plot</code> and <code>rect.hclust</code> function plots dendrogram with clusters group marked in red.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">5 Cluster Solution&#39;</span>)
+<span class="kw">rect.hclust</span>(fit.average, <span class="dt">k=</span><span class="dv">3</span>) <span class="co"># superimpose cluster group in previous plot</span></code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-74-1.png" width="864" /></p>
+
 </div>
 </div>
 <!-- </div> -->
@@ -323,7 +381,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/09-clustering.Rmd",
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/091-hclust.Rmd",
 "text": "Edit"
 },
 "download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],

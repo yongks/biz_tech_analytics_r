@@ -1,0 +1,175 @@
+# Clustering Analysis
+
+- Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset. 
+- It reduce a large number of observations to a much smaller number of clusters or types.  
+- A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups. 
+
+## Application
+- **Business** : researchers use cluster analysis for customer segmentation. Customers are arranged into clusters based on the similarity of their demographics and buying behaviours. Marketing campaings are then tailored to appeal to the groups.  
+  
+- **Psychological**: researchers cluster data on the symptoms and demographics of depressed patients, seeking to uncover subtypes of depression, with the hope of finding more effective targeted treatments and a better understanding of the disorder.
+  
+- **Medical**: researchers use cluster analysis to help catalog gene-expression patterns obtained from DNA microarray data. This can help them to understand normal growth and development and the underlying causes of many human diseases
+
+- **Information Retrieval**: The world wide web consists of billions of Web pages, and the results of a query to a search engine can return thousands of pages. Clustering can be used to group these search results into a small number of clusters, each of which captures a particular aspect of the query. For example, a query of "movie" might return Web pages grouped into categories such as reviews, trailers, starts and theaters. Each category (Cluster) can be bnorken into subcategories (sub-clusters), producing a hierachical structure that further assists a user's exploration of the query results.
+
+
+## General Steps
+
+1. **Choose appropriate attributes**  
+    + This is the most important steps. 
+    + Choose attributes that that actions can be taken upon
+    + A sohisticated cluster analysis can't compensate for a poor choice of variables  <br><br>
+
+2. **Scale Data**    
+      
+    **When NOT to scale **  
+    
+    If you have attributes with a well-defined meaning. Say, latitude and longitude, then you should not scale your data, because this will cause distortion.  
+   
+    **When To Scale **    
+
+    - If you have mixed numerica0l data, where each attribute is something entirely different (say, shoe size and weight), has different units attached (lb, tons, m, kg ...) then these values aren't really comparable anyway; z-standardizing them is a best-practise to give equal weight to them.    
+    - If variables vary in range, then the variable with the largest value will have the greatest impact on result. This is undesirable.  
+    - Therefore data must be scaled so that they can be compared fairly  
+ 
+    **Methods of Scaling**    
+      
+    * Popular scaling methods are:  
+      + Normalize to mean=0 and sd=1  
+      + Divide by Max  
+      + Minus min, divide by Min-Max range  <br><br>  
+  
+3. **Screen for Outliers**  
+    + Outliers can distort results. Screen to remove them  <br><br>
+    
+4. **Calculate Distance**
+    + Popular measure of distance between two data point is Euclidean distance
+    + Others are Manhattan, Canberra, Asymmetric Binary, Maximum and Minkowski also available  <br><br>
+    
+5. **Chosoe a Clustering Alrorithm**
+    + 
+
+6. **Try few Clustering Solutions**
+
+7. **Visualize the result**
+    + Visualization can help you determine the meaning and usefulness of the cluster solution  
+    + **Hierarchical** clustering are usually presented as a dendrogram  
+    + **Partitioning** results are typically visualized using a bivariate cluster plot  <br><br>
+
+8. **Intepret the Cluster**
+    + Once a cluster solution has been obtained, you must interpret (and possibly name) the clusters
+    + What do the observations in a cluster have in common? 
+    + How do they differ from the observations in other clusters? 
+    + This step is typically accomplished by obtaining summary statistics for each variable by cluster
+    + For continuous data, the mean or median for each variable within each cluster is calculated. 
+    + For mixed data (data that contain categorical variables), the summary statistics will also include modes or category distributions  <br><br>
+    
+9. **Validate Result**
+    + Validating the cluster solution involves asking the question:
+        + “Are these groupings in some sense real, and not a manifestation of unique aspects of this dataset or statistical technique?”   
+        + If a different cluster method or different sample is employed, would the same clusters be obtained?  
+        + The fpc, clv, and clValid packages each contain functions for evaluating the stability of a clustering solution  
+
+
+## Sample Data
+
+Sample data used in this chapter emulate two dimensional data points with three groups with clear grouping when visualize. 
+
+```{r fig.width=9, fig.height=4, fig.show='asis'}
+set.seed(1234)
+set.seed(1234)
+my.df = data.frame(
+  id = paste('ID_', 1:15, sep = ''),
+  grp = c(rep('G1', 5), rep('G2', 5), rep('G3', 5)),
+  value1 = c( round(rnorm(5, mean = 10,  sd = 3)),
+              round(rnorm(5, mean = 10, sd = 3)),
+              round(rnorm(5, mean = 30, sd = 3))),
+  value2 = c( round(rnorm(5, mean = 10, sd = 3)),
+              round(rnorm(5, mean = 20, sd = 3)),
+              round(rnorm(5, mean = 20, sd = 3))),
+  stringsAsFactors = F
+)
+str(my.df)
+plot(my.df$value1, my.df$value2)
+```
+
+## Distance Algorithm
+
+The choice of an appropriate metric will influence the shape of the clusters, as some elements may be close to one another according to one distance and farther away according to another. 
+
+For example, in a two dimensional data, the distance between the point (1,1) and the origin (0,0) can be 2 under **Manhattan distance**, $\sqrt{2}$ under **Euclidean distance**, or 1 under **Maximum distance**.
+
+**`dist`** is used to measure distance for all **numeric**  elements in dataframe or matrix. Supplying non-numeric columns for `dist` will incur warning.
+
+> **`dist`**`( x, method = )   default method = 'euclidean'`  
+> $\quad$ `method = 'euclidean', "maximum", "manhattan", "canberra", "binary" or "minkowski"`  
+
+### Euclidean Distance
+
+$$Euclidean-d(p,q) = \sqrt{\sum_{i=1}^n (p_i-q_i)^2} \quad,n = dimension$$  
+
+- The Euclidean distance is a distance measure between two points or or vectors in a two- or multidimensional (Euclidean) space **based on Pythagoras' theorem**   
+- The distance is calculated by taking the square root of the sum of the squared pair-wise distances of every dimension 
+
+Below command measures distance for  numeric columns of **all data points** in my.df, using **euclidean** algorithmn.  
+
+```{r}
+d1 = dist( my.df[,3:4])
+round (d1,1)
+```
+    
+
+### Manhattan Distance (n dimension)
+
+$$Manhattan - d(p,q) = \sum_{i=1}^n |p_i-q_i| \quad,n = dimension$$  
+
++ The Manhattan distance (sometimes also called **Taxicab** distance) metric is related to the Euclidean distance
++ But instead of calculating the shortest diagonal path ("beeline") between two points, it calculates the distance based on gridlines  
+
+Below command measures distance for  numeric columns of **all data points** in my.df, using **manhattan** algorithm.  
+
+```{r}
+d2 = dist( my.df[,3:4], method='manhattan')
+d2
+```
+    
+
+## Clustering Algorithm
+
+### Hierarchical Clustering 
+
+#### Clustering Process
+
+This is how Hierarchical Clustering works:  
+    1. Initially, put each data point in **its own cluster**  
+    2. **Calucate the distances** between each cluster and all other clusters  
+    3. **Combine the two clusters** with the smallest distance - This reduce cluster number by one  
+    4. Repeat step (2) and (3) until all clusters have been **merged into single cluster**  <br><br>
+
+
+#### Cluster Distance  
+
+Once distance for all data points has been measured, decide which of the five (5) methods below to measure distance between clusters:
+
+1. **Single Linkage**:  
+   Shortest distance between points belonging to two clusters    
+2. **Complete Linkage (common)**:  
+   Longest distance between points belonging to two clusters  
+3. **Average Linkage (common)**:  
+   Average distance between all points in one cluster with all points the another cluster  
+4. **Centroid**:  
+   Find the centroid of each cluster and calculate the distance between centroids between both  
+
+> `hclust (d, method =`)  
+> $\quad$ `method = 'single', 'complete', 'average', 'centroid'  
+
+
+```{r}
+c1 = hclust (d1)
+c1
+plot(c1)
+```
+### K-Mean Clustering  
+
+

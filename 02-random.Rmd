@@ -1,3 +1,0 @@
-# Random Data Generation
-
-Here is a review of existing methods.

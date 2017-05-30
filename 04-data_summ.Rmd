@@ -1,0 +1,217 @@
+```{r setup_aggregation, echo=FALSE}
+## global chunk option ##
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results = 'hold') 
+```
+
+
+# Data Summarization
+
+This capter explore manipulating table-like data, summarization and aggregation.
+
+## Sample Data
+Sample data used simulate two categorical-alike feature, and two numeric value feature:  
+
+- **dept** is random character between 'D1', 'D2' and 'D3'  
+- **grp** is random character with randomly generated 'G1', 'G2'  
+- **value1** represents numeric value, normally distributed at mean 50  
+- **value2** is numeric value, normally distributed at mean 25  
+
+```{r}
+set.seed(1234)
+my.df = data.frame(
+  com  = paste('C',sample(1:2, 100, replace = T),sep=''),
+  dept = paste('D',sample(1:3, 100, replace = T),sep=''),
+  grp  = paste('G',sample(1:2, 100, replace = T),sep=''),
+  team = paste('T',sample(1:2, 100, replace = T),sep=''),
+  value1 = rnorm(1:100, mean = 50, sd = 5),
+  value2 = rnorm(1:100, mean = 20, sd = 3),
+  value3 = rnorm(1:100, mean = 5, sd = 1),
+  stringsAsFactors = F
+)
+head(my.df)
+```
+
+## Frequency Table
+
+`table` return table object (which is also array) that report frequency count base of categorical-alike data provided.  
+
+`table` has the below data type characteristics. Note that only 2-dimensional table object is a matrix 
+
+| Dimension | is.atomic | is.vector | is.matrix | is.array | is.table |
+|:---------:|:---------:|:---------:|:---------:|:--------:|:--------:|
+| t1        |     T     |     F     |     F     |     T    |     T    |
+| t2        |     T     |     F     |     T     |     T    |     T    |
+| t3        |     T     |     F     |     F     |     T    |     T    |
+| t4        |     T     |     F     |     F     |     T    |     T    |
+
+`ftable` is technically a **matrix** with two dimensional data (it flatten multiple dimension data). It has below data type characteristic.
+
+| Dimension | is.atomic | is.vector | is.matrix | is.array | is.table |
+|:---------:|:---------:|:---------:|:---------:|:--------:|:--------:|
+| 1         |     T     |     F     |     T     |     T    |     F    |
+| 2         |     T     |     F     |     T     |     T    |     F    |
+| 3         |     T     |     F     |     T     |     T    |     F    |
+| 4         |     T     |     F     |     T     |     T    |     F    |
+
+### Single Dimension Data
+```{r results='markup'}
+t1 = table( my.df$com )
+t1
+str(t1)
+```
+
+### Two Dimension Data
+```{r results='markup'}
+t2 = table( my.df$com, my.df$dept )
+t2
+str(t2)
+```
+
+### Three Dimension Data
+When table contain three or more dimension, use `ftable (flat table)` to put multi dimension table into one flat output
+```{r results='markup'}
+t3 = table( my.df$com, my.df$dept, my.df$grp )
+t3
+str(t3)
+f3 = ftable( t3 )
+f3
+str(f3)
+```
+
+### Four Dimension Data
+When table contain three or more dimension, use `ftable (flat table)` to put multi dimension table into one flat output
+```{r results='markup', class.source='bg-success', class.output='bg-info'}
+t4 = table( my.df$com, my.df$dept, my.df$grp, my.df$team )
+t4
+str(t4)
+f4 = ftable( t4 )
+f4
+str(f4)
+```
+
+### Proportion Table
+
+`prop.table` converts `table` or `ftable` object into proportion.
+
+#### Proportion Table on 'table' object  
+
+```{r results='markup'}
+pt1 = prop.table( t1 )
+pt2 = prop.table( t2 )
+pt1
+pt2
+```
+
+#### Proportion Table on 'ftable' object  
+
+```{r results='markup'}
+pf3 = prop.table( f3 )
+pf4 = prop.table( f4 )
+pf3
+pf4
+```
+
+### Adding Margin Info
+
+#### Margin Info on 'table' object
+```{r results='markup'}
+addmargins( t2 )
+addmargins( t3 )
+addmargins( t4 )
+```
+
+#### Margin Info on 'ftable' object
+```{r results='markup'}
+addmargins( f3 )
+addmargins( f4 )
+```
+
+### Proportion Table with Margin
+
+First to obtain the proportion table, then only add the margin.  
+```{r results='markup'}
+addmargins( prop.table( t2 ))
+addmargins( prop.table( t3 ))
+addmargins( prop.table( t4 ))
+```
+
+```{r results='markup'}
+addmargins( prop.table( f3 ))
+addmargins( prop.table( f4 ))
+```
+
+## Data Aggregation
+
+This chapter explore multiple methods to group data columns and computes value within groups.
+
+### aggretate - base R
+
+**Aggregate** is a very useful base R function and provides quick way to group data and values:  
+
+- Input in **list/data.frame**, computes and **output new data.frame**.  
+- It groups categorical variable(s) and compute value variable(s) based on function FUN.  
+- FUN can be **min, max, mean, sd, sum or length (frequency count)**.  
+- **ONLY ONE function** is supported, and it applies to all value variables !!!
+
+#### Basic Syntax (formula method) - data source is data.frame
+The **formula method** use **'data'** parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names
+
+> **aggregate (data = df, formula, FUN = function)  **  
+Formula in the form: **value~categorical**   
+
+> one value variable ~ one categorical variable
+```{r}
+aggregate (data = my.df, value1 ~ grp, FUN = length)
+```
+
+> one value variable ~ multiple categorical variables
+```{r}
+aggregate (data = my.df, value1 ~ grp + dept, FUN = length)
+```
+
+> multiple value variables ~ one categorical variable, **use cbind()**
+```{r}
+aggregate (data = my.df, cbind(value1,value2) ~ grp, FUN = length)
+```
+
+> multiple value variables ~ multiple categorical variable
+```{r}
+aggregate (data = my.df, cbind(value1,value2) ~ grp + dept, FUN = length)
+```
+
+> **ALL** value variables ~ multiple categorical variable, **use dot notation**  
+Change from FUN=length to sum results in **error** because sum() cannot be applied to non-numerical variable 'team'
+```{r}
+aggregate (data = my.df, . ~ grp + dept, FUN = length)
+```
+
+#### Advance Syntax (by method) - data source is either list or data.frame
+
+The **advantage** of '**by method'** are:
+
+- Can use list/data.frame subset method to choose column to display, hence flexible  
+- Can customize output column names (list subset method only)  
+- Flexibility to use multiple data sources, hence **'data' is not used** and has no effect if specified  
+
+> Using **list subseting:** column name is not preserved, hence must specify meaningful column names. If not supplied, generic names and undesirable column names derived from data value will be used as column name  
+_**aggregate (x = list(...value_variables...), by = list(...categorical_variables...), FUN = function)**_
+
+
+```{r}
+aggregate (x =  list( v1_mean = my.df$value1, my.df$value2 ), 
+           by = list( my.df$grp, DEPT = my.df$dept), FUN=mean)
+```
+
+> Using **data.frame subseting:** column names are preserved and no option to change. Notice attempt below to change the column name does not succeed  
+_***aggregate( x = df[,c(...)], by = df[,c(...)]), FUN = function) ***_  
+_***aggregate( x = df[, p:q], by = df[,s:t]), FUN = function) ***_
+```{r}
+aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept')], FUN=mean)
+# aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above
+```
+
+
+### group_by - dplyr Package
+
+
+

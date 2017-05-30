@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-05-30">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="3-1-sample-data.html">
+<link rel="next" href="3-3-data-aggregation.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a><ul>
+<li class="chapter" data-level="1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html"><i class="fa fa-check"></i><b>1.1</b> Package Management</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html#packages-listing"><i class="fa fa-check"></i><b>1.1.1</b> Packages Listing</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-install-remove"><i class="fa fa-check"></i><b>1.1.2</b> Package Install / Remove</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-update"><i class="fa fa-check"></i><b>1.1.3</b> Package Update</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a></li>
+<li class="chapter" data-level="1.3" data-path="1-3-conditioinal-decision.html"><a href="1-3-conditioinal-decision.html"><i class="fa fa-check"></i><b>1.3</b> Conditioinal Decision</a></li>
+<li class="chapter" data-level="1.4" data-path="1-4-looping.html"><a href="1-4-looping.html"><i class="fa fa-check"></i><b>1.4</b> Looping</a></li>
+<li class="chapter" data-level="1.5" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html"><i class="fa fa-check"></i><b>1.5</b> Apply Family</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#overview"><i class="fa fa-check"></i><b>1.5.1</b> Overview</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#apply"><i class="fa fa-check"></i><b>1.5.2</b> apply</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#sapply"><i class="fa fa-check"></i><b>1.5.3</b> sapply</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#tapply"><i class="fa fa-check"></i><b>1.5.4</b> tapply</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
+<li class="chapter" data-level="2.1" data-path="2-1-sequential-number.html"><a href="2-1-sequential-number.html"><i class="fa fa-check"></i><b>2.1</b> Sequential Number</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="2-1-sequential-number.html"><a href="2-1-sequential-number.html#using-return-vector"><i class="fa fa-check"></i><b>2.1.1</b> Using <code>:</code> : return vector</a></li>
+<li class="chapter" data-level="2.1.2" data-path="2-1-sequential-number.html"><a href="2-1-sequential-number.html#using-seq-return-vector"><i class="fa fa-check"></i><b>2.1.2</b> Using <code>seq</code> : return vector</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="2-2-random-number.html"><a href="2-2-random-number.html"><i class="fa fa-check"></i><b>2.2</b> Random Number</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="2-2-random-number.html"><a href="2-2-random-number.html#random-unified-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Random Unified Distribution</a></li>
+<li class="chapter" data-level="2.2.2" data-path="2-2-random-number.html"><a href="2-2-random-number.html#random-normal-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Random Normal Distribution</a></li>
+<li class="chapter" data-level="2.2.3" data-path="2-2-random-number.html"><a href="2-2-random-number.html#drawing-from-a-bag"><i class="fa fa-check"></i><b>2.2.3</b> Drawing From A Bag</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="3-data-summarization.html"><a href="3-data-summarization.html"><i class="fa fa-check"></i><b>3</b> Data Summarization</a><ul>
+<li class="chapter" data-level="3.1" data-path="3-1-sample-data.html"><a href="3-1-sample-data.html"><i class="fa fa-check"></i><b>3.1</b> Sample Data</a></li>
+<li class="chapter" data-level="3.2" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html"><i class="fa fa-check"></i><b>3.2</b> Frequency Table</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#single-dimension-data"><i class="fa fa-check"></i><b>3.2.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#two-dimension-data"><i class="fa fa-check"></i><b>3.2.2</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#three-dimension-data"><i class="fa fa-check"></i><b>3.2.3</b> Three Dimension Data</a></li>
+<li class="chapter" data-level="3.2.4" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#four-dimension-data"><i class="fa fa-check"></i><b>3.2.4</b> Four Dimension Data</a></li>
+<li class="chapter" data-level="3.2.5" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#proportion-table"><i class="fa fa-check"></i><b>3.2.5</b> Proportion Table</a></li>
+<li class="chapter" data-level="3.2.6" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#adding-margin-info"><i class="fa fa-check"></i><b>3.2.6</b> Adding Margin Info</a></li>
+<li class="chapter" data-level="3.2.7" data-path="3-2-frequency-table.html"><a href="3-2-frequency-table.html#proportion-table-with-margin"><i class="fa fa-check"></i><b>3.2.7</b> Proportion Table with Margin</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-3-data-aggregation.html"><a href="3-3-data-aggregation.html"><i class="fa fa-check"></i><b>3.3</b> Data Aggregation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="3-3-data-aggregation.html"><a href="3-3-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>3.3.1</b> aggretate - base R</a></li>
+<li class="chapter" data-level="3.3.2" data-path="3-3-data-aggregation.html"><a href="3-3-data-aggregation.html#group_by---dplyr-package"><i class="fa fa-check"></i><b>3.3.2</b> group_by - dplyr Package</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="3-4-r-markdown.html"><a href="3-4-r-markdown.html"><i class="fa fa-check"></i><b>3.4</b> R Markdown</a></li>
+<li class="chapter" data-level="3.5" data-path="3-5-including-plots.html"><a href="3-5-including-plots.html"><i class="fa fa-check"></i><b>3.5</b> Including Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="4-sort-and-filter-data.html"><a href="4-sort-and-filter-data.html"><i class="fa fa-check"></i><b>4</b> Sort and Filter Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="4-1-sorting-data.html"><a href="4-1-sorting-data.html"><i class="fa fa-check"></i><b>4.1</b> Sorting Data</a></li>
+<li class="chapter" data-level="4.2" data-path="4-2-filtering-data.html"><a href="4-2-filtering-data.html"><i class="fa fa-check"></i><b>4.2</b> Filtering Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="5-graphic-visualization.html"><a href="5-graphic-visualization.html"><i class="fa fa-check"></i><b>5</b> Graphic Visualization</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-1-library-used.html"><a href="5-1-library-used.html"><i class="fa fa-check"></i><b>5.1</b> Library used</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-sample-data-1.html"><a href="5-2-sample-data-1.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-histogram.html"><a href="5-3-histogram.html"><i class="fa fa-check"></i><b>5.3</b> Histogram</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-histogram.html"><a href="5-3-histogram.html#single-dimension-data-1"><i class="fa fa-check"></i><b>5.3.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-histogram.html"><a href="5-3-histogram.html#two-dimension-data-1"><i class="fa fa-check"></i><b>5.3.2</b> Two Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-4-scatter-plot.html"><a href="5-4-scatter-plot.html"><i class="fa fa-check"></i><b>5.4</b> Scatter Plot</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-scatter-plot.html"><a href="5-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>5.4.1</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="5.4.2" data-path="5-4-scatter-plot.html"><a href="5-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>5.4.2</b> Two + One Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html"><i class="fa fa-check"></i><b>5.5</b> Bar Chart</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#single-dimension-data-2"><i class="fa fa-check"></i><b>5.5.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#two-one-dimension-data-1"><i class="fa fa-check"></i><b>5.5.2</b> Two + One Dimension Data</a></li>
+<li class="chapter" data-level="5.5.3" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#reordering"><i class="fa fa-check"></i><b>5.5.3</b> Reordering</a></li>
+<li class="chapter" data-level="5.5.4" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#positioning"><i class="fa fa-check"></i><b>5.5.4</b> Positioning</a></li>
+<li class="chapter" data-level="5.5.5" data-path="5-5-bar-chart.html"><a href="5-5-bar-chart.html#in-bar-text-labeling"><i class="fa fa-check"></i><b>5.5.5</b> In-Bar Text Labeling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html"><i class="fa fa-check"></i><b>5.6</b> Box Plot</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html#one-dimension-data"><i class="fa fa-check"></i><b>5.6.1</b> One Dimension Data</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html#two-dimension-data-3"><i class="fa fa-check"></i><b>5.6.2</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-box-plot.html"><a href="5-6-box-plot.html#two-one-dimension-data-2"><i class="fa fa-check"></i><b>5.6.3</b> Two + One Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-pie-chart.html"><a href="5-7-pie-chart.html"><i class="fa fa-check"></i><b>5.7</b> Pie Chart</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-statistics.html"><a href="6-statistics.html"><i class="fa fa-check"></i><b>6</b> Statistics</a><ul>
+<li class="chapter" data-level="6.1" data-path="6-1-sample-data-2.html"><a href="6-1-sample-data-2.html"><i class="fa fa-check"></i><b>6.1</b> Sample Data</a></li>
+<li class="chapter" data-level="6.2" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html"><i class="fa fa-check"></i><b>6.2</b> Descriptive Summary</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html#single-vector"><i class="fa fa-check"></i><b>6.2.1</b> Single Vector</a></li>
+<li class="chapter" data-level="6.2.2" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html#multiple-vectors"><i class="fa fa-check"></i><b>6.2.2</b> Multiple Vectors</a></li>
+<li class="chapter" data-level="6.2.3" data-path="6-2-descriptive-summary.html"><a href="6-2-descriptive-summary.html#custom-function"><i class="fa fa-check"></i><b>6.2.3</b> Custom Function</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="6-3-t-test.html"><a href="6-3-t-test.html"><i class="fa fa-check"></i><b>6.3</b> T-Test</a></li>
+<li class="chapter" data-level="6.4" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html"><i class="fa fa-check"></i><b>6.4</b> Covariance / Correlation</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html#covariance"><i class="fa fa-check"></i><b>6.4.1</b> Covariance</a></li>
+<li class="chapter" data-level="6.4.2" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html#correlation"><i class="fa fa-check"></i><b>6.4.2</b> Correlation</a></li>
+<li class="chapter" data-level="6.4.3" data-path="6-4-covariance-correlation.html"><a href="6-4-covariance-correlation.html#correlation-test-for-significance"><i class="fa fa-check"></i><b>6.4.3</b> Correlation Test for significance</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="7-clustering-analysis.html"><a href="7-clustering-analysis.html"><i class="fa fa-check"></i><b>7</b> Clustering Analysis</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-1-application.html"><a href="7-1-application.html"><i class="fa fa-check"></i><b>7.1</b> Application</a></li>
+<li class="chapter" data-level="7.2" data-path="7-2-general-steps.html"><a href="7-2-general-steps.html"><i class="fa fa-check"></i><b>7.2</b> General Steps</a></li>
+<li class="chapter" data-level="7.3" data-path="7-3-sample-data-3.html"><a href="7-3-sample-data-3.html"><i class="fa fa-check"></i><b>7.3</b> Sample Data</a></li>
+<li class="chapter" data-level="7.4" data-path="7-4-distance-algorithm.html"><a href="7-4-distance-algorithm.html"><i class="fa fa-check"></i><b>7.4</b> Distance Algorithm</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="7-4-distance-algorithm.html"><a href="7-4-distance-algorithm.html#euclidean-distance"><i class="fa fa-check"></i><b>7.4.1</b> Euclidean Distance</a></li>
+<li class="chapter" data-level="7.4.2" data-path="7-4-distance-algorithm.html"><a href="7-4-distance-algorithm.html#manhattan-distance-n-dimension"><i class="fa fa-check"></i><b>7.4.2</b> Manhattan Distance (n dimension)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="7-5-clustering-algorithm.html"><a href="7-5-clustering-algorithm.html"><i class="fa fa-check"></i><b>7.5</b> Clustering Algorithm</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="7-5-clustering-algorithm.html"><a href="7-5-clustering-algorithm.html#hierarchical-clustering"><i class="fa fa-check"></i><b>7.5.1</b> Hierarchical Clustering</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-classification.html"><a href="8-classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-1-introduction.html"><a href="8-1-introduction.html"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="8-2-application-1.html"><a href="8-2-application-1.html"><i class="fa fa-check"></i><b>8.2</b> Application</a></li>
+<li class="chapter" data-level="8.3" data-path="8-3-choosing-the-right-algorithm.html"><a href="8-3-choosing-the-right-algorithm.html"><i class="fa fa-check"></i><b>8.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="8.4" data-path="8-4-logistic-regression.html"><a href="8-4-logistic-regression.html"><i class="fa fa-check"></i><b>8.4</b> Logistic Regression</a></li>
+<li class="chapter" data-level="8.5" data-path="8-5-decision-tree-regression.html"><a href="8-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>8.5</b> Decision Tree Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-regression.html"><a href="9-regression.html"><i class="fa fa-check"></i><b>9</b> Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="9-1-introduction-1.html"><a href="9-1-introduction-1.html"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="9-2-application-2.html"><a href="9-2-application-2.html"><i class="fa fa-check"></i><b>9.2</b> Application</a></li>
+<li class="chapter" data-level="9.3" data-path="9-3-choosing-the-right-algorithm-1.html"><a href="9-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>9.3</b> Choosing The Right Algorithm</a></li>
+<li class="chapter" data-level="9.4" data-path="9-4-linear-regression.html"><a href="9-4-linear-regression.html"><i class="fa fa-check"></i><b>9.4</b> LInear Regression</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="frequency-table" class="section level2">
+<h2><span class="header-section-number">3.2</span> Frequency Table</h2>
+<p><code>table</code> return table object (which is also array) that report frequency count base of categorical-alike data provided.</p>
+<p><code>table</code> has the below data type characteristics. Note that only 2-dimensional table object is a matrix</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Dimension</th>
+<th align="center">is.atomic</th>
+<th align="center">is.vector</th>
+<th align="center">is.matrix</th>
+<th align="center">is.array</th>
+<th align="center">is.table</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">t1</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+</tr>
+<tr class="even">
+<td align="center">t2</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+<td align="center">T</td>
+</tr>
+<tr class="odd">
+<td align="center">t3</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+</tr>
+<tr class="even">
+<td align="center">t4</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+</tr>
+</tbody>
+</table>
+<p><code>ftable</code> is technically a <strong>matrix</strong> with two dimensional data (it flatten multiple dimension data). It has below data type characteristic.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Dimension</th>
+<th align="center">is.atomic</th>
+<th align="center">is.vector</th>
+<th align="center">is.matrix</th>
+<th align="center">is.array</th>
+<th align="center">is.table</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+<td align="center">F</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+<td align="center">F</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+<td align="center">F</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">T</td>
+<td align="center">F</td>
+<td align="center">T</td>
+<td align="center">T</td>
+<td align="center">F</td>
+</tr>
+</tbody>
+</table>
+<div id="single-dimension-data" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Single Dimension Data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t1 =<span class="st"> </span><span class="kw">table</span>( my.df<span class="op">$</span>com )
+t1</code></pre></div>
+<pre><code>## 
+## C1 C2 
+## 55 45</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(t1)</code></pre></div>
+<pre><code>##  &#39;table&#39; int [1:2(1d)] 55 45
+##  - attr(*, &quot;dimnames&quot;)=List of 1
+##   ..$ : chr [1:2] &quot;C1&quot; &quot;C2&quot;</code></pre>
+</div>
+<div id="two-dimension-data" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Two Dimension Data</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t2 =<span class="st"> </span><span class="kw">table</span>( my.df<span class="op">$</span>com, my.df<span class="op">$</span>dept )
+t2</code></pre></div>
+<pre><code>##     
+##      D1 D2 D3
+##   C1 16 18 21
+##   C2 15 18 12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(t2)</code></pre></div>
+<pre><code>##  &#39;table&#39; int [1:2, 1:3] 16 15 18 18 21 12
+##  - attr(*, &quot;dimnames&quot;)=List of 2
+##   ..$ : chr [1:2] &quot;C1&quot; &quot;C2&quot;
+##   ..$ : chr [1:3] &quot;D1&quot; &quot;D2&quot; &quot;D3&quot;</code></pre>
+</div>
+<div id="three-dimension-data" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Three Dimension Data</h3>
+<p>When table contain three or more dimension, use <code>ftable (flat table)</code> to put multi dimension table into one flat output</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t3 =<span class="st"> </span><span class="kw">table</span>( my.df<span class="op">$</span>com, my.df<span class="op">$</span>dept, my.df<span class="op">$</span>grp )
+t3</code></pre></div>
+<pre><code>## , ,  = G1
+## 
+##     
+##      D1 D2 D3
+##   C1 10  7 11
+##   C2  7  9  4
+## 
+## , ,  = G2
+## 
+##     
+##      D1 D2 D3
+##   C1  6 11 10
+##   C2  8  9  8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(t3)</code></pre></div>
+<pre><code>##  &#39;table&#39; int [1:2, 1:3, 1:2] 10 7 7 9 11 4 6 8 11 9 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 3
+##   ..$ : chr [1:2] &quot;C1&quot; &quot;C2&quot;
+##   ..$ : chr [1:3] &quot;D1&quot; &quot;D2&quot; &quot;D3&quot;
+##   ..$ : chr [1:2] &quot;G1&quot; &quot;G2&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f3 =<span class="st"> </span><span class="kw">ftable</span>( t3 )
+f3</code></pre></div>
+<pre><code>##        G1 G2
+##             
+## C1 D1  10  6
+##    D2   7 11
+##    D3  11 10
+## C2 D1   7  8
+##    D2   9  9
+##    D3   4  8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(f3)</code></pre></div>
+<pre><code>##  &#39;ftable&#39; int [1:6, 1:2] 10 7 11 7 9 4 6 11 10 8 ...
+##  - attr(*, &quot;row.vars&quot;)=List of 2
+##   ..$ : chr [1:2] &quot;C1&quot; &quot;C2&quot;
+##   ..$ : chr [1:3] &quot;D1&quot; &quot;D2&quot; &quot;D3&quot;
+##  - attr(*, &quot;col.vars&quot;)=List of 1
+##   ..$ : chr [1:2] &quot;G1&quot; &quot;G2&quot;</code></pre>
+</div>
+<div id="four-dimension-data" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Four Dimension Data</h3>
+<p>When table contain three or more dimension, use <code>ftable (flat table)</code> to put multi dimension table into one flat output</p>
+<div class="sourceCode"><pre class="sourceCode r bg-success"><code class="sourceCode r">t4 =<span class="st"> </span><span class="kw">table</span>( my.df<span class="op">$</span>com, my.df<span class="op">$</span>dept, my.df<span class="op">$</span>grp, my.df<span class="op">$</span>team )
+t4</code></pre></div>
+<pre class="bg-info"><code>## , ,  = G1,  = T1
+## 
+##     
+##      D1 D2 D3
+##   C1  4  5  4
+##   C2  4  5  1
+## 
+## , ,  = G2,  = T1
+## 
+##     
+##      D1 D2 D3
+##   C1  3  6  6
+##   C2  5  5  4
+## 
+## , ,  = G1,  = T2
+## 
+##     
+##      D1 D2 D3
+##   C1  6  2  7
+##   C2  3  4  3
+## 
+## , ,  = G2,  = T2
+## 
+##     
+##      D1 D2 D3
+##   C1  3  5  4
+##   C2  3  4  4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r bg-success"><code class="sourceCode r"><span class="kw">str</span>(t4)</code></pre></div>
+<pre class="bg-info"><code>##  &#39;table&#39; int [1:2, 1:3, 1:2, 1:2] 4 4 5 5 4 1 3 5 6 5 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 4
+##   ..$ : chr [1:2] &quot;C1&quot; &quot;C2&quot;
+##   ..$ : chr [1:3] &quot;D1&quot; &quot;D2&quot; &quot;D3&quot;
+##   ..$ : chr [1:2] &quot;G1&quot; &quot;G2&quot;
+##   ..$ : chr [1:2] &quot;T1&quot; &quot;T2&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r bg-success"><code class="sourceCode r">f4 =<span class="st"> </span><span class="kw">ftable</span>( t4 )
+f4</code></pre></div>
+<pre class="bg-info"><code>##           T1 T2
+##                
+## C1 D1 G1   4  6
+##       G2   3  3
+##    D2 G1   5  2
+##       G2   6  5
+##    D3 G1   4  7
+##       G2   6  4
+## C2 D1 G1   4  3
+##       G2   5  3
+##    D2 G1   5  4
+##       G2   5  4
+##    D3 G1   1  3
+##       G2   4  4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r bg-success"><code class="sourceCode r"><span class="kw">str</span>(f4)</code></pre></div>
+<pre class="bg-info"><code>##  &#39;ftable&#39; int [1:12, 1:2] 4 3 5 6 4 6 4 5 5 5 ...
+##  - attr(*, &quot;row.vars&quot;)=List of 3
+##   ..$ : chr [1:2] &quot;C1&quot; &quot;C2&quot;
+##   ..$ : chr [1:3] &quot;D1&quot; &quot;D2&quot; &quot;D3&quot;
+##   ..$ : chr [1:2] &quot;G1&quot; &quot;G2&quot;
+##  - attr(*, &quot;col.vars&quot;)=List of 1
+##   ..$ : chr [1:2] &quot;T1&quot; &quot;T2&quot;</code></pre>
+</div>
+<div id="proportion-table" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> Proportion Table</h3>
+<p><code>prop.table</code> converts <code>table</code> or <code>ftable</code> object into proportion.</p>
+<div id="proportion-table-on-table-object" class="section level4">
+<h4><span class="header-section-number">3.2.5.1</span> Proportion Table on ‘table’ object</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pt1 =<span class="st"> </span><span class="kw">prop.table</span>( t1 )
+pt2 =<span class="st"> </span><span class="kw">prop.table</span>( t2 )
+pt1</code></pre></div>
+<pre><code>## 
+##   C1   C2 
+## 0.55 0.45</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pt2</code></pre></div>
+<pre><code>##     
+##        D1   D2   D3
+##   C1 0.16 0.18 0.21
+##   C2 0.15 0.18 0.12</code></pre>
+</div>
+<div id="proportion-table-on-ftable-object" class="section level4">
+<h4><span class="header-section-number">3.2.5.2</span> Proportion Table on ‘ftable’ object</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pf3 =<span class="st"> </span><span class="kw">prop.table</span>( f3 )
+pf4 =<span class="st"> </span><span class="kw">prop.table</span>( f4 )
+pf3</code></pre></div>
+<pre><code>##          G1   G2
+##                 
+## C1 D1  0.10 0.06
+##    D2  0.07 0.11
+##    D3  0.11 0.10
+## C2 D1  0.07 0.08
+##    D2  0.09 0.09
+##    D3  0.04 0.08</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pf4</code></pre></div>
+<pre><code>##             T1   T2
+##                    
+## C1 D1 G1  0.04 0.06
+##       G2  0.03 0.03
+##    D2 G1  0.05 0.02
+##       G2  0.06 0.05
+##    D3 G1  0.04 0.07
+##       G2  0.06 0.04
+## C2 D1 G1  0.04 0.03
+##       G2  0.05 0.03
+##    D2 G1  0.05 0.04
+##       G2  0.05 0.04
+##    D3 G1  0.01 0.03
+##       G2  0.04 0.04</code></pre>
+</div>
+</div>
+<div id="adding-margin-info" class="section level3">
+<h3><span class="header-section-number">3.2.6</span> Adding Margin Info</h3>
+<div id="margin-info-on-table-object" class="section level4">
+<h4><span class="header-section-number">3.2.6.1</span> Margin Info on ‘table’ object</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( t2 )</code></pre></div>
+<pre><code>##      
+##        D1  D2  D3 Sum
+##   C1   16  18  21  55
+##   C2   15  18  12  45
+##   Sum  31  36  33 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( t3 )</code></pre></div>
+<pre><code>## , ,  = G1
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1   10   7  11  28
+##   C2    7   9   4  20
+##   Sum  17  16  15  48
+## 
+## , ,  = G2
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    6  11  10  27
+##   C2    8   9   8  25
+##   Sum  14  20  18  52
+## 
+## , ,  = Sum
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1   16  18  21  55
+##   C2   15  18  12  45
+##   Sum  31  36  33 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( t4 )</code></pre></div>
+<pre><code>## , ,  = G1,  = T1
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    4   5   4  13
+##   C2    4   5   1  10
+##   Sum   8  10   5  23
+## 
+## , ,  = G2,  = T1
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    3   6   6  15
+##   C2    5   5   4  14
+##   Sum   8  11  10  29
+## 
+## , ,  = Sum,  = T1
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    7  11  10  28
+##   C2    9  10   5  24
+##   Sum  16  21  15  52
+## 
+## , ,  = G1,  = T2
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    6   2   7  15
+##   C2    3   4   3  10
+##   Sum   9   6  10  25
+## 
+## , ,  = G2,  = T2
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    3   5   4  12
+##   C2    3   4   4  11
+##   Sum   6   9   8  23
+## 
+## , ,  = Sum,  = T2
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    9   7  11  27
+##   C2    6   8   7  21
+##   Sum  15  15  18  48
+## 
+## , ,  = G1,  = Sum
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1   10   7  11  28
+##   C2    7   9   4  20
+##   Sum  17  16  15  48
+## 
+## , ,  = G2,  = Sum
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1    6  11  10  27
+##   C2    8   9   8  25
+##   Sum  14  20  18  52
+## 
+## , ,  = Sum,  = Sum
+## 
+##      
+##        D1  D2  D3 Sum
+##   C1   16  18  21  55
+##   C2   15  18  12  45
+##   Sum  31  36  33 100</code></pre>
+</div>
+<div id="margin-info-on-ftable-object" class="section level4">
+<h4><span class="header-section-number">3.2.6.2</span> Margin Info on ‘ftable’ object</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( f3 )</code></pre></div>
+<pre><code>##           Sum
+##     10  6  16
+##      7 11  18
+##     11 10  21
+##      7  8  15
+##      9  9  18
+##      4  8  12
+## Sum 48 52 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( f4 )</code></pre></div>
+<pre><code>##           Sum
+##      4  6  10
+##      3  3   6
+##      5  2   7
+##      6  5  11
+##      4  7  11
+##      6  4  10
+##      4  3   7
+##      5  3   8
+##      5  4   9
+##      5  4   9
+##      1  3   4
+##      4  4   8
+## Sum 52 48 100</code></pre>
+</div>
+</div>
+<div id="proportion-table-with-margin" class="section level3">
+<h3><span class="header-section-number">3.2.7</span> Proportion Table with Margin</h3>
+<p>First to obtain the proportion table, then only add the margin.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( <span class="kw">prop.table</span>( t2 ))</code></pre></div>
+<pre><code>##      
+##         D1   D2   D3  Sum
+##   C1  0.16 0.18 0.21 0.55
+##   C2  0.15 0.18 0.12 0.45
+##   Sum 0.31 0.36 0.33 1.00</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( <span class="kw">prop.table</span>( t3 ))</code></pre></div>
+<pre><code>## , ,  = G1
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.10 0.07 0.11 0.28
+##   C2  0.07 0.09 0.04 0.20
+##   Sum 0.17 0.16 0.15 0.48
+## 
+## , ,  = G2
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.06 0.11 0.10 0.27
+##   C2  0.08 0.09 0.08 0.25
+##   Sum 0.14 0.20 0.18 0.52
+## 
+## , ,  = Sum
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.16 0.18 0.21 0.55
+##   C2  0.15 0.18 0.12 0.45
+##   Sum 0.31 0.36 0.33 1.00</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( <span class="kw">prop.table</span>( t4 ))</code></pre></div>
+<pre><code>## , ,  = G1,  = T1
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.04 0.05 0.04 0.13
+##   C2  0.04 0.05 0.01 0.10
+##   Sum 0.08 0.10 0.05 0.23
+## 
+## , ,  = G2,  = T1
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.03 0.06 0.06 0.15
+##   C2  0.05 0.05 0.04 0.14
+##   Sum 0.08 0.11 0.10 0.29
+## 
+## , ,  = Sum,  = T1
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.07 0.11 0.10 0.28
+##   C2  0.09 0.10 0.05 0.24
+##   Sum 0.16 0.21 0.15 0.52
+## 
+## , ,  = G1,  = T2
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.06 0.02 0.07 0.15
+##   C2  0.03 0.04 0.03 0.10
+##   Sum 0.09 0.06 0.10 0.25
+## 
+## , ,  = G2,  = T2
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.03 0.05 0.04 0.12
+##   C2  0.03 0.04 0.04 0.11
+##   Sum 0.06 0.09 0.08 0.23
+## 
+## , ,  = Sum,  = T2
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.09 0.07 0.11 0.27
+##   C2  0.06 0.08 0.07 0.21
+##   Sum 0.15 0.15 0.18 0.48
+## 
+## , ,  = G1,  = Sum
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.10 0.07 0.11 0.28
+##   C2  0.07 0.09 0.04 0.20
+##   Sum 0.17 0.16 0.15 0.48
+## 
+## , ,  = G2,  = Sum
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.06 0.11 0.10 0.27
+##   C2  0.08 0.09 0.08 0.25
+##   Sum 0.14 0.20 0.18 0.52
+## 
+## , ,  = Sum,  = Sum
+## 
+##      
+##         D1   D2   D3  Sum
+##   C1  0.16 0.18 0.21 0.55
+##   C2  0.15 0.18 0.12 0.45
+##   Sum 0.31 0.36 0.33 1.00</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( <span class="kw">prop.table</span>( f3 ))</code></pre></div>
+<pre><code>##                Sum
+##     0.10 0.06 0.16
+##     0.07 0.11 0.18
+##     0.11 0.10 0.21
+##     0.07 0.08 0.15
+##     0.09 0.09 0.18
+##     0.04 0.08 0.12
+## Sum 0.48 0.52 1.00</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">addmargins</span>( <span class="kw">prop.table</span>( f4 ))</code></pre></div>
+<pre><code>##                Sum
+##     0.04 0.06 0.10
+##     0.03 0.03 0.06
+##     0.05 0.02 0.07
+##     0.06 0.05 0.11
+##     0.04 0.07 0.11
+##     0.06 0.04 0.10
+##     0.04 0.03 0.07
+##     0.05 0.03 0.08
+##     0.05 0.04 0.09
+##     0.05 0.04 0.09
+##     0.01 0.03 0.04
+##     0.04 0.04 0.08
+## Sum 0.52 0.48 1.00</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="3-1-sample-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="3-3-data-aggregation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/04-data_summ.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -21,25 +21,27 @@
     + Choose attributes that that actions can be taken upon
     + A sohisticated cluster analysis can't compensate for a poor choice of variables  <br><br>
 
-2. **Scale Data**    
-      
-    **When NOT to scale **  
-    
-    If you have attributes with a well-defined meaning. Say, latitude and longitude, then you should not scale your data, because this will cause distortion.  
-   
-    **When To Scale **    
+2. **Scale Data**  
 
-    - If you have mixed numerica0l data, where each attribute is something entirely different (say, shoe size and weight), has different units attached (lb, tons, m, kg ...) then these values aren't really comparable anyway; z-standardizing them is a best-practise to give equal weight to them.    
-    - If variables vary in range, then the variable with the largest value will have the greatest impact on result. This is undesirable.  
-    - Therefore data must be scaled so that they can be compared fairly  
- 
-    **Methods of Scaling**    
-      
-    * Popular scaling methods are:  
+    **When NOT to scale **  
+
+    If you have attributes with a well-defined meaning. Say, latitude and longitude, then you should not scale your data, because this will cause distortion  
+
+    **When To Scale **  
+
+    + If you have mixed numerical data, where each attribute is something entirely different (say, shoe size and weight), has different units attached (lb, tons, m, kg ...) then these values aren't really comparable anyway; z-standardizing them is a best-practise to give equal weight to them  
+
+    + If variables vary in range, then the variable with the largest value will have the greatest impact on result. This is undesirable  
+
+    + Therefore data must be scaled so that they can be compared fairly  
+
+    **Methods of Scaling**  
+
+    Popular scaling methods are:  
       + Normalize to mean=0 and sd=1  
       + Divide by Max  
       + Minus min, divide by Min-Max range  <br><br>  
-  
+
 3. **Screen for Outliers**  
     + Outliers can distort results. Screen to remove them  <br><br>
     
@@ -48,7 +50,7 @@
     + Others are Manhattan, Canberra, Asymmetric Binary, Maximum and Minkowski also available  <br><br>
     
 5. **Chosoe a Clustering Alrorithm**
-    + 
+    
 
 6. **Try few Clustering Solutions**
 
@@ -77,7 +79,6 @@
 Sample data used in this chapter emulate two dimensional data points with three groups with clear grouping when visualize. 
 
 ```{r fig.width=9, fig.height=4, fig.show='asis'}
-set.seed(1234)
 set.seed(1234)
 my.df = data.frame(
   id = paste('ID_', 1:15, sep = ''),

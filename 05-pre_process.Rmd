@@ -1,28 +1,53 @@
----
-title: "031-pre_process"
-output: html_document
----
+# Data Preprocessing
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+## Handling Missing Data
+
+### Detecting Missing Data
+
+### Removing Missing Data
+
+
+## Scaling Data
+
+### Sample Data
+
+Scaling section will use sample data generated as below:  
+```{r}
+set.seed(1234)
+my.df = data.frame(
+  id = paste('ID_', 1:5, sep = ''),
+  value1 = sample(50:100, 5),
+  value2 = sample(10:50, 5),
+  stringsAsFactors = F
+)
+my.df
 ```
 
-## R Markdown
+### Z-Score Scaling
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+`scale` apply transformation **column-wise**, for  columns within matrix or dataframe  
+`scale` return a **matrix**  
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+>`scale (x, center=T, scale=T)`  # default S-Score transformation  
+>$\quad$ `center = T (default) means value minus with mean`  
+>$\quad$ `scale  = T (default) means value divide by sd`  
+>$\quad$ $\quad$ `output scaled:center --> mean`  
+>$\quad$ $\quad$ `output scaled:scale  --> sd`  
 
-```{r cars}
-summary(cars)
+```{r results='markdown'}
+scale( my.df[,2:3] )
+scale( my.df[,2:3], scale=F )
 ```
 
-## Including Plots
+### Min Max Scaling
 
-You can also embed plots, for example:
+Min-Max scaling will transform all numbers between 0 and 1.  
+Easiest way to perform this transformation is to write a function then `apply`.  
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+min_max = function(x){(x-min(x))/(max(x)-min(x))}
+apply( my.df[,2:3], MARGIN = 2, FUN = min_max )  ## 2 means column-wise
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+

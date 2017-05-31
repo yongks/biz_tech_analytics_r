@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-05-31">
+<meta name="date" content="2017-06-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -231,6 +231,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="8.8.2" data-path="8-8-k-mean-clustering.html"><a href="8-8-k-mean-clustering.html#run-the-code-2"><i class="fa fa-check"></i><b>8.8.2</b> Run The Code</a></li>
 <li class="chapter" data-level="8.8.3" data-path="8-8-k-mean-clustering.html"><a href="8-8-k-mean-clustering.html#visualizing-k-mean-cluster"><i class="fa fa-check"></i><b>8.8.3</b> Visualizing K-Mean Cluster</a></li>
 </ul></li>
+<li class="chapter" data-level="8.9" data-path="8-9-agreement-with-actual-group-data.html"><a href="8-9-agreement-with-actual-group-data.html"><i class="fa fa-check"></i><b>8.9</b> Agreement With Actual Group Data</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-classification.html"><a href="9-classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a><ul>
 <li class="chapter" data-level="9.1" data-path="9-1-introduction.html"><a href="9-1-introduction.html"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
@@ -273,11 +274,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>qplot default to <strong>geom_point</strong> when two numerical value is supplied for x and y</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-43-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-47-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-44-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-44-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-44-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-48-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-48-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-48-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data" class="section level3">
 <h3><span class="header-section-number">6.4.2</span> Two + One Dimension Data</h3>
@@ -287,11 +288,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>Note that <strong>fill has not effect</strong> on scatter plot. <strong>fill</strong> should only be used for bar like chart eg. <strong>geom_hist</strong> or <strong>gem_bar</strong></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-45-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-49-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">color =</span> grp, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">color =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-46-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-46-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-46-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-50-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-50-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-50-3.png" width="256.6656" /></p>
 </div>
 </div>
             </section>

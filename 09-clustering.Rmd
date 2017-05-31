@@ -101,7 +101,8 @@ plot(my.df$value1, my.df$value2)
     + Validating the cluster solution involves asking the question:
         + “Are these groupings in some sense real, and not a manifestation of unique aspects of this dataset or statistical technique?”   
         + If a different cluster method or different sample is employed, would the same clusters be obtained?  
-        + The fpc, clv, and clValid packages each contain functions for evaluating the stability of a clustering solution  
+        + If actual grouping data is known, run randIndex to measure the degree of agreement  
+        + The fpc, clv, and clValid packages each contain functions for evaluating the stability of a clustering solution (not discussed here)  
 
 ## Distance Algorithm
 
@@ -360,6 +361,7 @@ fviz_nbclust(nbc.hclust) + labs(subtitle='H-Cluster')
 fviz_nbclust(nbc.kmeans) + labs(subtitle='K-Means')
 ```
 
+
 ## Clustering Algorithm Compared
 
 |   | Description           | h-cluster                                     | k-means                                   |
@@ -578,3 +580,37 @@ library(factoextra)
 fviz_cluster( fit.kmeans, data = data.scaled, 
   geom = "point", stand = FALSE, ellipse.type = "norm")
 ```
+
+
+## Agreement With Actual Group Data
+
+The adjusted Rand index provides a measure of the agreement between two sets of grouping data, adjusted for chance. It ranges from -1 (no agreement) to 1 (perfect agreement).  
+
+```{r, results='markdown', collapse=TRUE}
+library('flexclust')
+```
+
+### Compare Cluster with Actual Data
+If we know the actual grouping data, we can then run this index analysis against the cluster grouping. 
+
+Construct a table of cluster groups and actual groups. Then run randIndex on it to reveal the agreement measure.  
+
+```{r collapse=TRUE}
+# cluster data generated using cutree()
+table(my.df$grp, clusters)  
+
+randIndex( table(my.df$grp, clusters) )
+```
+
+### Compare Two Clusters
+
+We can also compare cluster data from two different clusters, eg. clusters using different algorithm.  
+
+```{r collapse=TRUE}
+# cluster data generated using kmeans and factoextra::hcut()
+table(fit.kmeans$cluster, fit.hc$cluster)
+
+randIndex( table(fit.kmeans$cluster, fit.hc$cluster) )
+```
+
+It this case, both models give similar clustering result.  

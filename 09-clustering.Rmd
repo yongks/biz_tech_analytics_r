@@ -5,9 +5,26 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=9, fig.height=2.5, fig
 
 # Clustering Analysis
 
-- Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset. 
-- It reduce a large number of observations to a much smaller number of clusters or types.  
-- A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups. 
+- Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset  
+- It reduce a large number of observations to a much smaller number of clusters or types  
+- A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups  
+
+## Packages
+
+Below summarizes all packages, their functions and purposes used in this **Clustering Analysis** chapter.  
+
+|   | Package           | Function      | Purpose                                                                                                 |
+|---|-------------------|---------------|---------------------------------------------------------------------------------------------------------|
+| 1 | Base - R          | dist          | Calculate distance between data points with methods: euclidean, maximum, cenberra, minkowski, manhattan |
+|   |                   | scale         | Scale data (minus mean, div by SD)                                                                      |
+|   |                   | hclust        | Build hirerchical cluster model (no cutting)                                                            |
+|   |                   | kmeans        | Build k-means cluster model                                                                             |
+| 2 | factoextra        | fviz_nbclust  | Optimum number of cluster (K) visual analysis, methods: wss, silhoutte                                  |
+|   |                   | hcut          | Build hirerchical cluster model (with cutting)                                                          |
+|   |                   | fviz_dend     | Visualize h-cluster model in dendrogram graph  as ggplot object                                         |
+|   |                   | fviz_cluster  | Visualize data points with cluster grouping as ggplot object                                            |
+| 3 | NbClust           | NbClust       | 30 indices to analyze optimal number of cluster, K                                                      |
+| 4 | flexclust         | randIndex     | Agreement measure for two cluster results                                                               |
 
 ## Application
 - **Business** : researchers use cluster analysis for customer segmentation. Customers are arranged into clusters based on the similarity of their demographics and buying behaviours. Marketing campaings are then tailored to appeal to the groups.  

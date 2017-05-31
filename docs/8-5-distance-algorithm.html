@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-4-general-steps.html">
+<link rel="next" href="8-6-optimum-number-of-clusters-k.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,121 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
+<div id="distance-algorithm" class="section level2">
+<h2><span class="header-section-number">8.5</span> Distance Algorithm</h2>
+<p>The choice of an appropriate metric will influence the shape of the clusters, as some elements may be close to one another according to one distance and farther away according to another.</p>
+<p>For example, in a two dimensional data, the distance between the point (1,1) and the origin (0,0) can be 2 under <strong>Manhattan distance</strong>, <span class="math inline">\(\sqrt{2}\)</span> under <strong>Euclidean distance</strong>, or 1 under <strong>Maximum distance</strong>.</p>
+<p><strong><code>dist</code></strong> is used to measure distance for all <strong>numeric</strong> elements in dataframe or matrix. Supplying non-numeric columns for <code>dist</code> will incur warning.</p>
+<blockquote>
+<p><strong><code>dist</code></strong><code>( x, method = )   default method = 'euclidean'</code><br />
+<span class="math inline">\(\quad\)</span> <code>method = 'euclidean', &quot;maximum&quot;, &quot;manhattan&quot;, &quot;canberra&quot;, &quot;binary&quot; or &quot;minkowski&quot;</code></p>
+</blockquote>
+<div id="euclidean-distance" class="section level3">
+<h3><span class="header-section-number">8.5.1</span> Euclidean Distance</h3>
+<p><span class="math display">\[Euclidean-d(p,q) = \sqrt{\sum_{i=1}^n (p_i-q_i)^2} \quad,n = dimension\]</span></p>
 <ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
+<li>The Euclidean distance is a distance measure between two points or or vectors in a two- or multidimensional (Euclidean) space <strong>based on Pythagoras’ theorem</strong><br />
 </li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
-</li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<li>The distance is calculated by taking the square root of the sum of the squared pair-wise distances of every dimension</li>
+</ul>
+<p>Below command measures distance for numeric columns of <strong>all data points</strong> in my.df, using <strong>euclidean</strong> algorithmn.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.scaled =<span class="st"> </span><span class="kw">scale</span>(my.df[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])  <span class="co"># Z-Score scaling</span>
+d.euclidean =<span class="st"> </span><span class="kw">dist</span>( data.scaled )          <span class="co"># Euclidean distance</span>
+<span class="kw">round</span> (d.euclidean,<span class="dv">1</span>)</code></pre></div>
+<pre><code>##       ID_1 ID_2 ID_3 ID_4 ID_5 ID_6 ID_7 ID_8 ID_9 ID_10 ID_11 ID_12 ID_13
+## ID_2   0.6                                                                
+## ID_3   0.9  0.3                                                           
+## ID_4   0.6  0.8  1.0                                                      
+## ID_5   1.4  1.7  1.9  2.1                                                 
+## ID_6   2.0  2.3  2.5  2.6  0.6                                            
+## ID_7   1.7  2.1  2.4  2.4  0.5  0.4                                       
+## ID_8   1.7  2.1  2.4  2.4  0.5  0.4  0.0                                  
+## ID_9   2.1  2.5  2.7  2.7  0.8  0.4  0.4  0.4                             
+## ID_10  1.5  2.0  2.2  2.1  0.4  0.6  0.2  0.2  0.6                        
+## ID_11  2.5  2.3  2.3  3.0  1.7  1.8  2.1  2.1  2.2   2.1                  
+## ID_12  3.1  3.1  3.2  3.7  1.8  1.5  1.9  1.9  1.8   2.1   1.2            
+## ID_13  2.5  2.4  2.4  3.1  1.6  1.6  1.9  1.9  2.1   2.0   0.2   1.0      
+## ID_14  3.0  2.9  3.0  3.6  1.9  1.7  2.1  2.1  2.1   2.2   0.8   0.5   0.6
+## ID_15  2.9  2.7  2.7  3.5  2.1  2.1  2.4  2.4  2.5   2.5   0.4   1.1   0.5
+##       ID_14
+## ID_2       
+## ID_3       
+## ID_4       
+## ID_5       
+## ID_6       
+## ID_7       
+## ID_8       
+## ID_9       
+## ID_10      
+## ID_11      
+## ID_12      
+## ID_13      
+## ID_14      
+## ID_15   0.6</code></pre>
+</div>
+<div id="manhattan-distance" class="section level3">
+<h3><span class="header-section-number">8.5.2</span> Manhattan Distance</h3>
+<p><span class="math display">\[Manhattan - d(p,q) = \sum_{i=1}^n |p_i-q_i| \quad,n = dimension\]</span></p>
+<ul>
+<li>The Manhattan distance (sometimes also called <strong>Taxicab</strong> distance) metric is related to the Euclidean distance</li>
+<li>But instead of calculating the shortest diagonal path (“beeline”) between two points, it calculates the distance based on gridlines</li>
+</ul>
+<p>Below command measures distance for numeric columns of <strong>all data points</strong> in my.df, using <strong>manhattan</strong> algorithm.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.scaled =<span class="st"> </span><span class="kw">scale</span>(my.df[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])  <span class="co"># Z-Score scaling</span>
+d.manhattan =<span class="st"> </span><span class="kw">dist</span>( data.scaled, <span class="dt">method=</span><span class="st">&#39;manhattan&#39;</span>)
+<span class="kw">round</span> (d.manhattan, <span class="dv">1</span>)</code></pre></div>
+<pre><code>##       ID_1 ID_2 ID_3 ID_4 ID_5 ID_6 ID_7 ID_8 ID_9 ID_10 ID_11 ID_12 ID_13
+## ID_2   0.9                                                                
+## ID_3   1.2  0.4                                                           
+## ID_4   0.9  1.0  1.0                                                      
+## ID_5   1.8  1.7  2.1  2.7                                                 
+## ID_6   2.5  2.4  2.6  3.4  0.7                                            
+## ID_7   1.9  2.4  2.8  2.8  0.7  0.6                                       
+## ID_8   1.9  2.4  2.8  2.8  0.7  0.6  0.0                                  
+## ID_9   2.3  2.8  3.2  3.2  1.1  0.6  0.4  0.4                             
+## ID_10  1.6  2.3  2.7  2.5  0.6  0.9  0.3  0.3  0.7                        
+## ID_11  3.3  3.3  3.3  4.2  1.9  2.4  2.6  2.6  3.0   2.5                  
+## ID_12  4.3  4.2  4.2  5.2  2.5  1.8  2.4  2.4  2.0   2.7   1.3            
+## ID_13  3.4  3.4  3.4  4.3  1.6  2.1  2.3  2.3  2.7   2.2   0.3   1.1      
+## ID_14  4.2  4.1  4.1  5.1  2.4  1.7  2.3  2.3  2.3   2.6   0.9   0.7   0.8
+## ID_15  3.9  3.8  3.8  4.8  2.1  2.6  2.8  2.8  3.2   2.7   0.6   1.5   0.5
+##       ID_14
+## ID_2       
+## ID_3       
+## ID_4       
+## ID_5       
+## ID_6       
+## ID_7       
+## ID_8       
+## ID_9       
+## ID_10      
+## ID_11      
+## ID_12      
+## ID_13      
+## ID_14      
+## ID_15   0.9</code></pre>
+</div>
+<div id="maximum-distance" class="section level3">
+<h3><span class="header-section-number">8.5.3</span> Maximum Distance</h3>
+<p><span class="math display">\[d(x,y)= sup|x_j - y_j|, 1≤ j ≤ d\]</span></p>
+</div>
+<div id="canberra-distance" class="section level3">
+<h3><span class="header-section-number">8.5.4</span> Canberra Distance</h3>
+<p><span class="math display">\[\sum_{j=1}^{d}|x_j - y_j|) / (|x_j|+|y_j|)\]</span></p>
+</div>
+<div id="minkowski-distance" class="section level3">
+<h3><span class="header-section-number">8.5.5</span> Minkowski Distance</h3>
+<p>The Minkowski distance is a generalized form of the <strong>Euclidean distance</strong> (if m=2) and the <strong>Manhattan distance</strong> (if m=1).</p>
+<p><span class="math display">\[\left(\sum_{i=1}^n |p_i-q_i|^p\right)^{1/m}\]</span></p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-4-general-steps.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-6-optimum-number-of-clusters-k.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

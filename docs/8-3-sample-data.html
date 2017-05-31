@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-2-application.html">
+<link rel="next" href="8-4-general-steps.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,38 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
-<ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
-</li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
-</li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<div id="sample-data" class="section level2">
+<h2><span class="header-section-number">8.3</span> Sample Data</h2>
+<p>Sample data used in this chapter emulate two dimensional data points with three groups with clear grouping when visualize.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+my.df =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&#39;ID_&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">sep =</span> <span class="st">&#39;&#39;</span>),
+  <span class="dt">grp =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;G1&#39;</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">&#39;G2&#39;</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">&#39;G3&#39;</span>, <span class="dv">5</span>)),
+  <span class="dt">value1 =</span> <span class="kw">c</span>( <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">10</span>,  <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">3</span>))),
+  <span class="dt">value2 =</span> <span class="kw">c</span>( <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>))),
+  <span class="dt">stringsAsFactors =</span> F
+)
+<span class="kw">rownames</span>(my.df) =<span class="st"> </span>my.df[,<span class="dv">1</span>]
+<span class="kw">str</span>(my.df)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    15 obs. of  4 variables:
+##  $ id    : chr  &quot;ID_1&quot; &quot;ID_2&quot; &quot;ID_3&quot; &quot;ID_4&quot; ...
+##  $ grp   : chr  &quot;G1&quot; &quot;G1&quot; &quot;G1&quot; &quot;G1&quot; ...
+##  $ value1: num  6 11 13 3 11 12 8 8 8 7 ...
+##  $ value2: num  10 8 7 7 17 20 19 19 21 18 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-1-1.png" width="864" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-2-application.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-4-general-steps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

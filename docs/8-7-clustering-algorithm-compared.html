@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-6-optimum-number-of-clusters-k.html">
+<link rel="next" href="8-8-hierarchical-clustering.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,76 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
-<ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
-</li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
-</li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<div id="clustering-algorithm-compared" class="section level2">
+<h2><span class="header-section-number">8.7</span> Clustering Algorithm Compared</h2>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="20%" />
+<col width="40%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Description</th>
+<th align="left">h-cluster</th>
+<th align="left">k-means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td align="left">Computation Time</td>
+<td align="left">Fast. Linear to number of observation</td>
+<td align="left">Slow: Quadradric to number of observation</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td align="left">Initial K needed</td>
+<td align="left">No</td>
+<td align="left">Yes</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td align="left">Fine Tuning</td>
+<td align="left">Experiment with different method of Linkage</td>
+<td align="left">Experiment with different K centroids</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td align="left">Perform Well in</td>
+<td align="left">Hierachical Nature Data Set</td>
+<td align="left">Spherical Data Points</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td align="left">Perform Bad in</td>
+<td align="left">Large data sets</td>
+<td align="left">U-Shape, Outliers</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td align="left">Unique Advantages</td>
+<td align="left">Good for hirechical discovery</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td align="left">R Library</td>
+<td align="left">Base R, factoextra</td>
+<td align="left">Base R</td>
+</tr>
+</tbody>
+</table>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-6-optimum-number-of-clusters-k.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-8-hierarchical-clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

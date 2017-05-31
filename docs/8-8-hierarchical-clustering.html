@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-7-clustering-algorithm-compared.html">
+<link rel="next" href="8-9-k-mean-clustering.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,126 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
+<div id="hierarchical-clustering" class="section level2">
+<h2><span class="header-section-number">8.8</span> Hierarchical Clustering</h2>
 <ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
+<li>Hierarchical clustering is a widely used data analysis tool<br />
 </li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
+<li>The idea is to build a binary tree of the data that successively merges similar groups of points<br />
 </li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<li>Number of clusters (K) is required as import<br />
+</li>
+<li>It is an unsupervised learning</li>
+</ul>
+<div id="clustering-algorithm" class="section level3">
+<h3><span class="header-section-number">8.8.1</span> Clustering Algorithm</h3>
+<p>This is how Hierarchical Clustering works:<br />
+1. Initially, put each data point in <strong>its own cluster</strong><br />
+2. <strong>Calucate the distances</strong> between each cluster and all other clusters (inter-cluster distance)<br />
+3. <strong>Combine the two clusters</strong> with the smallest distance - This reduce cluster number by one<br />
+4. Repeat step (2) and (3) until all clusters have been <strong>merged into single cluster</strong> <br></p>
+</div>
+<div id="inter-cluster-distance-method" class="section level3">
+<h3><span class="header-section-number">8.8.2</span> Inter Cluster Distance Method</h3>
+<p>Once distance for all data points has been measured, decide which of the five (5) methods below to measure distance between clusters:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Single Linkage</strong>:<br />
+Shortest distance among all data points betweentwo clusters<br />
+</li>
+<li><strong>Complete Linkage (common)</strong>:<br />
+Longest distance among all data points between two clusters<br />
+</li>
+<li><strong>Average Linkage (common)</strong>:<br />
+Average distance of all points between two clusters</li>
+<li><strong>Centroid</strong>:<br />
+Find the centroid of each cluster and calculate the distance between centroids between two clusters</li>
+</ol>
+<p>Please note that the <strong>Inter Cluster Distance Method</strong> above uses <strong>Distance Algorithmn</strong> such as ‘euclidean’, “maximum”, “manhattan”, “canberra”, “binary” or “minkowski” to calculate actual distance value.</p>
+</div>
+<div id="run-the-code-1" class="section level3">
+<h3><span class="header-section-number">8.8.3</span> Run The Code</h3>
+<p>Generally, step (A), (B) and (C) are followed for H-clustering analysis.</p>
+<p><strong>A. Before running H-Clustering</strong></p>
+<ol style="list-style-type: decimal">
+<li>Fiter Data (choose only numeric columns)<br />
+</li>
+<li>Scale Data (if required)<br />
+</li>
+<li>Calculate distance, using</li>
+</ol>
+<p><strong>B. Performing H-Clustering</strong></p>
+<ol style="list-style-type: decimal">
+<li>Build H-Cluster model, require input of <strong>inter-cluster distance method</strong><br />
+</li>
+<li>Derive cluster by **cutting* into K number of clusters</li>
+</ol>
+<p><strong>C. Visualize</strong></p>
+<ol style="list-style-type: decimal">
+<li>Display frequency, number of observations for each cluster group<br />
+</li>
+<li>Plot dendrogram, superimpose cluster group into the plot</li>
+</ol>
+<div id="using-base-r-utilities" class="section level4">
+<h4><span class="header-section-number">8.8.3.1</span> Using Base-R Utilities</h4>
+<blockquote>
+<p><strong><code>hclust (d, method ='complete')</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>d      = distance calculated using dist()</code><br />
+<span class="math inline">\(\quad\)</span> <code>method = 'single', 'complete', 'average', 'centroid' as cluster distance method</code></p>
+</blockquote>
+<p><strong>Filter, Scale, Calculate Distance</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.scaled =<span class="st"> </span><span class="kw">scale</span>(my.df[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])   <span class="co"># scale data</span>
+d.euclidean =<span class="st"> </span><span class="kw">dist</span>( data.scaled )  <span class="co"># calculate distance</span></code></pre></div>
+<p><strong>Build H-Cluster Model, Cutting into clusters</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.average  =<span class="st"> </span><span class="kw">hclust</span> (d.euclidean, <span class="dt">method=</span><span class="st">&#39;average&#39;</span>)  <span class="co"># build the model</span>
+clusters =<span class="st"> </span><span class="kw">cutree</span> (fit.average, <span class="dt">k=</span><span class="dv">3</span>)                   <span class="co"># derive the clusters</span>
+clusters
+##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 
+##     1     1     1     1     2     2     2     2     2     2     3     3 
+## ID_13 ID_14 ID_15 
+##     3     3     3</code></pre></div>
+<p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
+<span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
+<span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-18-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-18-2.png" width="384" /></p>
+</div>
+<div id="using-factoextra-package" class="section level4">
+<h4><span class="header-section-number">8.8.3.2</span> Using <code>factoextra</code> Package</h4>
+<p><code>factoextra</code> provides single function <code>hcut</code> to <strong>scale</strong>, <strong>calcuate distance</strong> and <strong>cutting</strong> into cluster groups. Which is <strong>handy</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;factoextra&quot;</span>)</code></pre></div>
+<blockquote>
+<p><code>hcut(x, k = 2, hc_method = &quot;ward.D2&quot;, hc_metric = &quot;euclidean&quot;, stand = FALSE, graph = FALSE)</code><br />
+<span class="math inline">\(\quad\)</span> <code>x         = matrix or dataframe</code><br />
+<span class="math inline">\(\quad\)</span> <code>k         = number of clusters to cut</code><br />
+<span class="math inline">\(\quad\)</span> <code>hc_method = inter-cluster distance method: ward.D, ward.D2, single, complete, average</code><br />
+<span class="math inline">\(\quad\)</span> <code>hc_metric = distance calc method: euclidean, manhattan, maximum, canberra, binary, &quot;minkowski</code><br />
+<span class="math inline">\(\quad\)</span> <code>stand     = TRUE: scale x with z-score, FALSE: not to scale x</code></p>
+</blockquote>
+<p><code>hcut</code> output below useful values (not all displayed):</p>
+<blockquote>
+<p><span class="math inline">\(\quad\)</span> <code>data    = original data (if stand=FALSE), scaled data (if stand=TRUE)</code><br />
+<span class="math inline">\(\quad\)</span> <code>nbclust = number of clusters</code><br />
+<span class="math inline">\(\quad\)</span> <code>cluster = cluster group number assigned for each observation</code><br />
+<span class="math inline">\(\quad\)</span> <code>size    = frequency vector, number of observations for each cluster</code><br />
+<span class="math inline">\(\quad\)</span> <code>method  = inter-cluster distance method applied</code><br />
+<span class="math inline">\(\quad\)</span> <code>dist.method  = distance method applied</code></p>
+</blockquote>
+<p><strong>Filter, Scale, Calculate Distance, Build H-Cluster Model, Cutting into Clusters</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.hc =<span class="st"> </span><span class="kw">hcut</span>(my.df[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">hc_method=</span><span class="st">&#39;average&#39;</span>, <span class="dt">hc_metric=</span><span class="st">&#39;euclidean&#39;</span>, <span class="dt">stand =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
+<span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-22-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-22-2.png" width="384" /></p>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-7-clustering-algorithm-compared.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-9-k-mean-clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

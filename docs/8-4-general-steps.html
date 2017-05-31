@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-3-sample-data.html">
+<link rel="next" href="8-5-distance-algorithm.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,88 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
+<div id="general-steps" class="section level2">
+<h2><span class="header-section-number">8.4</span> General Steps</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Choose appropriate attributes</strong>
 <ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
+<li>This is the most important steps.</li>
+<li>Choose attributes that that actions can be taken upon</li>
+<li>A sohisticated cluster analysis can’t compensate for a poor choice of variables <br><br></li>
+</ul></li>
+<li><p><strong>Scale Data</strong></p>
+<p><strong>When NOT to scale </strong></p>
+<p>If you have attributes with a well-defined meaning. Say, latitude and longitude, then you should not scale your data, because this will cause distortion</p>
+<p><strong>When To Scale </strong></p>
+<ul>
+<li><p>If you have mixed numerical data, where each attribute is something entirely different (say, shoe size and weight), has different units attached (lb, tons, m, kg …) then these values aren’t really comparable anyway; z-standardizing them is a best-practise to give equal weight to them</p></li>
+<li><p>If variables vary in range, then the variable with the largest value will have the greatest impact on result. This is undesirable</p></li>
+<li><p>Therefore data must be scaled so that they can be compared fairly</p></li>
+</ul>
+<p><strong>Methods of Scaling</strong></p>
+Popular scaling methods are:
+<ul>
+<li>Normalize to mean=0 and sd=1<br />
 </li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
+<li>Divide by Max<br />
 </li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<li>Minus min, divide by Min-Max range <br><br></li>
+</ul></li>
+<li><strong>Screen for Outliers</strong>
+<ul>
+<li>Outliers can distort results. Screen to remove them <br><br></li>
+</ul></li>
+<li><strong>Calculate Data Point Distances</strong>
+<ul>
+<li>Popular measure of distance between two data point is Euclidean distance</li>
+<li>Others are Manhattan, Canberra, Asymmetric Binary, Maximum and Minkowski also available <br><br></li>
+</ul></li>
+<li><p><strong>Chosoe a Clustering Alrorithm, and Inter-Custer Distance Method</strong></p></li>
+<li><p><strong>Try few Clustering Solutions</strong></p>
+<ul>
+<li>Decide the best clustering algorithm, cluster distance method and <strong>number of cluster, K</strong><br />
+</li>
+<li>Use <code>NbClus</code> as a tool to guide choosing K (number of cluster)</li>
+</ul></li>
+<li><strong>Visualize the result</strong>
+<ul>
+<li>Visualization can help you determine the meaning and usefulness of the cluster solution<br />
+</li>
+<li><strong>Hierarchical</strong> clustering are usually presented as a dendrogram<br />
+</li>
+<li><strong>Partitioning</strong> results are typically visualized using a bivariate cluster plot <br><br></li>
+</ul></li>
+<li><strong>Intepret the Cluster</strong>
+<ul>
+<li>Once a cluster solution has been obtained, you must interpret (and possibly name) the clusters</li>
+<li>What do the observations in a cluster have in common?</li>
+<li>How do they differ from the observations in other clusters?</li>
+<li>This step is typically accomplished by obtaining summary statistics for each variable by cluster</li>
+<li>For continuous data, the mean or median for each variable within each cluster is calculated.</li>
+<li>For mixed data (data that contain categorical variables), the summary statistics will also include modes or category distributions <br><br></li>
+</ul></li>
+<li><strong>Validate Result</strong>
+<ul>
+<li>Validating the cluster solution involves asking the question:
+<ul>
+<li>“Are these groupings in some sense real, and not a manifestation of unique aspects of this dataset or statistical technique?”<br />
+</li>
+<li>If a different cluster method or different sample is employed, would the same clusters be obtained?<br />
+</li>
+<li>If actual grouping data is known, run randIndex to measure the degree of agreement<br />
+</li>
+<li>The fpc, clv, and clValid packages each contain functions for evaluating the stability of a clustering solution (not discussed here)</li>
+</ul></li>
+</ul></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-3-sample-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-5-distance-algorithm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

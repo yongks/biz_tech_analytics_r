@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-8-hierarchical-clustering.html">
+<link rel="next" href="8-10-agreement-with-actual-group-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,95 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
+<div id="k-mean-clustering" class="section level2">
+<h2><span class="header-section-number">8.9</span> K-Mean Clustering</h2>
 <ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
+<li><strong>K-mean</strong> is the <strong>most common partitioning</strong> clustering algorithm<br />
 </li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
+<li>Partitioning means data points need to be initally partioned into few clusters to start the process with<br />
 </li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<li>The other partitioning clustering method is <strong>Medoids</strong></li>
+</ul>
+<div id="clustering-algorithm-1" class="section level3">
+<h3><span class="header-section-number">8.9.1</span> Clustering Algorithm</h3>
+<ol style="list-style-type: decimal">
+<li><p><strong>Define K number of centroids (data points)</strong></p></li>
+<li><p><strong>Cluster Assignment</strong><br />
+Each observation is assigned to the nearest centroid, using <strong>euclidean</strong> distance</p></li>
+<li><p><strong>Update Centroids</strong><br />
+After all observations had been assigned to the centroids, a new centroids is calculated</p></li>
+<li><p><strong>Repeat step (2) - (3) until convergence</strong><br />
+Convergence means none of the observations changed cluster membership</p></li>
+</ol>
+</div>
+<div id="run-the-code-2" class="section level3">
+<h3><span class="header-section-number">8.9.2</span> Run The Code</h3>
+<p>Generally, step (A), (B) and (C) are followed for H-clustering analysis.</p>
+<p><strong>A. Before running H-Clustering</strong></p>
+<ol style="list-style-type: decimal">
+<li>Fiter Data (choose only numeric columns)<br />
+</li>
+<li>Scale Data (if required)</li>
+</ol>
+<p><strong>B. Performing H-Clustering</strong></p>
+<ol style="list-style-type: decimal">
+<li>Build K-Means Cluster model, require input
+<ul>
+<li>Number of initial centers (clusters K)</li>
+<li>K-Means Algorithmn</li>
+<li>Number of tries to seed random centers, before choosing the best model</li>
+</ul></li>
+</ol>
+<p><strong>C. Visualize</strong></p>
+<ol style="list-style-type: decimal">
+<li>Display frequency, number of observations for each cluster group<br />
+</li>
+<li>Plot graph, superimpose cluster group into the plot</li>
+</ol>
+<div id="section" class="section level4">
+<h4><span class="header-section-number">8.9.2.1</span> </h4>
+<blockquote>
+<p><strong><code>kmeans( x, centers, nstart=1, algorithmn='Hartiga-Wong' )</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>x = matrix or dataframe</code><br />
+<span class="math inline">\(\quad\)</span> <code>centers   = number of centroids</code><br />
+<span class="math inline">\(\quad\)</span> <code>nstart    = how many times to randomly try seeding centroids</code><br />
+<span class="math inline">\(\quad\)</span> <code>algorithm = &quot;Hartigan-Wong&quot;-default, &quot;Lloyd&quot;, &quot;Forgy&quot;, &quot;MacQueen&quot;</code></p>
+</blockquote>
+<p><strong>nstart=25</strong> is a good number to use. <code>kmeans</code> output below useful values:</p>
+<blockquote>
+<p><strong><code>cluster</code></strong> <code>: cluster number for all observations</code><br />
+<strong><code>centers</code></strong> <code>: Centre values (of each dimensions) for each cluster</code><br />
+<strong><code>withinss</code></strong> <code>: Total Sum of Squares Within For Each Cluster</code><br />
+<strong><code>size</code></strong> <code>: Number of observations for each cluster number</code></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans =<span class="st"> </span><span class="kw">kmeans</span>(data.scaled, <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">25</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans<span class="op">$</span>cluster
+##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 
+##     3     3     3     3     1     1     1     1     1     1     2     2 
+## ID_13 ID_14 ID_15 
+##     2     2     2</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans<span class="op">$</span>withinss
+## [1] 0.5512567 1.1226046 0.7940430</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans<span class="op">$</span>size
+## [1] 6 5 4</code></pre></div>
+</div>
+</div>
+<div id="visualizing-k-mean-cluster" class="section level3">
+<h3><span class="header-section-number">8.9.3</span> Visualizing K-Mean Cluster</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(factoextra)
+
+<span class="kw">fviz_cluster</span>( fit.kmeans, <span class="dt">data =</span> data.scaled, 
+  <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">stand =</span> <span class="ot">FALSE</span>, <span class="dt">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-27-1.png" width="864" /></p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-8-hierarchical-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-10-agreement-with-actual-group-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

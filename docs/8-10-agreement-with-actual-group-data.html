@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="7-statistics.html">
-<link rel="next" href="8-1-packages.html">
+<link rel="prev" href="8-9-k-mean-clustering.html">
+<link rel="next" href="9-classification.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,23 +163,52 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="clustering-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Clustering Analysis</h1>
-<ul>
-<li>Cluster analysis is a data-reduction technique designed to uncover subgroups of observations within a dataset<br />
-</li>
-<li>It reduce a large number of observations to a much smaller number of clusters or types<br />
-</li>
-<li>A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups</li>
-</ul> 
+<div id="agreement-with-actual-group-data" class="section level2">
+<h2><span class="header-section-number">8.10</span> Agreement With Actual Group Data</h2>
+<p>The adjusted Rand index provides a measure of the agreement between two sets of grouping data, adjusted for chance. It ranges from -1 (no agreement) to 1 (perfect agreement).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;flexclust&#39;</span>)</code></pre></div>
+<div id="compare-cluster-with-actual-data" class="section level3">
+<h3><span class="header-section-number">8.10.1</span> Compare Cluster with Actual Data</h3>
+<p>If we know the actual grouping data, we can then run this index analysis against the cluster grouping.</p>
+<p>Construct a table of cluster groups and actual groups. Then run randIndex on it to reveal the agreement measure.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cluster data generated using cutree()</span>
+<span class="kw">table</span>(my.df<span class="op">$</span>grp, clusters)  
+##     clusters
+##      1 2 3
+##   G1 4 1 0
+##   G2 0 5 0
+##   G3 0 0 5
+
+<span class="kw">randIndex</span>( <span class="kw">table</span>(my.df<span class="op">$</span>grp, clusters) )
+##       ARI 
+## 0.7920792</code></pre></div>
 </div>
+<div id="compare-two-clusters" class="section level3">
+<h3><span class="header-section-number">8.10.2</span> Compare Two Clusters</h3>
+<p>We can also compare cluster data from two different clusters, eg. clusters using different algorithm.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># cluster data generated using kmeans and factoextra::hcut()</span>
+<span class="kw">table</span>(fit.kmeans<span class="op">$</span>cluster, fit.hc<span class="op">$</span>cluster)
+##    
+##     1 2 3
+##   1 0 6 0
+##   2 0 0 5
+##   3 4 0 0
+
+<span class="kw">randIndex</span>( <span class="kw">table</span>(fit.kmeans<span class="op">$</span>cluster, fit.hc<span class="op">$</span>cluster) )
+## ARI 
+##   1</code></pre></div>
+<p>It this case, both models give similar clustering result.</p>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="7-statistics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="8-1-packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="8-9-k-mean-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="9-classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

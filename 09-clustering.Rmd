@@ -1,4 +1,4 @@
-```{r 09-init}
+```{r 09-init, echo=FALSE}
 ## global chunk option ##
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=9, fig.height=2.5, fig.show='hold') 
 ```
@@ -17,6 +17,28 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=9, fig.height=2.5, fig
 - **Medical**: researchers use cluster analysis to help catalog gene-expression patterns obtained from DNA microarray data. This can help them to understand normal growth and development and the underlying causes of many human diseases
 
 - **Information Retrieval**: The world wide web consists of billions of Web pages, and the results of a query to a search engine can return thousands of pages. Clustering can be used to group these search results into a small number of clusters, each of which captures a particular aspect of the query. For example, a query of "movie" might return Web pages grouped into categories such as reviews, trailers, starts and theaters. Each category (Cluster) can be bnorken into subcategories (sub-clusters), producing a hierachical structure that further assists a user's exploration of the query results.
+
+## Sample Data
+
+Sample data used in this chapter emulate two dimensional data points with three groups with clear grouping when visualize. 
+
+```{r fig.width=9, fig.height=4, fig.show='asis'}
+set.seed(1234)
+my.df = data.frame(
+  id = paste('ID_', 1:15, sep = ''),
+  grp = c(rep('G1', 5), rep('G2', 5), rep('G3', 5)),
+  value1 = c( round(rnorm(5, mean = 10,  sd = 3)),
+              round(rnorm(5, mean = 10, sd = 3)),
+              round(rnorm(5, mean = 30, sd = 3))),
+  value2 = c( round(rnorm(5, mean = 10, sd = 3)),
+              round(rnorm(5, mean = 20, sd = 3)),
+              round(rnorm(5, mean = 20, sd = 3))),
+  stringsAsFactors = F
+)
+rownames(my.df) = my.df[,1]
+str(my.df)
+plot(my.df$value1, my.df$value2)
+```
 
 
 ## General Steps
@@ -81,29 +103,6 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=9, fig.height=2.5, fig
         + If a different cluster method or different sample is employed, would the same clusters be obtained?  
         + The fpc, clv, and clValid packages each contain functions for evaluating the stability of a clustering solution  
 
-
-## Sample Data
-
-Sample data used in this chapter emulate two dimensional data points with three groups with clear grouping when visualize. 
-
-```{r fig.width=9, fig.height=4, fig.show='asis'}
-set.seed(1234)
-my.df = data.frame(
-  id = paste('ID_', 1:15, sep = ''),
-  grp = c(rep('G1', 5), rep('G2', 5), rep('G3', 5)),
-  value1 = c( round(rnorm(5, mean = 10,  sd = 3)),
-              round(rnorm(5, mean = 10, sd = 3)),
-              round(rnorm(5, mean = 30, sd = 3))),
-  value2 = c( round(rnorm(5, mean = 10, sd = 3)),
-              round(rnorm(5, mean = 20, sd = 3)),
-              round(rnorm(5, mean = 20, sd = 3))),
-  stringsAsFactors = F
-)
-rownames(my.df) = my.df[,1]
-str(my.df)
-plot(my.df$value1, my.df$value2)
-```
-
 ## Distance Algorithm
 
 The choice of an appropriate metric will influence the shape of the clusters, as some elements may be close to one another according to one distance and farther away according to another. 
@@ -126,12 +125,12 @@ Below command measures distance for  numeric columns of **all data points** in m
 
 ```{r}
 data.scaled = scale(my.df[,3:4])  # Z-Score scaling
-d1 = dist( data.scaled )          # Euclidean distance
-round (d1,1)
+d.euclidean = dist( data.scaled )          # Euclidean distance
+round (d.euclidean,1)
 ```
     
 
-### Manhattan Distance (n dimension)
+### Manhattan Distance
 
 $$Manhattan - d(p,q) = \sum_{i=1}^n |p_i-q_i| \quad,n = dimension$$  
 
@@ -142,11 +141,440 @@ Below command measures distance for  numeric columns of **all data points** in m
 
 ```{r}
 data.scaled = scale(my.df[,3:4])  # Z-Score scaling
-d2 = dist( data.scaled, method='manhattan')
-round (d2, 1)
+d.manhattan = dist( data.scaled, method='manhattan')
+round (d.manhattan, 1)
 ```
+
+### Maximum Distance
+
+$$d(x,y)= sup|x_j - y_j|, 1≤ j ≤ d$$
+
+### Canberra Distance
+
+$$\sum_{j=1}^{d}|x_j - y_j|) / (|x_j|+|y_j|)$$
+
+
+
+### Minkowski Distance
+
+The Minkowski distance is a generalized form of the **Euclidean distance** (if m=2) and the **Manhattan distance** (if m=1).  
+
+$$\left(\sum_{i=1}^n |p_i-q_i|^p\right)^{1/m}$$
+
+
+## Optimum Number of Clusters (K)  
+
+There are three (3) popular methods for determining the optimal number of clusters.  
+
+1. Elbow Method
+    Applicable for partioning clustering, such as k-means
     
+2. Average Silhoutte Method  
 
 
+3. Gap Statistics  (not discussed here)
 
 
+There is no guarantee that they will agree with each other. In fact, they probably won’t. However, use this as a guidine and test few highest criteria score to determinee final number of cluster.  
+
+### Elbow Method 
+
+#### Elbow Concept
+
+The objective of partitioning clustering (such as K-Mean) is to define clusters such that the total intra-cluster variation (known as total within-cluster variation or total within-cluster sum of square, wss) is minimized.
+
+#### Elbow Algorithm
+
+1. Run K-mean clustering algorithm for K=1 to n  
+2. For each K, calculate the within-cluster-sum-of-square (wss)  
+3. Plot the curve of wss against the number of clusters K  
+4. The location of bend (knee) in the plot is generally considered as the indicator of the appropriate number of clusters  
+
+When the WSS value stop decreasing significantly (at the knee), then the number of clusters probably had reached its optimum. Although this approach is heuristic, it still provide a good guideline for K selection.  
+
+#### Elbow Codes (for K-mean) - Do It Yourself!
+
+The method presented here does not require any external library !  However, it requires writing a funciton to calculate WSS and plot the results.  
+
+**Define the The Algorithmn**  
+
+```{r}
+# Algorithmn: Compute k-means and plot wss for k=2 to k=15
+wssplot = function(data, nc=15, seed=1234){
+            wss <- (nrow(data)-1)*sum(apply(data,2,var))
+            for (i in 2:nc) {
+              set.seed(seed)
+              wss[i] <- sum(kmeans(data, centers=i)$withinss)
+            }
+            plot(1:nc, wss, type="b", 
+                xlab="Number of Clusters (K)",
+                ylab="Total Within Groups Sum of Squares")
+            wss
+}
+```
+
+**Run The Code**  
+
+If number of observations <=nc(default 15), specify smaller nc.  
+
+```{r, collapse=TRUE, fig.height=4, fig.show='hold'}
+wssplot(data.scaled, nc=8)
+abline(v=3, lty=2)     # mark the optimum K after facts 
+```
+
+The wssplot above indicates that there is a **distinct drop** in the within-groups sum of squares when moving **from 1 to 3 clusters**. After three clusters, this **decrease drops off**, suggestign that a three-cluster solution may be a good fit to the data.  
+
+#### Elbow Codes - using `factoextra::fviz_nbclust,hcut`
+
++ `factoextra` combined functions to calculate 'silhoutte' and output `ggplot` object  
++ For k-mean wss analysis, `kmeans` helper function from base-R is required  
++ For pam wss analysis, `cluster:pam` helper function is required  
++ For h-cluster wss analysis, `hcut` helper function by its own library is used. Somehow base-R `hclust` is not supproted  
+
+```{r, echo=FALSE}
+par(mfrow=c(1,3))
+```
+
+```{r, fig.height=4, fig.width=2.65, fig.show='hold'}
+library(factoextra)
+library(cluster)
+
+fviz_nbclust(data.scaled, kmeans, method = "wss") + labs(subtitle='kmeans')
+fviz_nbclust(data.scaled, pam,    method = "wss") + labs(subtitle='pam')
+fviz_nbclust(data.scaled, hcut,   method = "wss") + labs(subtitle='hcut') +
+  geom_vline(xintercept = 3, linetype = 2)
+```
+
+### Average Silhoutte Method
+
+#### Average Silhoutte Concept
+
+Average silhouette method computes the average silhouette of observations for different values of k. The **optimal number** of clusters k is the one that **maximize the average silhouette** over a range of possible values for k (Kaufman and Rousseeuw [1990]).
+
+Silhouette analysis can be used to study the **separation distance between the resulting clusters**. The silhouette plot displays a measure of how close each point in one cluster is to points in the neighboring clusters and thus provides a way to assess parameters like number of clusters visually. This measure has a range of [-1, 1].
+
+Silhouette coefficients (as these values are referred to as) **near +1 indicate that the sample is far away from the neighboring clusters**. A value of 0 indicates that the sample is on or very close to the decision boundary between two neighboring clusters and negative values indicate that those samples might have been assigned to the wrong cluster.
+
+#### Average Silhoutte Algorithm
+
+1. Compute clustering algorithm (e.g., k-means clustering) for different values of k  
+2. For each k, calculate the average silhouette of observations (avg.sil)  
+3. Plot the curve of avg.sil according to the number of clusters k  
+4. The location of the maximum is considered as the appropriate number of clusters  
+
+#### Average Silhoutte Code - `factoextra:fviz_nbclust`
+
+Example code below shows silhoute analysis for kmeans, pam and h-cluster:  
+
++ `factoextra` combined functions to calculate 'silhoutte' and output ggplot object   
++ For k-mean silhoutte analysis, `kmeans` helper function from base-R is required  
++ For pam silhoutte analysis, `cluster:pam` helper function is required  
++ For h-cluster silhoutte analysis, `hcut` helper function by its own library is used. Somehow base-R `hclust` is not supproted  
+
+```{r, echo=FALSE}
+par(mfrow=c(1,3))
+```
+
+```{r, fig.height=4, fig.width=2.65, fig.show='hold'}
+library(factoextra)
+library(cluster)
+
+fviz_nbclust(data.scaled, kmeans, method = "silhouette") + labs(subtitle='kmeans')
+fviz_nbclust(data.scaled, pam,    method = "silhouette") + labs(subtitle='pam')
+fviz_nbclust(data.scaled, hcut,   method = "silhouette") + labs(subtitle='hcut')
+```
+
+### NbClust Package (with 30 Indices)
+
+`NbClust` package offers numerous 26 indices for determining the best number of clusters in a cluster analysis.  
+
+```{r}
+library('NbClust')
+```
+
++ Multiple indices are computed  **simultaneously** - a clear advantage  
++ Paramter `index='all'` will utilize all indices to evaluate the optimum number of clusters   
++ `Nbclust` returns a list that contains all evaluation statistic based on the indices used  
++ Results of the evaluation is stored in `Best.nc` vector  
++ Using `table` and `barplot` is best way to visualize the result of best K  
+
+**Supported Indices are**  
+
++ kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw  
++ **'all'** (all indices except GAP, Gamma, Gplus and Tau)  
++ 'alllong' (all indices with Gap, Gamma, Gplus and Tau included)  
+ 
+> **`NbClust( data=, diss=NULL, distance='euclidean', min.nc=2, max.nc=15,`**  
+> **`method=NULL, index='all', alphaBeale=0.1)`**  
+> $\quad$ `data = matrix or dataframe`  
+> $\quad$ `diss = dissimilarity matrix, if not NULL, then distance should be NULL`  
+> $\quad$ `distance = "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski" or "NULL"`  
+> $\quad$ `min.nc = minimum number of clusters`  
+> $\quad$ `max.nc = maximum number of clusters`  
+> $\quad$ `method = "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid", "kmeans"`  
+> $\quad$ `index = 'all' to use all indices for evaluation`  
+
+`NbClust` **output** an object with below values:  
+
+> **`Best.nc`** `: Best number of clusters proposed by each index and the corresponding index value`  
+> **`Best.partition`**` : vector of cluster group for every observation`   
+
+#### Run The Code
+
+Run `NbClust` for `average (h-clustering)` and `kmeans` method.  
+
+```{r, warning=FALSE, results='hide', fig.show='hide', collapse=TRUE}
+nbc.hclust = NbClust(data.scaled, distance="euclidean", min.nc=2, max.nc=8, method="average")
+nbc.kmeans = NbClust(data.scaled,                       min.nc=2, max.nc=8, method="kmeans")
+```
+
+#### Visualize The Result
+
+**Visualize using  Base-R**  
+
+As output `Best.nc[1,]` shows, majority indices favor three (3) clusters.  
+
+```{r, echo=FALSE}
+par(mfrow=c(1,2))
+```
+
+```{r, warning=FALSE, fig.height=3.5, fig.width=4, collapse=TRUE}
+table( nbc.hclust$Best.n[1,] )
+barplot( table(nbc.hclust$Best.n[1,] ),
+  xlab="Numer of Clusters", ylab="Number of Criteria",
+  main="Number of Clusters Chosen by 26 Criteria\nh-cluster")
+
+table( nbc.kmeans$Best.nc[1,] )
+barplot( table(nbc.kmeans$Best.nc[1,] ),
+  xlab="Numer of Clusters", ylab="Number of Criteria",
+  main="Number of Clusters Chosen by 26 Criteria\nkmeans")
+```
+
+**Visualize using  `factoextra::fviz_nbclust()`**  
+
+Single function `fviz_nbclust()` from `factoextra` library will use value in **NbClust** object to visualize the optimal cluster number.  `fviz_nbclus` output `ggplot` object, hence can be easily customized.  
+
+```{r, warning=FALSE, fig.height=3.5, fig.width=4, collapse=TRUE, results='hide'}
+library('factoextra')
+fviz_nbclust(nbc.hclust) + labs(subtitle='H-Cluster')
+fviz_nbclust(nbc.kmeans) + labs(subtitle='K-Means')
+```
+
+## Clustering Algorithm Compared
+
+|   | Description           | h-cluster                                     | k-means                                   |
+|---|:----------------------|:----------------------------------------------|:------------------------------------------|
+| 1 | Computation Time      | Fast.  Linear to number of observation        | Slow: Quadradric to number of observation |
+| 2 | Initial K needed      | No                                            | Yes                                       |
+| 3 | Fine Tuning           | Experiment with different method of Linkage   | Experiment with different K centroids     |
+| 4 | Perform Well in       | Hierachical Nature Data Set                   | Spherical Data Points                     |
+| 5 | Perform Bad  in       | Large data sets                               | U-Shape, Outliers                         |
+| 6 | Unique Advantages     | Good for hirechical discovery                 |                                           |
+| 7 | R Library             | Base R,  factoextra                           | Base R                                    |
+
+## Hierarchical Clustering 
+
++ Hierarchical clustering is a widely used data analysis tool  
++ The idea is to build a binary tree of the data that successively merges similar groups of points  
++ Number of clusters (K) is required as import  
++ It is an unsupervised learning  
+
+### Clustering Algorithm
+
+This is how Hierarchical Clustering works:  
+    1. Initially, put each data point in **its own cluster**  
+    2. **Calucate the distances** between each cluster and all other clusters (inter-cluster distance)  
+    3. **Combine the two clusters** with the smallest distance - This reduce cluster number by one  
+    4. Repeat step (2) and (3) until all clusters have been **merged into single cluster**  <br>
+
+### Inter Cluster Distance Method
+
+Once distance for all data points has been measured, decide which of the five (5) methods below to measure distance between clusters:  
+
+1. **Single Linkage**:  
+   Shortest distance among all data points betweentwo clusters    
+2. **Complete Linkage (common)**:  
+   Longest distance among all data points between two clusters   
+3. **Average Linkage (common)**:  
+   Average distance of all points between two clusters
+4. **Centroid**:  
+   Find the centroid of each cluster and calculate the distance between centroids between two clusters  
+
+Please note that the **Inter Cluster Distance Method** above uses **Distance Algorithmn** such as 'euclidean', "maximum", "manhattan", "canberra", "binary" or "minkowski" to calculate actual distance value.  
+
+### Run The Code
+
+Generally, step (A), (B) and (C) are followed for H-clustering analysis.  
+
+**A. Before running H-Clustering**  
+
+1. Fiter Data (choose only numeric columns)  
+2. Scale Data (if required)  
+3. Calculate distance, using  
+
+**B. Performing H-Clustering**  
+
+1. Build H-Cluster model,  require input of **inter-cluster distance method**  
+2. Derive cluster by **cutting* into K number of clusters  
+
+**C. Visualize**
+
+1. Display frequency, number of observations for each cluster group  
+2. Plot dendrogram, superimpose cluster group into the plot  
+
+#### Using Base-R Utilities
+
+> **`hclust (d, method ='complete')`**  
+> $\quad$ `d      = distance calculated using dist()`  
+> $\quad$ `method = 'single', 'complete', 'average', 'centroid' as cluster distance method`  
+
+**Filter, Scale, Calculate Distance**  
+
+```{r}
+data.scaled = scale(my.df[,3:4])   # scale data
+d.euclidean = dist( data.scaled )  # calculate distance
+```
+
+**Build H-Cluster Model, Cutting into clusters**  
+
+```{r, collapse=TRUE}
+fit.average  = hclust (d.euclidean, method='average')  # build the model
+clusters = cutree (fit.average, k=3)                   # derive the clusters
+clusters
+```
+
+**Display frequency table, Visualize with dendogram, superimpose cluster group**  
+
+```{r echo=FALSE}
+par(mfrow=c(1,2))
+```
+
+```{r fig.height=4, fig.width=4, fig.show='hold'}
+barplot( table(clusters), xlab='Cluster Group Number', ylab='No. of Observations' ) 
+plot( fit.average, main='HCluster, Average-Linkage\n3 Clusters Solution' )
+rect.hclust( fit.average, k=3, border = 2:5 )
+```
+
+
+#### Using `factoextra` Package
+
+`factoextra` provides single function `hcut` to **scale**, **calcuate distance** and **cutting** into cluster groups. Which is **handy**.  
+
+```{r}
+library("factoextra")
+```
+
+> `hcut(x, k = 2, hc_method = "ward.D2", hc_metric = "euclidean", stand = FALSE, graph = FALSE)`  
+> $\quad$ `x         = matrix or dataframe`  
+> $\quad$ `k         = number of clusters to cut`  
+> $\quad$ `hc_method = inter-cluster distance method: ward.D, ward.D2, single, complete, average`  
+> $\quad$ `hc_metric = distance calc method: euclidean, manhattan, maximum, canberra, binary, "minkowski`  
+> $\quad$ `stand     = TRUE: scale x with z-score, FALSE: not to scale x`  
+
+`hcut` output below useful values (not all displayed):  
+
+> $\quad$ `data    = original data (if stand=FALSE), scaled data (if stand=TRUE)`  
+> $\quad$ `nbclust = number of clusters`  
+> $\quad$ `cluster = cluster group number assigned for each observation`  
+> $\quad$ `size    = frequency vector, number of observations for each cluster`  
+> $\quad$ `method  = inter-cluster distance method applied`  
+> $\quad$ `dist.method  = distance method applied`  
+
+**Filter, Scale, Calculate Distance, Build H-Cluster Model, Cutting into Clusters**  
+
+```{r}
+fit.hc = hcut(my.df[,3:4], k=3, hc_method='average', hc_metric='euclidean', stand = TRUE)
+```
+
+**Display frequency table, Visualize with dendogram, superimpose cluster group**  
+
+```{r echo=FALSE}
+par(mfrow=c(1,2))
+```
+
+```{r fig.height=4, fig.width=4, fig.show='hold'}
+barplot( table(fit.hc$cluster), xlab='Cluster Group Number', ylab='No. of Observations' ) 
+fviz_dend(fit.hc, rect = TRUE, rect_border = 'red', cex = 0.5, lower_rect = -0.5, horiz = T)
+```
+
+
+## K-Mean Clustering
+
++ **K-mean** is the **most common partitioning** clustering algorithm  
++ Partitioning means data points need to be initally partioned into few clusters to start the process with  
++ The other partitioning clustering method is **Medoids**  
+
+### Clustering Algorithm
+
+1. **Define K number of centroids (data points)**  
+
+2. **Cluster Assignment**  
+   Each observation is assigned to the nearest centroid, using **euclidean** distance
+
+3. **Update Centroids**  
+   After all observations had been assigned to the centroids, a new centroids is calculated  
+
+4. **Repeat step (2) - (3) until convergence**  
+   Convergence means none of the observations changed  cluster membership  
+
+
+### Run The Code
+
+Generally, step (A), (B) and (C) are followed for H-clustering analysis.  
+
+**A. Before running H-Clustering**  
+
+1. Fiter Data (choose only numeric columns)  
+2. Scale Data (if required)  
+
+**B. Performing H-Clustering**  
+
+1. Build K-Means Cluster model,  require input  
+    + Number of initial centers (clusters K)
+    + K-Means Algorithmn 
+    + Number of tries to seed random centers, before choosing the best model
+
+**C. Visualize**  
+
+1. Display frequency, number of observations for each cluster group  
+2. Plot graph, superimpose cluster group into the plot  
+
+#### 
+
+> **`kmeans( x, centers, nstart=1, algorithmn='Hartiga-Wong' )`**  
+> $\quad$ `x = matrix or dataframe`  
+> $\quad$ `centers   = number of centroids`  
+> $\quad$ `nstart    = how many times to randomly try seeding centroids`  
+> $\quad$ `algorithm = "Hartigan-Wong"-default, "Lloyd", "Forgy", "MacQueen"`  
+
+**nstart=25** is a good number to use. `kmeans` output below useful values:  
+
+> **`cluster`** ` : cluster number for all observations`  
+> **`centers`** `: Centre values (of each dimensions) for each cluster`  
+> **`withinss`** `: Total Sum of Squares Within For Each Cluster`  
+> **`size`** `: Number of observations for each cluster number`  
+
+```{r, collapse=TRUE}
+fit.kmeans = kmeans(data.scaled, 3, nstart = 25)
+```
+
+```{r, collapse=TRUE}
+fit.kmeans$cluster
+```
+
+```{r, collapse=TRUE}
+fit.kmeans$withinss
+```
+
+```{r, collapse=TRUE}
+fit.kmeans$size
+```
+
+### Visualizing K-Mean Cluster
+
+```{r, fig.height=5}
+library(factoextra)
+
+fviz_cluster( fit.kmeans, data = data.scaled, 
+  geom = "point", stand = FALSE, ellipse.type = "norm")
+```

@@ -40,6 +40,34 @@ update.packages( ask=FALSE )  ## automatically update all packages without askin
 
 ## Data Types
 
+### String
+
+#### String Comparison
+
+#### String Manipulations
+
+**Splitting**  
+**Combining**  
+**Extracting**  
+
+
+### Dates Manipulation
+
+#### Formatting
+
+#### Dates Comparison
+
+#### Dates Manipulation
+
+**Days Between**  
+
+**First Day of the Month**  
+
+**Last Day of the Month**  
+
+**Days/Months/Years After**  
+
+
 ## Conditioinal Decision
 
 ## Looping

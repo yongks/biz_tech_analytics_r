@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-05-31">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="8-4-distance-algorithm.html">
+<link rel="next" href="8-6-clustering-algorithm-compared.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-summarization.html"><a href="3-data-summarization.html"><i class="fa fa-check"></i><b>3</b> Data Summarization</a></li>
+<li class="chapter" data-level="4" data-path="4-data-preprocessing.html"><a href="4-data-preprocessing.html"><i class="fa fa-check"></i><b>4</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="5" data-path="5-sort-and-filter-data.html"><a href="5-sort-and-filter-data.html"><i class="fa fa-check"></i><b>5</b> Sort and Filter Data</a></li>
+<li class="chapter" data-level="6" data-path="6-graphic-visualization.html"><a href="6-graphic-visualization.html"><i class="fa fa-check"></i><b>6</b> Graphic Visualization</a></li>
+<li class="chapter" data-level="7" data-path="7-statistics.html"><a href="7-statistics.html"><i class="fa fa-check"></i><b>7</b> Statistics</a></li>
+<li class="chapter" data-level="8" data-path="8-clustering-analysis.html"><a href="8-clustering-analysis.html"><i class="fa fa-check"></i><b>8</b> Clustering Analysis</a><ul>
+<li class="chapter" data-level="8.1" data-path="8-1-application.html"><a href="8-1-application.html"><i class="fa fa-check"></i><b>8.1</b> Application</a></li>
+<li class="chapter" data-level="8.2" data-path="8-2-sample-data.html"><a href="8-2-sample-data.html"><i class="fa fa-check"></i><b>8.2</b> Sample Data</a></li>
+<li class="chapter" data-level="8.3" data-path="8-3-general-steps.html"><a href="8-3-general-steps.html"><i class="fa fa-check"></i><b>8.3</b> General Steps</a></li>
+<li class="chapter" data-level="8.4" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html"><i class="fa fa-check"></i><b>8.4</b> Distance Algorithm</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#euclidean-distance"><i class="fa fa-check"></i><b>8.4.1</b> Euclidean Distance</a></li>
+<li class="chapter" data-level="8.4.2" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#manhattan-distance"><i class="fa fa-check"></i><b>8.4.2</b> Manhattan Distance</a></li>
+<li class="chapter" data-level="8.4.3" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#maximum-distance"><i class="fa fa-check"></i><b>8.4.3</b> Maximum Distance</a></li>
+<li class="chapter" data-level="8.4.4" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#canberra-distance"><i class="fa fa-check"></i><b>8.4.4</b> Canberra Distance</a></li>
+<li class="chapter" data-level="8.4.5" data-path="8-4-distance-algorithm.html"><a href="8-4-distance-algorithm.html#minkowski-distance"><i class="fa fa-check"></i><b>8.4.5</b> Minkowski Distance</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="8-5-optimum-number-of-clusters-k.html"><a href="8-5-optimum-number-of-clusters-k.html"><i class="fa fa-check"></i><b>8.5</b> Optimum Number of Clusters (K)</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="8-5-optimum-number-of-clusters-k.html"><a href="8-5-optimum-number-of-clusters-k.html#elbow-method"><i class="fa fa-check"></i><b>8.5.1</b> Elbow Method</a></li>
+<li class="chapter" data-level="8.5.2" data-path="8-5-optimum-number-of-clusters-k.html"><a href="8-5-optimum-number-of-clusters-k.html#average-silhoutte-method"><i class="fa fa-check"></i><b>8.5.2</b> Average Silhoutte Method</a></li>
+<li class="chapter" data-level="8.5.3" data-path="8-5-optimum-number-of-clusters-k.html"><a href="8-5-optimum-number-of-clusters-k.html#nbclust-package-with-30-indices"><i class="fa fa-check"></i><b>8.5.3</b> NbClust Package (with 30 Indices)</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="8-6-clustering-algorithm-compared.html"><a href="8-6-clustering-algorithm-compared.html"><i class="fa fa-check"></i><b>8.6</b> Clustering Algorithm Compared</a></li>
+<li class="chapter" data-level="8.7" data-path="8-7-hierarchical-clustering.html"><a href="8-7-hierarchical-clustering.html"><i class="fa fa-check"></i><b>8.7</b> Hierarchical Clustering</a><ul>
+<li class="chapter" data-level="8.7.1" data-path="8-7-hierarchical-clustering.html"><a href="8-7-hierarchical-clustering.html#clustering-algorithm"><i class="fa fa-check"></i><b>8.7.1</b> Clustering Algorithm</a></li>
+<li class="chapter" data-level="8.7.2" data-path="8-7-hierarchical-clustering.html"><a href="8-7-hierarchical-clustering.html#inter-cluster-distance-method"><i class="fa fa-check"></i><b>8.7.2</b> Inter Cluster Distance Method</a></li>
+<li class="chapter" data-level="8.7.3" data-path="8-7-hierarchical-clustering.html"><a href="8-7-hierarchical-clustering.html#run-the-code-1"><i class="fa fa-check"></i><b>8.7.3</b> Run The Code</a></li>
+</ul></li>
+<li class="chapter" data-level="8.8" data-path="8-8-k-mean-clustering.html"><a href="8-8-k-mean-clustering.html"><i class="fa fa-check"></i><b>8.8</b> K-Mean Clustering</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="8-8-k-mean-clustering.html"><a href="8-8-k-mean-clustering.html#clustering-algorithm-1"><i class="fa fa-check"></i><b>8.8.1</b> Clustering Algorithm</a></li>
+<li class="chapter" data-level="8.8.2" data-path="8-8-k-mean-clustering.html"><a href="8-8-k-mean-clustering.html#run-the-code-2"><i class="fa fa-check"></i><b>8.8.2</b> Run The Code</a></li>
+<li class="chapter" data-level="8.8.3" data-path="8-8-k-mean-clustering.html"><a href="8-8-k-mean-clustering.html#visualizing-k-mean-cluster"><i class="fa fa-check"></i><b>8.8.3</b> Visualizing K-Mean Cluster</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="9-classification.html"><a href="9-classification.html"><i class="fa fa-check"></i><b>9</b> Classification</a></li>
+<li class="chapter" data-level="10" data-path="10-regression.html"><a href="10-regression.html"><i class="fa fa-check"></i><b>10</b> Regression</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="optimum-number-of-clusters-k" class="section level2">
+<h2><span class="header-section-number">8.5</span> Optimum Number of Clusters (K)</h2>
+<p>There are three (3) popular methods for determining the optimal number of clusters.</p>
+<ol style="list-style-type: decimal">
+<li><p>Elbow Method Applicable for partioning clustering, such as k-means</p></li>
+<li><p>Average Silhoutte Method</p></li>
+<li><p>Gap Statistics (not discussed here)</p></li>
+</ol>
+<p>There is no guarantee that they will agree with each other. In fact, they probably won’t. However, use this as a guidine and test few highest criteria score to determinee final number of cluster.</p>
+<div id="elbow-method" class="section level3">
+<h3><span class="header-section-number">8.5.1</span> Elbow Method</h3>
+<div id="elbow-concept" class="section level4">
+<h4><span class="header-section-number">8.5.1.1</span> Elbow Concept</h4>
+<p>The objective of partitioning clustering (such as K-Mean) is to define clusters such that the total intra-cluster variation (known as total within-cluster variation or total within-cluster sum of square, wss) is minimized.</p>
+</div>
+<div id="elbow-algorithm" class="section level4">
+<h4><span class="header-section-number">8.5.1.2</span> Elbow Algorithm</h4>
+<ol style="list-style-type: decimal">
+<li>Run K-mean clustering algorithm for K=1 to n<br />
+</li>
+<li>For each K, calculate the within-cluster-sum-of-square (wss)<br />
+</li>
+<li>Plot the curve of wss against the number of clusters K<br />
+</li>
+<li>The location of bend (knee) in the plot is generally considered as the indicator of the appropriate number of clusters</li>
+</ol>
+<p>When the WSS value stop decreasing significantly (at the knee), then the number of clusters probably had reached its optimum. Although this approach is heuristic, it still provide a good guideline for K selection.</p>
+</div>
+<div id="elbow-codes-for-k-mean---do-it-yourself" class="section level4">
+<h4><span class="header-section-number">8.5.1.3</span> Elbow Codes (for K-mean) - Do It Yourself!</h4>
+<p>The method presented here does not require any external library ! However, it requires writing a funciton to calculate WSS and plot the results.</p>
+<p><strong>Define the The Algorithmn</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Algorithmn: Compute k-means and plot wss for k=2 to k=15</span>
+wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span class="dt">nc=</span><span class="dv">15</span>, <span class="dt">seed=</span><span class="dv">1234</span>){
+            wss &lt;-<span class="st"> </span>(<span class="kw">nrow</span>(data)<span class="op">-</span><span class="dv">1</span>)<span class="op">*</span><span class="kw">sum</span>(<span class="kw">apply</span>(data,<span class="dv">2</span>,var))
+            <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span>nc) {
+              <span class="kw">set.seed</span>(seed)
+              wss[i] &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">kmeans</span>(data, <span class="dt">centers=</span>i)<span class="op">$</span>withinss)
+            }
+            <span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span>nc, wss, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>, 
+                <span class="dt">xlab=</span><span class="st">&quot;Number of Clusters (K)&quot;</span>,
+                <span class="dt">ylab=</span><span class="st">&quot;Total Within Groups Sum of Squares&quot;</span>)
+            wss
+}</code></pre></div>
+<p><strong>Run The Code</strong></p>
+<p>If number of observations &lt;=nc(default 15), specify smaller nc.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wssplot</span>(data.scaled, <span class="dt">nc=</span><span class="dv">8</span>)
+## [1] 28.000000 12.865178  2.467904  2.191659  2.038777  0.785887  1.396947
+## [8]  1.030988
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)     <span class="co"># mark the optimum K after facts </span></code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-5-1.png" width="864" /></p>
+<p>The wssplot above indicates that there is a <strong>distinct drop</strong> in the within-groups sum of squares when moving <strong>from 1 to 3 clusters</strong>. After three clusters, this <strong>decrease drops off</strong>, suggestign that a three-cluster solution may be a good fit to the data.</p>
+</div>
+<div id="elbow-codes---using-factoextrafviz_nbclusthcut" class="section level4">
+<h4><span class="header-section-number">8.5.1.4</span> Elbow Codes - using <code>factoextra::fviz_nbclust,hcut</code></h4>
+<ul>
+<li><code>factoextra</code> combined functions to calculate ‘silhoutte’ and output <code>ggplot</code> object<br />
+</li>
+<li>For k-mean wss analysis, <code>kmeans</code> helper function from base-R is required<br />
+</li>
+<li>For pam wss analysis, <code>cluster:pam</code> helper function is required<br />
+</li>
+<li>For h-cluster wss analysis, <code>hcut</code> helper function by its own library is used. Somehow base-R <code>hclust</code> is not supproted</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(factoextra)
+<span class="kw">library</span>(cluster)
+
+<span class="kw">fviz_nbclust</span>(data.scaled, kmeans, <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;kmeans&#39;</span>)
+<span class="kw">fviz_nbclust</span>(data.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
+<span class="kw">fviz_nbclust</span>(data.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">3</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-7-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-7-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-7-3.png" width="254.4" /></p>
+</div>
+</div>
+<div id="average-silhoutte-method" class="section level3">
+<h3><span class="header-section-number">8.5.2</span> Average Silhoutte Method</h3>
+<div id="average-silhoutte-concept" class="section level4">
+<h4><span class="header-section-number">8.5.2.1</span> Average Silhoutte Concept</h4>
+<p>Average silhouette method computes the average silhouette of observations for different values of k. The <strong>optimal number</strong> of clusters k is the one that <strong>maximize the average silhouette</strong> over a range of possible values for k (Kaufman and Rousseeuw [1990]).</p>
+<p>Silhouette analysis can be used to study the <strong>separation distance between the resulting clusters</strong>. The silhouette plot displays a measure of how close each point in one cluster is to points in the neighboring clusters and thus provides a way to assess parameters like number of clusters visually. This measure has a range of [-1, 1].</p>
+<p>Silhouette coefficients (as these values are referred to as) <strong>near +1 indicate that the sample is far away from the neighboring clusters</strong>. A value of 0 indicates that the sample is on or very close to the decision boundary between two neighboring clusters and negative values indicate that those samples might have been assigned to the wrong cluster.</p>
+</div>
+<div id="average-silhoutte-algorithm" class="section level4">
+<h4><span class="header-section-number">8.5.2.2</span> Average Silhoutte Algorithm</h4>
+<ol style="list-style-type: decimal">
+<li>Compute clustering algorithm (e.g., k-means clustering) for different values of k<br />
+</li>
+<li>For each k, calculate the average silhouette of observations (avg.sil)<br />
+</li>
+<li>Plot the curve of avg.sil according to the number of clusters k<br />
+</li>
+<li>The location of the maximum is considered as the appropriate number of clusters</li>
+</ol>
+</div>
+<div id="average-silhoutte-code---factoextrafviz_nbclust" class="section level4">
+<h4><span class="header-section-number">8.5.2.3</span> Average Silhoutte Code - <code>factoextra:fviz_nbclust</code></h4>
+<p>Example code below shows silhoute analysis for kmeans, pam and h-cluster:</p>
+<ul>
+<li><code>factoextra</code> combined functions to calculate ‘silhoutte’ and output ggplot object<br />
+</li>
+<li>For k-mean silhoutte analysis, <code>kmeans</code> helper function from base-R is required<br />
+</li>
+<li>For pam silhoutte analysis, <code>cluster:pam</code> helper function is required<br />
+</li>
+<li>For h-cluster silhoutte analysis, <code>hcut</code> helper function by its own library is used. Somehow base-R <code>hclust</code> is not supproted</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(factoextra)
+<span class="kw">library</span>(cluster)
+
+<span class="kw">fviz_nbclust</span>(data.scaled, kmeans, <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;kmeans&#39;</span>)
+<span class="kw">fviz_nbclust</span>(data.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
+<span class="kw">fviz_nbclust</span>(data.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-9-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-9-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-9-3.png" width="254.4" /></p>
+</div>
+</div>
+<div id="nbclust-package-with-30-indices" class="section level3">
+<h3><span class="header-section-number">8.5.3</span> NbClust Package (with 30 Indices)</h3>
+<p><code>NbClust</code> package offers numerous 26 indices for determining the best number of clusters in a cluster analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;NbClust&#39;</span>)</code></pre></div>
+<ul>
+<li>Multiple indices are computed <strong>simultaneously</strong> - a clear advantage<br />
+</li>
+<li>Paramter <code>index='all'</code> will utilize all indices to evaluate the optimum number of clusters<br />
+</li>
+<li><code>Nbclust</code> returns a list that contains all evaluation statistic based on the indices used<br />
+</li>
+<li>Results of the evaluation is stored in <code>Best.nc</code> vector<br />
+</li>
+<li>Using <code>table</code> and <code>barplot</code> is best way to visualize the result of best K</li>
+</ul>
+<p><strong>Supported Indices are</strong></p>
+<ul>
+<li>kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw<br />
+</li>
+<li><strong>‘all’</strong> (all indices except GAP, Gamma, Gplus and Tau)<br />
+</li>
+<li>‘alllong’ (all indices with Gap, Gamma, Gplus and Tau included)</li>
+</ul>
+<blockquote>
+<p><strong><code>NbClust( data=, diss=NULL, distance='euclidean', min.nc=2, max.nc=15,</code></strong><br />
+<strong><code>method=NULL, index='all', alphaBeale=0.1)</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>data = matrix or dataframe</code><br />
+<span class="math inline">\(\quad\)</span> <code>diss = dissimilarity matrix, if not NULL, then distance should be NULL</code><br />
+<span class="math inline">\(\quad\)</span> <code>distance = &quot;euclidean&quot;, &quot;maximum&quot;, &quot;manhattan&quot;, &quot;canberra&quot;, &quot;binary&quot;, &quot;minkowski&quot; or &quot;NULL&quot;</code><br />
+<span class="math inline">\(\quad\)</span> <code>min.nc = minimum number of clusters</code><br />
+<span class="math inline">\(\quad\)</span> <code>max.nc = maximum number of clusters</code><br />
+<span class="math inline">\(\quad\)</span> <code>method = &quot;ward.D&quot;, &quot;ward.D2&quot;, &quot;single&quot;, &quot;complete&quot;, &quot;average&quot;, &quot;mcquitty&quot;, &quot;median&quot;, &quot;centroid&quot;, &quot;kmeans&quot;</code><br />
+<span class="math inline">\(\quad\)</span> <code>index = 'all' to use all indices for evaluation</code></p>
+</blockquote>
+<p><code>NbClust</code> <strong>output</strong> an object with below values:</p>
+<blockquote>
+<p><strong><code>Best.nc</code></strong> <code>: Best number of clusters proposed by each index and the corresponding index value</code><br />
+<strong><code>Best.partition</code></strong><code>: vector of cluster group for every observation</code></p>
+</blockquote>
+<div id="run-the-code" class="section level4">
+<h4><span class="header-section-number">8.5.3.1</span> Run The Code</h4>
+<p>Run <code>NbClust</code> for <code>average (h-clustering)</code> and <code>kmeans</code> method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nbc.hclust =<span class="st"> </span><span class="kw">NbClust</span>(data.scaled, <span class="dt">distance=</span><span class="st">&quot;euclidean&quot;</span>, <span class="dt">min.nc=</span><span class="dv">2</span>, <span class="dt">max.nc=</span><span class="dv">8</span>, <span class="dt">method=</span><span class="st">&quot;average&quot;</span>)
+nbc.kmeans =<span class="st"> </span><span class="kw">NbClust</span>(data.scaled,                       <span class="dt">min.nc=</span><span class="dv">2</span>, <span class="dt">max.nc=</span><span class="dv">8</span>, <span class="dt">method=</span><span class="st">&quot;kmeans&quot;</span>)</code></pre></div>
+</div>
+<div id="visualize-the-result" class="section level4">
+<h4><span class="header-section-number">8.5.3.2</span> Visualize The Result</h4>
+<p><strong>Visualize using Base-R</strong></p>
+<p>As output <code>Best.nc[1,]</code> shows, majority indices favor three (3) clusters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>( nbc.hclust<span class="op">$</span>Best.n[<span class="dv">1</span>,] )
+## 
+##  0  1  2  3  5  6  7  8 
+##  2  1  2 14  2  1  2  2
+<span class="kw">barplot</span>( <span class="kw">table</span>(nbc.hclust<span class="op">$</span>Best.n[<span class="dv">1</span>,] ),
+  <span class="dt">xlab=</span><span class="st">&quot;Numer of Clusters&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Number of Criteria&quot;</span>,
+  <span class="dt">main=</span><span class="st">&quot;Number of Clusters Chosen by 26 Criteria</span><span class="ch">\n</span><span class="st">h-cluster&quot;</span>)
+
+<span class="kw">table</span>( nbc.kmeans<span class="op">$</span>Best.nc[<span class="dv">1</span>,] )
+## 
+##  0  1  2  3  5  7  8 
+##  2  1  2 15  1  1  4
+<span class="kw">barplot</span>( <span class="kw">table</span>(nbc.kmeans<span class="op">$</span>Best.nc[<span class="dv">1</span>,] ),
+  <span class="dt">xlab=</span><span class="st">&quot;Numer of Clusters&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Number of Criteria&quot;</span>,
+  <span class="dt">main=</span><span class="st">&quot;Number of Clusters Chosen by 26 Criteria</span><span class="ch">\n</span><span class="st">kmeans&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-13-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-13-2.png" width="384" /></p>
+<p><strong>Visualize using <code>factoextra::fviz_nbclust()</code></strong></p>
+<p>Single function <code>fviz_nbclust()</code> from <code>factoextra</code> library will use value in <strong>NbClust</strong> object to visualize the optimal cluster number. <code>fviz_nbclus</code> output <code>ggplot</code> object, hence can be easily customized.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;factoextra&#39;</span>)
+<span class="kw">fviz_nbclust</span>(nbc.hclust) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;H-Cluster&#39;</span>)
+<span class="kw">fviz_nbclust</span>(nbc.kmeans) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;K-Means&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-14-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-14-2.png" width="384" /></p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="8-4-distance-algorithm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="8-6-clustering-algorithm-compared.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/09-clustering.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

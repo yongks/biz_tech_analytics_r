@@ -1,9 +1,45 @@
-# Regression
+```{r regression, echo=FALSE}
+## global chunk option ##
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results = 'hold') 
+```
+
+# Regression Analysis
+
 
 ## Introduction
+
+Regression analysis is a form of predictive modelling technique which investigates the relationship between a dependent (target) and independent variable (s) (predictor).  
 
 ## Application
 
 ## Choosing The Right Algorithm
 
-## LInear Regression 
+## LInear Regression
+
+### The Concept
+
+Linear Regression establishes a relationship between **dependent variable (Y)** and one or more **independent variables (X)** using a best fit straight line (also known as **regression line**).  
+
+- The objective of linear regression modeling is to find the most **optimum equation** that **best explain** the data
+- **Optimum** equation is defined as the one that has the least cost (error)
+
+Once we can derived the **optimum equation**, we can use the model to predict target $Y'$ base on new variables $X_1,X_2,X_3~etc$. 
+
+#### Equation
+
+$$
+\begin{align}
+Y~&~=~a~+~b~ \cdot X~+~e \\
+\text{where:}&\\
+Y &= \text{dependant variable (target)}\\
+X &= \text{independant variable(s) (predictor(s))}:~ X_1, X_2, X_3~etc\\
+a &= \text{intercept}\\
+\beta &= \text{slope, or coefficient(s)}:~\beta_1, \beta_2, \beta_3~etc\\
+\end{align}
+$$
+
+This equation can be used to predict the value of target variable based on given predictor $ equation $ variable(s).
+
+
+
+

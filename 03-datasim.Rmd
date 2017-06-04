@@ -1,0 +1,76 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.show='hold', fig.width=9, fig.height=6)
+```
+
+# Data Simulation
+
+## Linear Simulation
+
+```{r}
+gen_slinear = function(n = 50, start = 0, intercept = 0, coef = 1, mean = 0, sd = 1) {
+    par(mfrow = c(2, 2))
+    if (start == -1)
+        my.df = data.frame(x = rnorm(n))   # x is normally distributed random number
+    else
+        my.df = data.frame(x = start:n)    # x from 0 to 50
+    my.df$f = my.df$x * coef + intercept   # y = coef * x
+    my.df$residuals = rnorm(length(my.df$x), mean = mean, sd = sd)
+    my.df$y = my.df$f + my.df$residuals    # introduce errors
+    plot(my.df$x, my.df$f, main = paste('Perfect Fit Line:\nf = ', coef, 'x + ', intercept))
+    plot(my.df$x, my.df$y, main = 'Constant Normal Errors Introduced')
+    hist(my.df$y, main = 'Y Distribution')
+    hist(my.df$residuals, main = 'Residuals Distribution')
+    my.df
+}
+
+my.slinear = gen_slinear(n = 250, start=-1, intercept = 30, coef = 2, mean = 0, sd = 10)
+```
+
+###Example of Random Normal X
+
+```{r}
+my.slinear = gen_slinear(n = 250, start=-1, intercept = 30, coef = 2, mean = 0, sd = 10)
+```
+
+###Example of Sequantial X (non-random)
+
+```{r}
+my.slinear = gen_slinear(n = 250, start=0, intercept = 30, coef = 2, mean = 0, sd = 10)
+```
+
+## Parabola Simulation
+
+```{r}
+gen_parabola = function(n = 50, start = -1, root1 = -0.5, root2 = 0.5, mean = 0, sd = 1) {
+    par(mfrow = c(2, 2))
+    if (start == -1)
+        my.df = data.frame(x = rnorm(n)) # x is normally distributed random number
+    else
+        my.df = data.frame(x = start:n)  # x from 0 to 50
+    my.df$f = (my.df$x - root1) * (my.df$x - root2) # y=(x-20)(x-30), root at x=20 and x=30
+    my.df$residuals = rnorm(length(my.df$x), mean = mean, sd = sd)
+    my.df$y = my.df$f + my.df$residuals  # introduce errors
+    plot(my.df$x, my.df$f, main = paste('Perfect Fit Line:\nf=(x-', root1, ')(x-', root2, ')'))
+    plot(my.df$x, my.df$y, main = 'Constant Normal Errors Introduced')
+    hist(my.df$y, main = 'Y Distribution')
+    hist(my.df$residuals, main = 'Residuals Distribution')
+    my.df
+}
+```
+
+###Example of Random Normal X
+
+```{r}
+my.parabola = gen_parabola(n = 250, start=-1, root1 = 0.25, root2 = .5, sd = 1000)
+```
+
+
+###Example of Sequantial X (non-random)
+
+```{r}
+my.parabola = gen_parabola(n = 50, start=0, root1 = 20, root2 = 30, sd = 1000)
+```
+
+## Polynomial Simulation
+
+

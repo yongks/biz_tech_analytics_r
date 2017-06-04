@@ -1,0 +1,143 @@
+# Data Generation
+
+Here is a review of existing methods.
+
+## Sequential Number
+
+### Using `:` : return vector
+Produce sequantial integer with fix incremental or decremental by 1
+
+**Incremental**
+```{r results='hold'}
+3:6            # incremental integer
+1.25:9.25      # incremental decimal
+c(3:6, 4.25:8.25)  # combination of multiple sequence
+```
+
+**Decremental**
+```{r results='hold'}
+6:3            # decremental integer
+9.25: 1.25     # decremental decimal
+```
+
+### Using `seq` : return vector
+Improvement from `:`, **`seq`** allows specifying **incremental steps** with `by=`.   
+
+> `seq( from, to )`   
+> `seq( from, to, by = )`   
+> `seq( from, to, length.out = )     # potentially return decimal`   
+
+**Incremental**  
+```{r results='hold'}
+seq (3, 12)                   # default increment by=1
+seq (3, 12, by = 4)           # increment of integer
+seq (3.25, 12.25, by = 2.25)  # increment of decimal 
+```
+
+**Decremental** - `from` must be larger than `to`, and `by` has to be negative.  
+```{r results='hold'}
+seq (12, 3)                    # default decrement by=-1
+seq (12, 3, by = -4)           # decrement of integer
+seq (12.25, 3.25, by = -2.25)  # decrement of decimal
+```
+
+**Equal Spreading** - with `length.out=`    
+
+Equal Spreading of Integer  
+```{r results='hold'}
+seq (10, 50, length.out = 9)   # incremental spreding of integer
+seq (50, 10, length.out = 9)   # decremental spreading of integer
+```
+
+Equal Spreading of Decimal     
+```{r results='hold'}
+seq (10.33, 50.55, length.out = 9)   # incremental spreading of decimal
+seq (50.55, 10.33, length.out = 9)   # decremental spreading of decimal
+```
+
+## Random Number
+
+
+### Random Unified Distribution
+
+> `runif( n )                # default min=0, max=1`   
+> `runif( n, min=, max= )`   
+
+```{r results='hold'}
+set.seed(123)
+runif(5)                 # geenrate 5 numbers within default min=0, max=1
+runif(5, min=3, max=9)
+```
+
+Notice that the numbers generated are uniformly distributed.  
+
+```{r fig.width=9, fig.height=3, fig.show='hold'}
+hist(runif(300, min=3, max=9))
+```
+
+### Random Normal Distribution
+
+> `rnorm( n )                # default mean=0, sd=1`   
+> `rnorm( n, mean=, sd= )`   
+
+```{r results='hold'}
+set.seed(123)
+rnorm(5)                  # geenrate 5 numbers within default min=0, max=1
+rnorm(5, mean=3, sd=1.5)
+```
+
+Notice that the numbers generated are uniformly distributed.  
+
+```{r fig.width=9, fig.height=3, fig.show='hold'}
+hist(rnorm(300, mean=3, sd=1.5))
+```
+
+
+### Random Binomial Distribution
+
+The code below generates 'n' number of observations, each observation represents resuls of success for 'size' number of trials, and probability for success of each trial is 'prob':  
+
+The numbers generated has the below characteristic:
+
+a. Discrete number  
+b. Normally distributed (see histogram), mean mean approximately at the 'prob*size'  
+
+> `rbinorm( n, size, prob )`   
+> `rbinorm( n=, size=, prob= )`     
+> $\quad$ `n = number of observations`  
+> $\quad$ `size = number of trials per observations`  
+> $\quad$ `prob = probability of success for each trial`  
+
+```{r collapse=TRUE}
+rbinom(100, 10, 0.4)
+```
+
+```{r fig.width=9, fig.height=3, fig.show='hold'}
+hist(rbinom(100, 10, 0.4))
+```
+
+### Drawing From A Bag
+
++ A bag has been occupied with vector `x` (produced using `:` or any other vector)  
++ `sample()` will draw from this bag  
++ Specifying `replace=T` emulate that the drwan sample will be put back to the bag for next draw    
++ R will generate error if no enough samples to draw from ( size > length(x) )  
+
+> `sample( x=, size= )`    
+> `sample( x=, size=, replace=T) # recycle number even though it is not exhausted`    
+
+```{r results='hold'}
+set.seed (123)
+sample (10,   5)        # choose 5 numbers from the 'bag' containing 1:10
+sample (3:10, 5)        # choose 5 numbers from the 'bag' containing 3:10
+
+bag = runif(8, min=3, max=9)  # define the content of the bag
+sample (bag, 5, replace=T)    # draw from the bag, recycling numbers
+```
+
+
+
+
+
+
+

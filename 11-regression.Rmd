@@ -1,3 +1,8 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 ```{r regression, echo=FALSE}
 ## global chunk option ##
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results = 'hold') 
@@ -6,15 +11,129 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736,
 # Regression Analysis
 
 
+
+
+
+
+
 ## Introduction
 
-Regression analysis is a form of predictive modelling technique which investigates the relationship between a dependent (target) and independent variable (s) (predictor).  
+Regression is statistical process for estimating the relationships among variables:  
+
+- It includes many techniques for modeling and analyzing  the relationship between a dependent variable and one or more independent variables  
+- More specifically, regression analysis helps one understand how the typical value of the dependent variable changes when any one of the independent variables is varied, while the other independent variables are held fixed  
+- Regression analysis estimates the conditional expectation of the dependent variable given the independent variables – that is, the average value of the dependent variable when the independent variables are fixed  
+- Regression analysis is a form of predictive modelling technique which investigates the relationship between a dependent (target) and independent variable  
+
+### General Equation and Terminilogy
+
+A regression model relates Y to a function of $X$ and $\beta$:
+
+$\quad{Y\approx f(\mathbf {X} ,{\boldsymbol {\beta }})}$  
+$\quad \quad E(Y)$ = Predicted Value, Expected outcome or response, Expectation  
+$\quad \quad Y$ = Dependent variable, criterion, outocme, response    
+$\quad \quad X$ = Independent variable, features, predictors  
+
+The goal of regression analaysis is to derive a model that estimate the **paramter ($\beta$) which has the least cost**.  
+
+### R Formula Object
+
+#### Notation Symbols
+
+|  Symbol  | Usage                                                                                                                       | Example            |
+|:--------:|:----------------------------------------------------------------------------------------------------------------------------|--------------------|
+| ~        | Seperate response variables on the left, predictor variables on the right                                                   | y ~ x              |
+| +        | Seperate predictor variables                                                                                                | y ~ x + z          |
+| :        | Denotes interaction between predictors                                                                                      | y ~ x : z          |
+| \*       | Shortcut denoting all possible interactions.  x \* z equivalent to x + z + x:z                                              | y ~ x * z          |
+| ^        | ^3 measn include these variables and all interactions up to three way                                                       | y ~ (x + z + w)^2  |
+| -1       | Suppress the intercept (make intercept to be zero) y ~ x - 1 fits the regression of y on x, forcing the line y = 0 at x = 0 | y ~ x -1           |
+| .        | A shortcut placeholder to include all other variables except the dependent variable y ~ . will expand to y ~ x + z + w      | y ~ .              |
+| -        | Exclude specific variable                                                                                                   | y ~.-z , y~.-w:z   |
+| I ()     | Elements in parentheses are interpreted arithmetically                                                                      |                    |
+| function | Math function can be used in formula, log(y) ~ x + z + w would predict log(y) from x, z and w                               | log(y) ~ x + z + w |
+
+#### Example Equation and Notations
+
+|   | Example Equation                                                    | R Formula Notation       |
+|:-:|:--------------------------------------------------------------------|:-------------------------|
+| 1 | $y=\beta_0 + \beta_1 x + \beta_2 w + \beta_3 z + e$                 | y ~ x + w + z            |
+| 2 | $y=\beta_0 + \beta_1 x + \beta_2 wz + e$                            | y ~ x + w:z              |
+| 3 | $y=\beta_0 + \beta_1 x + \beta_2 wz + \beta_3 w + \beta_4 z + e$    | y ~ x + w*z              |
+|   |                                                                     | y ~ x + w:z + w + z      |
+| 4 | $y = 0 + \beta_1 x + \beta_2 w$                                     | y ~ -1 + x + w           |
+| 5 | $y=\beta_0 + \beta_1 x + \beta_2 w + e$                             | y ~ .-      z            |
+| 6 | $y=\beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + e$             | y ~ x + I(x^2) + I(x^3)  |
+
+In R, there are **more than one way** to write a notation, consider below two examples:  
+
+$y=\beta_0 + \beta_1 x + \beta_2 w + \beta_3 z + \beta_4 xw + \beta_5 xz + \beta_6 wz + \beta_7 xwz + e$  
+can be represented by three formulas as below:  
+
+```
+y ~ (x + w + z)^3  
+y ~ x * w * z
+y ~ x + w + z + x:w + x:z + w:z + x:w:z
+```
+
+$y=\beta_0 + \beta_1 x + \beta_2 w + \beta_3 z + \beta_4 xw + \beta_5 xz + \beta_6 wz + e$  
+can be represented by three formula as below:  
+```
+y ~ (x + w + z)^2
+y ~ x * w * z - x:w:z
+y ~ x + w + z + x:w + x:z + w:z
+```
 
 ## Application
 
-## Choosing The Right Algorithm
+ 
+## Types of Regression
 
-## LInear Regression
+### Linear and Non Lienar
+
+1. **Linear Regression**  
+
+    a. Simple an d Multiple Regression  
+    b. General Linear Model  
+    c. Heteroscedastic Model  
+    d. Hierarchical Linear Model  
+    e. Erros-in-variables  
+    f. Others  
+
+2. **Non Linear Regression**  
+
+    a. Logistic Regression  
+    b. Polynomial Regression   
+    c. Stepwise Regression  
+    d. Ridge Regression  
+    e. Lasso Regression  
+    f. ElasticNet Regression  
+    g. Others  
+
+### Choosing the Regression Algorithm
+
+1. Number of independent variables  
+2. Shape of the regression line  
+    
+    
+3. Type of dependent variable  
+    - Binary outocme : Logistic Regression  
+
+
+
+
+
+## Linear Regression
+
+This section discussed **Ordinary Least Square** Linear Regression, this includes single and multiple variable OLS Linear Regression.  
+
+There are other types of linear regression, which are not covered.  
+
+- General Linear Regression  
+- Generalized Linear Regression  
+- Hierachical Linear Regression  
+- Erros-in-variable Linear Regression  
+- Others  
 
 ### The Concept
 
@@ -23,23 +142,178 @@ Linear Regression establishes a relationship between **dependent variable (Y)** 
 - The objective of linear regression modeling is to find the most **optimum equation** that **best explain** the data
 - **Optimum** equation is defined as the one that has the least cost (error)
 
-Once we can derived the **optimum equation**, we can use the model to predict target $Y'$ base on new variables $X_1,X_2,X_3~etc$. 
+Once we had derived the **optimum equation**, we can use the model to predict target $Y'$ base on new variables $X$. 
 
-#### Equation
+### Assumptions
 
-$$
-\begin{align}
-Y~&~=~a~+~b~ \cdot X~+~e \\
-\text{where:}&\\
-Y &= \text{dependant variable (target)}\\
-X &= \text{independant variable(s) (predictor(s))}:~ X_1, X_2, X_3~etc\\
-a &= \text{intercept}\\
-\beta &= \text{slope, or coefficient(s)}:~\beta_1, \beta_2, \beta_3~etc\\
-\end{align}
-$$
+Below are conditions for the **least-squares estimator - used by linear regression** to possess desirable properties; in particular, these assumptions imply that the **parameter estimates** will be **unbiased, consistent, and efficient** in the class of linear unbiased estimators.  
 
-This equation can be used to predict the value of target variable based on given predictor $ equation $ variable(s).
+**Classical assumptions** for linear regression analysis include:  
 
+- The sample is representative of the population for the inference prediction  
+    Question how is the data being gathered, is it convincing that it represents the population  ?
+
+- Number of observations **must be larger** than number of independent variables  
+    Check the length of observations >= column length of data  
+    
+**Assumptions On Independent Variable**
+
+- The independent variables are measured with **no error**, that is observations must be a set of known constants. (Note: If this is not so, modeling may be done instead using errors-in-variables model techniques)  
+    Think about if the 'predictor' has erors, what makes the outcome ?  
+    
+- **Each** independent variable are **linearly correclated with outcome**, when other independent variables are held constant. Validation methods:  
+    a. Run Matrix Scatter plot outcome against individual independent variables. Methods to verify are:  
+    b. Run matrix correlation calculation for outcome againsts all independent varaibels. Correlation value 0.5 and above consider good correlation and therefore acceptable <br>  
+- **NO Multicollinearity** amont predictors - Meaning little or not linear correlationamong the predictors, i.e. it is not possible to express any predictor as a linear combination of the others, if so, we wouldn't know which predictor actually influene the outcome. Validation method:  
+    a. Scatter Plot Matrix for all independent variables  
+    b. Correlation Matrix calculation for all independent varaibels. Correlation value 0.2 and below consider week correlation and therefore acceptable  
+    c. Tolerance (**T**) - measures the influence of one independent variable on all other independent variables  
+        **T <0.01** --> **confirm** correlation  
+        **T <0.1**  --> **might have** correlation  
+    e. Variance Inflation Factor (**VIF**)  - VIF = 1/T  
+        **T >100**  --> **confirm** correlation  
+        **T >10** --> **might have** correlation  
+    e. Condition Index (**CI**) - calculated using a factor analysis on the independent variables  
+        ** Values of 10-30** -->  indicate a mediocre multicollinearity  
+        ** Values > 30** --> strong multicollinearity  
+
+**Assumptions On Errors (residuals)**
+  
+- The **errors are random numbers**, with means of **zero**  
+    - There should not be a pattern in the residuals distribution  
+    - If the residuals are **normally distributed** with **mean of zero**, then it is considered a bonus which we can perform statistical significant testing. $e = N(0,\sigma^2)$  
+    - Normality on redisuals implies that the dependent variable are also normally distributed (if and only if **dependent variable is not stochastic**)  
+    
+- The **errors are uncorrelated** - that is, the variance–covariance matrix of the errors is diagonal and each non-zero element is the variance of the error  
+
+- **Homoscedasticity** - The variance of the error is constant across observations. If heteroscedasticity exist, scatter plot of response and predictor will look like below  
+
+
+
+
+If not, weighted least squares or other methods might instead be used. 
+    - The Goldfeld-Quandt Test can test for heteroscedasticity  
+    - If homoscedasticity is present, a non-linear correction might fix the problem  
+
+#### Are The Assumptions to be followed strictly ?
+
+In real life, actual data **rarely satisfies** the assumptions, that is:  
+
+- Method is used even though the assumptions are not true  
+- Variation from the assumptions can sometimes be used as a measure of how far the model is from being useful  
+- Many of these assumptions may be relaxed in more advanced treatments  
+
+Reports of statistical analyses usually include analyses of tests on the sample data and methodology for the fit and usefulness of the model. 
+    
+#### Additional notes of independent variables  
+  
+- Adding more variables to a regression procedure may **overfit** the model and make things worse. The idea is to pick the **best** variables  
+- Some independent variable(s) are better at predicting the outocme, some contribute little or nothing  
+
+  Because of **multicollinearity** and **overfitting**, there is a fair amount of **prep-work** to be performed BEFORE conducting multiple regression analysis - if one is to do it properly.  
+
+
+
+### Equations
+
+#### Terminology
+
+**Simple** Linear Regression (classical) consists of just on predictor.  aka Single Variable Linear Regression.  
+**Multiple** Linear Regression (classical)    consists of multiple predictors.  aka. Multiple Variable Linear Regression.  
+
+**Multivariate** Regression (aka. **General Linear Regression**) is linear regression where the outocme is a vector (not scalar).   Not the same as multiple variable linear regression.  
+
+
+#### Ordinary Least Square Estimatation
+
+**Regression Model - Actual Outcome**
+
+$\quad y_i = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ...  \beta_k x_k + e_i$  
+$\quad$where:  
+$\quad \quad y_i$ = actual outcome value  
+$\quad \quad \beta_0$ = intercept, when all independent variables are 0  
+$\quad \quad \beta_k$ = parameter for independent variable k
+$\quad \quad e_i$ = error for observation i  
+
+**Regression Equation - Predicted Outcome**
+
+$\quad E(y_i) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + ...  \beta_k x_k$  
+
+$\quad h_\theta(X)~=~\theta_0~+~\theta_1 \cdot X$  , error terms assumed to be zero  
+$\quad$where:  
+$\quad \quad h_\theta(x)$ = hypothesis target (dependant variable)  
+$\quad \quad \theta_0$ = intercept  
+$\quad \quad \theta_1$ = slopes or coefficients  
+$\quad \quad X$ = independant variables (predictors)  
+
+$\quad$Take note that each $\theta_0$ and $\theta_1$ represents multi-variate data in matrix form.  
+
+#### Cost Function
+
+- The goal is to find some values of θ (known as coefficients), so we can minimize the difference between real values $y$  and predicted values ($h(x)$)  
+- Mathematically, this means finding the minimum value of cost function $J$ and derive the  optimum value of $\theta_0$ and $\theta_1$   
+- Linear regression uses Total Sum Of Square calculation on Error as Cost Function, denoted by $J$ below:  
+
+$\quad \quad J(\theta_0,\theta_1) = \frac{1}{2m}\sum_{i=1}^m ((h_\theta(x^i)-y^i)^2$
+
+
+### Sample Data
+
+```{r}
+set.seed(1234)
+my.df = data.frame(
+  id = paste('ID', 1:n),
+  x1 = 10:(10 + n - 1) * runif(n, min = 0.5, max = 1.1),
+  x2 = 20:(20 + n - 1) * runif(n, min = 0.5, max = 1.1),
+  x3 = 30:(30 + n - 1) * runif(n, min = 0.5, max = 1.1)
+)
+my.df$y = 88 + 0.1 * my.df$x1 + 0.2 * my.df$x2 + 0.3*my.df$x3
+cor(my.df[, 2:5])
+lm(formula = y ~ x1 + x2 + x3, data = my.df)
+```
+
+$h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$
+
+
+
+
+
+
+### Run The Code
+
+> **`fit = lm ( data = , formula = )`**
+> **`fit = lm ( data , formula )`**
+> **`fit = lm ( formula , data )`**  
+> formula : y~x1 + x2 + x3
+> data: matrix or dataframe
+
+```{r}
+cor(my.df[, 2:5])
+lm(formula = y ~ x1 + x2 + x3, data = my.df)
+```
+
+
+## Regression Diagnostic
+
+```{r}
+library('car')
+```
+
+
+### Outlier Test
+
+
+### Linearity Test
+
+
+### Homoscedasticity Test
+
+
+
+### Multicollinearity Test
+
+
+### Normality Test
 
 
 

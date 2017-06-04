@@ -13,13 +13,9 @@ This chapter uses the sample data generate with below code. The idea is to simul
 
 ```{r}
 is.matrix(state.x77)
-
 str(state.x77)
-
 dimnames(state.x77)[1]
-
 dimnames(state.x77)[2]
-
 head(state.x77)
 ```
 
@@ -91,7 +87,7 @@ sapply(my.df[,3:4], mystats)
 
 ## Covariance / Correlation
 
-If two variables are independent, their covariance/correlation  is 0.
+If two variables are independent, their **covariance/correlation  is 0**.  
 **But**, having a covariance/correlation  of 0 does not imply the variables are independent. 
 
 ### Covariance
@@ -99,29 +95,30 @@ If two variables are independent, their covariance/correlation  is 0.
 $$Pearson - Cov(X,Y)= \frac{\sum_{i=1}^n (X_i-\bar{X})*(Y_i-\bar{Y})}{n-1}$$  
 
 - Covariance doesn't really tell you about the strength of the relationship between the two variables. - A large covariance can simply means the variables are made of large numbers, **doesn't means that the relation are strong**.  
-- Hence **correlation** (scaled covariance) is a better indicator of the relation strenght.  
+- Hence **correlation (scaled covariance)** is a better indicator of the relation strenght.  
 
 ### Correlation
 
 $$Pearson-Cor(X,Y)= \frac{Cov(X,Y)}{sd(X)sd(Y)}$$  
 
-- Correlation is a scaled version of covariance that takes on values between -1 and 1. 0 indicates no correlation. +1 and -1 indicates perfect correlation.  
-- Correlation  are used to measure the **strength** of relationship among linearly related quntitative variables (numerical).  
+- Correlation is a **scaled version** of covariance that takes on values between -1 and 1  
+- Correlation  are used to measure the **strength** of relationship among linearly related quntitative variables (numerical)  
+- 0 indicates no correlation. +1 and -1 indicates perfect correlation  
 
 >**`cor(x, y, use= , method= )`**  
->**`x`**`      = matrix or dataframe`  
->**`y`**`      = matrix or dataframe, default = x`  
->**`method`**` = pearson, spearman, kendall, default is pearson`  
->**`use`**`    = everthing:missing value will set to missing, complete.obs:listwise deletion, pairwise.complete.obs:pairwise deletion`  
+>$\quad$ **`x`**`      = matrix or dataframe`  
+>$\quad$ **`y`**`      = matrix or dataframe, default = x`  
+>$\quad$ **`method`**` = pearson, spearman, kendall, default is pearson`  
+>$\quad$ **`use`**`    = everthing:missing value will set to missing, complete.obs:listwise deletion, pairwise.complete.obs:pairwise deletion`  
 
-- If y is not specified, you get cross matrices by default (all variables crossed with all other variables).  
+- If y is not specified, you get **cross matrices** by default (all variables crossed with all other variables).  
 ```{r, collapse=FALSE}
 states = state.x77[,1:5]
 cor(states) 
 cor(states, method = 'kendall') 
 ```
 
-- If x and y are specified, you can produce non squared correlation matrices with only the variables specified for both x and y axis 
+- If x and y are specified, you can produce **non squared correlation matrices** with only the variables specified for both x and y axis 
 ```{r, collapse=FALSE}
 cor(states[,1:5], states[,3:5])
 ```
@@ -129,25 +126,27 @@ cor(states[,1:5], states[,3:5])
 
 ### Correlation Test for significance
 
-From the `cor` function, we know that Murder rate and Illiteracy are highly correlated (>0.7). However, is this merely by chance, or it is statistically significant that there are indeedc correlated ?   
+From the `cor` function, we know that Murder rate and Illiteracy are highly correlated (>0.7). However, is this merely by chance, or it is statistically significant that there are indeed correlated ?   
 
 To answer this question, we need to perform hypotesis testing:  
 
-- $H_0$ : (population) correlation betwen Murder rate and Illiteracy = zero  
-- $H_1$ : (sample) correlation between Murder rate and Illiteracy <> zero  
+- $H_0$ : (population) correlation betwen Murder rate and Illiteracy **is** zero  
+- $H_1$ : (sample) correlation between Murder rate and Illiteracy **is not** zero  
 
-We then test our sample data using `cor.test` to find out the p-value. If the p-value < 0.025 (two sided), then we reject the null hypothesis.
+We then test our sample data using `cor.test` to find out the p-value:  
+
+- If p-value < 0.025 (two sided test), means $H_1$ is significant, therefore reject $H_0$.  
+- If p-value > 0.025 (two sided test), means $H_0$ is significant, therefore accept $H_0$.  
 
 >**`cor.test(x, y, method = , alternative= , conf.level= )`**  
->**`x`**`      = vector 1`  
->**`y`**`      = vector 2`  
->**`method`**` = pearson (default), spearman, kendall`  
->**`alternative`**`    = two.sided (default), less, more`  
->**`conf.level`** `= 0.95(default), any value between 0 to 1`  
+>$\quad$ **`x`**`      = vector 1`  
+>$\quad$ **`y`**`      = vector 2`  
+>$\quad$ **`method`**` = pearson (default), spearman, kendall`  
+>$\quad$ **`alternative`**`    = two.sided (default), less, more`  
+>$\quad$ **`conf.level`** `= 0.95(default), any value between 0 to 1`  
 
 ```{r}
 cor.test (states[,'Murder'], states[,'Illiteracy'])
 ```
 
-If $H_0$ is true, then chance of observing the sample data (with correlation of 0.7) is 1.258e-08
-(too low to be true). Hence we reject $H_0$, and accept $H_1$ that there is indeed a significant correlation between the variables.
+If $H_0$ is true, then chance of observing the sample data (with correlation of 0.7) is 1.258e-08 (too low to be true).  Hence we reject $H_0$, and accept $H_1$ that there is indeed a significant correlation between the variables.

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-06-04">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="11-1-introduction.html">
+<link rel="next" href="11-3-application.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="6" data-path="6-sort-and-filter-data.html"><a href="6-sort-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Sort and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-classification.html"><a href="10-classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
+<li class="chapter" data-level="11" data-path="11-regression-analysis.html"><a href="11-regression-analysis.html"><i class="fa fa-check"></i><b>11</b> Regression Analysis</a><ul>
+<li class="chapter" data-level="11.1" data-path="11-1-introduction.html"><a href="11-1-introduction.html"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="11-1-introduction.html"><a href="11-1-introduction.html#general-equation-and-terminilogy"><i class="fa fa-check"></i><b>11.1.1</b> General Equation and Terminilogy</a></li>
+<li class="chapter" data-level="11.1.2" data-path="11-1-introduction.html"><a href="11-1-introduction.html#general-assumptions"><i class="fa fa-check"></i><b>11.1.2</b> General Assumptions</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="11-2-r-formula-object.html"><a href="11-2-r-formula-object.html"><i class="fa fa-check"></i><b>11.2</b> R Formula Object</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="11-2-r-formula-object.html"><a href="11-2-r-formula-object.html#notation-symbols"><i class="fa fa-check"></i><b>11.2.1</b> Notation Symbols</a></li>
+<li class="chapter" data-level="11.2.2" data-path="11-2-r-formula-object.html"><a href="11-2-r-formula-object.html#example-equation-and-notations"><i class="fa fa-check"></i><b>11.2.2</b> Example Equation and Notations</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="11-3-application.html"><a href="11-3-application.html"><i class="fa fa-check"></i><b>11.3</b> Application</a></li>
+<li class="chapter" data-level="11.4" data-path="11-4-types-of-regression.html"><a href="11-4-types-of-regression.html"><i class="fa fa-check"></i><b>11.4</b> Types of Regression</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="11-4-types-of-regression.html"><a href="11-4-types-of-regression.html#linear-and-non-lienar"><i class="fa fa-check"></i><b>11.4.1</b> Linear and Non Lienar</a></li>
+<li class="chapter" data-level="11.4.2" data-path="11-4-types-of-regression.html"><a href="11-4-types-of-regression.html#choosing-the-regression-algorithm"><i class="fa fa-check"></i><b>11.4.2</b> Choosing the Regression Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="11-5-linear-regression-ols.html"><a href="11-5-linear-regression-ols.html"><i class="fa fa-check"></i><b>11.5</b> Linear Regression (OLS)</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-linear-regression-ols.html"><a href="11-5-linear-regression-ols.html#the-concept"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-linear-regression-ols.html"><a href="11-5-linear-regression-ols.html#assumptions"><i class="fa fa-check"></i><b>11.5.2</b> Assumptions</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-5-linear-regression-ols.html"><a href="11-5-linear-regression-ols.html#equations"><i class="fa fa-check"></i><b>11.5.3</b> Equations</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-5-linear-regression-ols.html"><a href="11-5-linear-regression-ols.html#sample-data"><i class="fa fa-check"></i><b>11.5.4</b> Sample Data</a></li>
+<li class="chapter" data-level="11.5.5" data-path="11-5-linear-regression-ols.html"><a href="11-5-linear-regression-ols.html#run-the-code"><i class="fa fa-check"></i><b>11.5.5</b> Run The Code</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="11-6-regression-diagnostic.html"><a href="11-6-regression-diagnostic.html"><i class="fa fa-check"></i><b>11.6</b> Regression Diagnostic</a><ul>
+<li class="chapter" data-level="11.6.1" data-path="11-6-regression-diagnostic.html"><a href="11-6-regression-diagnostic.html#residual-analaysis"><i class="fa fa-check"></i><b>11.6.1</b> Residual Analaysis</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-formula-object" class="section level2">
+<h2><span class="header-section-number">11.2</span> R Formula Object</h2>
+<div id="notation-symbols" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Notation Symbols</h3>
+<table style="width:100%;">
+<colgroup>
+<col width="6%" />
+<col width="79%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Symbol</th>
+<th align="left">Usage</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">~</td>
+<td align="left">Seperate response variables on the left, predictor variables on the right</td>
+<td>y ~ x</td>
+</tr>
+<tr class="even">
+<td align="center">+</td>
+<td align="left">Seperate predictor variables</td>
+<td>y ~ x + z</td>
+</tr>
+<tr class="odd">
+<td align="center">:</td>
+<td align="left">Denotes interaction between predictors</td>
+<td>y ~ x : z</td>
+</tr>
+<tr class="even">
+<td align="center">*</td>
+<td align="left">Shortcut denoting all possible interactions. x * z equivalent to x + z + x:z</td>
+<td>y ~ x * z</td>
+</tr>
+<tr class="odd">
+<td align="center">^</td>
+<td align="left">^3 measn include these variables and all interactions up to three way</td>
+<td>y ~ (x + z + w)^2</td>
+</tr>
+<tr class="even">
+<td align="center">-1</td>
+<td align="left">Suppress the intercept (make intercept to be zero) y ~ x - 1 fits the regression of y on x, forcing the line y = 0 at x = 0</td>
+<td>y ~ x -1</td>
+</tr>
+<tr class="odd">
+<td align="center">.</td>
+<td align="left">A shortcut placeholder to include all other variables except the dependent variable y ~ . will expand to y ~ x + z + w</td>
+<td>y ~ .</td>
+</tr>
+<tr class="even">
+<td align="center">-</td>
+<td align="left">Exclude specific variable</td>
+<td>y ~.-z , y~.-w:z</td>
+</tr>
+<tr class="odd">
+<td align="center">I ()</td>
+<td align="left">Elements in parentheses are interpreted arithmetically</td>
+<td></td>
+</tr>
+<tr class="even">
+<td align="center">function</td>
+<td align="left">Math function can be used in formula, log(y) ~ x + z + w would predict log(y) from x, z and w</td>
+<td>log(y) ~ x + z + w</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="example-equation-and-notations" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Example Equation and Notations</h3>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="69%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="left">Example Equation</th>
+<th align="left">R Formula Notation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="left"><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 w + \beta_3 z + e\)</span></td>
+<td align="left">y ~ x + w + z</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="left"><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 wz + e\)</span></td>
+<td align="left">y ~ x + w:z</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="left"><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 wz + \beta_3 w + \beta_4 z + e\)</span></td>
+<td align="left">y ~ x + w*z</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="left"></td>
+<td align="left">y ~ x + w:z + w + z</td>
+</tr>
+<tr class="odd">
+<td align="center">4</td>
+<td align="left"><span class="math inline">\(y = 0 + \beta_1 x + \beta_2 w\)</span></td>
+<td align="left">y ~ -1 + x + w</td>
+</tr>
+<tr class="even">
+<td align="center">5</td>
+<td align="left"><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 w + e\)</span></td>
+<td align="left">y ~ .- z</td>
+</tr>
+<tr class="odd">
+<td align="center">6</td>
+<td align="left"><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 x^2 + \beta_3 x^3 + e\)</span></td>
+<td align="left">y ~ x + I(x^2) + I(x^3)</td>
+</tr>
+</tbody>
+</table>
+<p>In R, there are <strong>more than one way</strong> to write a notation, consider below two examples:</p>
+<p><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 w + \beta_3 z + \beta_4 xw + \beta_5 xz + \beta_6 wz + \beta_7 xwz + e\)</span><br />
+can be represented by three formulas as below:</p>
+<pre><code>y ~ (x + w + z)^3  
+y ~ x * w * z
+y ~ x + w + z + x:w + x:z + w:z + x:w:z</code></pre>
+<p><span class="math inline">\(y=\beta_0 + \beta_1 x + \beta_2 w + \beta_3 z + \beta_4 xw + \beta_5 xz + \beta_6 wz + e\)</span><br />
+can be represented by three formula as below:</p>
+<pre><code>y ~ (x + w + z)^2
+y ~ x * w * z - x:w:z
+y ~ x + w + z + x:w + x:z + w:z</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="11-1-introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="11-3-application.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/11-regression.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

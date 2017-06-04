@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-01">
+<meta name="date" content="2017-06-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="10-1-introduction-1.html">
-<link rel="next" href="10-3-choosing-the-right-algorithm-1.html">
+<link rel="next" href="10-3-regression-diagnostic.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -131,8 +131,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="2-2-random-number.html"><a href="2-2-random-number.html"><i class="fa fa-check"></i><b>2.2</b> Random Number</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="2-2-random-number.html"><a href="2-2-random-number.html#random-unified-distribution"><i class="fa fa-check"></i><b>2.2.1</b> Random Unified Distribution</a></li>
 <li class="chapter" data-level="2.2.2" data-path="2-2-random-number.html"><a href="2-2-random-number.html#random-normal-distribution"><i class="fa fa-check"></i><b>2.2.2</b> Random Normal Distribution</a></li>
-<li class="chapter" data-level="2.2.3" data-path="2-2-random-number.html"><a href="2-2-random-number.html#drawing-from-a-bag"><i class="fa fa-check"></i><b>2.2.3</b> Drawing From A Bag</a></li>
+<li class="chapter" data-level="2.2.3" data-path="2-2-random-number.html"><a href="2-2-random-number.html#random-binomial-distribution"><i class="fa fa-check"></i><b>2.2.3</b> Random Binomial Distribution</a></li>
+<li class="chapter" data-level="2.2.4" data-path="2-2-random-number.html"><a href="2-2-random-number.html#drawing-from-a-bag"><i class="fa fa-check"></i><b>2.2.4</b> Drawing From A Bag</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="2-3-data-simulation.html"><a href="2-3-data-simulation.html"><i class="fa fa-check"></i><b>2.3</b> Data Simulation</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-data-summarization.html"><a href="3-data-summarization.html"><i class="fa fa-check"></i><b>3</b> Data Summarization</a><ul>
 <li class="chapter" data-level="3.1" data-path="3-1-sample-data.html"><a href="3-1-sample-data.html"><i class="fa fa-check"></i><b>3.1</b> Sample Data</a></li>
@@ -245,10 +247,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.5" data-path="9-5-decision-tree-regression.html"><a href="9-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>9.5</b> Decision Tree Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a><ul>
-<li class="chapter" data-level="10.1" data-path="10-1-introduction-1.html"><a href="10-1-introduction-1.html"><i class="fa fa-check"></i><b>10.1</b> Introduction</a></li>
+<li class="chapter" data-level="10.1" data-path="10-1-introduction-1.html"><a href="10-1-introduction-1.html"><i class="fa fa-check"></i><b>10.1</b> Introduction</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="10-1-introduction-1.html"><a href="10-1-introduction-1.html#general-equation-and-terminilogy"><i class="fa fa-check"></i><b>10.1.1</b> General Equation and Terminilogy</a></li>
+<li class="chapter" data-level="10.1.2" data-path="10-1-introduction-1.html"><a href="10-1-introduction-1.html#general-assumptions"><i class="fa fa-check"></i><b>10.1.2</b> General Assumptions</a></li>
+</ul></li>
 <li class="chapter" data-level="10.2" data-path="10-2-application-2.html"><a href="10-2-application-2.html"><i class="fa fa-check"></i><b>10.2</b> Application</a></li>
-<li class="chapter" data-level="10.3" data-path="10-3-choosing-the-right-algorithm-1.html"><a href="10-3-choosing-the-right-algorithm-1.html"><i class="fa fa-check"></i><b>10.3</b> Choosing The Right Algorithm</a></li>
-<li class="chapter" data-level="10.4" data-path="10-4-linear-regression.html"><a href="10-4-linear-regression.html"><i class="fa fa-check"></i><b>10.4</b> LInear Regression</a></li>
+<li class="chapter" data-level="10.3" data-path="10-3-regression-diagnostic.html"><a href="10-3-regression-diagnostic.html"><i class="fa fa-check"></i><b>10.3</b> Regression Diagnostic</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="10-3-regression-diagnostic.html"><a href="10-3-regression-diagnostic.html#residual-analaysis"><i class="fa fa-check"></i><b>10.3.1</b> Residual Analaysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="10-4-types-of-regression.html"><a href="10-4-types-of-regression.html"><i class="fa fa-check"></i><b>10.4</b> Types of Regression</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="10-4-types-of-regression.html"><a href="10-4-types-of-regression.html#choosing-the-regression-algorithm"><i class="fa fa-check"></i><b>10.4.1</b> Choosing the Regression Algorithm</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="10-5-r-formula-object.html"><a href="10-5-r-formula-object.html"><i class="fa fa-check"></i><b>10.5</b> R Formula Object</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="10-5-r-formula-object.html"><a href="10-5-r-formula-object.html#notation-symbols"><i class="fa fa-check"></i><b>10.5.1</b> Notation Symbols</a></li>
+<li class="chapter" data-level="10.5.2" data-path="10-5-r-formula-object.html"><a href="10-5-r-formula-object.html#example-equation-and-notations"><i class="fa fa-check"></i><b>10.5.2</b> Example Equation and Notations</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="10-6-linear-regression.html"><a href="10-6-linear-regression.html"><i class="fa fa-check"></i><b>10.6</b> LInear Regression</a><ul>
+<li class="chapter" data-level="10.6.1" data-path="10-6-linear-regression.html"><a href="10-6-linear-regression.html#the-concept"><i class="fa fa-check"></i><b>10.6.1</b> The Concept</a></li>
+<li class="chapter" data-level="10.6.2" data-path="10-6-linear-regression.html"><a href="10-6-linear-regression.html#assumptions"><i class="fa fa-check"></i><b>10.6.2</b> Assumptions</a></li>
+<li class="chapter" data-level="10.6.3" data-path="10-6-linear-regression.html"><a href="10-6-linear-regression.html#equations"><i class="fa fa-check"></i><b>10.6.3</b> Equations</a></li>
+<li class="chapter" data-level="10.6.4" data-path="10-6-linear-regression.html"><a href="10-6-linear-regression.html#sample-data-5"><i class="fa fa-check"></i><b>10.6.4</b> Sample Data</a></li>
+<li class="chapter" data-level="10.6.5" data-path="10-6-linear-regression.html"><a href="10-6-linear-regression.html#run-the-code-3"><i class="fa fa-check"></i><b>10.6.5</b> Run The Code</a></li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -276,7 +296,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
         </div>
       </div>
 <a href="10-1-introduction-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="10-3-choosing-the-right-algorithm-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="10-3-regression-diagnostic.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

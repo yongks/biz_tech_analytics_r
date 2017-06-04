@@ -73,4 +73,6 @@ my.parabola = gen_parabola(n = 50, start=0, root1 = 20, root2 = 30, sd = 1000)
 
 ## Polynomial Simulation
 
+$$ y = \beta_0 + \beta_1 x + \beta_2 x^2 +  \beta_3 x^3 + ...+ \beta_k x^k $$
+
 

@@ -136,9 +136,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a><ul>
-<li class="chapter" data-level="3.1" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html"><i class="fa fa-check"></i><b>3.1</b> Linear Simulation</a></li>
-<li class="chapter" data-level="3.2" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html"><i class="fa fa-check"></i><b>3.2</b> Parabola Simulation</a></li>
-<li class="chapter" data-level="3.3" data-path="3-3-quadradic-simulation.html"><a href="3-3-quadradic-simulation.html"><i class="fa fa-check"></i><b>3.3</b> Quadradic Simulation</a></li>
+<li class="chapter" data-level="3.1" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html"><i class="fa fa-check"></i><b>3.1</b> Linear Simulation</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html#example-of-random-normal-x"><i class="fa fa-check"></i><b>3.1.1</b> Example of Random Normal X</a></li>
+<li class="chapter" data-level="3.1.2" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html#example-of-sequantial-x-non-random"><i class="fa fa-check"></i><b>3.1.2</b> Example of Sequantial X (non-random)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html"><i class="fa fa-check"></i><b>3.2</b> Parabola Simulation</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html#example-of-random-normal-x-1"><i class="fa fa-check"></i><b>3.2.1</b> Example of Random Normal X</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html#example-of-sequantial-x-non-random-1"><i class="fa fa-check"></i><b>3.2.2</b> Example of Sequantial X (non-random)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-3-polynomial-simulation.html"><a href="3-3-polynomial-simulation.html"><i class="fa fa-check"></i><b>3.3</b> Polynomial Simulation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a><ul>
 <li class="chapter" data-level="4.1" data-path="4-1-sample-data.html"><a href="4-1-sample-data.html"><i class="fa fa-check"></i><b>4.1</b> Sample Data</a></li>
@@ -303,11 +309,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>qplot default to <strong>geom_point</strong> when two numerical value is supplied for x and y</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-47-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-51-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-48-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-48-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-48-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-52-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-52-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-52-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data" class="section level3">
 <h3><span class="header-section-number">7.4.2</span> Two + One Dimension Data</h3>
@@ -317,11 +323,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>Note that <strong>fill has not effect</strong> on scatter plot. <strong>fill</strong> should only be used for bar like chart eg. <strong>geom_hist</strong> or <strong>gem_bar</strong></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-49-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-53-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">color =</span> grp, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">color =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-50-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-50-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-50-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-54-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-54-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-54-3.png" width="256.6656" /></p>
 </div>
 </div>
             </section>

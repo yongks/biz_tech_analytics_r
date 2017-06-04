@@ -136,9 +136,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a><ul>
-<li class="chapter" data-level="3.1" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html"><i class="fa fa-check"></i><b>3.1</b> Linear Simulation</a></li>
-<li class="chapter" data-level="3.2" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html"><i class="fa fa-check"></i><b>3.2</b> Parabola Simulation</a></li>
-<li class="chapter" data-level="3.3" data-path="3-3-quadradic-simulation.html"><a href="3-3-quadradic-simulation.html"><i class="fa fa-check"></i><b>3.3</b> Quadradic Simulation</a></li>
+<li class="chapter" data-level="3.1" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html"><i class="fa fa-check"></i><b>3.1</b> Linear Simulation</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html#example-of-random-normal-x"><i class="fa fa-check"></i><b>3.1.1</b> Example of Random Normal X</a></li>
+<li class="chapter" data-level="3.1.2" data-path="3-1-linear-simulation.html"><a href="3-1-linear-simulation.html#example-of-sequantial-x-non-random"><i class="fa fa-check"></i><b>3.1.2</b> Example of Sequantial X (non-random)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html"><i class="fa fa-check"></i><b>3.2</b> Parabola Simulation</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html#example-of-random-normal-x-1"><i class="fa fa-check"></i><b>3.2.1</b> Example of Random Normal X</a></li>
+<li class="chapter" data-level="3.2.2" data-path="3-2-parabola-simulation.html"><a href="3-2-parabola-simulation.html#example-of-sequantial-x-non-random-1"><i class="fa fa-check"></i><b>3.2.2</b> Example of Sequantial X (non-random)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="3-3-polynomial-simulation.html"><a href="3-3-polynomial-simulation.html"><i class="fa fa-check"></i><b>3.3</b> Polynomial Simulation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a><ul>
 <li class="chapter" data-level="4.1" data-path="4-1-sample-data.html"><a href="4-1-sample-data.html"><i class="fa fa-check"></i><b>4.1</b> Sample Data</a></li>
@@ -303,7 +309,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(my.df<span class="op">$</span>value1)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> <span class="st">&#39;&#39;</span> ,  <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>( <span class="dt">x=</span> <span class="st">&#39;&#39;</span>, <span class="dt">y=</span>value1 )) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-57-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-57-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-57-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-61-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-61-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-61-3.png" width="256.6656" /></p>
 </div>
 <div id="two-dimension-data-3" class="section level3">
 <h3><span class="header-section-number">7.6.2</span> Two Dimension Data</h3>
@@ -313,7 +319,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> grp , <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>grp, <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-58-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-58-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-58-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-62-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-62-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-62-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data-2" class="section level3">
 <h3><span class="header-section-number">7.6.3</span> Two + One Dimension Data</h3>
@@ -323,10 +329,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>In <strong>qplot/ggplot</strong>, use <strong>interaction</strong> to specify extra dimension</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp<span class="op">+</span>dept)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-59-1.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-63-1.png" width="772.8" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-60-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-60-2.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-64-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-64-2.png" width="772.8" /></p>
 </div>
 </div>
             </section>

@@ -122,6 +122,19 @@ y ~ x + w + z + x:w + x:z + w:z
 
 
 
+lm() fits models following the form Y = Xb + e, where e is Normal (0 , s^2).
+
+glm() fits models following the form f(Y) = Xb + e. However, in glm both the function f(Y) (the 'link function') and the distribution of the error term e can be specified. Hence the name - 'generalised linear model'.
+
+If you are getting the same results using both lm() and glm(), it is because for glm(), f(Y) - the 'link function' defaults to Y, and e defaults to Normal (0, s^2). i.e. if you don't specify the link function and error distribution, the parameters that glm() uses produce the same effect as running lm().
+
+Glm uses normal distribution, lm uses t-distribution, hence the degree of freedom used are different.
+
+lm models equation of $Y = \beta_0 X  + E$, where e = Normal(0,s^2)  
+glm models equation of $g(Y) = \beta_0 X  + E$, where distribution of e can be specified  
+function g(Y) is called 'link function'  .  By default parameters, glm fits the same model as lm, with exception that it uses normal distribution instead of t-distribution. 
+
+
 
 ## Linear Regression
 

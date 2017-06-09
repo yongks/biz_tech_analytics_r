@@ -8,4 +8,71 @@
 
 ## Logistic Regression
 
+### The Concept
+
+Logistic Regression is a actually a **classification** algorithm. It is used to predict: 
+
+a. Binary outcome (1=Yes/Sucess, 0=No/Failure), given a set of independent variables. 
+b. Multinomial outcome (more than two categories) - however, reference category for comparison must be specified, otehrwise, must run multiple regressions with different refence categories  
+c. Like OLS, NO multicollinearity - if found, create interaction term, or drop one of the IVs
+d. Like OLS, error terms are assumed uncorrelated  
+
+Logistic Regression as a special case of linear regression where:  
+
+a. The outcome variable is categorical   
+b. Log of odds as dependent variable  
+
+
+In simple words, it predicts the probability ($p$) of occurrence of an event by fitting data to a logit function.
+
+Linear regression cannot be used for classification because:  
+
+- Binary data does not have a normal distribution, which is a condition for many types of regressions  
+- Predicted values can go beyond 0 and 1, which violates the definition of probability  
+- Probabilities are often not linear  
+
+
+### Assumptions
+
+1. Dependent variable must be 1/0 type eg. 'sucess/failure', 'male/female', 'yes/no'. Must not be ordinal and continous  
+2. Observations must be independent  
+3. Linearity between logit with all independent variables  
+
+
+Although **logit**  is a linear relation with independent variables, logistic regression (which use MLE) is differenct from OLS Linear Regression as below:  
+
+- Can handle categorical independent variables  
+- Does not assume normality of DV and IVs  
+- Does not assume linearity between DV and IVs  
+- Does not assume homoscedasticity  
+- Does not assume normal errors  
+
+
+
+### Equations
+
+- The goal of logistic regression is to estimate $p$ for a **linear combination** of the independent variables.  
+- This is done by 'linking' the linear combination of independent variables to Bernoulli probability distribution (with domain from 0 to 1), to predict the probability of success.  
+
+- The **link function** is called **logit**, which is the natural log of odds ratio. It is a linear function against independent variables:  
+$logit(p) = ln(odds) = ln\bigg(\frac{p}{1-p}\bigg) = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n$  
+
+- $p$ can be further derived as below sigmoid function. $p$ is **non-linear** against independent varibales :  
+$p = \frac{e^{\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}{1+e^{\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}$  
+
+
+### Sample Data
+
+### Run The Code
+
+
+
+### Performance Measurement
+
+#### Confusion Matrix
+
+
+#### ROC Curve
+
+
 ## Decision Tree Regression

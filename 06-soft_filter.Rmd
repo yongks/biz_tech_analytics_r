@@ -71,18 +71,34 @@ detach(my.df)
 
 ## Filtering Data
 
-### Subseting Vector
+There are two methods of filtering data:  
 
-**subset()** is a general function that can be used to filter vector, matrix and data.frame
+- **subset()** is a general function that can be used to filter vector, matrix and data.frame  
+- logical vector method - derive a conditional criteria that produce a logical vector, then apply to element selection  
+
+### Subseting Vector
 
 #### Using subset()
 
 ```{r}
 my.vector = 1:100
-subset( my.vector, my.vector<10)
+subset( my.vector, my.vector>10 & my.vector<20)
 ```
 
+#### Using logical vector
+
+Essentially, the below has similar results as using subset()..  
+
+```{r}
+my.vector = 1:100
+lvector = my.vector>10 & my.vector<20
+my.vector[ lvector ]
+```
+
+
 ### Subseting Data Frame
+
+#### Using subset()
 
 ```{r}
 my.df = data.frame( 
@@ -92,4 +108,9 @@ my.df = data.frame(
 subset( my.df, x<10 & y<300 )
 ```
 
-#### Using subset()
+#### Using logical vector
+
+```{r}
+lvector = my.df$x<10 & my.df$y<300
+my.df [ lvector, ]
+```

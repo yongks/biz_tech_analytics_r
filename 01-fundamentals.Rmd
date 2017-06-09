@@ -84,4 +84,71 @@ update.packages( ask=FALSE )  ## automatically update all packages without askin
 
 ### tapply
 
+## Data Import
 
+### Working Directory
+
+To display the current working directory.  
+
+```{r, collapse=TRUE}
+getwd()
+```
+
+To set the working directory, use below:  
+
+```{r eval=FALSE}
+setwd("...new path...)
+```
+
+### Importing CSV
+
+**read.csv** is a similar to **read.table** but with some defaults value set as below for convenience of CSV import.  
+
+> **read.csv** ( file,   
+> $\quad$ header = TRUE  - contain header row  
+> $\quad$ sep = ","  - column seperator marked as ','  
+> $\quad$ dec = "."  - decimals marked as '.'  
+> $\quad$ na.strings = "NA"  - vectors that define missing data marking <NA>  
+> $\quad$ check.names = TRUE - col names with white space replaced with '.'   
+> $\quad$ stringsAsFactors = TRUE - convert string to factor  
+
+Examine the below example of data import process (Excel-->csv-->R data.frame):  
+
+**Excel File**  
+
+![Check out the Yellow areas in codes below !](./images/sample_excel_import.jpg)
+
+**Exported CSV File from Excel**
+
+```
+,,age,weight,gender,date_string,date_uk,date my
+1,ID101,12,12.1,Male,1/7/1973,20/07/1973,1973-07-20
+2,ID102,43,43.12,Female,8/8/1980,08/08/1980,1980-08-08
+3,ID103,23,23.123,Female,31/12/1978,31/12/1978,1978-12-31
+4,ID104,54,54.1234,Male,12/1/1997,12/01/1997,1997-01-12
+5,ID105,34,34.12345,Male,2/1/1982,02/01/1982,1982-01-02
+6,ID106,NA,88.8,Male,,02/01/1982,
+7,ID107,NULL,88.8,Male,NULL,NA,NULL
+8,ID108,,88.8,NULL,NA,NULL,NA
+```
+**Converting to R Data Frame**  
+
+Example below specify multiple string elements that represents  **missing data** in the CSV file.  Also turn FALSE for stirngsAsFactors so all string columns are not converted to factor automatically.  
+
+**./** is a relative path represents  current R working directory. It can be replaced with complete non-relative path.  
+
+```{r}
+sample.df <- read.csv ( file="./datasets/import_sample.csv", 
+    stringsAsFactors = FALSE,
+    na.strings=c('NA','NULL',''),
+    encoding="UTF-8")
+sample.df
+```
+
+Parameter **check.names=TRUE** automatically named 'unnamed' column, as well as replacing white spaces for column names with '.'.  
+
+All non-numeric data are imported as **string**.  
+
+```{r, collapse=TRUE}
+str(sample.df)
+```

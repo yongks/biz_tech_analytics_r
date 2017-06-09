@@ -27,8 +27,23 @@ Below summarizes all packages, their functions and purposes used in this **Clust
 | 4 | flexclust         | randIndex     | Agreement measure for two cluster results                                                               |
 
 ## Application
-- **Business** : researchers use cluster analysis for customer segmentation. Customers are arranged into clusters based on the similarity of their demographics and buying behaviours. Marketing campaings are then tailored to appeal to the groups.  
+
+
+Finding groups within data and distinguishing observation in your data set that are similar from those that are different. The objective is to find the right balance between similarities and differences. On the one hand we want to treat similar cases in a similar way to benefit from economies of scale.  
+
+Finding groups within data will allow you to allocate your effort more efficiently:  
+
+- Leveraging synergies between cases that are similar  
+- Allocating specific case houses to different cases if needed in order to maximize your effectiveness  
+
+
+Example Usages are:  
+
+- **Business** : researchers use cluster analysis for customer segmentation. Customers are arranged into clusters based on the similarity of their demographics and buying behaviours. Marketing campaings are then tailored to appeal to the groups  
   
+  
+- **Human Resource** : you're concerned by the number of employees leaving the firm. As an HR manager, you want to retain your best employees within the company but you cannot follow-up with each one of them too often as that would be very time consuming.  Instead, you may rely on an HR analytic solution to understand what are the most frequent situations explaining why an employee decides to leave, with variables like number of completed projects for the past 12 months/utilization, age, last project evaluation, time spent in company, position, number of newborn, etc.   
+
 - **Psychological**: researchers cluster data on the symptoms and demographics of depressed patients, seeking to uncover subtypes of depression, with the hope of finding more effective targeted treatments and a better understanding of the disorder.
   
 - **Medical**: researchers use cluster analysis to help catalog gene-expression patterns obtained from DNA microarray data. This can help them to understand normal growth and development and the underlying causes of many human diseases

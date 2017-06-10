@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-09">
+<meta name="date" content="2017-06-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -270,9 +270,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.4.3" data-path="10-4-logistic-regression.html"><a href="10-4-logistic-regression.html#equations"><i class="fa fa-check"></i><b>10.4.3</b> Equations</a></li>
 <li class="chapter" data-level="10.4.4" data-path="10-4-logistic-regression.html"><a href="10-4-logistic-regression.html#sample-data-6"><i class="fa fa-check"></i><b>10.4.4</b> Sample Data</a></li>
 <li class="chapter" data-level="10.4.5" data-path="10-4-logistic-regression.html"><a href="10-4-logistic-regression.html#run-the-code-3"><i class="fa fa-check"></i><b>10.4.5</b> Run The Code</a></li>
-<li class="chapter" data-level="10.4.6" data-path="10-4-logistic-regression.html"><a href="10-4-logistic-regression.html#performance-measurement"><i class="fa fa-check"></i><b>10.4.6</b> Performance Measurement</a></li>
 </ul></li>
-<li class="chapter" data-level="10.5" data-path="10-5-decision-tree-regression.html"><a href="10-5-decision-tree-regression.html"><i class="fa fa-check"></i><b>10.5</b> Decision Tree Regression</a></li>
+<li class="chapter" data-level="10.5" data-path="10-5-performance-measurement.html"><a href="10-5-performance-measurement.html"><i class="fa fa-check"></i><b>10.5</b> Performance Measurement</a><ul>
+<li class="chapter" data-level="10.5.1" data-path="10-5-performance-measurement.html"><a href="10-5-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>10.5.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="10.5.2" data-path="10-5-performance-measurement.html"><a href="10-5-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>10.5.2</b> ROC Curve</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="11-regression-analysis.html"><a href="11-regression-analysis.html"><i class="fa fa-check"></i><b>11</b> Regression Analysis</a><ul>
 <li class="chapter" data-level="11.1" data-path="11-1-introduction-1.html"><a href="11-1-introduction-1.html"><i class="fa fa-check"></i><b>11.1</b> Introduction</a><ul>
@@ -349,6 +351,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 Question how is the data being gathered, is it convincing that it represents the population ?</p></li>
 <li><p>Number of observations <strong>must be larger</strong> than number of independent variables<br />
 Check the length of observations &gt;= column length of data</p></li>
+</ul>
+<p><strong>Assumptions On Dependent Variable</strong></p>
+<ul>
+<li>Must not be a categorical data type</li>
 </ul>
 <p><strong>Assumptions On Independent Variable</strong></p>
 <ul>
@@ -484,8 +490,11 @@ my.df<span class="op">$</span>y =<span class="st"> </span><span class="dv">88</s
 <div id="run-the-code-4" class="section level3">
 <h3><span class="header-section-number">11.4.5</span> Run The Code</h3>
 <blockquote>
-<p><strong><code>fit = lm ( data = , formula = )</code></strong> <strong><code>fit = lm ( data , formula )</code></strong> <strong><code>fit = lm ( formula , data )</code></strong><br />
-formula : y~x1 + x2 + x3 data: matrix or dataframe</p>
+<p><strong><code>fit = lm ( data = , formula = )</code></strong><br />
+<strong><code>fit = lm ( data , formula )</code></strong><br />
+<strong><code>fit = lm ( formula , data )</code></strong><br />
+formula : y~x1 + x2 + x3<br />
+data: matrix or dataframe</p>
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(my.df[, <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>])
 <span class="kw">lm</span>(<span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3, <span class="dt">data =</span> my.df)</code></pre></div>

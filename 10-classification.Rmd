@@ -12,18 +12,13 @@
 
 Logistic Regression is a actually a **classification** algorithm. It is used to predict: 
 
-a. Binary outcome (1=Yes/Sucess, 0=No/Failure), given a set of independent variables. 
-b. Multinomial outcome (more than two categories) - however, reference category for comparison must be specified, otehrwise, must run multiple regressions with different refence categories  
-c. Like OLS, NO multicollinearity - if found, create interaction term, or drop one of the IVs
-d. Like OLS, error terms are assumed uncorrelated  
+- Binary outcome (1=Yes/Sucess, 0=No/Failure), given a set of independent variables. 
+- Multinomial outcome (more than two categories) - however, reference category for comparison must be specified, otehrwise, must run multiple regressions with different refence categories  
 
-Logistic Regression as a special case of linear regression where:  
+Logistic Regression as a **special case** of linear regression where:  
 
-a. The outcome variable is categorical   
-b. Log of odds as dependent variable  
-
-
-In simple words, it predicts the probability ($p$) of occurrence of an event by fitting data to a logit function.
+- The outcome variable is categorical   
+- **Ln of odds** as dependent variable  
 
 Linear regression cannot be used for classification because:  
 
@@ -31,48 +26,73 @@ Linear regression cannot be used for classification because:
 - Predicted values can go beyond 0 and 1, which violates the definition of probability  
 - Probabilities are often not linear  
 
-
 ### Assumptions
+
+Since logistic regression is related to linear combination of IVs, it share some common asssumptions regarding IVs and error terms:  
 
 1. Dependent variable must be 1/0 type eg. 'sucess/failure', 'male/female', 'yes/no'. Must not be ordinal and continous  
 2. Observations must be independent  
-3. Linearity between logit with all independent variables  
+3. Like OLS, Linearity between logit with all independent variables  
+4. Like OLS, NO multicollinearity - if found, create interaction term, or drop one of the IVs  
+5. Like OLS, error terms are assumed uncorrelated  
 
-
-Although **logit**  is a linear relation with independent variables, logistic regression (which use MLE) is differenct from OLS Linear Regression as below:  
+Although **logit**  is a linear relation with independent variables, logistic regression (which use MLE) is **different from OLS** Linear Regression as below, due to the fact that DV is categorical and not continuuous:  
 
 - Can handle categorical independent variables  
-- Does not assume normality of DV and IVs  
-- Does not assume linearity between DV and IVs  
+- Does not assume normality of DV and IVs: becauae $p$ follow Bernoulli distribution  
+- Does not assume linearity between DV and IVs: because DV is categorical  
 - Does not assume homoscedasticity  
 - Does not assume normal errors  
 
-
-
 ### Equations
 
-- The goal of logistic regression is to estimate $p$ for a **linear combination** of the independent variables.  
-- This is done by 'linking' the linear combination of independent variables to Bernoulli probability distribution (with domain from 0 to 1), to predict the probability of success.  
+- The goal of logistic regression is to estimate $p$ (the probability of 'Success') for a **linear combination** of the independent variables  
+- This is done by 'linking' the linear combination of independent variables to Bernoulli probability distribution (with domain from 0 to 1), to predict the probability of success  
 
 - The **link function** is called **logit**, which is the natural log of odds ratio. It is a linear function against independent variables:  
 $logit(p) = ln(odds) = ln\bigg(\frac{p}{1-p}\bigg) = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n$  
 
+- Derive **Odd ratio** by anti-log. It measures the 'strength' of IV in affecting the outcome, p:  
+$odds = \frac{p}{1-p} = e^{\beta_0 + \beta_1 x_1 + ... + \beta_n x_n}$  
+
 - $p$ can be further derived as below sigmoid function. $p$ is **non-linear** against independent varibales :  
-$p = \frac{e^{\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}{1+e^{\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}$  
+$p = \frac{1}{1+e^{-\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}$  
 
 
 ### Sample Data
 
 ### Run The Code
 
+> **`glm`** `(formula, family=gaussian(link=identity), data)`  
+> $\quad$ `formula : example y ~ x1 + x2 + x3`  
+> $\quad$ `family  : binomial, gaussian, poisson, quasi etc  
+> $\quad$ `link    : logit-default for binomial(), identity-default for gaussian, log-default for poisson`  
+
+#### Binomial
 
 
-### Performance Measurement
 
-#### Confusion Matrix
+**Binomial Example**
+
+```
+glm (y ~ x1 + x2 + x3 , family=binomial(logit), data=my.df)
+```
 
 
-#### ROC Curve
+## Performance Measurement
+
+summary(fit) # display results
+confint(fit) # 95% CI for the coefficients
+exp(coef(fit)) # exponentiated coefficients
+exp(confint(fit)) # 95% CI for exponentiated coefficients
+predict(fit, type="response") # predicted values
+residuals(fit, type="deviance") # residuals 
+
+### Confusion Matrix
+
+![Confusion Matrix](./images/confusion_table.jpg)
+
+$Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$
 
 
-## Decision Tree Regression
+### ROC Curve

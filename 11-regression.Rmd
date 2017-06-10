@@ -169,6 +169,10 @@ Below are conditions for the **least-squares estimator - used by linear regressi
 - Number of observations **must be larger** than number of independent variables  
     Check the length of observations >= column length of data  
     
+**Assumptions On Dependent Variable**
+
+- Must not be a categorical data type  
+    
 **Assumptions On Independent Variable**
 
 - The independent variables are measured with **no error**, that is observations must be a set of known constants. (Note: If this is not so, modeling may be done instead using errors-in-variables model techniques)  
@@ -294,11 +298,11 @@ $h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$
 
 ### Run The Code
 
-> **`fit = lm ( data = , formula = )`**
-> **`fit = lm ( data , formula )`**
-> **`fit = lm ( formula , data )`**  
-> formula : y~x1 + x2 + x3
-> data: matrix or dataframe
+> **`fit = lm ( data = , formula = )`**  
+> **`fit = lm ( data , formula )`**  
+> **`fit = lm ( formula , data )`**    
+> formula : y~x1 + x2 + x3  
+> data: matrix or dataframe  
 
 ```{r}
 cor(my.df[, 2:5])

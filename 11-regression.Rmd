@@ -136,7 +136,7 @@ function g(Y) is called 'link function'  .  By default parameters, glm fits the 
 
 
 
-## Linear Regression
+## Linear Regression (OLS)
 
 This section discussed **Ordinary Least Square** Linear Regression, this includes single and multiple variable OLS Linear Regression.  
 
@@ -273,11 +273,57 @@ $\quad$Take note that each $\theta_0$ and $\theta_1$ represents multi-variate da
 
 $\quad \quad J(\theta_0,\theta_1) = \frac{1}{2m}\sum_{i=1}^m ((h_\theta(x^i)-y^i)^2$
 
+### OLS Performance
+
+#### Fundamental
+
+OLS performance is mainly on error analysis.  
+
+**SST** (**total** sample variability) = **SSR** (**explained** variability) + **SSE** (**unexplained** variability) :    
+
+![SST Explained](./images/explain_sst.jpg)
+
+#### Root Mean Square Error (RMSE)
+
+- RMSE = The square root of the average of the total sum of square error  
+$RMSE = \sqrt{\frac{SSE}{n}} = \sqrt \frac{\sum^n_{i=1}{(y_i - \hat y_i)^2}}{n}$  
+- It measure **how close** observed data points are to the model’s predicted values  
+- Low RMSE value indicates better fit  
+- Compared to the similar Mean Absolute Error, RMSE amplifies and severely punishes large errors  
+
+> **RMSE** is excellent general measurement to assess **the accuracy** of a model  
+
+#### $R^2$ (Coefficient Of Determination) and $R^2_{adj}$
+
+**R-Squared**  
+
+- $R^2$ is a ratio indicating how much **variations are explained** by regression model  
+$R^2 = \frac{SSR}{SST} = 1-\frac{SSE}{SST}, \quad 0 <= R^2 <= 1$  
+
+- High $R^2$ value indicates high SSR and low SSE, which means the model is **more precise**  
+    - In a **perfect fit** situation (SSE=0), $R^2$ will be 1.   
+    - In a worst fit situation (coefficient=0, SSR=0, aka horizontally flat line), $R^2$ will be 0.  
+
+- One pitfall of $R^2$ is that it **always increases** when additional variables are added to the model. The increase can be artificial as it doesn't improve the model fit - which is called **over-fitting**.  A **remediation** to this is $R^2_{adj}$  
+
+**Adjusted R-Squared**  
+
+- Adjusted $R^2$ incorporates the number of coefficients and observations into the calculation  
+$R_{adj}^2 = 1- \bigg( \frac{n-1}{n-p}\bigg) \frac{SSE}{SST}$  
+$\quad$ p = number of coefficients (including intercept)  
+$\quad$ n = number of observations  
+
+- Adjusted $R^2$ will **decrease** when adding predictors that doesn't increase the model fit that make up for the loss of degrees of freedom  
+- Likewise, it will **increase** as predictors are added if the increase in model fit is **worthwhile**  
+
+> **$R^2_{adj}$** is useful for **comparing models with a different number of predictors**, hence can be use for features selection  
+
 
 ### Sample Data
 
 ```{r}
 set.seed(1234)
+n=100
 my.df = data.frame(
   id = paste('ID', 1:n),
   x1 = 10:(10 + n - 1) * runif(n, min = 0.5, max = 1.1),
@@ -291,11 +337,6 @@ lm(formula = y ~ x1 + x2 + x3, data = my.df)
 
 $h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$
 
-
-
-
-
-
 ### Run The Code
 
 > **`fit = lm ( data = , formula = )`**  
@@ -308,6 +349,7 @@ $h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$
 cor(my.df[, 2:5])
 lm(formula = y ~ x1 + x2 + x3, data = my.df)
 ```
+
 
 
 ## Regression Diagnostic

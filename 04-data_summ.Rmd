@@ -89,33 +89,47 @@ f4
 str(f4)
 ```
 
-### Proportion Table
+### Making Table Proportion
 
-`prop.table` converts `table` or `ftable` object into proportion.
+`prop.table` **converts** `table` or `ftable` object into proportion. It can calculate table-wise, column-wise or row-wise proportion.  
+
+> prop.table (x,margin=NULL)  
+> $\quad$ x = table object  
+> $\quad$ margin = NULL: proportion table-wise, 1-row_wise, 2-column_wise  
 
 #### Proportion Table on 'table' object  
 
 ```{r results='markup'}
-pt1 = prop.table( t1 )
-pt2 = prop.table( t2 )
-pt1
-pt2
+prop.table( t1 )
+prop.table( t2 )
+prop.table( t2, margin=1 )
+prop.table( t2, margin=2 )
 ```
 
 #### Proportion Table on 'ftable' object  
 
 ```{r results='markup'}
-pf3 = prop.table( f3 )
-pf4 = prop.table( f4 )
-pf3
-pf4
+prop.table( f3 )
+prop.table( f4 )
+
+prop.table( f3, margin=1 )
+prop.table( f4, margin=1 )
+
+prop.table( f3, margin=2 )
+prop.table( f4, margin=2 )
 ```
 
-### Adding Margin Info
+### Adding Margin Info To Table
+
+> addmargins (x, margin=NULL)  
+> $\quad$ x = table or ftable object  
+> $\quad$ margin = NULL: row and column-sum, 1-col_sum, 2-row_sum  
 
 #### Margin Info on 'table' object
 ```{r results='markup'}
-addmargins( t2 )
+addmargins( t2)
+addmargins( t2,margin=1 )
+addmargins( t2,margin=2 )
 addmargins( t3 )
 addmargins( t4 )
 ```
@@ -129,8 +143,11 @@ addmargins( f4 )
 ### Proportion Table with Margin
 
 First to obtain the proportion table, then only add the margin.  
+
 ```{r results='markup'}
-addmargins( prop.table( t2 ))
+addmargins( prop.table( t2 ))    # add both column and row margin
+addmargins( prop.table( t2 ), 1) # add column margin
+addmargins( prop.table( t2 ), 2) # add row margin
 addmargins( prop.table( t3 ))
 addmargins( prop.table( t4 ))
 ```

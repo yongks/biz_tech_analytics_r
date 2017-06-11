@@ -288,23 +288,37 @@ OLS performance is mainly on error analysis.
 - RMSE = The square root of the average of the total sum of square error  
 $RMSE = \sqrt{\frac{SSE}{n}} = \sqrt \frac{\sum^n_{i=1}{(y_i - \hat y_i)^2}}{n}$  
 - It measure **how close** observed data points are to the model’s predicted values  
+- It has a unit of Y, therefore cannot used for comparison models with different outcome
+- It can be used to compare different model with the similar outcome but different predictors, however, adjusted $R^2$ is better in this  
 - Low RMSE value indicates better fit  
 - Compared to the similar Mean Absolute Error, RMSE amplifies and severely punishes large errors  
 
 > **RMSE** is excellent general measurement to assess **the accuracy** of a model  
 
-#### $R^2$ (Coefficient Of Determination) and $R^2_{adj}$
 
-**R-Squared**  
+#### $r$, $R^2$ and $R^2_{adj}$
+
+**r - Correlation Coeeficient**  
+
+- Correlation, often measured as a correlation coefficient - indicates the **strength** and direction of a linear relationship between two variables (for example model output and observed values)  
+- The best known is the Pearson product-moment correlation coefficient (also called Pearson correlation coefficient or the sample correlation coefficient)  
+- It is a ratio (has no unit)  
+$Pearson Correlation, r = \frac{{}\sum_{i=1}^{n} (x_i - \overline{x})(y_i - \overline{y})}
+{\sqrt{\sum_{i=1}^{n} (x_i - \overline{x})^2(y_i - \overline{y})^2}} \quad, \quad 0=<r<=1$  
+
+> **Scatter plot** predicted and actual outcome reveal visually the good-fit of the model, good correlation also means tigther the scatter plots with less variability    
+
+**R-Squared - Coefficient Determination**  
 
 - $R^2$ is a ratio indicating how much **variations are explained** by regression model  
-$R^2 = \frac{SSR}{SST} = 1-\frac{SSE}{SST}, \quad 0 <= R^2 <= 1$  
+$R^2 = r^2 = \frac{SSR}{SST} = 1-\frac{SSE}{SST}, \quad 0 <= R^2 <= 1$  
 
 - High $R^2$ value indicates high SSR and low SSE, which means the model is **more precise**  
     - In a **perfect fit** situation (SSE=0), $R^2$ will be 1.   
     - In a worst fit situation (coefficient=0, SSR=0, aka horizontally flat line), $R^2$ will be 0.  
 
 - One pitfall of $R^2$ is that it **always increases** when additional variables are added to the model. The increase can be artificial as it doesn't improve the model fit - which is called **over-fitting**.  A **remediation** to this is $R^2_{adj}$  
+
 
 **Adjusted R-Squared**  
 

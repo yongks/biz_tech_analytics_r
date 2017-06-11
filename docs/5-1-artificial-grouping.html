@@ -25,15 +25,15 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-09">
+<meta name="date" content="2017-06-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="6-ordering-and-filter-data.html">
-<link rel="next" href="6-2-ordering-data.html">
+<link rel="prev" href="5-data-preprocessing.html">
+<link rel="next" href="5-2-handling-missing-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -108,18 +108,22 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
 <li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
 <li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
-<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a></li>
-<li class="chapter" data-level="6" data-path="6-ordering-and-filter-data.html"><a href="6-ordering-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Ordering and Filter Data</a><ul>
-<li class="chapter" data-level="6.1" data-path="6-1-sample-data.html"><a href="6-1-sample-data.html"><i class="fa fa-check"></i><b>6.1</b> Sample Data</a></li>
-<li class="chapter" data-level="6.2" data-path="6-2-ordering-data.html"><a href="6-2-ordering-data.html"><i class="fa fa-check"></i><b>6.2</b> Ordering Data</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="6-2-ordering-data.html"><a href="6-2-ordering-data.html#ordering-vector"><i class="fa fa-check"></i><b>6.2.1</b> Ordering Vector</a></li>
-<li class="chapter" data-level="6.2.2" data-path="6-2-ordering-data.html"><a href="6-2-ordering-data.html#ordering-data-frame"><i class="fa fa-check"></i><b>6.2.2</b> Ordering Data Frame</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-1-artificial-grouping.html"><a href="5-1-artificial-grouping.html"><i class="fa fa-check"></i><b>5.1</b> Artificial Grouping</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="5-1-artificial-grouping.html"><a href="5-1-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.1.1</b> Grouping with Numeric Breakpoints</a></li>
+<li class="chapter" data-level="5.1.2" data-path="5-1-artificial-grouping.html"><a href="5-1-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.1.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="6-3-filtering-data.html"><a href="6-3-filtering-data.html"><i class="fa fa-check"></i><b>6.3</b> Filtering Data</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="6-3-filtering-data.html"><a href="6-3-filtering-data.html#subseting-vector"><i class="fa fa-check"></i><b>6.3.1</b> Subseting Vector</a></li>
-<li class="chapter" data-level="6.3.2" data-path="6-3-filtering-data.html"><a href="6-3-filtering-data.html#subseting-data-frame"><i class="fa fa-check"></i><b>6.3.2</b> Subseting Data Frame</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-handling-missing-data.html"><a href="5-2-handling-missing-data.html"><i class="fa fa-check"></i><b>5.2</b> Handling Missing Data</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="5-2-handling-missing-data.html"><a href="5-2-handling-missing-data.html#detecting-missing-data"><i class="fa fa-check"></i><b>5.2.1</b> Detecting Missing Data</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-handling-missing-data.html"><a href="5-2-handling-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.2.2</b> Removing Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html"><i class="fa fa-check"></i><b>5.3</b> Scaling Data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html#sample-data"><i class="fa fa-check"></i><b>5.3.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html#z-score-scaling"><i class="fa fa-check"></i><b>5.3.2</b> Z-Score Scaling</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html#min-max-scaling"><i class="fa fa-check"></i><b>5.3.3</b> Min Max Scaling</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="6-ordering-and-filter-data.html"><a href="6-ordering-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Ordering and Filter Data</a></li>
 <li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a></li>
 <li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
 <li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
@@ -142,45 +146,56 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sample-data" class="section level2">
-<h2><span class="header-section-number">6.1</span> Sample Data</h2>
-<p>Sample data used simulate two categorical-alike feature, and two numeric value feature:</p>
-<ul>
-<li><strong>dept</strong> is random character between ‘D1’, ‘D2’ and ‘D3’<br />
-</li>
-<li><strong>grp</strong> is random character with randomly generated ‘G1’, ‘G2’<br />
-</li>
-<li><strong>value1</strong> represents numeric value, normally distributed at mean 50<br />
-</li>
-<li><strong>value2</strong> is numeric value, normally distributed at mean 25</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
-my.df =<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">dept =</span> <span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">10</span>, <span class="dt">replace =</span> T),
-  <span class="dt">value1 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">5</span>),
-  <span class="dt">stringsAsFactors =</span> F
-)
-
-my.vector =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>,<span class="dv">18</span>, <span class="dt">rep=</span>T)
-
-<span class="kw">head</span>(my.df)</code></pre></div>
-<pre><code>##   dept   value1
-## 1    1 52.53028
-## 2    2 47.12630
-## 3    2 47.26684
-## 4    2 47.17774
-## 5    3 45.54981
-## 6    2 47.61404</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(my.vector)</code></pre></div>
-<pre><code>## [1] 46 27 31 51 19 76</code></pre>
+<div id="artificial-grouping" class="section level2">
+<h2><span class="header-section-number">5.1</span> Artificial Grouping</h2>
+<p>Artificial group can be created based on existing numeric data. Such as age_group based on age.</p>
+<div id="grouping-with-numeric-breakpoints" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Grouping with Numeric Breakpoints</h3>
+<p>Simulate data with x,y,z variables. p simulates priority scoring.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">10</span>)
+y =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">10</span>)
+p =<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>y</code></pre></div>
+<p>Articial groups is created first by identifying the <strong>number of groups</strong>, generate the break points vector, then <strong>cut</strong> the data base on <strong>break points</strong> and return <strong>factor</strong> as output.</p>
+<p>Automatically calculate breakpoints by distributing numbers into the min-max range, in low to high order:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num_groups =<span class="st"> </span><span class="dv">4</span>
+breakPoints =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(p), <span class="kw">max</span>(p), <span class="dt">length.out =</span> num_groups <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
+breakPoints</code></pre></div>
+<pre><code>## [1]  85.59917  92.47633  99.35348 106.23063 113.10779</code></pre>
+<blockquote>
+<p><code>cut ( x, breaks, right = TRUE, include.lowest = FALSE)</code><br />
+<span class="math inline">\(\quad\)</span> <code>x: numeric vector to be cutted</code><br />
+<span class="math inline">\(\quad\)</span> <code>breaks: numeric vector ranging from low to high (in order)</code><br />
+<span class="math inline">\(\quad\)</span> <code>include.lowest: FALSE - ommit element matching lowest number in breaks</code><br />
+<span class="math inline">\(\quad\)</span> <code>right: TRUE - close end on right;open end on left</code></p>
+</blockquote>
+<p>The result from <strong>cut</strong> is factor based on order from breakPoints. Therefore, once convert into numeric, the group number is in order of low to high accoriding to breakPoints.</p>
+<p>Verify that group (g) has been assigned for each priority (p).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span><span class="kw">as.numeric</span>( <span class="kw">cut</span>( p, breakPoints, <span class="dt">include.lowest=</span><span class="ot">TRUE</span>))
+<span class="kw">data.frame</span>(p,g)</code></pre></div>
+<pre><code>##            p g
+## 1  103.90189 3
+## 2   89.43620 1
+## 3   85.91982 1
+## 4   86.45631 1
+## 5  113.10779 4
+## 6   96.50497 2
+## 7   85.59917 1
+## 8   88.17396 1
+## 9  105.27011 3
+## 10 101.99212 3</code></pre>
+</div>
+<div id="grouping-based-on-custom-criteria" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> Grouping based on Custom Criteria</h3>
+<p>???</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="6-ordering-and-filter-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="6-2-ordering-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="5-data-preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="5-2-handling-missing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -209,7 +224,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/06-soft_filter.Rmd",
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/05-pre_process.Rmd",
 "text": "Edit"
 },
 "download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],

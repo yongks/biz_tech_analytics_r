@@ -1,5 +1,47 @@
 # Data Preprocessing
 
+## Artificial Grouping
+
+Artificial group can be created based on existing numeric data.  Such as age_group based on age.  
+
+### Grouping with Numeric Breakpoints
+
+Simulate data with x,y,z variables. p simulates priority scoring.  
+
+```{r}
+x = rnorm(10, mean = 10)
+y = rnorm(10, mean = 10)
+p = x * y
+```
+
+Articial groups is created first by identifying the **number of groups**, generate the break points vector, then **cut** the data base on **break points** and return **factor** as output.  
+
+Automatically calculate breakpoints by distributing numbers into the min-max range, in low to high order:  
+
+```{r, results='markup'}
+num_groups = 4
+breakPoints = seq(min(p), max(p), length.out = num_groups + 1)
+breakPoints
+```
+
+> `cut ( x, breaks, right = TRUE, include.lowest = FALSE)`  
+> $\quad$ `x: numeric vector to be cutted`   
+> $\quad$ `breaks: numeric vector ranging from low to high (in order)`  
+> $\quad$ `include.lowest: FALSE - ommit element matching lowest number in breaks`  
+> $\quad$ `right: TRUE - close end on right;open end on left`  
+
+The result from **cut** is factor based on order from breakPoints. Therefore, once convert into numeric, the group number is in order of low to high accoriding to breakPoints.  
+
+Verify that group (g) has been assigned for each priority (p).    
+
+```{r}
+g = as.numeric( cut( p, breakPoints, include.lowest=TRUE))
+data.frame(p,g)
+```
+
+### Grouping based on Custom Criteria
+
+???
 
 ## Handling Missing Data
 

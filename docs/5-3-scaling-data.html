@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="4-data-summarization.html">
-<link rel="next" href="5-1-artificial-grouping.html">
+<link rel="prev" href="5-2-handling-missing-data.html">
+<link rel="next" href="6-ordering-and-filter-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -146,16 +146,84 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-preprocessing" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Data Preprocessing</h1> 
+<div id="scaling-data" class="section level2">
+<h2><span class="header-section-number">5.3</span> Scaling Data</h2>
+<div id="sample-data" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Sample Data</h3>
+<p>Scaling section will use sample data generated as below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+my.df =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&#39;ID_&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">sep =</span> <span class="st">&#39;&#39;</span>),
+  <span class="dt">value1 =</span> <span class="kw">sample</span>(<span class="dv">50</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">5</span>),
+  <span class="dt">value2 =</span> <span class="kw">sample</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">50</span>, <span class="dv">5</span>),
+  <span class="dt">stringsAsFactors =</span> F
+)
+my.df</code></pre></div>
+<pre><code>##     id value1 value2
+## 1 ID_1     55     36
+## 2 ID_2     81     10
+## 3 ID_3     79     19
+## 4 ID_4     98     35
+## 5 ID_5     90     29</code></pre>
 </div>
+<div id="z-score-scaling" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Z-Score Scaling</h3>
+<p><code>scale</code> apply transformation <strong>column-wise</strong>, for columns within matrix or dataframe<br />
+<code>scale</code> return a <strong>matrix</strong></p>
+<blockquote>
+<p><code>scale (x, center=T, scale=T)</code> # default S-Score transformation<br />
+<span class="math inline">\(\quad\)</span> <code>center = T (default) means value minus with mean</code><br />
+<span class="math inline">\(\quad\)</span> <code>scale  = T (default) means value divide by sd</code><br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(\quad\)</span> <code>output scaled:center --&gt; mean</code><br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(\quad\)</span> <code>output scaled:scale  --&gt; sd</code></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scale</span>( my.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>] )</code></pre></div>
+<pre><code>##           value1     value2
+## [1,] -1.58066858  0.9170971
+## [2,]  0.02469795 -1.4206014
+## [3,] -0.09879179 -0.6113981
+## [4,]  1.07436067  0.8271856
+## [5,]  0.58040174  0.2877167
+## attr(,&quot;scaled:center&quot;)
+## value1 value2 
+##   80.6   25.8 
+## attr(,&quot;scaled:scale&quot;)
+##   value1   value2 
+## 16.19568 11.12205</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scale</span>( my.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">scale=</span>F )</code></pre></div>
+<pre><code>##      value1 value2
+## [1,]  -25.6   10.2
+## [2,]    0.4  -15.8
+## [3,]   -1.6   -6.8
+## [4,]   17.4    9.2
+## [5,]    9.4    3.2
+## attr(,&quot;scaled:center&quot;)
+## value1 value2 
+##   80.6   25.8</code></pre>
+</div>
+<div id="min-max-scaling" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> Min Max Scaling</h3>
+<p>Min-Max scaling will transform all numbers between 0 and 1.<br />
+Easiest way to perform this transformation is to write a function then <code>apply</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">min_max =<span class="st"> </span><span class="cf">function</span>(x){(x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x)<span class="op">-</span><span class="kw">min</span>(x))}
+<span class="kw">apply</span>( my.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">MARGIN =</span> <span class="dv">2</span>, <span class="dt">FUN =</span> min_max )  ## 2 means column-wise</code></pre></div>
+<pre><code>##         value1    value2
+## [1,] 0.0000000 1.0000000
+## [2,] 0.6046512 0.0000000
+## [3,] 0.5581395 0.3461538
+## [4,] 1.0000000 0.9615385
+## [5,] 0.8139535 0.7307692</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="4-data-summarization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="5-1-artificial-grouping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="5-2-handling-missing-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="6-ordering-and-filter-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

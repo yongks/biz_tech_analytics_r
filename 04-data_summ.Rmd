@@ -228,7 +228,27 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 ```
 
 
-### group_by - dplyr Package
+## R with SQL Emulation
 
+Running SQL statement on existing data.frame are useful to derive summarization and aggregation for someone who are familiar with SQL.  
 
+### Library
 
+**sqldf** library is required.  It has dependency on gsubfn, proto and RSQLite packages.  
+
+```{r}
+library(sqldf)
+```
+
+### Run The Code
+
+R data.frame variable is specified in **'FROM'** clause.  
+Note that `.` is a SQL operator, any variable with '.' must be contained within **single quote**.  
+
+```{r}
+sqldf("
+  SELECT com, dept, count(*) AS qty, AVG(value1) AS v1_mean, SUM(value2) AS v2_sum
+  FROM 'my.df'  
+  GROUP BY com, dept
+")
+```

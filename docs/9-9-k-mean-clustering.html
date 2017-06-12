@@ -168,9 +168,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
 <li class="chapter" data-level="5.1" data-path="5-1-sample-data-1.html"><a href="5-1-sample-data-1.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Column(s)</a><ul>
+<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Column(s)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
@@ -316,7 +316,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5.2" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>11.5.2</b> ROC Curve</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-1-library-used-1.html"><a href="12-1-library-used-1.html"><i class="fa fa-check"></i><b>12.1</b> Library Used</a></li>
+<li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
+<li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -397,8 +401,10 @@ Convergence means none of the observations changed cluster membership</p></li>
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans =<span class="st"> </span><span class="kw">kmeans</span>(data.scaled, <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">25</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans<span class="op">$</span>cluster
-##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 ID_13 ID_14 ID_15 
-##     3     3     3     3     1     1     1     1     1     1     2     2     2     2     2</code></pre></div>
+##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 
+##     3     3     3     3     1     1     1     1     1     1     2     2 
+## ID_13 ID_14 ID_15 
+##     2     2     2</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans<span class="op">$</span>withinss
 ## [1] 0.5512567 1.1226046 0.7940430</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.kmeans<span class="op">$</span>size
@@ -411,7 +417,7 @@ Convergence means none of the observations changed cluster membership</p></li>
 
 <span class="kw">fviz_cluster</span>( fit.kmeans, <span class="dt">data =</span> data.scaled, 
   <span class="dt">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="dt">stand =</span> <span class="ot">FALSE</span>, <span class="dt">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-123-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-132-1.png" width="864" /></p>
 </div>
 </div>
             </section>

@@ -168,9 +168,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
 <li class="chapter" data-level="5.1" data-path="5-1-sample-data-1.html"><a href="5-1-sample-data-1.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Column(s)</a><ul>
+<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Column(s)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
@@ -316,7 +316,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5.2" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>11.5.2</b> ROC Curve</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-1-library-used-1.html"><a href="12-1-library-used-1.html"><i class="fa fa-check"></i><b>12.1</b> Library Used</a></li>
+<li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
+<li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -421,13 +425,20 @@ Change from FUN=length to sum results in <strong>error</strong> because sum() ca
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span> (<span class="dt">x =</span>  <span class="kw">list</span>( <span class="dt">v1_mean =</span> my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2 ), 
            <span class="dt">by =</span> <span class="kw">list</span>( my.df<span class="op">$</span>grp, <span class="dt">DEPT =</span> my.df<span class="op">$</span>dept), <span class="dt">FUN=</span>mean)</code></pre></div>
-<pre><code>##   Group.1 DEPT  v1_mean c.18.2601290329418..17.1401638941593..19.4617142391631..23.0294246448329..
-## 1      G1   D1 49.19603                                                                   19.74277
-## 2      G2   D1 50.23397                                                                   20.99601
-## 3      G1   D2 50.64011                                                                   19.87320
-## 4      G2   D2 52.20157                                                                   19.65301
-## 5      G1   D3 51.81631                                                                   19.13836
-## 6      G2   D3 50.34312                                                                   20.54948</code></pre>
+<pre><code>##   Group.1 DEPT  v1_mean
+## 1      G1   D1 49.19603
+## 2      G2   D1 50.23397
+## 3      G1   D2 50.64011
+## 4      G2   D2 52.20157
+## 5      G1   D3 51.81631
+## 6      G2   D3 50.34312
+##   c.18.2601290329418..17.1401638941593..19.4617142391631..23.0294246448329..
+## 1                                                                   19.74277
+## 2                                                                   20.99601
+## 3                                                                   19.87320
+## 4                                                                   19.65301
+## 5                                                                   19.13836
+## 6                                                                   20.54948</code></pre>
 <blockquote>
 <p>Using <strong>data.frame subseting:</strong> column names are preserved and no option to change. Notice attempt below to change the column name does not succeed<br />
 <em><strong><em>aggregate( x = df[,c(…)], by = df[,c(…)]), FUN = function) </em></strong></em><br />

@@ -168,9 +168,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
 <li class="chapter" data-level="5.1" data-path="5-1-sample-data-1.html"><a href="5-1-sample-data-1.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Column(s)</a><ul>
+<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Column(s)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
@@ -316,7 +316,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5.2" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>11.5.2</b> ROC Curve</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-1-library-used-1.html"><a href="12-1-library-used-1.html"><i class="fa fa-check"></i><b>12.1</b> Library Used</a></li>
+<li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
+<li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -407,13 +411,15 @@ d.euclidean =<span class="st"> </span><span class="kw">dist</span>( data.scaled 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.average  =<span class="st"> </span><span class="kw">hclust</span> (d.euclidean, <span class="dt">method=</span><span class="st">&#39;average&#39;</span>)  <span class="co"># build the model</span>
 clusters =<span class="st"> </span><span class="kw">cutree</span> (fit.average, <span class="dt">k=</span><span class="dv">3</span>)                   <span class="co"># derive the clusters</span>
 clusters
-##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 ID_13 ID_14 ID_15 
-##     1     1     1     1     2     2     2     2     2     2     3     3     3     3     3</code></pre></div>
+##  ID_1  ID_2  ID_3  ID_4  ID_5  ID_6  ID_7  ID_8  ID_9 ID_10 ID_11 ID_12 
+##     1     1     1     1     2     2     2     2     2     2     3     3 
+## ID_13 ID_14 ID_15 
+##     3     3     3</code></pre></div>
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
 <span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-114-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-114-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-123-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-123-2.png" width="384" /></p>
 </div>
 <div id="using-factoextra-package" class="section level4">
 <h4><span class="header-section-number">9.8.3.2</span> Using <code>factoextra</code> Package</h4>
@@ -441,7 +447,7 @@ clusters
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-118-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-118-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-127-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-127-2.png" width="384" /></p>
 </div>
 </div>
 </div>

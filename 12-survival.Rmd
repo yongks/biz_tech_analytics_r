@@ -7,4 +7,54 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
 # Survival Analysis
+
+## Library Used
+
+```{r}
+library(survival)
+```
+
+## Sample Data
+
+```{r results='markdown'}
+main.data = read.csv('./datasets/surv_maintenance.csv')
+str(main.data)
+head(main.data)
+summary(main.data)
+```
+
+## The Code
+
+```{r}
+dependantVar = Surv(main.data$lifetime, main.data.train$broken)
+main.fit = survreg(dependantVar~pressureInd+moistureInd+temperatureInd+team+provider, 
+                   dist="gaussian", 
+                   data=main.data)
+summary(main.fit)
+```
+
+
+Use the model to predict lifetime before break (labeled as Ebreak below).  Then calculate the remaing lifetime (remaingLT) as predicted lifetime before break - current lifetime.
+
+```{r}
+Ebreak = predict(main.fit, data=main.data,type='quantile',p=0.5)
+remainingLT = Ebreak - main.data$lifetime
+```
+
+```{r}
+main.data.forecast = data.frame (
+  lifetime = main.data$lifetime,
+  broken = main.data$broken,
+  Ebreak,
+  remainingLT
+)
+```
+
+Put all into one data.frame.  Sort the remainingLT with lowest first, so that the priority to pay attention to are top to down.  
+
+```{r}
+head(main.data.forecast[order(main.data.forecast$remainingLT, decreasing = FALSE),])
+```

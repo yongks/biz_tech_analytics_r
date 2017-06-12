@@ -168,9 +168,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
 <li class="chapter" data-level="5.1" data-path="5-1-sample-data-1.html"><a href="5-1-sample-data-1.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Column(s)</a><ul>
+<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Column(s)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
@@ -316,7 +316,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5.2" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>11.5.2</b> ROC Curve</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-1-library-used-1.html"><a href="12-1-library-used-1.html"><i class="fa fa-check"></i><b>12.1</b> Library Used</a></li>
+<li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
+<li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -345,7 +349,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(my.df<span class="op">$</span>value1)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> <span class="st">&#39;&#39;</span> ,  <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>( <span class="dt">x=</span> <span class="st">&#39;&#39;</span>, <span class="dt">y=</span>value1 )) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-84-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-84-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-84-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-3.png" width="256.6656" /></p>
 </div>
 <div id="two-dimension-data-3" class="section level3">
 <h3><span class="header-section-number">7.6.2</span> Two Dimension Data</h3>
@@ -355,7 +359,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> grp , <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>grp, <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-85-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-85-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-85-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-94-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-94-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-94-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data-2" class="section level3">
 <h3><span class="header-section-number">7.6.3</span> Two + One Dimension Data</h3>
@@ -365,10 +369,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>In <strong>qplot/ggplot</strong>, use <strong>interaction</strong> to specify extra dimension</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp<span class="op">+</span>dept)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-86-1.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-95-1.png" width="772.8" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-87-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-87-2.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-96-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-96-2.png" width="772.8" /></p>
 </div>
 </div>
             </section>

@@ -168,9 +168,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
 <li class="chapter" data-level="5.1" data-path="5-1-sample-data-1.html"><a href="5-1-sample-data-1.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Column(s)</a><ul>
+<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Column(s)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
 <li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
@@ -316,7 +316,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.5.2" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>11.5.2</b> ROC Curve</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
+<li class="chapter" data-level="12.1" data-path="12-1-library-used-1.html"><a href="12-1-library-used-1.html"><i class="fa fa-check"></i><b>12.1</b> Library Used</a></li>
+<li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
+<li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -355,21 +359,36 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.scaled =<span class="st"> </span><span class="kw">scale</span>(my.df[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])  <span class="co"># Z-Score scaling</span>
 d.euclidean =<span class="st"> </span><span class="kw">dist</span>( data.scaled )          <span class="co"># Euclidean distance</span>
 <span class="kw">round</span> (d.euclidean,<span class="dv">1</span>)</code></pre></div>
-<pre><code>##       ID_1 ID_2 ID_3 ID_4 ID_5 ID_6 ID_7 ID_8 ID_9 ID_10 ID_11 ID_12 ID_13 ID_14
-## ID_2   0.6                                                                      
-## ID_3   0.9  0.3                                                                 
-## ID_4   0.6  0.8  1.0                                                            
-## ID_5   1.4  1.7  1.9  2.1                                                       
-## ID_6   2.0  2.3  2.5  2.6  0.6                                                  
-## ID_7   1.7  2.1  2.4  2.4  0.5  0.4                                             
-## ID_8   1.7  2.1  2.4  2.4  0.5  0.4  0.0                                        
-## ID_9   2.1  2.5  2.7  2.7  0.8  0.4  0.4  0.4                                   
-## ID_10  1.5  2.0  2.2  2.1  0.4  0.6  0.2  0.2  0.6                              
-## ID_11  2.5  2.3  2.3  3.0  1.7  1.8  2.1  2.1  2.2   2.1                        
-## ID_12  3.1  3.1  3.2  3.7  1.8  1.5  1.9  1.9  1.8   2.1   1.2                  
-## ID_13  2.5  2.4  2.4  3.1  1.6  1.6  1.9  1.9  2.1   2.0   0.2   1.0            
-## ID_14  3.0  2.9  3.0  3.6  1.9  1.7  2.1  2.1  2.1   2.2   0.8   0.5   0.6      
-## ID_15  2.9  2.7  2.7  3.5  2.1  2.1  2.4  2.4  2.5   2.5   0.4   1.1   0.5   0.6</code></pre>
+<pre><code>##       ID_1 ID_2 ID_3 ID_4 ID_5 ID_6 ID_7 ID_8 ID_9 ID_10 ID_11 ID_12 ID_13
+## ID_2   0.6                                                                
+## ID_3   0.9  0.3                                                           
+## ID_4   0.6  0.8  1.0                                                      
+## ID_5   1.4  1.7  1.9  2.1                                                 
+## ID_6   2.0  2.3  2.5  2.6  0.6                                            
+## ID_7   1.7  2.1  2.4  2.4  0.5  0.4                                       
+## ID_8   1.7  2.1  2.4  2.4  0.5  0.4  0.0                                  
+## ID_9   2.1  2.5  2.7  2.7  0.8  0.4  0.4  0.4                             
+## ID_10  1.5  2.0  2.2  2.1  0.4  0.6  0.2  0.2  0.6                        
+## ID_11  2.5  2.3  2.3  3.0  1.7  1.8  2.1  2.1  2.2   2.1                  
+## ID_12  3.1  3.1  3.2  3.7  1.8  1.5  1.9  1.9  1.8   2.1   1.2            
+## ID_13  2.5  2.4  2.4  3.1  1.6  1.6  1.9  1.9  2.1   2.0   0.2   1.0      
+## ID_14  3.0  2.9  3.0  3.6  1.9  1.7  2.1  2.1  2.1   2.2   0.8   0.5   0.6
+## ID_15  2.9  2.7  2.7  3.5  2.1  2.1  2.4  2.4  2.5   2.5   0.4   1.1   0.5
+##       ID_14
+## ID_2       
+## ID_3       
+## ID_4       
+## ID_5       
+## ID_6       
+## ID_7       
+## ID_8       
+## ID_9       
+## ID_10      
+## ID_11      
+## ID_12      
+## ID_13      
+## ID_14      
+## ID_15   0.6</code></pre>
 </div>
 <div id="manhattan-distance" class="section level3">
 <h3><span class="header-section-number">9.5.2</span> Manhattan Distance</h3>
@@ -382,21 +401,36 @@ d.euclidean =<span class="st"> </span><span class="kw">dist</span>( data.scaled 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data.scaled =<span class="st"> </span><span class="kw">scale</span>(my.df[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])  <span class="co"># Z-Score scaling</span>
 d.manhattan =<span class="st"> </span><span class="kw">dist</span>( data.scaled, <span class="dt">method=</span><span class="st">&#39;manhattan&#39;</span>)
 <span class="kw">round</span> (d.manhattan, <span class="dv">1</span>)</code></pre></div>
-<pre><code>##       ID_1 ID_2 ID_3 ID_4 ID_5 ID_6 ID_7 ID_8 ID_9 ID_10 ID_11 ID_12 ID_13 ID_14
-## ID_2   0.9                                                                      
-## ID_3   1.2  0.4                                                                 
-## ID_4   0.9  1.0  1.0                                                            
-## ID_5   1.8  1.7  2.1  2.7                                                       
-## ID_6   2.5  2.4  2.6  3.4  0.7                                                  
-## ID_7   1.9  2.4  2.8  2.8  0.7  0.6                                             
-## ID_8   1.9  2.4  2.8  2.8  0.7  0.6  0.0                                        
-## ID_9   2.3  2.8  3.2  3.2  1.1  0.6  0.4  0.4                                   
-## ID_10  1.6  2.3  2.7  2.5  0.6  0.9  0.3  0.3  0.7                              
-## ID_11  3.3  3.3  3.3  4.2  1.9  2.4  2.6  2.6  3.0   2.5                        
-## ID_12  4.3  4.2  4.2  5.2  2.5  1.8  2.4  2.4  2.0   2.7   1.3                  
-## ID_13  3.4  3.4  3.4  4.3  1.6  2.1  2.3  2.3  2.7   2.2   0.3   1.1            
-## ID_14  4.2  4.1  4.1  5.1  2.4  1.7  2.3  2.3  2.3   2.6   0.9   0.7   0.8      
-## ID_15  3.9  3.8  3.8  4.8  2.1  2.6  2.8  2.8  3.2   2.7   0.6   1.5   0.5   0.9</code></pre>
+<pre><code>##       ID_1 ID_2 ID_3 ID_4 ID_5 ID_6 ID_7 ID_8 ID_9 ID_10 ID_11 ID_12 ID_13
+## ID_2   0.9                                                                
+## ID_3   1.2  0.4                                                           
+## ID_4   0.9  1.0  1.0                                                      
+## ID_5   1.8  1.7  2.1  2.7                                                 
+## ID_6   2.5  2.4  2.6  3.4  0.7                                            
+## ID_7   1.9  2.4  2.8  2.8  0.7  0.6                                       
+## ID_8   1.9  2.4  2.8  2.8  0.7  0.6  0.0                                  
+## ID_9   2.3  2.8  3.2  3.2  1.1  0.6  0.4  0.4                             
+## ID_10  1.6  2.3  2.7  2.5  0.6  0.9  0.3  0.3  0.7                        
+## ID_11  3.3  3.3  3.3  4.2  1.9  2.4  2.6  2.6  3.0   2.5                  
+## ID_12  4.3  4.2  4.2  5.2  2.5  1.8  2.4  2.4  2.0   2.7   1.3            
+## ID_13  3.4  3.4  3.4  4.3  1.6  2.1  2.3  2.3  2.7   2.2   0.3   1.1      
+## ID_14  4.2  4.1  4.1  5.1  2.4  1.7  2.3  2.3  2.3   2.6   0.9   0.7   0.8
+## ID_15  3.9  3.8  3.8  4.8  2.1  2.6  2.8  2.8  3.2   2.7   0.6   1.5   0.5
+##       ID_14
+## ID_2       
+## ID_3       
+## ID_4       
+## ID_5       
+## ID_6       
+## ID_7       
+## ID_8       
+## ID_9       
+## ID_10      
+## ID_11      
+## ID_12      
+## ID_13      
+## ID_14      
+## ID_15   0.9</code></pre>
 </div>
 <div id="maximum-distance" class="section level3">
 <h3><span class="header-section-number">9.5.3</span> Maximum Distance</h3>

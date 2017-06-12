@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-12">
+<meta name="date" content="2017-06-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="4-2-frequency-table.html">
-<link rel="next" href="5-data-preprocessing.html">
+<link rel="next" href="4-4-r-with-sql-emulation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -106,9 +106,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
 <li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a><ul>
 <li class="chapter" data-level="1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html"><i class="fa fa-check"></i><b>1.1</b> Package Management</a><ul>
-<li class="chapter" data-level="1.1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html#packages-listing"><i class="fa fa-check"></i><b>1.1.1</b> Packages Listing</a></li>
-<li class="chapter" data-level="1.1.2" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-install-remove"><i class="fa fa-check"></i><b>1.1.2</b> Package Install / Remove</a></li>
-<li class="chapter" data-level="1.1.3" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-update"><i class="fa fa-check"></i><b>1.1.3</b> Package Update</a></li>
+<li class="chapter" data-level="1.1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-storage"><i class="fa fa-check"></i><b>1.1.1</b> Package Storage</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-listing"><i class="fa fa-check"></i><b>1.1.2</b> Package Listing</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-install-removal"><i class="fa fa-check"></i><b>1.1.3</b> Package Install / Removal</a></li>
+<li class="chapter" data-level="1.1.4" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-update"><i class="fa fa-check"></i><b>1.1.4</b> Package Update</a></li>
+<li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#string"><i class="fa fa-check"></i><b>1.2.1</b> String</a></li>
@@ -163,32 +165,40 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="4-3-data-aggregation.html"><a href="4-3-data-aggregation.html"><i class="fa fa-check"></i><b>4.3</b> Data Aggregation</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="4-3-data-aggregation.html"><a href="4-3-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.3.1</b> aggretate - base R</a></li>
-<li class="chapter" data-level="4.3.2" data-path="4-3-data-aggregation.html"><a href="4-3-data-aggregation.html#group_by---dplyr-package"><i class="fa fa-check"></i><b>4.3.2</b> group_by - dplyr Package</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="4-4-r-with-sql-emulation.html"><a href="4-4-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.4</b> R with SQL Emulation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="4-4-r-with-sql-emulation.html"><a href="4-4-r-with-sql-emulation.html#library"><i class="fa fa-check"></i><b>4.4.1</b> Library</a></li>
+<li class="chapter" data-level="4.4.2" data-path="4-4-r-with-sql-emulation.html"><a href="4-4-r-with-sql-emulation.html#run-the-code"><i class="fa fa-check"></i><b>4.4.2</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
-<li class="chapter" data-level="5.1" data-path="5-1-sample-data-1.html"><a href="5-1-sample-data-1.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
+<li class="chapter" data-level="5.1" data-path="5-1-library-1.html"><a href="5-1-library-1.html"><i class="fa fa-check"></i><b>5.1</b> Library</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-sample-data-1.html"><a href="5-2-sample-data-1.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html"><i class="fa fa-check"></i><b>5.3</b> Column Manipulation</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
-<li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html#date-and-string-conversion"><i class="fa fa-check"></i><b>5.4.1</b> Date and String Conversion</a></li>
+<li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
+<li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="5-5-string-extraction.html"><a href="5-5-string-extraction.html"><i class="fa fa-check"></i><b>5.5</b> String Extraction</a></li>
-<li class="chapter" data-level="5.6" data-path="5-6-artificial-grouping.html"><a href="5-6-artificial-grouping.html"><i class="fa fa-check"></i><b>5.6</b> Artificial Grouping</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="5-6-artificial-grouping.html"><a href="5-6-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.6.1</b> Grouping with Numeric Breakpoints</a></li>
-<li class="chapter" data-level="5.6.2" data-path="5-6-artificial-grouping.html"><a href="5-6-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.6.2</b> Grouping based on Custom Criteria</a></li>
+<li class="chapter" data-level="5.5" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html"><i class="fa fa-check"></i><b>5.5</b> String Manipulation</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#extration"><i class="fa fa-check"></i><b>5.5.1</b> Extration</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#removal"><i class="fa fa-check"></i><b>5.5.2</b> Removal</a></li>
+<li class="chapter" data-level="5.5.3" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.5.3</b> Concatenation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="5-7-handling-missing-data.html"><a href="5-7-handling-missing-data.html"><i class="fa fa-check"></i><b>5.7</b> Handling Missing Data</a><ul>
-<li class="chapter" data-level="5.7.1" data-path="5-7-handling-missing-data.html"><a href="5-7-handling-missing-data.html#detecting-missing-data"><i class="fa fa-check"></i><b>5.7.1</b> Detecting Missing Data</a></li>
-<li class="chapter" data-level="5.7.2" data-path="5-7-handling-missing-data.html"><a href="5-7-handling-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.7.2</b> Removing Missing Data</a></li>
+<li class="chapter" data-level="5.6" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html"><i class="fa fa-check"></i><b>5.6</b> Date Manipulation</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#conversion-to-date"><i class="fa fa-check"></i><b>5.6.1</b> Conversion To Date</a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html"><i class="fa fa-check"></i><b>5.8</b> Scaling Data</a><ul>
-<li class="chapter" data-level="5.8.1" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html#sample-data-2"><i class="fa fa-check"></i><b>5.8.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.8.2" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html#z-score-scaling"><i class="fa fa-check"></i><b>5.8.2</b> Z-Score Scaling</a></li>
-<li class="chapter" data-level="5.8.3" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html#min-max-scaling"><i class="fa fa-check"></i><b>5.8.3</b> Min Max Scaling</a></li>
+<li class="chapter" data-level="5.7" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> Number Manipulation</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#sample-data-2"><i class="fa fa-check"></i><b>5.7.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.7.2" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#z-score-scaling"><i class="fa fa-check"></i><b>5.7.2</b> Z-Score Scaling</a></li>
+<li class="chapter" data-level="5.7.3" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#min-max-scaling"><i class="fa fa-check"></i><b>5.7.3</b> Min Max Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="5-8-artificial-grouping.html"><a href="5-8-artificial-grouping.html"><i class="fa fa-check"></i><b>5.8</b> Artificial Grouping</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="5-8-artificial-grouping.html"><a href="5-8-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.8.1</b> Grouping with Numeric Breakpoints</a></li>
+<li class="chapter" data-level="5.8.2" data-path="5-8-artificial-grouping.html"><a href="5-8-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.8.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-ordering-and-filter-data.html"><a href="6-ordering-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Ordering and Filter Data</a><ul>
@@ -262,11 +272,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="9.8" data-path="9-8-hierarchical-clustering.html"><a href="9-8-hierarchical-clustering.html"><i class="fa fa-check"></i><b>9.8</b> Hierarchical Clustering</a><ul>
 <li class="chapter" data-level="9.8.1" data-path="9-8-hierarchical-clustering.html"><a href="9-8-hierarchical-clustering.html#clustering-algorithm"><i class="fa fa-check"></i><b>9.8.1</b> Clustering Algorithm</a></li>
 <li class="chapter" data-level="9.8.2" data-path="9-8-hierarchical-clustering.html"><a href="9-8-hierarchical-clustering.html#inter-cluster-distance-method"><i class="fa fa-check"></i><b>9.8.2</b> Inter Cluster Distance Method</a></li>
-<li class="chapter" data-level="9.8.3" data-path="9-8-hierarchical-clustering.html"><a href="9-8-hierarchical-clustering.html#run-the-code-1"><i class="fa fa-check"></i><b>9.8.3</b> Run The Code</a></li>
+<li class="chapter" data-level="9.8.3" data-path="9-8-hierarchical-clustering.html"><a href="9-8-hierarchical-clustering.html#run-the-code-2"><i class="fa fa-check"></i><b>9.8.3</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="9.9" data-path="9-9-k-mean-clustering.html"><a href="9-9-k-mean-clustering.html"><i class="fa fa-check"></i><b>9.9</b> K-Mean Clustering</a><ul>
 <li class="chapter" data-level="9.9.1" data-path="9-9-k-mean-clustering.html"><a href="9-9-k-mean-clustering.html#clustering-algorithm-1"><i class="fa fa-check"></i><b>9.9.1</b> Clustering Algorithm</a></li>
-<li class="chapter" data-level="9.9.2" data-path="9-9-k-mean-clustering.html"><a href="9-9-k-mean-clustering.html#run-the-code-2"><i class="fa fa-check"></i><b>9.9.2</b> Run The Code</a></li>
+<li class="chapter" data-level="9.9.2" data-path="9-9-k-mean-clustering.html"><a href="9-9-k-mean-clustering.html#run-the-code-3"><i class="fa fa-check"></i><b>9.9.2</b> Run The Code</a></li>
 <li class="chapter" data-level="9.9.3" data-path="9-9-k-mean-clustering.html"><a href="9-9-k-mean-clustering.html#visualizing-k-mean-cluster"><i class="fa fa-check"></i><b>9.9.3</b> Visualizing K-Mean Cluster</a></li>
 </ul></li>
 <li class="chapter" data-level="9.10" data-path="9-10-agreement-with-actual-group-data.html"><a href="9-10-agreement-with-actual-group-data.html"><i class="fa fa-check"></i><b>9.10</b> Agreement With Actual Group Data</a><ul>
@@ -290,7 +300,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.4.3" data-path="10-4-linear-regression-ols.html"><a href="10-4-linear-regression-ols.html#equations"><i class="fa fa-check"></i><b>10.4.3</b> Equations</a></li>
 <li class="chapter" data-level="10.4.4" data-path="10-4-linear-regression-ols.html"><a href="10-4-linear-regression-ols.html#ols-performance"><i class="fa fa-check"></i><b>10.4.4</b> OLS Performance</a></li>
 <li class="chapter" data-level="10.4.5" data-path="10-4-linear-regression-ols.html"><a href="10-4-linear-regression-ols.html#sample-data-7"><i class="fa fa-check"></i><b>10.4.5</b> Sample Data</a></li>
-<li class="chapter" data-level="10.4.6" data-path="10-4-linear-regression-ols.html"><a href="10-4-linear-regression-ols.html#run-the-code-3"><i class="fa fa-check"></i><b>10.4.6</b> Run The Code</a></li>
+<li class="chapter" data-level="10.4.6" data-path="10-4-linear-regression-ols.html"><a href="10-4-linear-regression-ols.html#run-the-code-4"><i class="fa fa-check"></i><b>10.4.6</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="10.5" data-path="10-5-regression-diagnostic.html"><a href="10-5-regression-diagnostic.html"><i class="fa fa-check"></i><b>10.5</b> Regression Diagnostic</a><ul>
 <li class="chapter" data-level="10.5.1" data-path="10-5-regression-diagnostic.html"><a href="10-5-regression-diagnostic.html#outlier-test"><i class="fa fa-check"></i><b>10.5.1</b> Outlier Test</a></li>
@@ -309,7 +319,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4.2" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#assumptions-1"><i class="fa fa-check"></i><b>11.4.2</b> Assumptions</a></li>
 <li class="chapter" data-level="11.4.3" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#equations-1"><i class="fa fa-check"></i><b>11.4.3</b> Equations</a></li>
 <li class="chapter" data-level="11.4.4" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#sample-data-8"><i class="fa fa-check"></i><b>11.4.4</b> Sample Data</a></li>
-<li class="chapter" data-level="11.4.5" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#run-the-code-4"><i class="fa fa-check"></i><b>11.4.5</b> Run The Code</a></li>
+<li class="chapter" data-level="11.4.5" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#run-the-code-5"><i class="fa fa-check"></i><b>11.4.5</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html"><i class="fa fa-check"></i><b>11.5</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.5.1" data-path="11-5-performance-measurement.html"><a href="11-5-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.5.1</b> Confusion Matrix</a></li>
@@ -320,6 +330,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.1" data-path="12-1-library-used-1.html"><a href="12-1-library-used-1.html"><i class="fa fa-check"></i><b>12.1</b> Library Used</a></li>
 <li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
 <li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
+<li class="chapter" data-level="12.4" data-path="12-4-performance-evaluation.html"><a href="12-4-performance-evaluation.html"><i class="fa fa-check"></i><b>12.4</b> Performance Evaluation</a></li>
 </ul></li>
 </ul>
 
@@ -455,19 +466,14 @@ Change from FUN=length to sum results in <strong>error</strong> because sum() ca
 ## 6  G2   D3 50.34312 20.54948</code></pre>
 </div>
 </div>
-<div id="group_by---dplyr-package" class="section level3">
-<h3><span class="header-section-number">4.3.2</span> group_by - dplyr Package</h3>
-
 </div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
 <a href="4-2-frequency-table.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="5-data-preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="4-4-r-with-sql-emulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

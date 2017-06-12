@@ -1,23 +1,32 @@
 # Data Preprocessing
 
+## Library
+
+```{r}
+library('lubridate')
+```
+
 ## Sample Data
 
 ```{r results='markup'}
-sample.df <- read.csv ( file="./datasets/import_sample.csv", 
+my.df <- read.csv ( file="./datasets/import_sample.csv", 
     na.strings=c('NA','NULL',''),
+    stringsAsFactors = FALSE,
     encoding="UTF-8")
-sample.df
-str(sample.df)
+my.df
+str(my.df)
 ```
-## Duplicate and Deleting Columns
 
-### Duplicating columns
+## Column Manipulation
+
+### Duplicating Columns
 
 Duplicate single column using `$` selector  
 
 ```{r}
-sample.df$Z = sample.df$X
-str(sample.df)
+my.df$Z1 = my.df$X
+my.df$Z2 = my.df$X
+str(my.df)
 ```
 
 ### Delete Columns
@@ -25,60 +34,146 @@ str(sample.df)
 Delete **single column** using `$` column selector, setting to NULL.  
 
 ```{r}
-sample.df$Z = NULL
+my.df$Z1 = NULL
 ```
 
 **Delete multiple columns** using multiple columns selector `[,vector]`, with vector containing column numbers or names, setting to NULL.  
 
 ```{r}
-sample.df[,c('X','date_string')] = NULL
-str(sample.df)
+my.df[,c('X','Z2')] = NULL
+str(my.df)
 ```
 
-## Renaming Columns
+### Renaming Columns
 
 **colnames** returns vector of names attribute of data.frame.  
 
 ```{r, results='hold'}
-attributes(sample.df)
-colnames(sample.df)
+attributes(my.df)
+colnames(my.df)
 ```
 
-Use **colnames** to rename one or multiple columns. Use `[]` to select the specific column(s).  
+Use **colnames** to rename single or multiple columns. Use `[]` to select the specific column(s).  
 
 ```{r, results='hold'}
-colnames(sample.df)[c(1,6)] = c('id','date_my')
-str(sample.df)
+colnames(my.df)[c(1,9)] = c('id','date_first')
+colnames(my.df)
 ```
 
-## Data Conversion
 
-### Date and String Conversion
+## Missing Data
 
-By default when importing string into data frame, they are converted to factor (stringAsFactor=TRUE). It is usually desirable to convert back to its original format such as string and date.  
+### Detecting Complete/Incomplete Vector/Row
 
-**Before Conversion**, except for numeric data, notice all string and date columns are imported as factor.  
+**complete.cases** returns logical vector for elements that **doesn't** contain <NA>, with TRUE. It can be applied to both vector or data.frame.  
+
+```{r results='hold'}
+complete.cases(my.df$date_birth)   # vector example
+complete.cases(my.df)              # data.frame example
+```
+
+**Negate** complete.cases resulting TRUE for rows containing <NA>.  
+
+```{r results='hold'}
+!complete.cases(my.df$date_birth)  # vector example
+!complete.cases(my.df)             # data.frame example
+```
+
+Result from complete.cases is useful to **retrieve incomplete** rows for further investigation.  
 
 ```{r}
-str(sample.df)
+my.df[!complete.cases(my.df),]
 ```
 
-**as.Date** can convert vector into `date` data type. The original data must have a **format** that allow as.Date to recognize it.  
 
-**as.character** will convert vector to `chr`.  
+### Removing Missing Data
+
+**na.omit** returns data with <NA> removed.  This is a **more elegant** way to filtering compare with using **complete.cases**.  
 
 ```{r results='markup'}
-sample.df$id      = as.character(sample.df$id)
-sample.df$date_uk = as.Date(sample.df$date_uk, "%d/%m/%Y")
-sample.df$date_my = as.Date(sample.df$date_uk, "%Y-%m-%d")
-str(sample.df)
-sample.df
+na.omit(my.df$date_birth) # vector example
+
+# my.df[complate.cases(my.df),]   # longer method which is less elegant
+na.omit(my.df)                    # data.frame example
 ```
 
+## String Manipulation
 
-## String Extraction
+### Extration
+
+### Removal
+
+### Concatenation
 
 
+## Date Manipulation
+
+### Conversion To Date
+
+The example below demonstrates conversion of date columns from formated string.  
+
+**Before Conversion**, verify that all dates column are actually `chr`.    
+
+```{r}
+str(my.df)
+```
+
+Two ways to convert string to date:  
+
+- **as.Date** can convert vector into `date` data type. A format parameter has to be specified to match the source format  
+- lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required  
+
+In both methods, unmatched rows with unrecognized format will throw an error.  
+
+```{r results='markup'}
+my.df$date_birth = as.Date( my.df$date_birth, format = "%d/%m/%Y" )  # base R
+my.df$date_last  = mdy( my.df$date_last  )    # lubridate 
+my.df$date_first = ymd( my.df$date_first )    # lubridate
+str(my.df)
+```
+
+## Number Manipulation
+
+### Sample Data
+
+Scaling section will use sample data generated as below:  
+
+```{r}
+set.seed(1234)
+my.df = data.frame(
+  id = paste('ID_', 1:5, sep = ''),
+  value1 = sample(50:100, 5),
+  value2 = sample(10:50, 5),
+  stringsAsFactors = F
+)
+my.df
+```
+
+### Z-Score Scaling
+
+`scale` apply transformation **column-wise**, for  columns within matrix or dataframe  
+`scale` return a **matrix**  
+
+>`scale (x, center=T, scale=T)`  # default S-Score transformation  
+>$\quad$ `center = T (default) means value minus with mean`  
+>$\quad$ `scale  = T (default) means value divide by sd`  
+>$\quad$ $\quad$ `output scaled:center --> mean`  
+>$\quad$ $\quad$ `output scaled:scale  --> sd`  
+
+```{r results='markdown'}
+scale( my.df[,2:3] )
+scale( my.df[,2:3], scale=F )
+```
+
+### Min Max Scaling
+
+Min-Max scaling will transform all numbers between 0 and 1.  
+Easiest way to perform this transformation is to write a function then `apply`.  
+
+```{r}
+min_max = function(x){(x-min(x))/(max(x)-min(x))}
+apply( my.df[,2:3], MARGIN = 2, FUN = min_max )  ## 2 means column-wise
+```
 
 
 ## Artificial Grouping
@@ -124,53 +219,6 @@ data.frame(p,g)
 
 ???
 
-## Handling Missing Data
 
-### Detecting Missing Data
-
-### Removing Missing Data
-
-
-## Scaling Data
-
-### Sample Data
-
-Scaling section will use sample data generated as below:  
-```{r}
-set.seed(1234)
-my.df = data.frame(
-  id = paste('ID_', 1:5, sep = ''),
-  value1 = sample(50:100, 5),
-  value2 = sample(10:50, 5),
-  stringsAsFactors = F
-)
-my.df
-```
-
-### Z-Score Scaling
-
-`scale` apply transformation **column-wise**, for  columns within matrix or dataframe  
-`scale` return a **matrix**  
-
->`scale (x, center=T, scale=T)`  # default S-Score transformation  
->$\quad$ `center = T (default) means value minus with mean`  
->$\quad$ `scale  = T (default) means value divide by sd`  
->$\quad$ $\quad$ `output scaled:center --> mean`  
->$\quad$ $\quad$ `output scaled:scale  --> sd`  
-
-```{r results='markdown'}
-scale( my.df[,2:3] )
-scale( my.df[,2:3], scale=F )
-```
-
-### Min Max Scaling
-
-Min-Max scaling will transform all numbers between 0 and 1.  
-Easiest way to perform this transformation is to write a function then `apply`.  
-
-```{r}
-min_max = function(x){(x-min(x))/(max(x)-min(x))}
-apply( my.df[,2:3], MARGIN = 2, FUN = min_max )  ## 2 means column-wise
-```
 
 

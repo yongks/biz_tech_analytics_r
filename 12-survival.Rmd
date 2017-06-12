@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.width=9)
 ```
 
 
@@ -28,14 +28,19 @@ summary(main.data)
 
 ## The Code
 
+**Create the Model**  
+
+Step 1 - Use survival::Surv to create an object that ties time (lifetime) to event (broken). This object simple simply combines both time and event variables together in a matrix.  
+
+Step 2 - run the modelling with the time-event object create above, specify the parameters and distribution (example below use normal distribution).  
+
 ```{r}
-dependantVar = Surv(main.data$lifetime, main.data.train$broken)
+dependantVar = Surv(main.data$lifetime, main.data$broken)
 main.fit = survreg(dependantVar~pressureInd+moistureInd+temperatureInd+team+provider, 
                    dist="gaussian", 
                    data=main.data)
 summary(main.fit)
 ```
-
 
 Use the model to predict lifetime before break (labeled as Ebreak below).  Then calculate the remaing lifetime (remaingLT) as predicted lifetime before break - current lifetime.
 
@@ -57,4 +62,25 @@ Put all into one data.frame.  Sort the remainingLT with lowest first, so that th
 
 ```{r}
 head(main.data.forecast[order(main.data.forecast$remainingLT, decreasing = FALSE),])
+```
+
+
+## Performance Evaluation
+
+Performance can be measured by analysis **how well the model predict the lifetime of 'already happened event'**, which is the training data.  Subset the training data.  
+
+```{r}
+eval.data = subset ( main.data.forecast, broken==1)
+```
+
+Measure **correlation** of the predicted and actual.  
+
+```{r, collapse=TRUE}
+cor(eval.data$Ebreak,eval.data$lifetime)
+```
+
+**Visualize** the fitness of the model.  
+
+```{r}
+plot(eval.data$Ebreak, eval.data$lifetime)
 ```

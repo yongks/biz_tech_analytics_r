@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-11">
+<meta name="date" content="2017-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="4-data-summarization.html">
-<link rel="next" href="5-1-artificial-grouping.html">
+<link rel="next" href="5-1-sample-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -109,26 +109,37 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
 <li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
-<li class="chapter" data-level="5.1" data-path="5-1-artificial-grouping.html"><a href="5-1-artificial-grouping.html"><i class="fa fa-check"></i><b>5.1</b> Artificial Grouping</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="5-1-artificial-grouping.html"><a href="5-1-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.1.1</b> Grouping with Numeric Breakpoints</a></li>
-<li class="chapter" data-level="5.1.2" data-path="5-1-artificial-grouping.html"><a href="5-1-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.1.2</b> Grouping based on Custom Criteria</a></li>
+<li class="chapter" data-level="5.1" data-path="5-1-sample-data.html"><a href="5-1-sample-data.html"><i class="fa fa-check"></i><b>5.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html"><i class="fa fa-check"></i><b>5.2</b> Duplicate and Deleting Columns</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#duplicating-columns"><i class="fa fa-check"></i><b>5.2.1</b> Duplicating columns</a></li>
+<li class="chapter" data-level="5.2.2" data-path="5-2-duplicate-and-deleting-columns.html"><a href="5-2-duplicate-and-deleting-columns.html#delete-columns"><i class="fa fa-check"></i><b>5.2.2</b> Delete Columns</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="5-2-handling-missing-data.html"><a href="5-2-handling-missing-data.html"><i class="fa fa-check"></i><b>5.2</b> Handling Missing Data</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="5-2-handling-missing-data.html"><a href="5-2-handling-missing-data.html#detecting-missing-data"><i class="fa fa-check"></i><b>5.2.1</b> Detecting Missing Data</a></li>
-<li class="chapter" data-level="5.2.2" data-path="5-2-handling-missing-data.html"><a href="5-2-handling-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.2.2</b> Removing Missing Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-renaming-columns.html"><a href="5-3-renaming-columns.html"><i class="fa fa-check"></i><b>5.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.4" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html"><i class="fa fa-check"></i><b>5.4</b> Data Conversion</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-data-conversion.html"><a href="5-4-data-conversion.html#date-and-string-conversion"><i class="fa fa-check"></i><b>5.4.1</b> Date and String Conversion</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html"><i class="fa fa-check"></i><b>5.3</b> Scaling Data</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html#sample-data"><i class="fa fa-check"></i><b>5.3.1</b> Sample Data</a></li>
-<li class="chapter" data-level="5.3.2" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html#z-score-scaling"><i class="fa fa-check"></i><b>5.3.2</b> Z-Score Scaling</a></li>
-<li class="chapter" data-level="5.3.3" data-path="5-3-scaling-data.html"><a href="5-3-scaling-data.html#min-max-scaling"><i class="fa fa-check"></i><b>5.3.3</b> Min Max Scaling</a></li>
+<li class="chapter" data-level="5.5" data-path="5-5-string-extraction.html"><a href="5-5-string-extraction.html"><i class="fa fa-check"></i><b>5.5</b> String Extraction</a></li>
+<li class="chapter" data-level="5.6" data-path="5-6-artificial-grouping.html"><a href="5-6-artificial-grouping.html"><i class="fa fa-check"></i><b>5.6</b> Artificial Grouping</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-artificial-grouping.html"><a href="5-6-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.6.1</b> Grouping with Numeric Breakpoints</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-artificial-grouping.html"><a href="5-6-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.6.2</b> Grouping based on Custom Criteria</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-handling-missing-data.html"><a href="5-7-handling-missing-data.html"><i class="fa fa-check"></i><b>5.7</b> Handling Missing Data</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="5-7-handling-missing-data.html"><a href="5-7-handling-missing-data.html#detecting-missing-data"><i class="fa fa-check"></i><b>5.7.1</b> Detecting Missing Data</a></li>
+<li class="chapter" data-level="5.7.2" data-path="5-7-handling-missing-data.html"><a href="5-7-handling-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.7.2</b> Removing Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html"><i class="fa fa-check"></i><b>5.8</b> Scaling Data</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html#sample-data-1"><i class="fa fa-check"></i><b>5.8.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.8.2" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html#z-score-scaling"><i class="fa fa-check"></i><b>5.8.2</b> Z-Score Scaling</a></li>
+<li class="chapter" data-level="5.8.3" data-path="5-8-scaling-data.html"><a href="5-8-scaling-data.html#min-max-scaling"><i class="fa fa-check"></i><b>5.8.3</b> Min Max Scaling</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-ordering-and-filter-data.html"><a href="6-ordering-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Ordering and Filter Data</a></li>
 <li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a></li>
 <li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
 <li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
-<li class="chapter" data-level="10" data-path="10-classification.html"><a href="10-classification.html"><i class="fa fa-check"></i><b>10</b> Classification</a></li>
-<li class="chapter" data-level="11" data-path="11-regression-analysis.html"><a href="11-regression-analysis.html"><i class="fa fa-check"></i><b>11</b> Regression Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
 </ul>
 
       </nav>
@@ -155,7 +166,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
         </div>
       </div>
 <a href="4-data-summarization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="5-1-artificial-grouping.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="5-1-sample-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

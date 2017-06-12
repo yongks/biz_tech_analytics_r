@@ -71,7 +71,9 @@ detach(my.df)
 
 ## Filtering Data
 
-There are two methods of filtering data:  
+There are two methods of filtering data, using logical vector or subset() function.  
+
+With both methods, **row.names are retained** in the output vector/dataframe.  
 
 - **subset()** is a general function that can be used to filter vector, matrix and data.frame  
 - logical vector method - derive a conditional criteria that produce a logical vector, then apply to element selection  

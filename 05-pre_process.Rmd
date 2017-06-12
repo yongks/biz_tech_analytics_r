@@ -1,5 +1,86 @@
 # Data Preprocessing
 
+## Sample Data
+
+```{r results='markup'}
+sample.df <- read.csv ( file="./datasets/import_sample.csv", 
+    na.strings=c('NA','NULL',''),
+    encoding="UTF-8")
+sample.df
+str(sample.df)
+```
+## Duplicate and Deleting Columns
+
+### Duplicating columns
+
+Duplicate single column using `$` selector  
+
+```{r}
+sample.df$Z = sample.df$X
+str(sample.df)
+```
+
+### Delete Columns
+
+Delete **single column** using `$` column selector, setting to NULL.  
+
+```{r}
+sample.df$Z = NULL
+```
+
+**Delete multiple columns** using multiple columns selector `[,vector]`, with vector containing column numbers or names, setting to NULL.  
+
+```{r}
+sample.df[,c('X','date_string')] = NULL
+str(sample.df)
+```
+
+## Renaming Columns
+
+**colnames** returns vector of names attribute of data.frame.  
+
+```{r, results='hold'}
+attributes(sample.df)
+colnames(sample.df)
+```
+
+Use **colnames** to rename one or multiple columns. Use `[]` to select the specific column(s).  
+
+```{r, results='hold'}
+colnames(sample.df)[c(1,6)] = c('id','date_my')
+str(sample.df)
+```
+
+## Data Conversion
+
+### Date and String Conversion
+
+By default when importing string into data frame, they are converted to factor (stringAsFactor=TRUE). It is usually desirable to convert back to its original format such as string and date.  
+
+**Before Conversion**, except for numeric data, notice all string and date columns are imported as factor.  
+
+```{r}
+str(sample.df)
+```
+
+**as.Date** can convert vector into `date` data type. The original data must have a **format** that allow as.Date to recognize it.  
+
+**as.character** will convert vector to `chr`.  
+
+```{r results='markup'}
+sample.df$id      = as.character(sample.df$id)
+sample.df$date_uk = as.Date(sample.df$date_uk, "%d/%m/%Y")
+sample.df$date_my = as.Date(sample.df$date_uk, "%Y-%m-%d")
+str(sample.df)
+sample.df
+```
+
+
+## String Extraction
+
+
+
+
 ## Artificial Grouping
 
 Artificial group can be created based on existing numeric data.  Such as age_group based on age.  

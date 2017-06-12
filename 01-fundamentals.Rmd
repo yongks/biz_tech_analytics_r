@@ -104,6 +104,8 @@ setwd("...new path...)
 
 **read.csv** is a similar to **read.table** but with some defaults value set as below for convenience of CSV import.  
 
+In the resulting data.frame, row.names attribute are automatically assigned with sequence number starting from 1.  
+
 > **read.csv** ( file,   
 > $\quad$ header = TRUE  - contain header row  
 > $\quad$ sep = ","  - column seperator marked as ','  

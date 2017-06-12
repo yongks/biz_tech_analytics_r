@@ -4,7 +4,7 @@
 
 ## Application
 
-## Choosing The Right Algorithm
+## Comparing Algorithm
 
 ## Logistic Regression
 
@@ -81,18 +81,42 @@ glm (y ~ x1 + x2 + x3 , family=binomial(logit), data=my.df)
 
 ## Performance Measurement
 
-summary(fit) # display results
-confint(fit) # 95% CI for the coefficients
-exp(coef(fit)) # exponentiated coefficients
-exp(confint(fit)) # 95% CI for exponentiated coefficients
-predict(fit, type="response") # predicted values
-residuals(fit, type="deviance") # residuals 
+> summary(fit) # display results  
+> confint(fit) # 95% CI for the coefficients  
+> exp(coef(fit)) # exponentiated coefficients  
+> exp(confint(fit)) # 95% CI for exponentiated coefficients  
+> predict(fit, type="response") # predicted values  
+> residuals(fit, type="deviance") # residuals   
 
 ### Confusion Matrix
 
 ![Confusion Matrix](./images/confusion_table.jpg)
 
 $Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$
+
+**Simulate the Binary Data** and generate frequency table of Actual vs Predicted  
+
+```{r}
+predicted = sample(0:1, 33, replace=T)
+actual    = sample(0:1, 33, replace=T)
+t = table(actual, predicted)    # 2-dim frequency table
+t
+```
+
+**Generate Proportion Table**  
+
+```{r results='markup'}
+p1 = prop.table(t)              # for accuracy calc
+addmargins(p1)
+p2 = prop.table(t, margin = 1)  # for tpr, fpr, fnr, tnr calc
+addmargins(p2,2)
+```
+
+**Calcuate Metrics**  
+
+```{r}
+c(accuracy=p1[1]+p1[4],tpr=p2[1],fpr=p2[2],fnr=p2[3],tnr=p2[4])
+```
 
 
 ### ROC Curve

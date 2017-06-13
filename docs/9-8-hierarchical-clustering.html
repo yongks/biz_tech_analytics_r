@@ -189,7 +189,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.5.3" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.5.3</b> Concatenation</a></li>
 </ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html"><i class="fa fa-check"></i><b>5.6</b> Date Manipulation</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#conversion-to-date"><i class="fa fa-check"></i><b>5.6.1</b> Conversion To Date</a></li>
+<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#parsing-date"><i class="fa fa-check"></i><b>5.6.1</b> Parsing Date</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonthsyear-different"><i class="fa fa-check"></i><b>5.6.2</b> Days/Months/Year Different</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonhtsyears-later"><i class="fa fa-check"></i><b>5.6.3</b> Days/Monhts/Years Later</a></li>
+<li class="chapter" data-level="5.6.4" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#last-day-of-month"><i class="fa fa-check"></i><b>5.6.4</b> Last Day of Month</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> Number Manipulation</a><ul>
 <li class="chapter" data-level="5.7.1" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#sample-data-2"><i class="fa fa-check"></i><b>5.7.1</b> Sample Data</a></li>
@@ -430,7 +433,7 @@ clusters
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
 <span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-124-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-124-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-136-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-136-2.png" width="384" /></p>
 </div>
 <div id="using-factoextra-package" class="section level4">
 <h4><span class="header-section-number">9.8.3.2</span> Using <code>factoextra</code> Package</h4>
@@ -458,7 +461,7 @@ clusters
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-128-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-128-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-140-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-140-2.png" width="384" /></p>
 </div>
 </div>
 </div>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-06-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="5-1-library.html">
+<link rel="next" href="5-3-column-manipulation.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-1-library.html"><a href="5-1-library.html"><i class="fa fa-check"></i><b>5.1</b> Library</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-sample-data.html"><a href="5-2-sample-data.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html"><i class="fa fa-check"></i><b>5.3</b> Column Manipulation</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
+<li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html"><i class="fa fa-check"></i><b>5.5</b> String Manipulation</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#extration"><i class="fa fa-check"></i><b>5.5.1</b> Extration</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#removal"><i class="fa fa-check"></i><b>5.5.2</b> Removal</a></li>
+<li class="chapter" data-level="5.5.3" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.5.3</b> Concatenation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html"><i class="fa fa-check"></i><b>5.6</b> Date Manipulation</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#parsing-date"><i class="fa fa-check"></i><b>5.6.1</b> Parsing Date</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonthsyear-different"><i class="fa fa-check"></i><b>5.6.2</b> Days/Months/Year Different</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonhtsyears-later"><i class="fa fa-check"></i><b>5.6.3</b> Days/Monhts/Years Later</a></li>
+<li class="chapter" data-level="5.6.4" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#last-day-of-month"><i class="fa fa-check"></i><b>5.6.4</b> Last Day of Month</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> Number Manipulation</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#sample-data-1"><i class="fa fa-check"></i><b>5.7.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.7.2" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#z-score-scaling"><i class="fa fa-check"></i><b>5.7.2</b> Z-Score Scaling</a></li>
+<li class="chapter" data-level="5.7.3" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#min-max-scaling"><i class="fa fa-check"></i><b>5.7.3</b> Min Max Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="5-8-artificial-grouping.html"><a href="5-8-artificial-grouping.html"><i class="fa fa-check"></i><b>5.8</b> Artificial Grouping</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="5-8-artificial-grouping.html"><a href="5-8-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.8.1</b> Grouping with Numeric Breakpoints</a></li>
+<li class="chapter" data-level="5.8.2" data-path="5-8-artificial-grouping.html"><a href="5-8-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.8.2</b> Grouping based on Custom Criteria</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-ordering-and-filter-data.html"><a href="6-ordering-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Ordering and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sample-data" class="section level2">
+<h2><span class="header-section-number">5.2</span> Sample Data</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df &lt;-<span class="st"> </span><span class="kw">read.csv</span> ( <span class="dt">file=</span><span class="st">&quot;./datasets/import_sample.csv&quot;</span>, 
+    <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;NA&#39;</span>,<span class="st">&#39;NULL&#39;</span>,<span class="st">&#39;&#39;</span>),
+    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>,
+    <span class="dt">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)
+my.df</code></pre></div>
+<pre><code>##     X   X.1 dept gender   weight height date_birth amount  date_last
+## 1   1 ID101   D1   Male 35.00000    173   1/7/1973    100  2/29/2016
+## 2   2 ID102   D2 Female 37.10000    164  28/2/1980    121   4/1/2017
+## 3   3 ID103   D3 Female 43.12000    178 31/12/1978    152 10/31/2015
+## 4   4 ID104   D1   Male 38.12300    182  12/1/1997    133  11/1/2016
+## 5   5 ID105   D1   Male 54.12340    159   2/1/1982    143  9/30/2016
+## 6  NA ID106   D3 Female 34.12345    166  26/7/1973    155 11/27/2015
+## 7   7 ID107   D2   Male 49.12346    153  21/8/1985    117  3/31/2017
+## 8   8 ID108   D3 Female 75.10000    151   9/8/1983    135   2/1/2015
+## 9   9 ID109   D2   Male 52.10000    169       &lt;NA&gt;    128       &lt;NA&gt;
+## 10 10 ID110   D3   &lt;NA&gt; 88.80000    171       &lt;NA&gt;    141       &lt;NA&gt;
+##    date.first
+## 1  2013-07-31
+## 2  2013-08-31
+## 3  2014-12-31
+## 4  2015-02-28
+## 5  2012-06-15
+## 6  2013-04-28
+## 7  2014-03-01
+## 8        &lt;NA&gt;
+## 9        &lt;NA&gt;
+## 10       &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.df)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  10 variables:
+##  $ X         : int  1 2 3 4 5 NA 7 8 9 10
+##  $ X.1       : chr  &quot;ID101&quot; &quot;ID102&quot; &quot;ID103&quot; &quot;ID104&quot; ...
+##  $ dept      : chr  &quot;D1&quot; &quot;D2&quot; &quot;D3&quot; &quot;D1&quot; ...
+##  $ gender    : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
+##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height    : int  173 164 178 182 159 166 153 151 169 171
+##  $ date_birth: chr  &quot;1/7/1973&quot; &quot;28/2/1980&quot; &quot;31/12/1978&quot; &quot;12/1/1997&quot; ...
+##  $ amount    : int  100 121 152 133 143 155 117 135 128 141
+##  $ date_last : chr  &quot;2/29/2016&quot; &quot;4/1/2017&quot; &quot;10/31/2015&quot; &quot;11/1/2016&quot; ...
+##  $ date.first: chr  &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; ...</code></pre>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="5-1-library.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="5-3-column-manipulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/05-pre_process.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

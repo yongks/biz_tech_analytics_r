@@ -189,7 +189,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.5.3" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.5.3</b> Concatenation</a></li>
 </ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html"><i class="fa fa-check"></i><b>5.6</b> Date Manipulation</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#conversion-to-date"><i class="fa fa-check"></i><b>5.6.1</b> Conversion To Date</a></li>
+<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#parsing-date"><i class="fa fa-check"></i><b>5.6.1</b> Parsing Date</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonthsyear-different"><i class="fa fa-check"></i><b>5.6.2</b> Days/Months/Year Different</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonhtsyears-later"><i class="fa fa-check"></i><b>5.6.3</b> Days/Monhts/Years Later</a></li>
+<li class="chapter" data-level="5.6.4" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#last-day-of-month"><i class="fa fa-check"></i><b>5.6.4</b> Last Day of Month</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> Number Manipulation</a><ul>
 <li class="chapter" data-level="5.7.1" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#sample-data-2"><i class="fa fa-check"></i><b>5.7.1</b> Sample Data</a></li>
@@ -362,11 +365,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">plot</span>(<span class="kw">as.factor</span>(my.df<span class="op">$</span>dept))
 <span class="kw">barplot</span>(<span class="kw">table</span>(my.df<span class="op">$</span>dept))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-88-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-100-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>dept)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>dept, <span class="dt">geom=</span><span class="st">&#39;bar&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>dept)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-89-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-89-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-89-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-101-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-101-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-101-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data-1" class="section level3">
 <h3><span class="header-section-number">7.5.2</span> Two + One Dimension Data</h3>
@@ -378,14 +381,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> dept, <span class="dt">fill =</span> grp, <span class="dt">geom=</span><span class="st">&#39;bar&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x =</span> dept, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x =</span> dept, <span class="dt">color=</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-90-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-90-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-90-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-90-4.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-102-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-102-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-102-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-102-4.png" width="256.6656" /></p>
 </div>
 <div id="reordering" class="section level3">
 <h3><span class="header-section-number">7.5.3</span> Reordering</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>dept)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>dept, <span class="dt">geom=</span><span class="st">&#39;bar&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>dept)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-92-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-92-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-92-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-104-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-104-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-104-3.png" width="256.6656" /></p>
 </div>
 <div id="positioning" class="section level3">
 <h3><span class="header-section-number">7.5.4</span> Positioning</h3>
@@ -400,7 +403,7 @@ g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</s
 g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="co"># default 0.9</span>
 g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.5</span>))
 g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">1.0</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-4.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-93-5.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-105-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-105-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-105-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-105-4.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-105-5.png" width="256.6656" /></p>
 </div>
 <div id="in-bar-text-labeling" class="section level3">
 <h3><span class="header-section-number">7.5.5</span> In-Bar Text Labeling</h3>

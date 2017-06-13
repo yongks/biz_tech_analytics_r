@@ -189,7 +189,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.5.3" data-path="5-5-string-manipulation.html"><a href="5-5-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.5.3</b> Concatenation</a></li>
 </ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html"><i class="fa fa-check"></i><b>5.6</b> Date Manipulation</a><ul>
-<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#conversion-to-date"><i class="fa fa-check"></i><b>5.6.1</b> Conversion To Date</a></li>
+<li class="chapter" data-level="5.6.1" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#parsing-date"><i class="fa fa-check"></i><b>5.6.1</b> Parsing Date</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonthsyear-different"><i class="fa fa-check"></i><b>5.6.2</b> Days/Months/Year Different</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#daysmonhtsyears-later"><i class="fa fa-check"></i><b>5.6.3</b> Days/Monhts/Years Later</a></li>
+<li class="chapter" data-level="5.6.4" data-path="5-6-date-manipulation.html"><a href="5-6-date-manipulation.html#last-day-of-month"><i class="fa fa-check"></i><b>5.6.4</b> Last Day of Month</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> Number Manipulation</a><ul>
 <li class="chapter" data-level="5.7.1" data-path="5-7-number-manipulation.html"><a href="5-7-number-manipulation.html#sample-data-2"><i class="fa fa-check"></i><b>5.7.1</b> Sample Data</a></li>
@@ -366,8 +369,6 @@ Note that <code>.</code> is a SQL operator, any variable with ‘.’ must be co
 <span class="st">  FROM &#39;my.df&#39;  </span>
 <span class="st">  GROUP BY com, dept</span>
 <span class="st">&quot;</span>)</code></pre></div>
-<pre><code>## Warning: Quoted identifiers should have class SQL, use DBI::SQL() if the
-## caller performs the quoting.</code></pre>
 <pre><code>##   com dept qty  v1_mean   v2_sum
 ## 1  C1   D1  16 48.57577 312.0188
 ## 2  C1   D2  18 51.93834 351.8293

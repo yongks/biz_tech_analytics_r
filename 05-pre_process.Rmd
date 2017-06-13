@@ -2,6 +2,8 @@
 
 ## Library
 
+Below are the external libraries used in this section.  
+
 ```{r}
 library('lubridate')
 ```
@@ -11,8 +13,7 @@ library('lubridate')
 ```{r results='markup'}
 my.df <- read.csv ( file="./datasets/import_sample.csv", 
     na.strings=c('NA','NULL',''),
-    stringsAsFactors = FALSE,
-    encoding="UTF-8")
+    stringsAsFactors = FALSE )
 my.df
 str(my.df)
 ```
@@ -131,8 +132,8 @@ str(my.df)
 
 Two ways to convert string to date:  
 
-- **as.Date** can convert vector into `date` data type. A format parameter has to be specified to match the source format. If not as.Date will try default of "%Y-%m-%d" then "%Y/%m/%d"  
-- lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required, however, it converts only string data. If the data source is factor, use as.Date() instead  
+- **as.Date** can convert vector into `date` data type. A format parameter has to be specified to match the source format. Otherwise `as.Date` will try default format of "%Y-%m-%d" then "%Y/%m/%d"  
+- lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, **convert it to string** first or use **`as.Date()`** instead  
 
 In both methods, unmatched rows with unrecognized format will throw an error.  
 

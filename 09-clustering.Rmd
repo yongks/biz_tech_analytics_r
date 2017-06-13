@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=9, fig.height=2.5, fig
 - It reduce a large number of observations to a much smaller number of clusters or types  
 - A cluster is defined as a group of observations that are more similar to each other than they are to the observations in other groups  
 
-## Packages
+## Library
 
 Below summarizes all packages, their functions and purposes used in this **Clustering Analysis** chapter.  
 

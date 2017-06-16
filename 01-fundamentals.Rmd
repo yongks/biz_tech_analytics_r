@@ -143,11 +143,11 @@ In the resulting data.frame, row.names attribute are automatically assigned with
 
 Examine the below example of data import process (Excel-->csv-->R data.frame):  
 
-**Excel File**  
+#### Original Excel Data Source
 
 ![Check out the Yellow areas in codes below !](./images/sample_excel_import.jpg)
 
-**Exported CSV File from Excel**
+#### Exported CSV File from Excel
 
 ```
 ,,dept,gender,weight,height,date_birth,amount,date_last,date first
@@ -162,7 +162,7 @@ Examine the below example of data import process (Excel-->csv-->R data.frame):
 9,ID109,D2,Male,52.1,169,NULL,128,NA,
 10,ID110,D3,NULL,88.8,171,NULL,141,NA,
 ```
-**Converting to R Data Frame**  
+#### Import Into R Data Frame
 
 Example below specify multiple string elements that represents  **missing data** in the CSV file.  Also turn FALSE for stirngsAsFactors so all string columns are not converted to factor automatically.  
 
@@ -178,7 +178,7 @@ sample.df
 
 Parameter **check.names=TRUE** automatically named 'unnamed' column, as well as replacing white spaces for column names with '.'.  
 
-All non-numeric data are imported as **string**.  
+All non-numeric data are imported as **chr** due to stringsAsFactor=FALSE.  
 
 ```{r, collapse=TRUE}
 str(sample.df)

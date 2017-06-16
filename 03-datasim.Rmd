@@ -38,6 +38,32 @@ my.slinear = gen_slinear(n = 250, start=-1, intercept = 30, coef = 2, mean = 0, 
 my.slinear = gen_slinear(n = 250, start=0, intercept = 30, coef = 2, mean = 0, sd = 10)
 ```
 
+## Logarithm Simulation
+
+```{r}
+
+
+gen_log = function(n = 50, start = -1, root = 0, mean = 0, sd = 10) {
+    par(mfrow = c(2, 2))
+    if (start == -1)
+        my.df = data.frame(x = rnorm(n)) # x is normally distributed random number
+    else
+        my.df = data.frame(x = start:n)  # x from 0 to 50
+    
+    my.df$f = log((my.df$x + root)) # y=log(x+root
+    my.df$residuals = rnorm(length(my.df$x), mean = mean, sd = sd)
+    my.df$y = my.df$f + my.df$residuals  # introduce errors
+    plot(my.df$x, my.df$f, main = paste('Perfect Fit Line:\nf=log(x+', root, ')'))
+    plot(my.df$x, my.df$y, main = 'Constant Normal Errors Introduced')
+    hist(my.df$y, main = 'Y Distribution')
+    hist(my.df$residuals, main = 'Residuals Distribution')
+    my.df
+}
+
+gen_log(n=100, start=1, mean=10, sd=0.2)
+
+```
+
 ## Parabola Simulation
 
 ```{r}

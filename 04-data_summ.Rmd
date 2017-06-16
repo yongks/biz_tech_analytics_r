@@ -159,7 +159,41 @@ addmargins( prop.table( f4 ))
 
 ## Data Aggregation
 
-This chapter explore multiple methods to group data columns and computes value within groups.
+This chapter explore multiple methods to group data columns and computes value within groups:  
+
+1. apply
+2. tapply
+3. aggregate (10x slower than apply)
+
+### tapply
+
+> **`tapply ( X, INDEX, FUN, na.rm = FALSE )`**  
+> $quad$ ` X = value vector`  
+> $quad$ ` INDEX = groups data, can be factor, number of string`  
+> $quad$ ` FUN = function to apply to elements in X according to group specified in INDEX`  
+> $quad$ ` na.rm = FALSE`  
+
+`tapply` will divide the vector (X) into groups (INDEX), and perform computation (FUN) on each group.  
+The output:  
+
+1. Is whatever FUN returns for each group  
+2. **INDEX as dimnames** attribute (accessible through **names()** )
+
+Please take note that if there are <NA> in the vector X, some FUNC may fail to return value, such as mean, sum.  So it is essential to specify `na.rm = TRUE`.  
+
+**FUN that returns vector** - output is a vector  
+
+```{r}
+tapply(my.df$value1, my.df$com, FUN=mean)
+names( tapply(my.df$value1, my.df$com, FUN=mean) )
+```
+
+**FUN that returns non-vector** -  output is **list**  
+
+```{r}
+tapply(my.df$value1, my.df$com, FUN=summary)
+names( tapply(my.df$value1, my.df$com, FUN=summary) )
+```
 
 ### aggretate - base R
 

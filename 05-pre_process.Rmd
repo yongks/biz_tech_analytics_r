@@ -108,6 +108,9 @@ my.df = na.omit(my.df)            # data.frame example
 na.action(my.df)                  # number of rows removed
 ```
 
+## Merging Data
+
+
 
 ## String Manipulation
 
@@ -144,7 +147,7 @@ my.df$date_first = ymd( my.df$date_first )    # lubridate
 str(my.df)
 ```
 
-### Days/Months/Year Different
+### Days/Months/Year Difference
 
 #### Days Difference
 

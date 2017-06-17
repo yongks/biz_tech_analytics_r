@@ -7,7 +7,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.show='hold', fig.width=9, fig.height=6)
 ## Linear Simulation
 
 ```{r}
-gen_slinear = function(n = 50, start = 0, intercept = 0, coef = 1, mean = 0, sd = 1) {
+gen_slinear = function(n = 50, start = 0, intercept = 0, coef = 1, mean = 0, sd = 1, visual=TRUE) {
     par(mfrow = c(2, 2))
     if (start == -1)
         my.df = data.frame(x = rnorm(n))   # x is normally distributed random number
@@ -16,10 +16,12 @@ gen_slinear = function(n = 50, start = 0, intercept = 0, coef = 1, mean = 0, sd 
     my.df$f = my.df$x * coef + intercept   # y = coef * x
     my.df$residuals = rnorm(length(my.df$x), mean = mean, sd = sd)
     my.df$y = my.df$f + my.df$residuals    # introduce errors
-    plot(my.df$x, my.df$f, main = paste('Perfect Fit Line:\nf = ', coef, 'x + ', intercept))
-    plot(my.df$x, my.df$y, main = 'Constant Normal Errors Introduced')
-    hist(my.df$y, main = 'Y Distribution')
-    hist(my.df$residuals, main = 'Residuals Distribution')
+    if (visual){
+      plot(my.df$x, my.df$f, main = paste('Perfect Fit Line:\nf = ', coef, 'x + ', intercept))
+      plot(my.df$x, my.df$y, main = 'Constant Normal Errors Introduced')
+      hist(my.df$y, main = 'Y Distribution')
+      hist(my.df$residuals, main = 'Residuals Distribution')
+    }
     my.df
 }
 

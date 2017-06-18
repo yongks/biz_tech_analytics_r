@@ -341,6 +341,13 @@ $\quad$ n = number of observations
 - However, if the model is **underfit**, test data (out of sample) will reveals that 0 => $R^2$ <= 1. Hence SSE is larger than SST, causing SSE/SST >= 1, therefore $R^2$ goes negative.  
 
 
+
+### Feature Selection
+
+1. High correlation of response and independent variable doesn't means the coefficient is statistically significant (p-value < 0.05)
+2. Correlation direction (positive/negative) of response and independent variable doesn't means the coefficient will have the same direction  
+
+
 ### Sample Data
 
 ```{r fig.width=9}

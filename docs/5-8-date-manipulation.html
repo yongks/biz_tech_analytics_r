@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-06-18">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="5-7-string-manipulation.html">
+<link rel="next" href="5-9-number-manipulation.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-1-library.html"><a href="5-1-library.html"><i class="fa fa-check"></i><b>5.1</b> Library</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-sample-data.html"><a href="5-2-sample-data.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html"><i class="fa fa-check"></i><b>5.3</b> Column Manipulation</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
+<li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data <NA></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a></li>
+<li class="chapter" data-level="5.6" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html"><i class="fa fa-check"></i><b>5.6</b> Categorical Data</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#converting-to-factor"><i class="fa fa-check"></i><b>5.6.1</b> Converting to Factor</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#releveling-factor"><i class="fa fa-check"></i><b>5.6.2</b> Releveling Factor</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#dropping-levels"><i class="fa fa-check"></i><b>5.6.3</b> Dropping Levels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> String Manipulation</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html#extration"><i class="fa fa-check"></i><b>5.7.1</b> Extration</a></li>
+<li class="chapter" data-level="5.7.2" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html#removal"><i class="fa fa-check"></i><b>5.7.2</b> Removal</a></li>
+<li class="chapter" data-level="5.7.3" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.7.3</b> Concatenation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html"><i class="fa fa-check"></i><b>5.8</b> Date Manipulation</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#parsing-date"><i class="fa fa-check"></i><b>5.8.1</b> Parsing Date</a></li>
+<li class="chapter" data-level="5.8.2" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#what-daymonthyear"><i class="fa fa-check"></i><b>5.8.2</b> What Day/Month/Year</a></li>
+<li class="chapter" data-level="5.8.3" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#daysmonthsyear-difference"><i class="fa fa-check"></i><b>5.8.3</b> Days/Months/Year Difference</a></li>
+<li class="chapter" data-level="5.8.4" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#daysmonhtsyears-later"><i class="fa fa-check"></i><b>5.8.4</b> Days/Monhts/Years Later</a></li>
+<li class="chapter" data-level="5.8.5" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#last-day-of-month"><i class="fa fa-check"></i><b>5.8.5</b> Last Day of Month</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html"><i class="fa fa-check"></i><b>5.9</b> Number Manipulation</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#sample-data-1"><i class="fa fa-check"></i><b>5.9.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.9.2" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#z-score-scaling"><i class="fa fa-check"></i><b>5.9.2</b> Z-Score Scaling</a></li>
+<li class="chapter" data-level="5.9.3" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#min-max-scaling"><i class="fa fa-check"></i><b>5.9.3</b> Min Max Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html"><i class="fa fa-check"></i><b>5.10</b> Artificial Grouping</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
+<li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-training-and-testing-data.html"><a href="5-11-splitting-into-training-and-testing-data.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Training and Testing Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="date-manipulation" class="section level2">
+<h2><span class="header-section-number">5.8</span> Date Manipulation</h2>
+<div id="parsing-date" class="section level3">
+<h3><span class="header-section-number">5.8.1</span> Parsing Date</h3>
+<p>When import date date from text file using <code>read()</code>, often date column are imported as string or factor. Note that <code>lubridate::dmy,ymd</code> can convert from string only, whereas <code>as.Date</code> can convert from both string and factor.</p>
+<p><strong>Before Conversion</strong>, verify that all dates column are actually <code>chr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.df)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    7 obs. of  9 variables:
+##  $ id        : chr  &quot;ID101&quot; &quot;ID102&quot; &quot;ID103&quot; &quot;ID104&quot; ...
+##  $ dept      : chr  &quot;D1&quot; &quot;D2&quot; &quot;D3&quot; &quot;D1&quot; ...
+##  $ gender    : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
+##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height    : int  173 164 178 182 159 166 153
+##  $ date_birth: chr  &quot;1/7/1973&quot; &quot;28/2/1980&quot; &quot;31/12/1978&quot; &quot;12/1/1997&quot; ...
+##  $ amount    : int  100 121 152 133 143 155 117
+##  $ date_last : chr  &quot;2/29/2016&quot; &quot;4/1/2017&quot; &quot;10/31/2015&quot; &quot;11/1/2016&quot; ...
+##  $ date_first: chr  &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; ...
+##  - attr(*, &quot;na.action&quot;)=Class &#39;omit&#39;  Named int [1:3] 8 9 10
+##   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;8&quot; &quot;9&quot; &quot;10&quot;</code></pre>
+<p>Two ways to convert string to date:</p>
+<ul>
+<li><strong>as.Date</strong> can convert vector into <code>date</code> data type. A format parameter has to be specified to match the source format. Otherwise <code>as.Date</code> will try default format of “%Y-%m-%d” then “%Y/%m/%d”<br />
+</li>
+<li>lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, <strong>convert it to string</strong> first</li>
+</ul>
+<p>In both methods, unmatched rows with unrecognized format will throw an error.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_birth =<span class="st"> </span><span class="kw">as.Date</span>( my.df<span class="op">$</span>date_birth, <span class="dt">format =</span> <span class="st">&quot;%d/%m/%Y&quot;</span> )  <span class="co"># base R</span>
+my.df<span class="op">$</span>date_last  =<span class="st"> </span><span class="kw">mdy</span>( my.df<span class="op">$</span>date_last  )    <span class="co"># lubridate </span>
+my.df<span class="op">$</span>date_first =<span class="st"> </span><span class="kw">ymd</span>( my.df<span class="op">$</span>date_first )    <span class="co"># lubridate</span>
+<span class="kw">str</span>(my.df)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    7 obs. of  9 variables:
+##  $ id        : chr  &quot;ID101&quot; &quot;ID102&quot; &quot;ID103&quot; &quot;ID104&quot; ...
+##  $ dept      : chr  &quot;D1&quot; &quot;D2&quot; &quot;D3&quot; &quot;D1&quot; ...
+##  $ gender    : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
+##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height    : int  173 164 178 182 159 166 153
+##  $ date_birth: Date, format: &quot;1973-07-01&quot; &quot;1980-02-28&quot; ...
+##  $ amount    : int  100 121 152 133 143 155 117
+##  $ date_last : Date, format: &quot;2016-02-29&quot; &quot;2017-04-01&quot; ...
+##  $ date_first: Date, format: &quot;2013-07-31&quot; &quot;2013-08-31&quot; ...
+##  - attr(*, &quot;na.action&quot;)=Class &#39;omit&#39;  Named int [1:3] 8 9 10
+##   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;8&quot; &quot;9&quot; &quot;10&quot;</code></pre>
+</div>
+<div id="what-daymonthyear" class="section level3">
+<h3><span class="header-section-number">5.8.2</span> What Day/Month/Year</h3>
+<p><strong><code>lubridate</code></strong> has useful functions to return numeric day, month, year from date object.</p>
+<div id="what-day" class="section level4">
+<h4><span class="header-section-number">5.8.2.1</span> What Day</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d1 =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&#39;2017-03-31&#39;</span>)
+lubridate<span class="op">::</span><span class="kw">day</span>(d1)</code></pre></div>
+<pre><code>## [1] 31</code></pre>
+</div>
+<div id="what-month" class="section level4">
+<h4><span class="header-section-number">5.8.2.2</span> What Month</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lubridate<span class="op">::</span><span class="kw">month</span>(d1)</code></pre></div>
+<pre><code>## [1] 3</code></pre>
+</div>
+<div id="what-year" class="section level4">
+<h4><span class="header-section-number">5.8.2.3</span> What Year</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lubridate<span class="op">::</span><span class="kw">year</span>(d1)</code></pre></div>
+<pre><code>## [1] 2017</code></pre>
+</div>
+</div>
+<div id="daysmonthsyear-difference" class="section level3">
+<h3><span class="header-section-number">5.8.3</span> Days/Months/Year Difference</h3>
+<div id="days-difference" class="section level4">
+<h4><span class="header-section-number">5.8.3.1</span> Days Difference</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
+my.df<span class="op">$</span>date_first
+my.df<span class="op">$</span>date_last <span class="op">-</span><span class="st"> </span>my.df<span class="op">$</span>date_first</code></pre></div>
+<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
+## [1] &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; &quot;2012-06-15&quot;
+## [6] &quot;2013-04-28&quot; &quot;2014-03-01&quot;
+## Time differences in days
+## [1]  943 1309  304  612 1568  943 1126</code></pre>
+</div>
+<div id="months-difference" class="section level4">
+<h4><span class="header-section-number">5.8.3.2</span> Months Difference</h4>
+<p>Combination of <code>lubridate::interval</code> and <code>lubridate operator</code> provides a integer vector of months elapsed between two date:<br />
+- The result can be negative if first date parameter &gt; second date parameter<br />
+- lubridate ‘intelligently’ knows interval is from end of month to end of month interval</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-03-30&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2016-04-29&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) <span class="co"># end day no. &lt; begining day no.</span>
+<span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-03-30&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2016-04-30&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) <span class="co"># end day no. == beginning day no.</span>
+<span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-03-31&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2016-04-30&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) <span class="co"># end of month to end of month</span></code></pre></div>
+<pre><code>## [1] 0
+## [1] 1
+## [1] 1</code></pre>
+<p>Apply this to data frame / vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_first
+my.df<span class="op">$</span>date_last
+<span class="kw">interval</span>( my.df<span class="op">$</span>date_first, my.df<span class="op">$</span>date_last ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) </code></pre></div>
+<pre><code>## [1] &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; &quot;2012-06-15&quot;
+## [6] &quot;2013-04-28&quot; &quot;2014-03-01&quot;
+## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
+## [1] 31 43 10 20 51 30 36</code></pre>
+</div>
+<div id="years-difference" class="section level4">
+<h4><span class="header-section-number">5.8.3.3</span> Years Difference</h4>
+<p>Use <strong><code>lubridate::year</code> function to find the year (integer) of a given date</strong>. Difference of the year() results from the birthdate and current date is the <strong>Age</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">year</span>(<span class="kw">now</span>()) <span class="op">-</span><span class="st"> </span><span class="kw">year</span>(my.df<span class="op">$</span>date_birth)</code></pre></div>
+<pre><code>## [1] 44 37 39 20 35 44 32</code></pre>
+<p>However in <strong>insurance</strong> industry, only a <strong>full year</strong> is considred for age.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-02-29&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2017-02-27&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) <span class="co"># a day short for a year</span>
+<span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-02-29&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2017-02-28&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) <span class="co"># EoM to EoM</span></code></pre></div>
+<pre><code>## [1] 0
+## [1] 1</code></pre>
+<p>Apply this to data frame / vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_first
+my.df<span class="op">$</span>date_last
+<span class="kw">interval</span>( my.df<span class="op">$</span>date_first, my.df<span class="op">$</span>date_last ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) </code></pre></div>
+<pre><code>## [1] &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; &quot;2012-06-15&quot;
+## [6] &quot;2013-04-28&quot; &quot;2014-03-01&quot;
+## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
+## [1] 2 3 0 1 4 2 3</code></pre>
+</div>
+</div>
+<div id="daysmonhtsyears-later" class="section level3">
+<h3><span class="header-section-number">5.8.4</span> Days/Monhts/Years Later</h3>
+<p>Adding days to a date is simple. Just + days(123) for 123 days later.<br />
+However, adding months and years is tricky, because certain months are shorter. Good solution is to use <strong><code>lubridate::%m+%</code></strong> operator.</p>
+<div id="days-later" class="section level4">
+<h4><span class="header-section-number">5.8.4.1</span> Days Later</h4>
+<p><strong>Adding days</strong> is as simple as <strong>add number of days</strong> to the date variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last</code></pre></div>
+<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;</code></pre>
+</div>
+<div id="months-later" class="section level4">
+<h4><span class="header-section-number">5.8.4.2</span> Months Later</h4>
+<p>Adding month(s) is tricky on the <strong>last day of month</strong>. Use <strong><code>lubridate operator</code> for correct solution</strong>, because it takes cares of last day of month including February of leap years.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
+my.df<span class="op">$</span>date_last   <span class="op">+</span><span class="st">  </span><span class="kw">months</span>(<span class="dv">1</span>)   <span class="co"># 1 month later, bad solution, can result in &lt;NA&gt;</span>
+my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)   <span class="co"># 1 month later, good solution</span></code></pre></div>
+<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
+## [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; NA           &quot;2016-12-01&quot; &quot;2016-10-30&quot;
+## [6] &quot;2015-12-27&quot; NA          
+## [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; &quot;2015-11-30&quot; &quot;2016-12-01&quot; &quot;2016-10-30&quot;
+## [6] &quot;2015-12-27&quot; &quot;2017-04-30&quot;</code></pre>
+</div>
+<div id="years-later" class="section level4">
+<h4><span class="header-section-number">5.8.4.3</span> Years Later</h4>
+<p>Adding year(s) is similar to adding month(s) above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
+my.df<span class="op">$</span>date_last   <span class="op">+</span><span class="st">  </span><span class="kw">years</span>(<span class="dv">1</span>)   <span class="co"># 1 year later, bad solution</span>
+my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>)   <span class="co"># 1 year later, good solution</span></code></pre></div>
+<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
+## [1] NA           &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot;
+## [6] &quot;2016-11-27&quot; &quot;2018-03-31&quot;
+## [1] &quot;2017-02-28&quot; &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot;
+## [6] &quot;2016-11-27&quot; &quot;2018-03-31&quot;</code></pre>
+</div>
+</div>
+<div id="last-day-of-month" class="section level3">
+<h3><span class="header-section-number">5.8.5</span> Last Day of Month</h3>
+<p><strong><code>lubridate::ceiling_date</code></strong> rounds up the date to the nearest unit.</p>
+<p>When rounding up a date to the **next nearest month*, it results the <strong>first day of next month</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
+<span class="kw">ceiling_date</span>(my.df<span class="op">$</span>date_last, <span class="st">&quot;month&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
+## [1] &quot;2016-03-01&quot; &quot;2017-05-01&quot; &quot;2015-11-01&quot; &quot;2016-12-01&quot; &quot;2016-10-01&quot;
+## [6] &quot;2015-12-01&quot; &quot;2017-04-01&quot;</code></pre>
+<p><strong>Substracting this date by one</strong> will return last day of the month.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ceiling_date</span>(my.df<span class="op">$</span>date_last, <span class="st">&quot;month&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-30&quot; &quot;2015-10-31&quot; &quot;2016-11-30&quot; &quot;2016-09-30&quot;
+## [6] &quot;2015-11-30&quot; &quot;2017-03-31&quot;</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="5-7-string-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="5-9-number-manipulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/05-pre_process.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

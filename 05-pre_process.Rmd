@@ -2,11 +2,34 @@
 
 ## Library
 
-Below are the external libraries used in this section.  
-
 ```{r}
 library('lubridate')
+library('caTools')
 ```
+
+Below summarizes all packages, their functions and purposes used in this **Data Preprocessing** chapter.  
+
+|   | Package              | Function      | Purpose                                                                                                 |
+|---|----------------------|---------------|---------------------------------------------------------------------------------------------------------|
+| 1 | Base R (factor)      | as.factor     | Convert a vector to a new factor                                                                        |
+|   |                      | droplevels    | Return a new factor with unused levels removed                                                          |
+|   |                      | relevel       | Return a new factor with new reference level                                                            |
+| 2 | Base R (missing data)| is.na         | Return TRUE if <NA> is found in vector                                                                  |
+|   |                      | na.omit       | Return a new vector/dataframe with ALL <NA> removed, with attribute containing info ro rows removed     |
+|   |                      | complete.cases| Return TRUE if vector/data.frame row does not contain any <NA>                                          |
+| 3 | Base R (numeric)     | scale         | Centre numeric data (-mean), and optionally normalize it (/sd)                                          |
+|   |                      | cut           | Cut numeric vector into breakpoints, and return grouping factor                                         |
+| 4 | Base R (date)        | as.Date       | Parse a factor / string to date                                                                         |
+|   | lubridate            | ymd,mdy,dmy   | Parse a string to date                                                                                  |
+|   |                      | interval      | Return interval object betwen two given dates. Can be further used for deriving days/months in between  |
+|   |                      | ceiling.date  | Return next nearest date according to unit (day / month / year)                                         |
+| 5 | Base R (dataset)     | subset        | Return a new data based on input logical vector                                                         |
+|   |                      | merge         | Merge two data.frame together based on common key                                                       |
+|   |                      | nrow, ncol    | How many columns / rows in the dataset ?                                                                |
+|   |                      | length        | How many elements in a vector ?                                                                         |
+|   | caTools              | sample.split  | Split vector into two with a ratio, return result in logical vector                                     |
+
+
 
 ## Sample Data
 
@@ -32,13 +55,17 @@ str(my.df)
 
 ### Delete Columns
 
-Delete **single column** using `$` column selector, setting to NULL.  
+#### Delete One Column
+
+Use `$` column selector, setting to NULL.  
 
 ```{r}
 my.df$Z1 = NULL
 ```
 
-**Delete multiple columns** using multiple columns selector `[,vector]`, with vector containing column numbers or names, setting to NULL.  
+#### Delete Multiple Columns
+
+Use multiple columns selector `[,vector]`, with vector containing column numbers or names, setting to NULL.  
 
 ```{r}
 my.df[,c('X','Z2')] = NULL
@@ -47,12 +74,15 @@ str(my.df)
 
 ### Renaming Columns
 
+#### What Are The Column Names
+
 **colnames** returns vector of names attribute of data.frame.  
 
 ```{r, results='hold'}
-attributes(my.df)
 colnames(my.df)
 ```
+
+#### Set the Column Name(s)
 
 Use **colnames** to rename single or multiple columns. Use `[]` to select the specific column(s).  
 
@@ -87,20 +117,20 @@ my.df[!complete.cases(my.df),]
 ```
 
 
-### Removing Missing Data
+### Removing Missing Data <NA>
 
-**na.omit** returns data with <NA> removed.  The advantage of this method compare to **complete.cases** are:  
+**`na.omit`** returns data with <NA> removed.  The advantage of this method compare to **complete.cases** are:  
 - **simpler syntax**, filtering using [rows,]  not require  
 - **additonal attribute**, accessible through `na.action()`, providing information on element number removed  
 
-**Remove Missing elements with <NA> in rows**  
+#### Remove Elements with Missing Data In Vector
 
 ```{r collapse=TRUE}
 na.omit(my.df$date_birth) # vector example
 str(na.omit(my.df$date_birth))
 ```
 
-**Remove missing rows with <NA>**  
+#### Remove Rows with Missing Data In Data Frame
 
 ```{r results='markup'}
 # my.df[complete.cases(my.df),]   # longer method which is less elegant
@@ -110,6 +140,43 @@ na.action(my.df)                  # number of rows removed
 
 ## Merging Data
 
+## Categorical Data
+
+### Converting to Factor
+
+Notice that `D1` is the **reference level**.  
+
+```{r, results = 'hold'}
+as.factor(my.df$dept)
+```
+
+### Releveling Factor
+
+**Change the reference** to 'D2'.  
+**`relevel`** return a new factor with base reference changed.  
+
+```{r, results = 'hold'}
+relevel(as.factor(my.df$dept), ref='D2')
+```
+
+### Dropping Levels
+
+We will remove `D2` from the vector, but the level of `D2` exist !  
+
+```{r, results = 'markup'}
+x = as.factor(my.df$dept)
+x = x[my.df$dept!='D2']
+str(x)
+```
+
+After remove unused level, notice all value will be renumbered.  
+
+```{r}
+x = droplevels(x)
+str(x)
+```
+
+Question, can this be combined back to original factor ?
 
 
 ## String Manipulation
@@ -125,9 +192,9 @@ na.action(my.df)                  # number of rows removed
 
 ### Parsing Date
 
-The example below demonstrates conversion of date columns from formated string.  
+When import date date from text file using `read()`, often date column are imported as string or factor.  Note that `lubridate::dmy,ymd` can convert from string only, whereas `as.Date` can convert from both string and  factor.  
 
-**Before Conversion**, verify that all dates column are actually `chr`.    
+**Before Conversion**, verify that all dates column are actually `chr`.  
 
 ```{r}
 str(my.df)
@@ -136,7 +203,7 @@ str(my.df)
 Two ways to convert string to date:  
 
 - **as.Date** can convert vector into `date` data type. A format parameter has to be specified to match the source format. Otherwise `as.Date` will try default format of "%Y-%m-%d" then "%Y/%m/%d"  
-- lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, **convert it to string** first or use **`as.Date()`** instead  
+- lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, **convert it to string** first  
 
 In both methods, unmatched rows with unrecognized format will throw an error.  
 
@@ -145,6 +212,26 @@ my.df$date_birth = as.Date( my.df$date_birth, format = "%d/%m/%Y" )  # base R
 my.df$date_last  = mdy( my.df$date_last  )    # lubridate 
 my.df$date_first = ymd( my.df$date_first )    # lubridate
 str(my.df)
+```
+
+### What Day/Month/Year
+
+**`lubridate`** has useful functions to return numeric day, month, year from date object.  
+
+#### What Day
+```{r}
+d1 = as.Date('2017-03-31')
+lubridate::day(d1)
+```
+
+#### What Month
+```{r}
+lubridate::month(d1)
+```
+
+#### What Year
+```{r}
+lubridate::year(d1)
 ```
 
 ### Days/Months/Year Difference
@@ -201,12 +288,18 @@ interval( my.df$date_first, my.df$date_last ) %/% years(1)
 ```
 
 ### Days/Monhts/Years Later
+Adding days to a date is simple. Just + days(123) for 123 days later.  
+However, adding months and years is tricky, because certain months are shorter. Good solution is to use **`lubridate::%m+%`** operator.  
+
+#### Days Later
 
 **Adding days** is as simple as  **add number of days** to the date variables.  
 
 ```{r}
 my.df$date_last
 ```
+
+#### Months Later
 
 Adding month(s) is tricky on the **last day of month**.  Use **`lubridate operator` for correct solution**, because it takes cares of last day of month including February of leap years.  
 
@@ -216,17 +309,19 @@ my.df$date_last   +  months(1)   # 1 month later, bad solution, can result in <N
 my.df$date_last %m+% months(1)   # 1 month later, good solution
 ```
 
+#### Years Later
+
 Adding year(s) is similar to adding month(s) above.  
 
 ```{r, results='hold'}
 my.df$date_last
-my.df$date_last   +  years(1)   # 1 month later, bad solution
-my.df$date_last %m+% years(1)   # 1 month later, good solution
+my.df$date_last   +  years(1)   # 1 year later, bad solution
+my.df$date_last %m+% years(1)   # 1 year later, good solution
 ```
 
 ### Last Day of Month
 
-**`libridate::ceiling_date`** rounds up the date to the nearest unit. 
+**`lubridate::ceiling_date`** rounds up the date to the nearest unit. 
 
 When rounding up a date to the **next nearest month*, it results the **first day of next month**. 
 
@@ -240,10 +335,6 @@ ceiling_date(my.df$date_last, "month")
 ```{r}
 ceiling_date(my.df$date_last, "month") - days(1)
 ```
-
-
-
-
 
 
 ## Number Manipulation
@@ -331,8 +422,40 @@ data.frame(p,g)
 
 ### Grouping based on Custom Criteria
 
-???
+creates a logical vector, indicating. Ratio specified in SplitRatio will be have value 'TRUE'
 
+## Splitting Into Training and Testing Data
 
+When we have only ONE dataset, we can split them into training and testing, example 0.7/0.3 split.  
 
+**`sample.split`** takes a vector (or a column from a data.frame), randomly assign TRUE (training data) and FALSE (test data) according to a specified ratio.  It returns a **logical vector for data subsetting** purpose.
+
+> **`sample.split (Y, SplitRatio = 2/3, group = NULL)`**  
+> `$\quad$ Y = vector`  
+> `$\quad$ SplitRatio = ratio of split`  
+
+Note **`sample.split`** doesn't take a data.frame, it takes a vector (or a data.frame column).
+
+Load the library, display the original data.frame.  Split the data and verify the **logical vector** output.  
+
+```{r, collapse=TRUE }
+set.seed(8034)
+my.df
+split.data = sample.split(my.df$id, 0.6)  # randomly 0.6 set to TRUE, remaining FALSE
+split.data
+```
+
+Subseting for the **training data**
+
+```{r, collapse=TRUE }
+subset( my.df, split.data )   # Training Data (0.6)
+#my.df[  split.data, ]        #   alternative
+```
+
+Subsetting the test data by **negating** the splitting logical vector.  
+
+```{r, collapse=TRUE }
+subset( my.df, !split.data )  # Testing Data (0.4)
+#my.df[ !split.data, ]        #   alternative
+```
 

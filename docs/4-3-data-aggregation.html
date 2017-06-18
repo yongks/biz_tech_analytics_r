@@ -370,45 +370,45 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">4.3</span> Data Aggregation</h2>
 <p>This chapter explore multiple methods to group data columns and computes value within groups:</p>
 <ol style="list-style-type: decimal">
-<li>apply</li>
 <li>tapply</li>
 <li>aggregate (10x slower than apply)</li>
 </ol>
 <div id="tapply-1" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> tapply</h3>
+<p><code>tapply</code> is quick and fast way to produce aggregation with <strong>ONE level of grouping</strong>.</p>
 <blockquote>
 <p><strong><code>tapply ( X, INDEX, FUN, na.rm = FALSE )</code></strong><br />
-<span class="math inline">\(quad\)</span> <code>X = value vector</code><br />
-<span class="math inline">\(quad\)</span> <code>INDEX = groups data, can be factor, number of string</code><br />
-<span class="math inline">\(quad\)</span> <code>FUN = function to apply to elements in X according to group specified in INDEX</code><br />
-<span class="math inline">\(quad\)</span> <code>na.rm = FALSE</code></p>
+$quad$ <code>X = value vector</code><br />
+$quad$ <code>INDEX = groups data, can be factor, number of string</code><br />
+$quad$ <code>FUN = function to apply to elements in X according to group specified in INDEX</code><br />
+$quad$ <code>na.rm = ignore &lt;NA&gt; values</code></p>
 </blockquote>
-<p><code>tapply</code> will divide the vector (X) into groups (INDEX), and perform computation (FUN) on each group.<br />
-The output:</p>
-<ol style="list-style-type: decimal">
-<li>Is whatever FUN returns for each group<br />
-</li>
-<li><strong>INDEX as dimnames</strong> attribute (accessible through <strong>names()</strong> )</li>
-</ol>
-<p>Please take note that if there are <NA> in the vector X, some FUNC may fail to return value, such as mean, sum. So it is essential to specify <code>na.rm = TRUE</code>.</p>
-<p><strong>FUN that returns vector</strong> - output is a vector</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tapply</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>com, <span class="dt">FUN=</span>mean)
-<span class="kw">names</span>( <span class="kw">tapply</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>com, <span class="dt">FUN=</span>mean) )</code></pre></div>
+<p><code>tapply</code> will divide the vector (X) into groups (base on index INDEX), and perform computation (FUN) on each group.</p>
+<p>If there are <strong><code>&lt;NA&gt;</code></strong> in the vector X, some FUN may fail to return value, such as mean, sum. So it is essential to specify <strong><code>na.rm = TRUE</code></strong> in these cases.<br />
+Group identifier will be used as column name (accessible through <strong><code>names()</code></strong>).</p>
+<div id="fun-that-returns-vector" class="section level4">
+<h4><span class="header-section-number">4.3.1.1</span> FUN That Returns Vector</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t1 =<span class="st"> </span><span class="kw">tapply</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>com, <span class="dt">FUN=</span>mean)
+t1</code></pre></div>
 <pre><code>##       C1       C2 
-## 50.48732 51.12221 
-## [1] &quot;C1&quot; &quot;C2&quot;</code></pre>
-<p><strong>FUN that returns non-vector</strong> - output is <strong>list</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tapply</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>com, <span class="dt">FUN=</span>summary)
-<span class="kw">names</span>( <span class="kw">tapply</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>com, <span class="dt">FUN=</span>summary) )</code></pre></div>
+## 50.48732 51.12221</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>( t1 )</code></pre></div>
+<pre><code>## [1] &quot;C1&quot; &quot;C2&quot;</code></pre>
+</div>
+<div id="fun-that-returns-non-vector---output-is-list" class="section level4">
+<h4><span class="header-section-number">4.3.1.2</span> FUN That Returns Non-Vector - output is list</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t2 =<span class="st"> </span><span class="kw">tapply</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>com, <span class="dt">FUN=</span>summary)
+t2</code></pre></div>
 <pre><code>## $C1
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   33.83   48.04   51.29   50.49   53.47   61.37 
 ## 
 ## $C2
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   41.96   48.15   51.60   51.12   53.39   64.60 
-## 
-## [1] &quot;C1&quot; &quot;C2&quot;</code></pre>
+##   41.96   48.15   51.60   51.12   53.39   64.60</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>( t2 )</code></pre></div>
+<pre><code>## [1] &quot;C1&quot; &quot;C2&quot;</code></pre>
+</div>
 </div>
 <div id="aggretate---base-r" class="section level3">
 <h3><span class="header-section-number">4.3.2</span> aggretate - base R</h3>

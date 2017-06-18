@@ -447,7 +447,7 @@ clusters
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
 <span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-155-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-155-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-156-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-156-2.png" width="384" /></p>
 </div>
 <div id="using-factoextra-package" class="section level4">
 <h4><span class="header-section-number">9.8.3.2</span> Using <code>factoextra</code> Package</h4>
@@ -475,7 +475,7 @@ clusters
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-159-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-159-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-160-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-160-2.png" width="384" /></p>
 </div>
 </div>
 </div>

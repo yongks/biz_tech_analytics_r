@@ -161,39 +161,40 @@ addmargins( prop.table( f4 ))
 
 This chapter explore multiple methods to group data columns and computes value within groups:  
 
-1. apply
-2. tapply
-3. aggregate (10x slower than apply)
+1. tapply
+2. aggregate (10x slower than apply)
 
 ### tapply
 
+`tapply` is quick and fast way to produce aggregation with **ONE level of grouping**.   
+
 > **`tapply ( X, INDEX, FUN, na.rm = FALSE )`**  
-> $quad$ ` X = value vector`  
-> $quad$ ` INDEX = groups data, can be factor, number of string`  
-> $quad$ ` FUN = function to apply to elements in X according to group specified in INDEX`  
-> $quad$ ` na.rm = FALSE`  
+> \$quad$ ` X = value vector`  
+> \$quad$ ` INDEX = groups data, can be factor, number of string`  
+> \$quad$ ` FUN = function to apply to elements in X according to group specified in INDEX`  
+> \$quad$ ` na.rm = ignore <NA> values`  
 
-`tapply` will divide the vector (X) into groups (INDEX), and perform computation (FUN) on each group.  
-The output:  
+`tapply` will divide the vector (X) into groups (base on index INDEX), and perform computation (FUN) on each group.  
 
-1. Is whatever FUN returns for each group  
-2. **INDEX as dimnames** attribute (accessible through **names()** )
+If there are **`<NA>`** in the vector X, some FUN may fail to return value, such as mean, sum.  So it is essential to specify **`na.rm = TRUE`** in these cases.  
+Group identifier will be used as column name (accessible through **`names()`**).  
 
-Please take note that if there are <NA> in the vector X, some FUNC may fail to return value, such as mean, sum.  So it is essential to specify `na.rm = TRUE`.  
+#### FUN That Returns Vector 
 
-**FUN that returns vector** - output is a vector  
-
-```{r}
-tapply(my.df$value1, my.df$com, FUN=mean)
-names( tapply(my.df$value1, my.df$com, FUN=mean) )
+```{r results='markup'}
+t1 = tapply(my.df$value1, my.df$com, FUN=mean)
+t1
+names( t1 )
 ```
 
-**FUN that returns non-vector** -  output is **list**  
+#### FUN That Returns Non-Vector -  output is list
 
-```{r}
-tapply(my.df$value1, my.df$com, FUN=summary)
-names( tapply(my.df$value1, my.df$com, FUN=summary) )
+```{r results='markup'}
+t2 = tapply(my.df$value1, my.df$com, FUN=summary)
+t2
+names( t2 )
 ```
+
 
 ### aggretate - base R
 

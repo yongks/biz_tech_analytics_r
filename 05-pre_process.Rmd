@@ -161,7 +161,7 @@ relevel(as.factor(my.df$dept), ref='D2')
 
 ### Dropping Levels
 
-We will remove `D2` from the vector, but the level of `D2` exist !  
+We removed `D2` from the vector, but the level `D2` **still exist !**  
 
 ```{r, results = 'markup'}
 x = as.factor(my.df$dept)
@@ -169,7 +169,7 @@ x = x[my.df$dept!='D2']
 str(x)
 ```
 
-After remove unused level, notice all value will be renumbered.  
+After remove unused level, notice all value will be **renumbered**.  
 
 ```{r}
 x = droplevels(x)
@@ -202,8 +202,8 @@ str(my.df)
 
 Two ways to convert string to date:  
 
-- **as.Date** can convert vector into `date` data type. A format parameter has to be specified to match the source format. Otherwise `as.Date` will try default format of "%Y-%m-%d" then "%Y/%m/%d"  
-- lubridate::dmy, mdy, ymd - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, **convert it to string** first  
+- **as.Date** - convert vector into `date` data type. A format parameter has to be specified to match the source format. Otherwise `as.Date` will try default format of "%Y-%m-%d" then "%Y/%m/%d"  
+- **lubridate::dmy, mdy, ymd** - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, **convert it to string** first  
 
 In both methods, unmatched rows with unrecognized format will throw an error.  
 

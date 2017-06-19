@@ -424,7 +424,7 @@ data.frame(p,g)
 
 creates a logical vector, indicating. Ratio specified in SplitRatio will be have value 'TRUE'
 
-## Splitting Into Training and Testing Data
+## Splitting Into Train and Test Dataset
 
 When we have only ONE dataset, we can split them into training and testing, example 0.7/0.3 split.  
 
@@ -436,14 +436,23 @@ When we have only ONE dataset, we can split them into training and testing, exam
 
 Note **`sample.split`** doesn't take a data.frame, it takes a vector (or a data.frame column).
 
-Load the library, display the original data.frame.  Split the data and verify the **logical vector** output.  
+#### Create Logical Split
 
-```{r, collapse=TRUE }
-set.seed(8034)
+Load the library, check the number of rows in this dataset.  
+
+```{r}
 my.df
+```
+
+Randomly split the data and verify the **logical vector** output.  
+
+```{r}
+set.seed(8034)
 split.data = sample.split(my.df$id, 0.6)  # randomly 0.6 set to TRUE, remaining FALSE
 split.data
 ```
+
+#### Filter With The Split
 
 Subseting for the **training data**
 

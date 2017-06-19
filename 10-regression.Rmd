@@ -373,17 +373,38 @@ my.df = gen_slinear(n=100,start=-1, intercept = 7, coef=3, visual=FALSE)
 > $\quad$ `formula : y~x1 + x2 + x3`  
 > $\quad$ `data: matrix or dataframe`  
 
+
+#### Build The Model
+
 Build a linear regresson model based on this formula: $h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$  
 
 ```{r}
 fit = lm(formula = y ~ x, data = my.df)
 ```
 
+#### Evaluate The Model
+
 Check the detail of the model built, see the coef, t-value, $R^2$ and $RMSE$  
+
+What does **`summary`** tells you ?
+
+```{r}
+
+```
+
+**Extracting** More Information From The Model
 
 ```{r}
 summary(fit)
+
+SSE = sum(fit$residuals^2)
+# SSR =
+# SST =
+RMSE = sqrt(SSE/nrow(fit$model))
+R2   = 1-SSE/SST
 ```
+
+
 
 
 ## Regression Diagnostic

@@ -6,7 +6,9 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 
 # Data Summarization
 
-This capter explore manipulating table-like data, summarization and aggregation.
+
+## Library
+
 
 ## Sample Data
 Sample data used simulate two categorical-alike feature, and two numeric value feature:  

@@ -144,39 +144,50 @@ na.action(my.df)                  # number of rows removed
 
 ### Converting to Factor
 
-Notice that `D1` is the **reference level**.  
+`as.factor` converts string, discrete integer and logical data to factor. Each unique value will make up the levels for the factor, (sorted alphabatically during creation time).  
 
-```{r, results = 'hold'}
-as.factor(my.df$dept)
+Convert below string to factor, and the first element of the **sorted unique value** - `D1` is the **reference level**.  
+
+```{r, results = 'markup'}
+x = as.factor( c('D2', 'D1', 'D3', 'D3', 'D2', 'D1', 'D3') )
+x
 ```
 
 ### Releveling Factor
 
-**Change the reference** to 'D2'.  
 **`relevel`** return a new factor with base reference changed.  
 
-```{r, results = 'hold'}
-relevel(as.factor(my.df$dept), ref='D2')
+Notice current factor **x** has 'D1` as the reference.  
+
+```{r, results = 'markup'}
+levels(x)
 ```
+
+**Change the reference** to 'D3', return a new factor
+
+```{r, results = 'markup'}
+y = relevel(x, 'D3')
+levels(y)
+```
+
 
 ### Dropping Levels
 
-We removed `D2` from the vector, but the level `D2` **still exist !**  
+**Levels can be 'squeezed'** if it contain levels that no longer have data in it.  
+
+Original data below contain three levels, D1 D2 D3.  After removing all 'D2' value from the factor, all three original levels **still exist !**
 
 ```{r, results = 'markup'}
-x = as.factor(my.df$dept)
-x = x[my.df$dept!='D2']
-str(x)
+z = x[x!='D2']
+str(z)
 ```
 
-After remove unused level, notice all value will be **renumbered**.  
+Use **`droplevels`** to remove all unused levels. All value will be **renumbered**.  
 
-```{r}
-x = droplevels(x)
-str(x)
+```{r, results = 'markup'}
+z = droplevels(z)
+str(z)
 ```
-
-Question, can this be combined back to original factor ?
 
 
 ## String Manipulation

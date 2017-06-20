@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-18">
+<meta name="date" content="2017-06-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="5-9-number-manipulation.html">
-<link rel="next" href="5-11-splitting-into-training-and-testing-data.html">
+<link rel="next" href="5-11-splitting-into-train-and-test-dataset.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -117,16 +117,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#dates-manipulation"><i class="fa fa-check"></i><b>1.2.2</b> Dates Manipulation</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-conditioinal-decision.html"><a href="1-3-conditioinal-decision.html"><i class="fa fa-check"></i><b>1.3</b> Conditioinal Decision</a></li>
-<li class="chapter" data-level="1.4" data-path="1-4-looping.html"><a href="1-4-looping.html"><i class="fa fa-check"></i><b>1.4</b> Looping</a></li>
-<li class="chapter" data-level="1.5" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html"><i class="fa fa-check"></i><b>1.5</b> Apply Family</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#overview"><i class="fa fa-check"></i><b>1.5.1</b> Overview</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#apply"><i class="fa fa-check"></i><b>1.5.2</b> apply</a></li>
-<li class="chapter" data-level="1.5.3" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#sapply"><i class="fa fa-check"></i><b>1.5.3</b> sapply</a></li>
-<li class="chapter" data-level="1.5.4" data-path="1-5-apply-family.html"><a href="1-5-apply-family.html#tapply"><i class="fa fa-check"></i><b>1.5.4</b> tapply</a></li>
+<li class="chapter" data-level="1.4" data-path="1-4-looping.html"><a href="1-4-looping.html"><i class="fa fa-check"></i><b>1.4</b> Looping</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="1-4-looping.html"><a href="1-4-looping.html#using-apply"><i class="fa fa-check"></i><b>1.4.1</b> Using apply</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-4-looping.html"><a href="1-4-looping.html#using-lapply"><i class="fa fa-check"></i><b>1.4.2</b> Using lapply</a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="1-6-data-import.html"><a href="1-6-data-import.html"><i class="fa fa-check"></i><b>1.6</b> Data Import</a><ul>
-<li class="chapter" data-level="1.6.1" data-path="1-6-data-import.html"><a href="1-6-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.6.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.6.2" data-path="1-6-data-import.html"><a href="1-6-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.6.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -156,27 +153,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.4" data-path="3-4-polynomial-simulation.html"><a href="3-4-polynomial-simulation.html"><i class="fa fa-check"></i><b>3.4</b> Polynomial Simulation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a><ul>
-<li class="chapter" data-level="4.1" data-path="4-1-sample-data.html"><a href="4-1-sample-data.html"><i class="fa fa-check"></i><b>4.1</b> Sample Data</a></li>
-<li class="chapter" data-level="4.2" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html"><i class="fa fa-check"></i><b>4.2</b> Frequency Table</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#single-dimension-data"><i class="fa fa-check"></i><b>4.2.1</b> Single Dimension Data</a></li>
-<li class="chapter" data-level="4.2.2" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#two-dimension-data"><i class="fa fa-check"></i><b>4.2.2</b> Two Dimension Data</a></li>
-<li class="chapter" data-level="4.2.3" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#three-dimension-data"><i class="fa fa-check"></i><b>4.2.3</b> Three Dimension Data</a></li>
-<li class="chapter" data-level="4.2.4" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#four-dimension-data"><i class="fa fa-check"></i><b>4.2.4</b> Four Dimension Data</a></li>
-<li class="chapter" data-level="4.2.5" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#making-table-proportion"><i class="fa fa-check"></i><b>4.2.5</b> Making Table Proportion</a></li>
-<li class="chapter" data-level="4.2.6" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#adding-margin-info-to-table"><i class="fa fa-check"></i><b>4.2.6</b> Adding Margin Info To Table</a></li>
-<li class="chapter" data-level="4.2.7" data-path="4-2-frequency-table.html"><a href="4-2-frequency-table.html#proportion-table-with-margin"><i class="fa fa-check"></i><b>4.2.7</b> Proportion Table with Margin</a></li>
+<li class="chapter" data-level="4.1" data-path="4-1-library.html"><a href="4-1-library.html"><i class="fa fa-check"></i><b>4.1</b> Library</a></li>
+<li class="chapter" data-level="4.2" data-path="4-2-sample-data.html"><a href="4-2-sample-data.html"><i class="fa fa-check"></i><b>4.2</b> Sample Data</a></li>
+<li class="chapter" data-level="4.3" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html"><i class="fa fa-check"></i><b>4.3</b> Frequency Table</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#single-dimension-data"><i class="fa fa-check"></i><b>4.3.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="4.3.2" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#two-dimension-data"><i class="fa fa-check"></i><b>4.3.2</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="4.3.3" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#three-dimension-data"><i class="fa fa-check"></i><b>4.3.3</b> Three Dimension Data</a></li>
+<li class="chapter" data-level="4.3.4" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#four-dimension-data"><i class="fa fa-check"></i><b>4.3.4</b> Four Dimension Data</a></li>
+<li class="chapter" data-level="4.3.5" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#making-table-proportion"><i class="fa fa-check"></i><b>4.3.5</b> Making Table Proportion</a></li>
+<li class="chapter" data-level="4.3.6" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#adding-margin-info-to-table"><i class="fa fa-check"></i><b>4.3.6</b> Adding Margin Info To Table</a></li>
+<li class="chapter" data-level="4.3.7" data-path="4-3-frequency-table.html"><a href="4-3-frequency-table.html#proportion-table-with-margin"><i class="fa fa-check"></i><b>4.3.7</b> Proportion Table with Margin</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="4-3-data-aggregation.html"><a href="4-3-data-aggregation.html"><i class="fa fa-check"></i><b>4.3</b> Data Aggregation</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="4-3-data-aggregation.html"><a href="4-3-data-aggregation.html#tapply-1"><i class="fa fa-check"></i><b>4.3.1</b> tapply</a></li>
-<li class="chapter" data-level="4.3.2" data-path="4-3-data-aggregation.html"><a href="4-3-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.3.2</b> aggretate - base R</a></li>
+<li class="chapter" data-level="4.4" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html"><i class="fa fa-check"></i><b>4.4</b> Data Aggregation</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#tapply"><i class="fa fa-check"></i><b>4.4.1</b> tapply</a></li>
+<li class="chapter" data-level="4.4.2" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.4.2</b> aggretate - base R</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="4-4-r-with-sql-emulation.html"><a href="4-4-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.4</b> R with SQL Emulation</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="4-4-r-with-sql-emulation.html"><a href="4-4-r-with-sql-emulation.html#library"><i class="fa fa-check"></i><b>4.4.1</b> Library</a></li>
-<li class="chapter" data-level="4.4.2" data-path="4-4-r-with-sql-emulation.html"><a href="4-4-r-with-sql-emulation.html#run-the-code"><i class="fa fa-check"></i><b>4.4.2</b> Run The Code</a></li>
+<li class="chapter" data-level="4.5" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.5</b> R with SQL Emulation</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html#library-1"><i class="fa fa-check"></i><b>4.5.1</b> Library</a></li>
+<li class="chapter" data-level="4.5.2" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html#run-the-code"><i class="fa fa-check"></i><b>4.5.2</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
-<li class="chapter" data-level="5.1" data-path="5-1-library-1.html"><a href="5-1-library-1.html"><i class="fa fa-check"></i><b>5.1</b> Library</a></li>
+<li class="chapter" data-level="5.1" data-path="5-1-library-2.html"><a href="5-1-library-2.html"><i class="fa fa-check"></i><b>5.1</b> Library</a></li>
 <li class="chapter" data-level="5.2" data-path="5-2-sample-data-1.html"><a href="5-2-sample-data-1.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
 <li class="chapter" data-level="5.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html"><i class="fa fa-check"></i><b>5.3</b> Column Manipulation</a><ul>
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
@@ -214,18 +212,22 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
 <li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
-<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-training-and-testing-data.html"><a href="5-11-splitting-into-training-and-testing-data.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Training and Testing Data</a></li>
+<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Train and Test Dataset</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a><ul>
-<li class="chapter" data-level="6.1" data-path="6-1-sample-data-3.html"><a href="6-1-sample-data-3.html"><i class="fa fa-check"></i><b>6.1</b> Sample Data</a></li>
-<li class="chapter" data-level="6.2" data-path="6-2-finding-data.html"><a href="6-2-finding-data.html"><i class="fa fa-check"></i><b>6.2</b> Finding Data</a></li>
-<li class="chapter" data-level="6.3" data-path="6-3-ordering-data.html"><a href="6-3-ordering-data.html"><i class="fa fa-check"></i><b>6.3</b> Ordering Data</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="6-3-ordering-data.html"><a href="6-3-ordering-data.html#ordering-vector"><i class="fa fa-check"></i><b>6.3.1</b> Ordering Vector</a></li>
-<li class="chapter" data-level="6.3.2" data-path="6-3-ordering-data.html"><a href="6-3-ordering-data.html#ordering-data-frame"><i class="fa fa-check"></i><b>6.3.2</b> Ordering Data Frame</a></li>
+<li class="chapter" data-level="6.1" data-path="6-1-library-3.html"><a href="6-1-library-3.html"><i class="fa fa-check"></i><b>6.1</b> Library</a></li>
+<li class="chapter" data-level="6.2" data-path="6-2-sample-data-3.html"><a href="6-2-sample-data-3.html"><i class="fa fa-check"></i><b>6.2</b> Sample Data</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="6-2-sample-data-3.html"><a href="6-2-sample-data-3.html#sample-data-frame"><i class="fa fa-check"></i><b>6.2.1</b> Sample Data Frame</a></li>
+<li class="chapter" data-level="6.2.2" data-path="6-2-sample-data-3.html"><a href="6-2-sample-data-3.html#sample-vector"><i class="fa fa-check"></i><b>6.2.2</b> Sample Vector</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="6-4-filtering-data.html"><a href="6-4-filtering-data.html"><i class="fa fa-check"></i><b>6.4</b> Filtering Data</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="6-4-filtering-data.html"><a href="6-4-filtering-data.html#subseting-vector"><i class="fa fa-check"></i><b>6.4.1</b> Subseting Vector</a></li>
-<li class="chapter" data-level="6.4.2" data-path="6-4-filtering-data.html"><a href="6-4-filtering-data.html#subseting-data-frame"><i class="fa fa-check"></i><b>6.4.2</b> Subseting Data Frame</a></li>
+<li class="chapter" data-level="6.3" data-path="6-3-finding-data-in-vector.html"><a href="6-3-finding-data-in-vector.html"><i class="fa fa-check"></i><b>6.3</b> Finding Data in Vector</a></li>
+<li class="chapter" data-level="6.4" data-path="6-4-ordering-data.html"><a href="6-4-ordering-data.html"><i class="fa fa-check"></i><b>6.4</b> Ordering Data</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="6-4-ordering-data.html"><a href="6-4-ordering-data.html#ordering-vector"><i class="fa fa-check"></i><b>6.4.1</b> Ordering Vector</a></li>
+<li class="chapter" data-level="6.4.2" data-path="6-4-ordering-data.html"><a href="6-4-ordering-data.html#ordering-data-frame"><i class="fa fa-check"></i><b>6.4.2</b> Ordering Data Frame</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="6-5-filtering-data.html"><a href="6-5-filtering-data.html"><i class="fa fa-check"></i><b>6.5</b> Filtering Data</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="6-5-filtering-data.html"><a href="6-5-filtering-data.html#subseting-vector"><i class="fa fa-check"></i><b>6.5.1</b> Subseting Vector</a></li>
+<li class="chapter" data-level="6.5.2" data-path="6-5-filtering-data.html"><a href="6-5-filtering-data.html#subseting-data-frame"><i class="fa fa-check"></i><b>6.5.2</b> Subseting Data Frame</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a><ul>
@@ -268,7 +270,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a><ul>
-<li class="chapter" data-level="9.1" data-path="9-1-library-2.html"><a href="9-1-library-2.html"><i class="fa fa-check"></i><b>9.1</b> Library</a></li>
+<li class="chapter" data-level="9.1" data-path="9-1-library-4.html"><a href="9-1-library-4.html"><i class="fa fa-check"></i><b>9.1</b> Library</a></li>
 <li class="chapter" data-level="9.2" data-path="9-2-application.html"><a href="9-2-application.html"><i class="fa fa-check"></i><b>9.2</b> Application</a></li>
 <li class="chapter" data-level="9.3" data-path="9-3-sample-data-6.html"><a href="9-3-sample-data-6.html"><i class="fa fa-check"></i><b>9.3</b> Sample Data</a></li>
 <li class="chapter" data-level="9.4" data-path="9-4-general-steps.html"><a href="9-4-general-steps.html"><i class="fa fa-check"></i><b>9.4</b> General Steps</a></li>
@@ -344,7 +346,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="12.1" data-path="12-1-library-3.html"><a href="12-1-library-3.html"><i class="fa fa-check"></i><b>12.1</b> Library</a></li>
+<li class="chapter" data-level="12.1" data-path="12-1-library-5.html"><a href="12-1-library-5.html"><i class="fa fa-check"></i><b>12.1</b> Library</a></li>
 <li class="chapter" data-level="12.2" data-path="12-2-sample-data-9.html"><a href="12-2-sample-data-9.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
 <li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
 <li class="chapter" data-level="12.4" data-path="12-4-performance-evaluation.html"><a href="12-4-performance-evaluation.html"><i class="fa fa-check"></i><b>12.4</b> Performance Evaluation</a></li>
@@ -415,7 +417,7 @@ breakPoints</code></pre></div>
         </div>
       </div>
 <a href="5-9-number-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="5-11-splitting-into-training-and-testing-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="5-11-splitting-into-train-and-test-dataset.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

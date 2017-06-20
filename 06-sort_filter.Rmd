@@ -1,43 +1,79 @@
+```{r regression, echo=FALSE}
+## global chunk option ##
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results = 'hold') 
+```
+
 # Find, Order and Filter Data
 
+## Library
+
+Functions and libraries used in this chapter are as below:  
+
+|   | Package              | Function      | Purpose                                                                                                 |
+|---|----------------------|---------------|---------------------------------------------------------------------------------------------------------|
+| 1 | Base R               | match         | return the position(s) of first match                                                                   |
+|   |                      | order         | return the positions for each vector element with order                                                 |
+|   |                      | which         | return the positions of value TRUE of a logical vector                                                  |
+
 ## Sample Data
-Sample data used simulate two categorical-alike feature, and two numeric value feature:  
 
-- **dept** is random character between 'D1', 'D2' and 'D3'  
-- **grp** is random character with randomly generated 'G1', 'G2'  
-- **value1** represents numeric value, normally distributed at mean 50  
-- **value2** is numeric value, normally distributed at mean 25  
-
-```{r}
+```{r echo=FALSE}
 set.seed(1234)
 my.df = data.frame(
-  dept = sample(1:3, 10, replace = T),
+  dept = paste('D',sample(1:3, 10, replace = T),sep=''),
   value1 = rnorm(1:10, mean = 50, sd = 5),
   stringsAsFactors = F
 )
 
-my.vector = sample(1:100,18, rep=T)
-
-head(my.df)
-head(my.vector)
+my.vector = sample(1:100,17, rep=T)
 ```
 
-## Finding Data
+### Sample Data Frame
 
-Find the **first match row number(s)** of specific element(s).  
+```{r results='markup', collapse=T}
+str( my.df )
+
+head( my.df )
+```
+
+### Sample Vector
+
+```{r results='markup', collapse=T}
+str( vector )
+
+head( my.vector )
+```
+
+## Finding Data in Vector
+
+Find the **first match position number(s)** of specific element(s).  
 
 > `match ( x, y )`  
 > $\quad$ `x = vector of criteria`  
-> $\quad$ `y = vector of elements to find from`   
+> $\quad$ `y = vector of elements to look in`   
 
-```{r}
-match(2, my.df$dept)
-match(c(1,2), my.df$dept)
+Let's look at the **sample vector**.  
+
+```{r, collapse=TRUE}
+my.df$dept
 ```
+
+Find the position of **one criteria**.  
+
+```{r, collapse=TRUE}
+match( 'D2', my.df$dept )
+```
+
+Find the positions of **multiple criterias**.  
+
+```{r, collapse=TRUE}
+match( c('D1','D2','D3'), my.df$dept )
+```
+
 
 ## Ordering Data
 
-The key **idea** of ordering data is to produce an 'order' vector representing the **position** of the element.  Then apply the order list to vector/data.frame to produce sorted result.  
+The key **idea** of ordering data is to produce an 'order' vector representing the **position** of the elements.  Then apply the order list to vector/data.frame to produce sorted result.  
 
 **order** make ordering based on a **numeric vector**. The order result can be applied to vector or data.frame.  
 
@@ -47,46 +83,64 @@ The key **idea** of ordering data is to produce an 'order' vector representing t
 
 ### Ordering Vector
 
-Create the order.
+Let's look at the **sample vector**.  
 
-```{r}
+```{r, collapse=TRUE}
+my.vector
+```
+
+**Create the order**.  
+
+```{r, collapse=TRUE}
 the.order = order (my.vector, decreasing=T) 
 the.order
 ```
 
-Apply the order on variable.  
+**Apply the order** on vector.  
 
-```{r}
-the.order = order (my.vector, decreasing=T) 
-the.order
+```{r, collapse=TRUE}
 my.vector[ the.order ]
 ```
 
 ### Ordering Data Frame
 
-**One Level Ordering**  
-```{r}
-the.order = order(my.df$dept, decreasing=TRUE)
-my.df[the.order,]
+We want to order a data.frame based on the values in one or more columns.  
+Here is the data.frame example.  
+
+```{r, collapse=TRUE}
+head(my.df)
 ```
 
-**Multi Level Ordering**  
+#### One Level Ordering
 
-Specify more than one column for multi-level ordering.However, all levels follow the same decreasing (ascending/desceding).  
+Order the data.frame based on one column - dept.  
+
+```{r}
+the.order = order(my.df$dept, decreasing=TRUE)
+head( my.df[the.order,] )
+```
+
+#### Multi Levels Ordering
+
+Order the data.frame based on two columns. However, all columns follow the same decreasing (ascending/desceding).  
 
 ```{r results='hold'}
 attach(my.df)
 the.order = order(dept, value1, decreasing=TRUE)
-my.df[the.order,]
+head( my.df[the.order,] )
 detach(my.df)
 ```
 
 
 ## Filtering Data
 
-There are two methods of filtering data, using logical vector or subset() function.  
+There are two methods of filtering data:  
 
-With both methods, **row.names are retained** in the output vector/dataframe.  
+- Using **logical vector**  
+- Using **`subset`** function  
+- Using row numbers: **`which()`**  
+
+With these methods, **row.names are retained** in the output vector/dataframe.  
 
 - **subset()** is a general function that can be used to filter vector, matrix and data.frame  
 - logical vector method - derive a conditional criteria that produce a logical vector, then apply to element selection
@@ -103,41 +157,58 @@ my.vector = 1:100
 subset( my.vector, my.vector>10 & my.vector<20)
 ```
 
-#### Using logical vector
+#### Using Logical Vector
 
-Essentially, the below has similar results as using subset()..  
+**First, create a logical vector**.  
 
-```{r}
+```{r, collapse=T}
 my.vector = 1:100
 lvector = my.vector>10 & my.vector<20
+head( lvector, 24 )
+```
+
+**Then apply the logical vector with selection**.  
+
+```{r, collapse=T}
 my.vector[ lvector ]
 ```
 
-#### Using row numbers vector
+#### Using Row Numbers
 
-**`which`** returns the **true indices of a logical object**.  
+**`which`** returns the **indices of TRUE value, of a logical vector**.  
 
-```{r}
+**Create a vector containing row numbers for all TRUE values**.  
+
+```{r, collapse = TRUE}
 my.vector = 1:100
-which (my.vector>10 & my.vector<20)
-my.vector[which (my.vector>10 & my.vector>10& my.vector<20)]
+w = which (my.vector>10 & my.vector<20)
+w
 ```
 
-**'which'** has a useful form to return row number with max or min value  
+**Then apply the row numbers with selection**.  
 
-```{r}
-my.vector = 1:100
-which.min (my.vector)
-my.vector[which.min(my.vector)]
-
-which.max (my.vector)
-my.vector[which.max(my.vector)]
+```{r, collapse=TRUE}
+my.vector[ w ]
 ```
 
+**'which'** has a useful form to return position of **max or min** value.  
+
+```{r, collapse=TRUE}
+my.vector = 1:100
+which.min ( my.vector )
+
+my.vector [ which.min(my.vector) ]
+```
+
+```{r, collapse=TRUE}
+which.max ( my.vector )
+
+my.vector [ which.max(my.vector) ]
+```
 
 ### Subseting Data Frame
 
-All methods show in below section has similar results.  
+Subsetting data.frame is generally similar to subsetting vector, except that it uses **[rows,cols] selectors**.  
 
 #### Using subset()
 
@@ -146,21 +217,23 @@ my.df = data.frame(
   x = 1:100,
   y = 300:201
 )
-subset( my.df, x<10 & y<300 )
+head( my.df ) 
+
+subset( my.df, x<10 & y<297 )
 ```
 
-#### Using logical vector
+#### Using Logical Vector
 
 ```{r}
-lvector = my.df$x<10 & my.df$y<300
+lvector = my.df$x<10 & my.df$y<297
 my.df [ lvector, ]
 ```
 
-#### Using row numbers vector
+#### Using Row Numbers
 
-**`which`** returns the **true indices of a logical object**.  
+**`which`** returns the **positions of value TRUE of a logical vector**.  
 
 ```{r}
-z = which (my.df$x<10 & my.df$y<300)
+z = which (my.df$x<10 & my.df$y<297)
 my.df [ z, ]
 ```

@@ -400,8 +400,8 @@ summary(fit)
 SSE = sum(fit$residuals^2)
 # SSR =
 # SST =
-RMSE = sqrt(SSE/nrow(fit$model))
-R2   = 1-SSE/SST
+#RMSE = sqrt(SSE/nrow(fit$model))
+#R2   = 1-SSE/SST
 ```
 
 

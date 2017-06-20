@@ -99,17 +99,10 @@ The solution is to:
 
 ## Looping
 
-## Apply Family
+### Using apply
 
-### Overview
+### Using lapply
 
-- Apply and its family is a useful function
-
-### apply
-
-### sapply
-
-### tapply
 
 ## Data Import
 

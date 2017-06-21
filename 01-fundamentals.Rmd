@@ -97,11 +97,68 @@ The solution is to:
 
 ## Conditioinal Decision
 
-## Looping
+## Loops
 
-### Using apply
+### Sample Data
+```{r,echo=FALSE}
+set.seed(1234)
+n=5
+my.df = data.frame(
+  com  = paste('C',sample(1:2, n, replace = T),sep=''),
+  dept = paste('D',sample(1:3, n, replace = T),sep=''),
+  grp  = paste('G',sample(1:2, n, replace = T),sep=''),
+  team = paste('T',sample(1:2, n, replace = T),sep=''),
+  value1 = rnorm(1:n, mean = 50, sd = 5),
+  value2 = rnorm(1:n, mean = 20, sd = 3),
+  value3 = rnorm(1:n, mean = 10, sd = 1),
+  stringsAsFactors = F
+)
+```
 
-### Using lapply
+```{r}
+my.df
+```
+
+### Loop Through Columns/Rows
+
+**`apply`** loops through all rowa or columns, take each column/row as a vector and supply them as input to a function. The function will compute the vector supplied, and return output in one of the form below base on the function used:    
+
+- Return **single value** per row/column, eg. `sum()`  
+- Return **multiple value** per row/column, eg. `function(x) x^2`  
+
+At the end of the 'loop', all results from each iteration are combined into one vector or matrix as final output.  
+
+> **`apply (X, MARGIN, FUN, ...)`**  
+> $\quad$ `X : matrix (anything else will be converted to matrix`  
+> $\quad$ `MARGIN: 1 - row-wise, 2-column-wise`  
+> $\quad$ `FUN: function to apply, can be a custom function`  
+> $\quad$ `... : optional parameters for FUN`  
+
+#### Row-Wise Function
+
+Iterate through each row with parameter `MARGIN=1`.  
+**Each output column represent a data ROW**.  
+
+```{r, collapse = TRUE}
+# single value returned per row
+apply( my.df[,5:7], 1, sum )
+
+# multiple values returned per row
+apply( my.df[,5:7], 1, function (x,y) x^y, y=3 )  
+```
+
+#### Column-Wise Function
+
+Iterate through each column with paramneter `MARGIN=2`.  
+**Each output column represent a data COLUMN**.  
+
+```{r, collapse = TRUE}
+# single value returned per column
+apply( my.df[,5:7], 2, sum)   
+
+# multiple values returned per column
+apply( my.df[,5:7], 2, function (x,y) x^y, y=3 )
+```
 
 
 ## Data Import

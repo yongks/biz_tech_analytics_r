@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-06-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="11-3-comparing-algorithm.html">
+<link rel="next" href="11-5-logistic-regression.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a><ul>
+<li class="chapter" data-level="11.1" data-path="11-1-introduction.html"><a href="11-1-introduction.html"><i class="fa fa-check"></i><b>11.1</b> Introduction</a></li>
+<li class="chapter" data-level="11.2" data-path="11-2-application.html"><a href="11-2-application.html"><i class="fa fa-check"></i><b>11.2</b> Application</a></li>
+<li class="chapter" data-level="11.3" data-path="11-3-comparing-algorithm.html"><a href="11-3-comparing-algorithm.html"><i class="fa fa-check"></i><b>11.3</b> Comparing Algorithm</a></li>
+<li class="chapter" data-level="11.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html"><i class="fa fa-check"></i><b>11.4</b> Performance Measurement</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.4.1</b> Confusion Matrix</a></li>
+<li class="chapter" data-level="11.4.2" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#cutoff-threshold-and-performance"><i class="fa fa-check"></i><b>11.4.2</b> Cutoff Threshold and Performance</a></li>
+<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code"><i class="fa fa-check"></i><b>11.4.3</b> Run The Code</a></li>
+<li class="chapter" data-level="11.4.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#roc-curve"><i class="fa fa-check"></i><b>11.4.4</b> ROC Curve</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html"><i class="fa fa-check"></i><b>11.5</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#the-concept"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#assumptions"><i class="fa fa-check"></i><b>11.5.2</b> Assumptions</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#equations"><i class="fa fa-check"></i><b>11.5.3</b> Equations</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#sample-data-1"><i class="fa fa-check"></i><b>11.5.4</b> Sample Data</a></li>
+<li class="chapter" data-level="11.5.5" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#run-the-code-1"><i class="fa fa-check"></i><b>11.5.5</b> Run The Code</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="performance-measurement" class="section level2">
+<h2><span class="header-section-number">11.4</span> Performance Measurement</h2>
+<p>There are many performance measurement used for binary classification. Here are the rules of thumb which one to use:</p>
+<ul>
+<li><strong>Recall</strong>: If you don’t mind getting some inaccurate result, as long as you get as much correct ones</li>
+<li><strong>Precision</strong>: If you demand rate of correctness and willing to reject some correct results<br />
+</li>
+<li><strong>F1 Score</strong>: For a more balanced measurement, taking into consideraton both recall and precision</li>
+</ul>
+<div id="confusion-matrix" class="section level3">
+<h3><span class="header-section-number">11.4.1</span> Confusion Matrix</h3>
+<div class="figure">
+<img src="images/confusion_table.jpg" alt="Confusion Matrix and Performance Measurement" />
+<p class="caption">Confusion Matrix and Performance Measurement</p>
+</div>
+<div id="accuracy" class="section level4">
+<h4><span class="header-section-number">11.4.1.1</span> Accuracy</h4>
+<ul>
+<li>Accuracy answers the question: <strong>From the total samples, how many had been correctly predicted by the model ?</strong><br />
+</li>
+<li><span class="math inline">\(Accuracy = \frac{TP+TN}{TP+TN+FP+FN}\)</span></li>
+<li>This measurement is useful when the both <strong>classes are balanced</strong> (that is, the number of TP and TN cases are almost balanced)<br />
+</li>
+<li>In practice, it seems that the best accuracy is usually achieved when the cutpoint is <strong>near the Probability(actual TRUE)</strong></li>
+</ul>
+</div>
+<div id="recall" class="section level4">
+<h4><span class="header-section-number">11.4.1.2</span> Recall</h4>
+<ul>
+<li>Recall answers the question: <strong>Out of all actual positive samples, how many were correctly predicted by classifiers ?</strong><br />
+</li>
+<li><span class="math inline">\(Recall = \frac{TP}{TP+FN}\)</span></li>
+</ul>
+</div>
+<div id="precision" class="section level4">
+<h4><span class="header-section-number">11.4.1.3</span> Precision</h4>
+<ul>
+<li>Precison answers the question: <strong>Out of all the samples classifier predicted as positive, what fraction were correct ?</strong><br />
+</li>
+<li><span class="math inline">\(Precision = \frac{TP}{TP+FN}\)</span></li>
+</ul>
+</div>
+<div id="f1-score" class="section level4">
+<h4><span class="header-section-number">11.4.1.4</span> F1 Score</h4>
+<ul>
+<li>F1 score is the <strong>harmonic mean of Precision and Recall</strong>. Intuitively, F1 Score is the <strong>weighted average of Precision and Recall</strong>. It takes into account all three measures: TP, FP and FN<br />
+</li>
+<li><span class="math inline">\(Precision = 2*\frac{Recall * Precision}{Recall + Precision}\)</span><br />
+</li>
+<li>F1 is usually more useful than accuracy, especially if you have an unbalanced class distribution</li>
+</ul>
+</div>
+<div id="area-under-roc-auroc" class="section level4">
+<h4><span class="header-section-number">11.4.1.5</span> Area Under ROC (AUROC)</h4>
+<ul>
+<li>ROC curve is basically a graph of <strong>TPR vs FPR</strong> (some refer to as Recall vs (1-Sensitivity), plotted for <strong>different thresholds</strong><br />
+</li>
+<li>Comparing two different models, the model with <strong>higher AUROC is considered to have higher overall Accuracy</strong><br />
+</li>
+<li>AUROC (Area Under ROC) measures :
+<ul>
+<li>AUC of 0.5: means the model is as good as tossing a coin, worthless<br />
+</li>
+<li>AUC of 1.0: means for all cutoff points, TPR=1 and FPR=0. Intuitively it means, all samples had been correctly classified into TP (TPR=0) and TN(FPR=0), and there is no FP and FN. Ultiamtely it means Accuracy is 100%</li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="images/roc_curve.gif" alt="AUROC and Thresholds" />
+<p class="caption">AUROC and Thresholds</p>
+</div>
+</div>
+</div>
+<div id="cutoff-threshold-and-performance" class="section level3">
+<h3><span class="header-section-number">11.4.2</span> Cutoff Threshold and Performance</h3>
+<div id="impact-of-cutoff-threshold-to-performance" class="section level4">
+<h4><span class="header-section-number">11.4.2.1</span> Impact of Cutoff Threshold to Performance</h4>
+<p>Cutoff threshold <strong>direclty influence</strong> the value of TP, FP, TN, FN.<br />
+If <strong>cutoff threshold is lowered</strong> (lower probability to classify as Postive), the results are:</p>
+<ul>
+<li><strong>More linient</strong> and hence <strong>more samples will be classified as Positive</strong><br />
+</li>
+<li>More predicted Positives means more TP and FP, hence <strong>TPR and FPR increases</strong><br />
+</li>
+<li>However, <strong>TPR and FPR increases at different rate</strong>:
+<ul>
+<li>If TPR increases faster than FPR -&gt; this is <strong>good</strong>, as the lowered threshold generated more TP than FP<br />
+</li>
+<li>If FPR increases faster then TPR -&gt; this is <strong>not good</strong>, as the lowered threhsold generated more FP than TP</li>
+</ul></li>
+</ul>
+<p>Different threshold produces different performance metrics (Accuracy, Recall, Precision and Specificity and F1-score). As an example, picture below shows how threshold influences the ROC curve.</p>
+<div class="figure">
+<img src="images/roc_threshold_demo.gif" alt="Threshold and ROC" />
+<p class="caption">Threshold and ROC</p>
+</div>
+<p>The only way to estimate the <strong>optimum threshold</strong> for each of the performance measurement will be to measure them for a <strong>wide range of threshold</strong>.</p>
+</div>
+<div id="cutoff-and-performance-visualization" class="section level4">
+<h4><span class="header-section-number">11.4.2.2</span> Cutoff and Performance Visualization</h4>
+<p>Cutoff and Performance is best visualized using the graphs below:</p>
+<ol style="list-style-type: decimal">
+<li>Threshold vs Accuracy<br />
+</li>
+<li>Threshold vs Recall / TPR<br />
+</li>
+<li>Threshold vs Precision<br />
+</li>
+<li>Threshold vs Specificity / TNR<br />
+</li>
+<li>Threshold vs TPR / FPR<br />
+</li>
+<li>ROC Curve (TPR vs FPR)</li>
+</ol>
+</div>
+<div id="cutoff-inbalance-class" class="section level4">
+<h4><span class="header-section-number">11.4.2.3</span> Cutoff Inbalance Class</h4>
+</div>
+<div id="maximize-f1-score" class="section level4">
+<h4><span class="header-section-number">11.4.2.4</span> Maximize F1 Score</h4>
+</div>
+</div>
+<div id="run-the-code" class="section level3">
+<h3><span class="header-section-number">11.4.3</span> Run The Code</h3>
+<div id="sample-data" class="section level4">
+<h4><span class="header-section-number">11.4.3.1</span> Sample Data</h4>
+<p>We shall simulate the results of binary prediction and its true value:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predicted =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">33</span>, <span class="dt">replace=</span>T)
+actual    =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">1</span>, <span class="dv">33</span>, <span class="dt">replace=</span>T)</code></pre></div>
+</div>
+<div id="the-confusion-table" class="section level4">
+<h4><span class="header-section-number">11.4.3.2</span> The Confusion Table</h4>
+<p>Building the confusion table is the <strong>first step</strong> to calculate the rest of the metrics.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t =<span class="st"> </span><span class="kw">table</span>(actual, predicted)    <span class="co"># 2-dim frequency table</span>
+t
+##       predicted
+## actual  0  1
+##      0 13  5
+##      1  5 10</code></pre></div>
+</div>
+<div id="performance-ratio" class="section level4">
+<h4><span class="header-section-number">11.4.3.3</span> Performance Ratio</h4>
+<p><strong>Accuracy</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p1 =<span class="st"> </span><span class="kw">prop.table</span>(t)              <span class="co"># for accuracy calc</span>
+<span class="kw">addmargins</span>(p1)
+##       predicted
+## actual         0         1       Sum
+##    0   0.3939394 0.1515152 0.5454545
+##    1   0.1515152 0.3030303 0.4545455
+##    Sum 0.5454545 0.4545455 1.0000000</code></pre></div>
+<p><strong>Recall, Miss Rate, Fallout, Specificity</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2 =<span class="st"> </span><span class="kw">prop.table</span>(t, <span class="dt">margin =</span> <span class="dv">1</span>)  <span class="co"># tpr, fpr, fnr, tnr calc</span>
+<span class="kw">addmargins</span>(p2,<span class="dv">2</span>)
+##       predicted
+## actual         0         1       Sum
+##      0 0.7222222 0.2777778 1.0000000
+##      1 0.3333333 0.6666667 1.0000000</code></pre></div>
+<p><strong>PPV, FDR, FOR, NPV</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p3 =<span class="st"> </span><span class="kw">prop.table</span>(t, <span class="dt">margin =</span> <span class="dv">2</span>)  <span class="co"># ppv, fdr, for, npv</span>
+<span class="kw">addmargins</span>(p3,<span class="dv">2</span>)
+##       predicted
+## actual         0         1       Sum
+##      0 0.7222222 0.3333333 1.0555556
+##      1 0.2777778 0.6666667 0.9444444</code></pre></div>
+</div>
+<div id="put-all-codes-together" class="section level4">
+<h4><span class="header-section-number">11.4.3.4</span> Put All Codes Together</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eval_binclass =<span class="st"> </span><span class="cf">function</span> ( predicted, actual) {
+  t =<span class="st"> </span><span class="kw">table</span>(actual, predicted)    <span class="co"># accuracy</span>
+  p1 =<span class="st"> </span><span class="kw">prop.table</span>(t)              <span class="co"># for accuracy calc</span>
+  p2 =<span class="st"> </span><span class="kw">prop.table</span>(t, <span class="dt">margin =</span> <span class="dv">1</span>)  <span class="co"># tpr, fpr, fnr, tnr calc</span>
+  p3 =<span class="st"> </span><span class="kw">prop.table</span>(t, <span class="dt">margin =</span> <span class="dv">2</span>)  <span class="co"># ppv, fdr, for, npv</span>
+  f1 =<span class="st"> </span><span class="dv">2</span><span class="op">*</span>(p3[<span class="dv">1</span>]<span class="op">*</span>p2[<span class="dv">1</span>]<span class="op">/</span>(p3[<span class="dv">1</span>]<span class="op">+</span>p2[<span class="dv">1</span>]))
+  result =<span class="st"> </span><span class="kw">c</span>(<span class="dt">accuracy=</span>p1[<span class="dv">1</span>]<span class="op">+</span>p1[<span class="dv">4</span>],<span class="dt">tpr=</span>p2[<span class="dv">1</span>],<span class="dt">fpr=</span>p2[<span class="dv">2</span>],<span class="dt">fnr=</span>p2[<span class="dv">3</span>],<span class="dt">tnr=</span>p2[<span class="dv">4</span>], <span class="dt">ppv=</span>p3[<span class="dv">1</span>], <span class="dt">fdr=</span>p3[<span class="dv">2</span>], <span class="dt">fo_r=</span>p3[<span class="dv">3</span>], <span class="dt">npv=</span>p3[<span class="dv">4</span>], <span class="dt">f1=</span>f1)
+}
+
+<span class="kw">eval_binclass</span>( predicted, actual )</code></pre></div>
+</div>
+</div>
+<div id="roc-curve" class="section level3">
+<h3><span class="header-section-number">11.4.4</span> ROC Curve</h3>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="11-3-comparing-algorithm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="11-5-logistic-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/11-classification.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

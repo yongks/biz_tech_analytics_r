@@ -435,27 +435,45 @@ data.frame(p,g)
 
 creates a logical vector, indicating. Ratio specified in SplitRatio will be have value 'TRUE'
 
+
 ## Splitting Into Train and Test Dataset
 
-When we have only ONE dataset, we can split them into training and testing, example 0.7/0.3 split.  
+When we have only ONE dataset, we can split them into training and testing, example 0.7/0.3 split. 
 
-**`sample.split`** takes a vector (or a column from a data.frame), randomly assign TRUE (training data) and FALSE (test data) according to a specified ratio.  It returns a **logical vector for data subsetting** purpose.
+#### Using Base R Method
 
-> **`sample.split (Y, SplitRatio = 2/3, group = NULL)`**  
-> `$\quad$ Y = vector`  
-> `$\quad$ SplitRatio = ratio of split`  
-
-Note **`sample.split`** doesn't take a data.frame, it takes a vector (or a data.frame column).
-
-#### Create Logical Split
-
-Load the library, check the number of rows in this dataset.  
+**First, create the vector of row numbers for training data**.  
 
 ```{r}
-my.df
+set.seed(8034)
+train.rows = sample( 1:nrow(my.df), 0.6 * nrow(my.df) )
 ```
 
-Randomly split the data and verify the **logical vector** output.  
+**Then split the data into two**.  
+
+Subseting for the **training data**
+
+```{r, collapse=TRUE }
+my.df [train.rows, ]          # Training Data (0.6)
+```
+
+Subsetting the test data by **negating** the splitting row numbers.  
+
+```{r, collapse=TRUE }
+my.df [-train.rows, ]         # Training Data (0.4)
+```
+
+We can of course **reverse** by the splitting row vector as test rows instead of training rows. This will **reduce memory footprint** of the splitting row vector as test row numbers are generally smaller.  
+
+#### Using caTools::sample.split
+
+**`caTools::sample.split`** takes a **vector (or a column from a data.frame)**, randomly assign TRUE (training data) and FALSE (test data) according to a specified ratio.  It returns a **logical vector for data subsetting** purpose.
+
+> **`sample.split (Y, SplitRatio = 2/3, group = NULL)`**  
+> $\quad$ `Y = vector`  
+> $\quad$ `SplitRatio = ratio of split`  
+
+**First, create the logical vector of the split**. Randomly split the data and verify the **logical vector** output.  
 
 ```{r}
 set.seed(8034)
@@ -463,19 +481,17 @@ split.data = sample.split(my.df$id, 0.6)  # randomly 0.6 set to TRUE, remaining 
 split.data
 ```
 
-#### Filter With The Split
+**Then split the data into two**.  
 
 Subseting for the **training data**
 
 ```{r, collapse=TRUE }
 subset( my.df, split.data )   # Training Data (0.6)
-#my.df[  split.data, ]        #   alternative
 ```
 
 Subsetting the test data by **negating** the splitting logical vector.  
 
 ```{r, collapse=TRUE }
 subset( my.df, !split.data )  # Testing Data (0.4)
-#my.df[ !split.data, ]        #   alternative
 ```
 

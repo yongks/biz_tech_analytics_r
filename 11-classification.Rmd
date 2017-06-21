@@ -6,6 +6,155 @@
 
 ## Comparing Algorithm
 
+
+## Performance Measurement
+
+There are many performance measurement used for binary classification.  Here are the rules of thumb which one to use:  
+
+- **Recall**: If you don't mind getting some inaccurate result, as long as you get as much correct ones 
+- **Precision**: If you demand rate of correctness and willing to reject some correct results  
+- **F1 Score**: For a more balanced measurement, taking into consideraton both recall and precision  
+
+### Confusion Matrix
+
+![Confusion Matrix and Performance Measurement](./images/confusion_table.jpg)
+
+#### Accuracy
+
+- Accuracy answers the question: **From the total samples, how many had been correctly predicted by the model ?**  
+- $Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$
+- This measurement is useful when the both **classes are balanced** (that is, the number of TP and TN cases are almost balanced)  
+- In practice, it seems that the best accuracy is usually achieved when the cutpoint is **near the Probability(actual TRUE)**  
+
+#### Recall
+
+- Recall answers the question: **Out of all actual positive samples, how many were correctly predicted by classifiers ?**  
+- $Recall = \frac{TP}{TP+FN}$
+
+#### Precision
+
+- Precison answers the question:  **Out of all the samples classifier predicted as positive, what fraction were correct ?**  
+- $Precision = \frac{TP}{TP+FN}$
+
+#### F1 Score
+
+- F1 score is the **harmonic mean of Precision and Recall**. Intuitively, F1 Score is the **weighted average of Precision and Recall**. It takes into account all three measures: TP, FP and FN  
+- $Precision = 2*\frac{Recall * Precision}{Recall + Precision}$  
+- F1 is usually more useful than accuracy, especially if you have an unbalanced class distribution  
+  
+#### Area Under ROC (AUROC)
+
+- ROC curve is basically a graph of **TPR vs FPR** (some refer to as Recall vs (1-Sensitivity), plotted for **different thresholds**  
+- Comparing two different models, the model with **higher AUROC is considered to have higher overall Accuracy**  
+- AUROC (Area Under ROC) measures :  
+    - AUC of 0.5: means the model is as good as tossing a coin, worthless  
+    - AUC of 1.0: means for all cutoff points, TPR=1 and FPR=0. Intuitively it means, all samples had been correctly classified into TP (TPR=0) and TN(FPR=0), and there is no FP and FN. Ultiamtely it means Accuracy is 100%  
+    
+    
+![AUROC and Thresholds](./images/roc_curve.gif)  
+  
+### Cutoff Threshold and Performance
+
+#### Impact of Cutoff Threshold to Performance
+
+Cutoff threshold **direclty influence** the value of TP, FP, TN, FN.  
+If **cutoff threshold is lowered** (lower probability to classify as Postive), the results are:  
+
+- **More linient** and hence **more samples will be classified as Positive**  
+- More predicted Positives means more TP and FP, hence **TPR and FPR increases**  
+- However, **TPR and FPR increases at different rate**:  
+    - If TPR increases faster than FPR -> this is **good**, as the lowered threshold generated more TP than FP  
+    - If FPR increases faster then TPR -> this is **not good**, as the lowered threhsold generated more FP than TP  
+
+Different threshold produces different performance metrics (Accuracy, Recall, Precision and Specificity and F1-score). As an example, picture below shows how threshold influences the ROC curve.  
+
+![Threshold and ROC](./images/roc_threshold_demo.gif)  
+
+The only way to estimate the **optimum threshold** for each of the performance measurement will be to measure them for a **wide range of threshold**.  
+
+#### Cutoff and Performance Visualization
+
+Cutoff and Performance is best visualized using the graphs below:  
+
+1. Threshold vs Accuracy  
+2. Threshold vs Recall / TPR  
+3. Threshold vs Precision  
+4. Threshold vs Specificity / TNR  
+5. Threshold vs TPR / FPR  
+6. ROC Curve (TPR vs FPR) 
+
+
+#### Cutoff Inbalance Class
+
+
+
+#### Maximize F1 Score
+
+
+  
+  
+### Run The Code
+
+#### Sample Data
+
+We shall simulate the results of binary prediction and its true value:  
+
+```{r}
+predicted = sample(0:1, 33, replace=T)
+actual    = sample(0:1, 33, replace=T)
+```
+
+#### The Confusion Table
+
+Building the confusion table is the **first step** to calculate the rest of the metrics.  
+
+```{r collapse=T}
+t = table(actual, predicted)    # 2-dim frequency table
+t
+```
+
+#### Performance Ratio
+
+**Accuracy**  
+
+```{r collapse=T}
+p1 = prop.table(t)              # for accuracy calc
+addmargins(p1)
+```
+
+**Recall, Miss Rate, Fallout, Specificity**
+
+```{r collapse=T}
+p2 = prop.table(t, margin = 1)  # tpr, fpr, fnr, tnr calc
+addmargins(p2,2)
+```
+
+**PPV, FDR, FOR, NPV**
+
+```{r collapse=T}
+p3 = prop.table(t, margin = 2)  # ppv, fdr, for, npv
+addmargins(p3,2)
+```
+
+
+#### Put All Codes Together
+
+```{r}
+eval_binclass = function ( predicted, actual) {
+  t = table(actual, predicted)    # accuracy
+  p1 = prop.table(t)              # for accuracy calc
+  p2 = prop.table(t, margin = 1)  # tpr, fpr, fnr, tnr calc
+  p3 = prop.table(t, margin = 2)  # ppv, fdr, for, npv
+  f1 = 2*(p3[1]*p2[1]/(p3[1]+p2[1]))
+  result = c(accuracy=p1[1]+p1[4],tpr=p2[1],fpr=p2[2],fnr=p2[3],tnr=p2[4], ppv=p3[1], fdr=p3[2], fo_r=p3[3], npv=p3[4], f1=f1)
+}
+
+eval_binclass( predicted, actual )
+```
+
+
+### ROC Curve
+
 ## Logistic Regression
 
 ### The Concept
@@ -79,44 +228,3 @@ glm (y ~ x1 + x2 + x3 , family=binomial(logit), data=my.df)
 ```
 
 
-## Performance Measurement
-
-> summary(fit) # display results  
-> confint(fit) # 95% CI for the coefficients  
-> exp(coef(fit)) # exponentiated coefficients  
-> exp(confint(fit)) # 95% CI for exponentiated coefficients  
-> predict(fit, type="response") # predicted values  
-> residuals(fit, type="deviance") # residuals   
-
-### Confusion Matrix
-
-![Confusion Matrix](./images/confusion_table.jpg)
-
-$Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$
-
-**Simulate the Binary Data** and generate frequency table of Actual vs Predicted  
-
-```{r}
-predicted = sample(0:1, 33, replace=T)
-actual    = sample(0:1, 33, replace=T)
-t = table(actual, predicted)    # 2-dim frequency table
-t
-```
-
-**Generate Proportion Table**  
-
-```{r results='markup'}
-p1 = prop.table(t)              # for accuracy calc
-addmargins(p1)
-p2 = prop.table(t, margin = 1)  # for tpr, fpr, fnr, tnr calc
-addmargins(p2,2)
-```
-
-**Calcuate Metrics**  
-
-```{r}
-c(accuracy=p1[1]+p1[4],tpr=p2[1],fpr=p2[2],fnr=p2[3],tnr=p2[4])
-```
-
-
-### ROC Curve

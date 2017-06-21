@@ -161,7 +161,7 @@ Once we had derived the **optimum equation**, we can use the model to predict ta
 
 Below are conditions for the **least-squares estimator - used by linear regression** to possess desirable properties; in particular, these assumptions imply that the **parameter estimates** will be **unbiased, consistent, and efficient** in the class of linear unbiased estimators.  
 
-**Classical assumptions** for linear regression analysis include:  
+#### Classical Assumptions
 
 - The sample is representative of the population for the inference prediction  
     Question how is the data being gathered, is it convincing that it represents the population  ?
@@ -169,32 +169,19 @@ Below are conditions for the **least-squares estimator - used by linear regressi
 - Number of observations **must be larger** than number of independent variables  
     Check the length of observations >= column length of data  
     
-**Assumptions On Dependent Variable**
+#### Assumptions On Dependent Variable
 
 - Must not be a categorical data type  
     
-**Assumptions On Independent Variable**
+#### Assumptions On Independent Variable
 
 - The independent variables are measured with **no error**, that is observations must be a set of known constants. (Note: If this is not so, modeling may be done instead using errors-in-variables model techniques)  
-    Think about if the 'predictor' has erors, what makes the outcome ?  
-    
-- **Each** independent variable are **linearly correclated with outcome**, when other independent variables are held constant. Validation methods:  
-    a. Run Matrix Scatter plot outcome against individual independent variables. Methods to verify are:  
-    b. Run matrix correlation calculation for outcome againsts all independent varaibels. Correlation value 0.5 and above consider good correlation and therefore acceptable <br>  
-- **NO Multicollinearity** amont predictors - Meaning little or not linear correlationamong the predictors, i.e. it is not possible to express any predictor as a linear combination of the others, if so, we wouldn't know which predictor actually influene the outcome. Validation method:  
-    a. Scatter Plot Matrix for all independent variables  
-    b. Correlation Matrix calculation for all independent varaibels. Correlation value 0.2 and below consider week correlation and therefore acceptable  
-    c. Tolerance (**T**) - measures the influence of one independent variable on all other independent variables  
-        **T <0.01** --> **confirm** correlation  
-        **T <0.1**  --> **might have** correlation  
-    e. Variance Inflation Factor (**VIF**)  - VIF = 1/T  
-        **T >100**  --> **confirm** correlation  
-        **T >10** --> **might have** correlation  
-    e. Condition Index (**CI**) - calculated using a factor analysis on the independent variables  
-        ** Values of 10-30** -->  indicate a mediocre multicollinearity  
-        ** Values > 30** --> strong multicollinearity  
 
-**Assumptions On Errors (residuals)**
+- **Each** independent variable are **linearly correclated with outcome**, when other independent variables are held constant. **Matrix scatter plot and correlation calculation** can validate this. Generally correlation of 0.7 and above are considered good.  
+
+- **NO Multicollinearity** amont predictors - Meaning little or not linear correlationamong the predictors, i.e. it is not possible to express any predictor as a linear combination of the others, if so, we wouldn't know which predictor actually influene the outcome. 
+
+#### Assumptions On Errors (residuals)
   
 - The **errors are random numbers**, with means of **zero**  
     - There should not be a pattern in the residuals distribution  
@@ -203,16 +190,12 @@ Below are conditions for the **least-squares estimator - used by linear regressi
     
 - The **errors are uncorrelated** - that is, the variance–covariance matrix of the errors is diagonal and each non-zero element is the variance of the error  
 
-- **Homoscedasticity** - The variance of the error is constant across observations. If heteroscedasticity exist, scatter plot of response and predictor will look like below  
-
-
-
-
-If not, weighted least squares or other methods might instead be used. 
+- **Homoscedasticity** - The variance of the error is constant across observations. If heteroscedasticity exist, scatter plot of response and predictor will look like below  ![Heteroscedasticity](./images/heteroscedastic.jpg)  
     - The Goldfeld-Quandt Test can test for heteroscedasticity  
     - If homoscedasticity is present, a non-linear correction might fix the problem  
+    - Otherwise, weighted least squares or other methods might instead be used.
 
-#### Are The Assumptions to be followed strictly ?
+#### Are These Assumptions to be followed strictly ?
 
 In real life, actual data **rarely satisfies** the assumptions, that is:  
 
@@ -222,13 +205,12 @@ In real life, actual data **rarely satisfies** the assumptions, that is:
 
 Reports of statistical analyses usually include analyses of tests on the sample data and methodology for the fit and usefulness of the model. 
     
-#### Additional notes of independent variables  
+#### Additional Notes On Independent variables  
   
 - Adding more variables to a regression procedure may **overfit** the model and make things worse. The idea is to pick the **best** variables  
 - Some independent variable(s) are better at predicting the outocme, some contribute little or nothing  
 
   Because of **multicollinearity** and **overfitting**, there is a fair amount of **prep-work** to be performed BEFORE conducting multiple regression analysis - if one is to do it properly.  
-
 
 
 ### Equations
@@ -333,79 +315,98 @@ $\quad$ n = number of observations
 - Adjusted $R^2$ will **decrease** when adding predictors that doesn't increase the model fit that make up for the loss of degrees of freedom  
 - Likewise, it will **increase** as predictors are added if the increase in model fit is **worthwhile**  
 
-> **$R^2_{adj}$** is useful for **comparing models with a different number of predictors**, hence can be use for features selection  
+> **$R^2_{adj}$** is useful to **compare models with a different number of predictors**, hence good for feature selection  
 
 **Training Data and Test Data (out of sample)**  
 
-- In building model with training data, always true : 0 <= $R^2$ <= 1  
-- However, if the model is **underfit**, test data (out of sample) will reveals that 0 => $R^2$ <= 1. Hence SSE is larger than SST, causing SSE/SST >= 1, therefore $R^2$ goes negative.  
-
-
+- A built model based on **training data** always has $R^2$ between 0 <= $R^2$ <= 1  
+- However, if the model is **underfit**, **test data** may reveal $R^2$ <= 0  
 
 ### Feature Selection
 
-1. High correlation of response and independent variable doesn't means the coefficient is statistically significant (p-value < 0.05)
-2. Correlation direction (positive/negative) of response and independent variable doesn't means the coefficient will have the same direction  
+1. The **strength and importance** of an independent variable **is not measured** by its correlation or coefficient with the dependent variable - It only hold true if there is only single independent variable  
+2. **Multicolinearity** has below independent variable diversion and therefore must be removed:  
+    - It increases the p-value to make it insignificant 
+    - It divert a coef direction (eg. positive becomes negative)  
+3. Perform **transformation** (such as log, quadradric) if the plot of independet vs dependent variables shows Heteroscedasticity  
 
 
 ### Sample Data
 
 ```{r fig.width=9}
 set.seed(1234)
-#n=100
-#my.df = data.frame(
-#  id = paste('ID', 1:n),
-#  x1 = 10:(10 + n - 1) * runif(n, min = 0.5, max = 1.1),
-#  x2 = 20:(20 + n - 1) * runif(n, min = 0.5, max = 1.1),
-#  x3 = 30:(30 + n - 1) * runif(n, min = 0.5, max = 1.1)
-#)
-my.df = gen_slinear(n=100,start=-1, intercept = 7, coef=3, visual=FALSE)
-#my.df$y = 88 + 0.1 * my.df$x1 + 0.2 * my.df$x2 + 0.3*my.df$x3
+n=100
+my.df = data.frame(
+  id = paste('ID', 1:n),
+  x1 = 10:(10 + n - 1) * runif(n, min = 0.5, max = 1.1),
+  x2 = 20:(20 + n - 1) * runif(n, min = 0.5, max = 1.1),
+  x3 = 30:(30 + n - 1) * runif(n, min = 0.5, max = 1.1)
+)
+#my.df = gen_slinear(n=100,start=-1, intercept = 7, coef=3, visual=FALSE)
+my.df$y = 88 + 0.1 * my.df$x1 + 0.2 * my.df$x2 + 0.3*my.df$x3
 
 ```
 
 
 ### Run The Code
 
-> **`lm ( formula = , data = )`**  
+#### Build The Model
+
+**`lm` build a linear regresson model** for this equation: $h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$  
+
 > **`lm ( formula , data )`**  
-> **`lm ( data , formula )`**  
 > $\quad$ `formula : y~x1 + x2 + x3`  
 > $\quad$ `data: matrix or dataframe`  
 
-
-#### Build The Model
-
-Build a linear regresson model based on this formula: $h(x_1,x_2,x_3) = \theta_0+ \theta_1x_1 + \theta_2x_2 + \theta_3X_3$  
-
 ```{r}
-fit = lm(formula = y ~ x, data = my.df)
+fit = lm(formula = y ~ . -id, data = my.df)
 ```
 
 #### Evaluate The Model
 
-Check the detail of the model built, see the coef, t-value, $R^2$ and $RMSE$  
+**`summary`** provides useful infomration about the model, such as:  
 
-What does **`summary`** tells you ?
+  - List of coefficients, and their t-value, p-value  
+  - R-square  
+  - Adjusted R-square  
+  - Residual Standard Error, similar to RMSE except that it divides by degree of freedom, instead of number of observations  
 
-```{r}
-
-```
-
-**Extracting** More Information From The Model
-
-```{r}
+```{r results='markup'}
 summary(fit)
-
-SSE = sum(fit$residuals^2)
-# SSR =
-# SST =
-#RMSE = sqrt(SSE/nrow(fit$model))
-#R2   = 1-SSE/SST
 ```
 
+However, `summary` **doesn't show** RMSE/SSE/SST/SSR measurement, which requried additional coding as in following section. 
 
+#### Additional Evaluation (custom code)
 
+The built model (**lm object**) contain good information as below for us to build additional evaluation:  
+
+  - Original training data (\$model)   
+  - Residuals (\$residuals)  
+  - Predicted outocme (\$fitted.values)  
+  - R2, Adjusted R2 (summary\$)  
+
+From these information, we can calculate **SSE, SST, SSR, RMSE**. Note that R2 and R2-Adj can be derived from **`summary`** function, no calculation required.  
+
+```{r}
+eval_regression = function ( fit ) {
+  # fit: lm object
+  SSE = sum(fit$residuals^2)
+  SSR = sum((fit$fitted.values - mean(fit$model[[1]]))^2)
+  SST = sum((fit$model[1] - mean(fit$model[[1]]))^2)
+  RMSE = sqrt(SSE/nrow(fit$model))
+  R2   = 1-SSE/SST
+  R2.ADJ = summary(fit)$adj.r.squared
+  result = 
+  c( sse=SSE, ssr=SSR, sst=SST, rmse=RMSE, r2=R2, r2.adj = R2.ADJ)
+}
+```
+
+This evaluation function return key statistics in a **named vector**.  
+
+```{r, collapse=T}
+eval_regression(fit)
+```
 
 ## Regression Diagnostic
 
@@ -426,6 +427,18 @@ library('car')
 
 ### Multicollinearity Test
 
+Validation method:  
+    a. Scatter Plot Matrix for all independent variables  
+    b. Correlation Matrix calculation for all independent varaibels. Correlation value 0.2 and below consider week correlation and therefore acceptable  
+    c. **Tolerance (T)** - measures the influence of one independent variable on all other independent variables  
+        **T <0.01** --> **confirm** correlation  
+        **T <0.1**  --> **might have** correlation  
+    d. **Variance Inflation Factor (VIF)**  - VIF = 1/T  
+        **T >100**  --> **confirm** correlation  
+        **T >10** --> **might have** correlation  
+    e. **Condition Index (CI)** - calculated using a factor analysis on the independent variables  
+        ** Values of 10-30** -->  indicate a mediocre multicollinearity  
+        ** Values > 30** --> strong multicollinearity  
 
 ### Normality Test
 

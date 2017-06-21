@@ -1,4 +1,4 @@
-```{r regression, echo=FALSE}
+```{r ordering, echo=FALSE}
 ## global chunk option ##
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results = 'hold') 
 ```
@@ -22,19 +22,19 @@ set.seed(1234)
 my.df = data.frame(
   dept = paste('D',sample(1:3, 10, replace = T),sep=''),
   value1 = rnorm(1:10, mean = 50, sd = 5),
-  stringsAsFactors = F
-)
+  stringsAsFactors = F )
 
 my.vector = sample(1:100,17, rep=T)
 ```
 
 ### Sample Data Frame
 
-```{r results='markup', collapse=T}
+```{r  collapse=T}
 str( my.df )
 
 head( my.df )
 ```
+
 
 ### Sample Vector
 

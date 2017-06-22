@@ -119,9 +119,12 @@ my.df = data.frame(
 my.df
 ```
 
-### Loop Through Columns/Rows
 
-**`apply`** loops through all rowa or columns, take each column/row as a vector and supply them as input to a function. The function will compute the vector supplied, and return output in one of the form below base on the function used:    
+### Loop Through A Vector
+
+### Loop Through Multiple Columns/Rows
+
+**`apply`** loops through all rows or columns, take each column/row as a vector and supply them as input to a function. The function will compute the vector supplied, and return output in one of the form below base on the function used:    
 
 - Return **single value** per row/column, eg. `sum()`  
 - Return **multiple value** per row/column, eg. `function(x) x^2`  

@@ -1,3 +1,9 @@
+```{r classification, echo=FALSE}
+## global chunk option ##
+library('knitr')
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
+```
+
 # Classification
 
 ## Introduction
@@ -25,6 +31,7 @@ There are many performance measurement used for binary classification.  Here are
 - $Accuracy = \frac{TP+TN}{TP+TN+FP+FN}$
 - This measurement is useful when the both **classes are balanced** (that is, the number of TP and TN cases are almost balanced)  
 - In practice, it seems that the best accuracy is usually achieved when the cutpoint is **near the Probability(actual TRUE)**  
+- Accuracy is completely usessless in highly skewed class.  For example, with a disease that only affects 1 in a million people a completely bogus screening test that always reports “negative” will be 99.9999% accurate  
 
 #### Recall
 
@@ -47,15 +54,15 @@ There are many performance measurement used for binary classification.  Here are
 - ROC curve is basically a graph of **TPR vs FPR** (some refer to as Recall vs (1-Sensitivity), plotted for **different thresholds**  
 - Comparing two different models, the model with **higher AUROC is considered to have higher overall Accuracy**  
 - AUROC (Area Under ROC) measures :  
-    - AUC of 0.5: means the model is as good as tossing a coin, worthless  
-    - AUC of 1.0: means for all cutoff points, TPR=1 and FPR=0. Intuitively it means, all samples had been correctly classified into TP (TPR=0) and TN(FPR=0), and there is no FP and FN. Ultiamtely it means Accuracy is 100%  
+    - AUC of **0.5**: means the model is as good as tossing a coin, worthless  
+    - AUC of **1.0**: means for all cutoff points, TPR=1 and FPR=0. Intuitively it means, all samples had been correctly classified into TP (TPR=1) and TN(FPR=0), and there is no FP and FN. Ultiamtely it means Accuracy is 100%  
     
     
 ![AUROC and Thresholds](./images/roc_curve.gif)  
   
-### Cutoff Threshold and Performance
+### Cutoff Threshold Optimization
 
-#### Impact of Cutoff Threshold to Performance
+#### Understanding Cutoff Impacts
 
 Cutoff threshold **direclty influence** the value of TP, FP, TN, FN.  
 If **cutoff threshold is lowered** (lower probability to classify as Postive), the results are:  
@@ -72,88 +79,126 @@ Different threshold produces different performance metrics (Accuracy, Recall, Pr
 
 The only way to estimate the **optimum threshold** for each of the performance measurement will be to measure them for a **wide range of threshold**.  
 
-#### Cutoff and Performance Visualization
+#### Cutoff Impact Visualization
 
 Cutoff and Performance is best visualized using the graphs below:  
 
 1. Threshold vs Accuracy  
 2. Threshold vs Recall / TPR  
 3. Threshold vs Precision  
-4. Threshold vs Specificity / TNR  
-5. Threshold vs TPR / FPR  
-6. ROC Curve (TPR vs FPR) 
+4. ROC Curve (TPR vs FPR) 
 
-
-#### Cutoff Inbalance Class
-
-
-
-#### Maximize F1 Score
-
-
-  
-  
 ### Run The Code
 
-#### Sample Data
-
-We shall simulate the results of binary prediction and its true value:  
+#### Measurement Function
 
 ```{r}
-predicted = sample(0:1, 33, replace=T)
-actual    = sample(0:1, 33, replace=T)
-```
+#######################################################################################
+#### Function Return Various Performance by Cutoff Threshold
+##### Input : fit: glm model object that uses probability classifier
+#######################################################################################
+eval.binclass = function(fit = NULL, cutoff.min = 0, cutoff.max = 1, cutoff.by = 0.1) {
 
-#### The Confusion Table
+    ## Calculate Key Measurements For One Cutoff
+    calc.metrics = function(x) {
+        actual = factor(as.logical(fit$model[[1]]), levels = c(TRUE, FALSE))
+        predicted = factor(fit$fitted.values > x, levels = c(TRUE, FALSE))
+        ct = table(actual, predicted, useNA = 'no', exclude = c(NA)) #confusion table
+        accuracy = (ct[1] + ct[4]) / (sum(ct))
+        recall = ct[1] / (ct[1] + ct[3])
+        precision = ct[1] / (ct[1] + ct[2])
+        specificity = ct[4] / (ct[2] + ct[4])
+        data.frame(cutoff = x, accuracy = accuracy, recall = recall, precision = precision,
+            specificity = specificity, fscore = 2 * (precision * recall / (precision + recall)), fpr = 1 - specificity,
+            tpr_fpr = recall / (1 - specificity), tp = ct[1], fp = ct[2], fn=ct[3], tn=ct[4])
+    }
 
-Building the confusion table is the **first step** to calculate the rest of the metrics.  
+    ## Derive cutoff breakpoints, and loop to calculate measures for each breakpoint
+    cutoffs = seq(cutoff.min, cutoff.max, by = cutoff.by)
+    perf.tab = do.call(rbind, lapply(cutoffs, FUN = calc.metrics))
 
-```{r collapse=T}
-t = table(actual, predicted)    # 2-dim frequency table
-t
-```
+    ## Calculate AUC
+    h = (perf.tab$recall[-1] + perf.tab$recall[-length(perf.tab$recall)]) / 2
+    w = abs(diff(perf.tab$fpr))
+    auc = sum(h*w)
 
-#### Performance Ratio
+    ## Summarize optimal cutoff for max performance on various metrics
+    best.metrics = rbind(
+        best.accuracy = c(max = max(perf.tab$accuracy, na.rm = TRUE),   cutoff = perf.tab$cutoff[which.max(perf.tab$accuracy)]),
+        best.precision = c(max = max(perf.tab$precision, na.rm = TRUE), cutoff = perf.tab$cutoff[which.max(perf.tab$precision)]),
+        best.recall = c(max = max(perf.tab$recall, na.rm = TRUE),       cutoff = perf.tab$cutoff[which.max(perf.tab$recall)]),
+        best.fscore = c(max = max(perf.tab$fscore, na.rm = TRUE),       cutoff = perf.tab$cutoff[which.max(perf.tab$fscore)])
+    )
 
-**Accuracy**  
+    ## Plot ROC graphs
+    plot(perf.tab$fpr, perf.tab$recall, type = 'b', main = paste('ROC Curve, auc=',auc),
+        xlab='False Positive Rate, or (1-Specificity)', ylab='Recall or True Positive Rate')
+    grid()
+    abline(0, 1, col = "red", lty = 2)
 
-```{r collapse=T}
-p1 = prop.table(t)              # for accuracy calc
-addmargins(p1)
-```
+    ## Plot Accuracy graph
+    plot(perf.tab$cutoff, perf.tab$accuracy, type = 'b', main = 'Accuracy over Cutoffs',
+        xlab = 'Cutoff Thresholds', ylab = 'Accuracy')
+    grid()
+    text(best.metrics['best.accuracy', 'cutoff'], min(perf.tab$accuracy, na.rm = T) + diff(range(perf.tab$accuracy, na.rm = T)) / 10, best.metrics['best.accuracy', 'cutoff'], col = "red")
+    abline(v = best.metrics['best.accuracy', 'cutoff'], col = "red", lty = 2)
+    abline(h = best.metrics['best.accuracy', 'max'], col = "red", lty = 2)
 
-**Recall, Miss Rate, Fallout, Specificity**
+    ## Plot Precision graph
+    plot(perf.tab$cutoff, perf.tab$precision, type = 'b', main = 'Precision over Cutoffs',
+        xlab = 'Cutoff Thresholds', ylab = 'Precision')
+    grid()
+    text(best.metrics['best.precision', 'cutoff'], min(perf.tab$precision,na.rm = T)+diff(range(perf.tab$precision, na.rm=T))/10, best.metrics['best.precision', 'cutoff'], col = "red")
+    abline(v = best.metrics['best.precision', 'cutoff'], col = "red", lty = 2)
+    abline(h = best.metrics['best.precision', 'max'], col = "red", lty = 2)
 
-```{r collapse=T}
-p2 = prop.table(t, margin = 1)  # tpr, fpr, fnr, tnr calc
-addmargins(p2,2)
-```
+    ## Plot F1 Scoregraph
+    plot(perf.tab$cutoff, perf.tab$fscore, type = 'b', main = 'F1-Score over Cutoffs',
+        xlab = 'Cutoff Thresholds', ylab = 'F1-Score')
+    grid()
+    text(best.metrics['best.fscore', 'cutoff'], min(perf.tab$fscore, na.rm = T) + diff(range(perf.tab$fscore, na.rm = T)) / 10, best.metrics['best.fscore', 'cutoff'], col = "red")
+    abline(v = best.metrics['best.fscore', 'cutoff'], col = "red", lty = 2)
+    abline(h = best.metrics['best.fscore', 'max'], col = "red", lty = 2)
 
-**PPV, FDR, FOR, NPV**
-
-```{r collapse=T}
-p3 = prop.table(t, margin = 2)  # ppv, fdr, for, npv
-addmargins(p3,2)
-```
-
-
-#### Put All Codes Together
-
-```{r}
-eval_binclass = function ( predicted, actual) {
-  t = table(actual, predicted)    # accuracy
-  p1 = prop.table(t)              # for accuracy calc
-  p2 = prop.table(t, margin = 1)  # tpr, fpr, fnr, tnr calc
-  p3 = prop.table(t, margin = 2)  # ppv, fdr, for, npv
-  f1 = 2*(p3[1]*p2[1]/(p3[1]+p2[1]))
-  result = c(accuracy=p1[1]+p1[4],tpr=p2[1],fpr=p2[2],fnr=p2[3],tnr=p2[4], ppv=p3[1], fdr=p3[2], fo_r=p3[3], npv=p3[4], f1=f1)
+    # return performance table, and optimal values per metric
+    return(list(perf.tab = perf.tab, auroc = auc, best.metrics = best.metrics))
 }
-
-eval_binclass( predicted, actual )
 ```
 
+#### Train The Model
 
-### ROC Curve
+```{r collapse=T}
+### Load The Data and Build The Model
+train.data = read.csv('./datasets/hr.train.csv')
+
+str(train.data)
+
+## Trian The Model Using Logistic Regression
+my.fit = glm(left ~ ., family = binomial(link = logit), data = train.data)
+```
+
+#### Run the Performance Eval Function
+
+**List The Performance Table**
+
+```{r collapse=T,fig.width=9, fig.height=9}
+par(mfrow=c(2,2))
+r = eval.binclass(my.fit, cutoff.by = 0.1)
+
+kable(r$perf.tab)
+```
+
+**`$auroc`** is the **area under ROC**, calculated for each simulated threshold.  
+
+```{r collapse=T}
+r$auroc
+```
+
+**`$best.metrics`** provides **optimal threshold** that maximize individual metrics, based on the simulated thresholds. 
+
+```{r collapse=T}
+r$best.metrics
+```
 
 ## Logistic Regression
 

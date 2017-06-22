@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="5-7-string-manipulation.html">
-<link rel="next" href="5-9-number-manipulation.html">
+<link rel="prev" href="12-1-library-5.html">
+<link rel="next" href="12-3-the-code.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -370,186 +370,49 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="date-manipulation" class="section level2">
-<h2><span class="header-section-number">5.8</span> Date Manipulation</h2>
-<div id="parsing-date" class="section level3">
-<h3><span class="header-section-number">5.8.1</span> Parsing Date</h3>
-<p>When import date date from text file using <code>read()</code>, often date column are imported as string or factor. Note that <code>lubridate::dmy,ymd</code> can convert from string only, whereas <code>as.Date</code> can convert from both string and factor.</p>
-<p><strong>Before Conversion</strong>, verify that all dates column are actually <code>chr</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.df)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    7 obs. of  9 variables:
-##  $ id        : chr  &quot;ID101&quot; &quot;ID102&quot; &quot;ID103&quot; &quot;ID104&quot; ...
-##  $ dept      : chr  &quot;D1&quot; &quot;D2&quot; &quot;D3&quot; &quot;D1&quot; ...
-##  $ gender    : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
-##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
-##  $ height    : int  173 164 178 182 159 166 153
-##  $ date_birth: chr  &quot;1/7/1973&quot; &quot;28/2/1980&quot; &quot;31/12/1978&quot; &quot;12/1/1997&quot; ...
-##  $ amount    : int  100 121 152 133 143 155 117
-##  $ date_last : chr  &quot;2/29/2016&quot; &quot;4/1/2017&quot; &quot;10/31/2015&quot; &quot;11/1/2016&quot; ...
-##  $ date_first: chr  &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; ...
-##  - attr(*, &quot;na.action&quot;)=Class &#39;omit&#39;  Named int [1:3] 8 9 10
-##   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;8&quot; &quot;9&quot; &quot;10&quot;</code></pre>
-<p>Two ways to convert string to date:</p>
-<ul>
-<li><strong>as.Date</strong> - convert vector into <code>date</code> data type. A format parameter has to be specified to match the source format. Otherwise <code>as.Date</code> will try default format of “%Y-%m-%d” then “%Y/%m/%d”<br />
-</li>
-<li><strong>lubridate::dmy, mdy, ymd</strong> - this is more elegant because manual format is not required. However, it converts only string data. If the data source is factor, <strong>convert it to string</strong> first</li>
-</ul>
-<p>In both methods, unmatched rows with unrecognized format will throw an error.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_birth =<span class="st"> </span><span class="kw">as.Date</span>( my.df<span class="op">$</span>date_birth, <span class="dt">format =</span> <span class="st">&quot;%d/%m/%Y&quot;</span> )  <span class="co"># base R</span>
-my.df<span class="op">$</span>date_last  =<span class="st"> </span><span class="kw">mdy</span>( my.df<span class="op">$</span>date_last  )    <span class="co"># lubridate </span>
-my.df<span class="op">$</span>date_first =<span class="st"> </span><span class="kw">ymd</span>( my.df<span class="op">$</span>date_first )    <span class="co"># lubridate</span>
-<span class="kw">str</span>(my.df)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    7 obs. of  9 variables:
-##  $ id        : chr  &quot;ID101&quot; &quot;ID102&quot; &quot;ID103&quot; &quot;ID104&quot; ...
-##  $ dept      : chr  &quot;D1&quot; &quot;D2&quot; &quot;D3&quot; &quot;D1&quot; ...
-##  $ gender    : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
-##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
-##  $ height    : int  173 164 178 182 159 166 153
-##  $ date_birth: Date, format: &quot;1973-07-01&quot; &quot;1980-02-28&quot; ...
-##  $ amount    : int  100 121 152 133 143 155 117
-##  $ date_last : Date, format: &quot;2016-02-29&quot; &quot;2017-04-01&quot; ...
-##  $ date_first: Date, format: &quot;2013-07-31&quot; &quot;2013-08-31&quot; ...
-##  - attr(*, &quot;na.action&quot;)=Class &#39;omit&#39;  Named int [1:3] 8 9 10
-##   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;8&quot; &quot;9&quot; &quot;10&quot;</code></pre>
-</div>
-<div id="what-daymonthyear" class="section level3">
-<h3><span class="header-section-number">5.8.2</span> What Day/Month/Year</h3>
-<p><strong><code>lubridate</code></strong> has useful functions to return numeric day, month, year from date object.</p>
-<div id="what-day" class="section level4">
-<h4><span class="header-section-number">5.8.2.1</span> What Day</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d1 =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&#39;2017-03-31&#39;</span>)
-lubridate<span class="op">::</span><span class="kw">day</span>(d1)</code></pre></div>
-<pre><code>## [1] 31</code></pre>
-</div>
-<div id="what-month" class="section level4">
-<h4><span class="header-section-number">5.8.2.2</span> What Month</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lubridate<span class="op">::</span><span class="kw">month</span>(d1)</code></pre></div>
-<pre><code>## [1] 3</code></pre>
-</div>
-<div id="what-year" class="section level4">
-<h4><span class="header-section-number">5.8.2.3</span> What Year</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lubridate<span class="op">::</span><span class="kw">year</span>(d1)</code></pre></div>
-<pre><code>## [1] 2017</code></pre>
-</div>
-</div>
-<div id="daysmonthsyear-difference" class="section level3">
-<h3><span class="header-section-number">5.8.3</span> Days/Months/Year Difference</h3>
-<div id="days-difference" class="section level4">
-<h4><span class="header-section-number">5.8.3.1</span> Days Difference</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
-my.df<span class="op">$</span>date_first
-my.df<span class="op">$</span>date_last <span class="op">-</span><span class="st"> </span>my.df<span class="op">$</span>date_first</code></pre></div>
-<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
-## [1] &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; &quot;2012-06-15&quot;
-## [6] &quot;2013-04-28&quot; &quot;2014-03-01&quot;
-## Time differences in days
-## [1]  943 1309  304  612 1568  943 1126</code></pre>
-</div>
-<div id="months-difference" class="section level4">
-<h4><span class="header-section-number">5.8.3.2</span> Months Difference</h4>
-<p>Combination of <code>lubridate::interval</code> and <code>lubridate operator</code> provides a integer vector of months elapsed between two date:<br />
-- The result can be negative if first date parameter &gt; second date parameter<br />
-- lubridate ‘intelligently’ knows interval is from end of month to end of month interval</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-03-30&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2016-04-29&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) <span class="co"># end day no. &lt; begining day no.</span>
-<span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-03-30&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2016-04-30&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) <span class="co"># end day no. == beginning day no.</span>
-<span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-03-31&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2016-04-30&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) <span class="co"># end of month to end of month</span></code></pre></div>
-<pre><code>## [1] 0
-## [1] 1
-## [1] 1</code></pre>
-<p>Apply this to data frame / vector.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_first
-my.df<span class="op">$</span>date_last
-<span class="kw">interval</span>( my.df<span class="op">$</span>date_first, my.df<span class="op">$</span>date_last ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) </code></pre></div>
-<pre><code>## [1] &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; &quot;2012-06-15&quot;
-## [6] &quot;2013-04-28&quot; &quot;2014-03-01&quot;
-## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
-## [1] 31 43 10 20 51 30 36</code></pre>
-</div>
-<div id="years-difference" class="section level4">
-<h4><span class="header-section-number">5.8.3.3</span> Years Difference</h4>
-<p>Use <strong><code>lubridate::year</code> function to find the year (integer) of a given date</strong>. Difference of the year() results from the birthdate and current date is the <strong>Age</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">year</span>(<span class="kw">now</span>()) <span class="op">-</span><span class="st"> </span><span class="kw">year</span>(my.df<span class="op">$</span>date_birth)</code></pre></div>
-<pre><code>## [1] 44 37 39 20 35 44 32</code></pre>
-<p>However in <strong>insurance</strong> industry, only a <strong>full year</strong> is considred for age.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-02-29&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2017-02-27&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) <span class="co"># a day short for a year</span>
-<span class="kw">interval</span>( <span class="kw">ymd</span>(<span class="st">&#39;2016-02-29&#39;</span>), <span class="kw">ymd</span>(<span class="st">&#39;2017-02-28&#39;</span>) ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) <span class="co"># EoM to EoM</span></code></pre></div>
-<pre><code>## [1] 0
-## [1] 1</code></pre>
-<p>Apply this to data frame / vector.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_first
-my.df<span class="op">$</span>date_last
-<span class="kw">interval</span>( my.df<span class="op">$</span>date_first, my.df<span class="op">$</span>date_last ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) </code></pre></div>
-<pre><code>## [1] &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; &quot;2012-06-15&quot;
-## [6] &quot;2013-04-28&quot; &quot;2014-03-01&quot;
-## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
-## [1] 2 3 0 1 4 2 3</code></pre>
-</div>
-</div>
-<div id="daysmonhtsyears-later" class="section level3">
-<h3><span class="header-section-number">5.8.4</span> Days/Monhts/Years Later</h3>
-<p>Adding days to a date is simple. Just + days(123) for 123 days later.<br />
-However, adding months and years is tricky, because certain months are shorter. Good solution is to use <strong><code>lubridate::%m+%</code></strong> operator.</p>
-<div id="days-later" class="section level4">
-<h4><span class="header-section-number">5.8.4.1</span> Days Later</h4>
-<p><strong>Adding days</strong> is as simple as <strong>add number of days</strong> to the date variables.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last</code></pre></div>
-<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;</code></pre>
-</div>
-<div id="months-later" class="section level4">
-<h4><span class="header-section-number">5.8.4.2</span> Months Later</h4>
-<p>Adding month(s) is tricky on the <strong>last day of month</strong>. Use <strong><code>lubridate operator</code> for correct solution</strong>, because it takes cares of last day of month including February of leap years.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
-my.df<span class="op">$</span>date_last   <span class="op">+</span><span class="st">  </span><span class="kw">months</span>(<span class="dv">1</span>)   <span class="co"># 1 month later, bad solution, can result in &lt;NA&gt;</span>
-my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)   <span class="co"># 1 month later, good solution</span></code></pre></div>
-<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
-## [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; NA           &quot;2016-12-01&quot; &quot;2016-10-30&quot;
-## [6] &quot;2015-12-27&quot; NA          
-## [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; &quot;2015-11-30&quot; &quot;2016-12-01&quot; &quot;2016-10-30&quot;
-## [6] &quot;2015-12-27&quot; &quot;2017-04-30&quot;</code></pre>
-</div>
-<div id="years-later" class="section level4">
-<h4><span class="header-section-number">5.8.4.3</span> Years Later</h4>
-<p>Adding year(s) is similar to adding month(s) above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
-my.df<span class="op">$</span>date_last   <span class="op">+</span><span class="st">  </span><span class="kw">years</span>(<span class="dv">1</span>)   <span class="co"># 1 year later, bad solution</span>
-my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>)   <span class="co"># 1 year later, good solution</span></code></pre></div>
-<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
-## [1] NA           &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot;
-## [6] &quot;2016-11-27&quot; &quot;2018-03-31&quot;
-## [1] &quot;2017-02-28&quot; &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot;
-## [6] &quot;2016-11-27&quot; &quot;2018-03-31&quot;</code></pre>
-</div>
-</div>
-<div id="last-day-of-month" class="section level3">
-<h3><span class="header-section-number">5.8.5</span> Last Day of Month</h3>
-<p><strong><code>lubridate::ceiling_date</code></strong> rounds up the date to the nearest unit.</p>
-<p>When rounding up a date to the **next nearest month*, it results the <strong>first day of next month</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
-<span class="kw">ceiling_date</span>(my.df<span class="op">$</span>date_last, <span class="st">&quot;month&quot;</span>)</code></pre></div>
-<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-27&quot; &quot;2017-03-31&quot;
-## [1] &quot;2016-03-01&quot; &quot;2017-05-01&quot; &quot;2015-11-01&quot; &quot;2016-12-01&quot; &quot;2016-10-01&quot;
-## [6] &quot;2015-12-01&quot; &quot;2017-04-01&quot;</code></pre>
-<p><strong>Substracting this date by one</strong> will return last day of the month.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ceiling_date</span>(my.df<span class="op">$</span>date_last, <span class="st">&quot;month&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>## [1] &quot;2016-02-29&quot; &quot;2017-04-30&quot; &quot;2015-10-31&quot; &quot;2016-11-30&quot; &quot;2016-09-30&quot;
-## [6] &quot;2015-11-30&quot; &quot;2017-03-31&quot;</code></pre>
-</div>
+<div id="sample-data-10" class="section level2">
+<h2><span class="header-section-number">12.2</span> Sample Data</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">main.data =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/surv_maintenance.csv&#39;</span>)
+<span class="kw">str</span>(main.data)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1000 obs. of  7 variables:
+##  $ lifetime      : int  56 81 60 86 34 30 68 65 23 81 ...
+##  $ broken        : int  0 1 0 1 0 0 0 1 0 1 ...
+##  $ pressureInd   : num  92.2 72.1 96.3 94.4 97.8 ...
+##  $ moistureInd   : num  104.2 103.1 77.8 108.5 99.4 ...
+##  $ temperatureInd: num  96.5 87.3 112.2 72 103.8 ...
+##  $ team          : Factor w/ 3 levels &quot;TeamA&quot;,&quot;TeamB&quot;,..: 1 3 1 3 2 1 2 2 2 3 ...
+##  $ provider      : Factor w/ 4 levels &quot;Provider1&quot;,&quot;Provider2&quot;,..: 4 4 1 2 1 1 2 3 2 4 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(main.data)</code></pre></div>
+<pre><code>##   lifetime broken pressureInd moistureInd temperatureInd  team  provider
+## 1       56      0    92.17885   104.23020       96.51716 TeamA Provider4
+## 2       81      1    72.07594   103.06570       87.27106 TeamC Provider4
+## 3       60      0    96.27225    77.80138      112.19617 TeamA Provider1
+## 4       86      1    94.40646   108.49361       72.02537 TeamC Provider2
+## 5       34      0    97.75290    99.41349      103.75627 TeamB Provider1
+## 6       30      0    87.67880   115.71226       89.79210 TeamA Provider1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(main.data)</code></pre></div>
+<pre><code>##     lifetime        broken       pressureInd      moistureInd    
+##  Min.   : 1.0   Min.   :0.000   Min.   : 33.48   Min.   : 58.55  
+##  1st Qu.:34.0   1st Qu.:0.000   1st Qu.: 85.56   1st Qu.: 92.77  
+##  Median :60.0   Median :0.000   Median : 97.22   Median : 99.43  
+##  Mean   :55.2   Mean   :0.397   Mean   : 98.60   Mean   : 99.38  
+##  3rd Qu.:80.0   3rd Qu.:1.000   3rd Qu.:112.25   3rd Qu.:106.12  
+##  Max.   :93.0   Max.   :1.000   Max.   :173.28   Max.   :128.60  
+##  temperatureInd      team          provider  
+##  Min.   : 42.28   TeamA:336   Provider1:254  
+##  1st Qu.: 87.68   TeamB:356   Provider2:266  
+##  Median :100.59   TeamC:308   Provider3:242  
+##  Mean   :100.63               Provider4:238  
+##  3rd Qu.:113.66                              
+##  Max.   :172.54</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="5-7-string-manipulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="5-9-number-manipulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="12-1-library-5.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="12-3-the-code.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -578,7 +441,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/05-pre_process.Rmd",
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/12-survival.Rmd",
 "text": "Edit"
 },
 "download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],

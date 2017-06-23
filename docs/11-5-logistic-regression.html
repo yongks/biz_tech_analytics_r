@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-22">
+<meta name="date" content="2017-06-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -121,7 +121,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html"><i class="fa fa-check"></i><b>11.4</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.4.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.4.2" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#cutoff-threshold-optimization"><i class="fa fa-check"></i><b>11.4.2</b> Cutoff Threshold Optimization</a></li>
-<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code"><i class="fa fa-check"></i><b>11.4.3</b> Run The Code</a></li>
+<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.4.3</b> Model Evaluation</a></li>
+<li class="chapter" data-level="11.4.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code"><i class="fa fa-check"></i><b>11.4.4</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html"><i class="fa fa-check"></i><b>11.5</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="11.5.1" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#the-concept"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
@@ -212,7 +213,32 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="math inline">\(odds = \frac{p}{1-p} = e^{\beta_0 + \beta_1 x_1 + ... + \beta_n x_n}\)</span></p></li>
 <li><p><span class="math inline">\(p\)</span> can be further derived as below sigmoid function. <span class="math inline">\(p\)</span> is <strong>non-linear</strong> against independent varibales :<br />
 <span class="math inline">\(p = \frac{1}{1+e^{-\beta_0 + \beta_1x_1 + ... + \beta_nx_n}}\)</span></p></li>
+<li><p>The logistic graph below shows P(Y=1) vs <span class="math inline">\(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n\)</span>. **Intuitively, larger coefficients and independence varibles values increases the chance of being classified as Y=1*8</p></li>
+<li><p>Compare the graph below to understand why logistic regression is better than linear regression in binary classification</p></li>
 </ul>
+<p><span class="math inline">\(\quad\)</span> <img src="images/logistic_vs_linear.png" alt="Logistic Classifier" /></p>
+<div id="high-school-log-formula" class="section level4">
+<h4><span class="header-section-number">11.5.3.1</span> High School Log Formula</h4>
+<p>Some of the high scholl maths are useful for calculating the logistic scores. Remember them by heart.</p>
+<ul>
+<li><strong>What is ls log</strong><br />
+<span class="math inline">\(y = 10^a\)</span><br />
+<span class="math inline">\(log(y) = a\)</span></li>
+</ul>
+<p><span class="math inline">\(y = e^a\)</span><br />
+<span class="math inline">\(ln(y) = a\)</span></p>
+<ul>
+<li><p>Ln is log <strong>base e</strong><br />
+<span class="math inline">\(ln(a) = log_e(a)\)</span></p></li>
+<li><p>Basic <strong>properties</strong> of log<br />
+<span class="math inline">\(ln(1) = log(1) = 0\)</span><br />
+<span class="math inline">\(ln(0) = log(0) = Inf\)</span></p></li>
+<li><p>Log of <strong>division</strong> becomes substration of log<br />
+<span class="math inline">\(ln\bigg(\frac{a}{b}\bigg) = ln(a) - ln(b)\)</span></p></li>
+<li><p>Exponential of <strong>summation</strong> becomes multiplication of exponential<br />
+<span class="math inline">\(e^{a+b} = e^a * e^b\)</span></p></li>
+</ul>
+</div>
 </div>
 <div id="sample-data" class="section level3">
 <h3><span class="header-section-number">11.5.4</span> Sample Data</h3>

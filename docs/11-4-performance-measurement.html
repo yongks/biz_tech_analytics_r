@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-22">
+<meta name="date" content="2017-06-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -121,7 +121,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html"><i class="fa fa-check"></i><b>11.4</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.4.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.4.2" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#cutoff-threshold-optimization"><i class="fa fa-check"></i><b>11.4.2</b> Cutoff Threshold Optimization</a></li>
-<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code"><i class="fa fa-check"></i><b>11.4.3</b> Run The Code</a></li>
+<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.4.3</b> Model Evaluation</a></li>
+<li class="chapter" data-level="11.4.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code"><i class="fa fa-check"></i><b>11.4.4</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html"><i class="fa fa-check"></i><b>11.5</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="11.5.1" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#the-concept"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
@@ -238,8 +239,10 @@ If <strong>cutoff threshold is lowered</strong> (lower probability to classify a
 <ul>
 <li>If TPR increases faster than FPR -&gt; this is <strong>good</strong>, as the lowered threshold generated more TP than FP<br />
 </li>
-<li>If FPR increases faster then TPR -&gt; this is <strong>not good</strong>, as the lowered threhsold generated more FP than TP</li>
+<li>If FPR increases faster then TPR -&gt; this is <strong>not good</strong>, as the lowered threhsold generated more FP than TP<br />
+</li>
 </ul></li>
+<li>The cutoff with highest TPR/FPR value is the optimal means optimum point whereby It is possible to discover the optimum cutoff by finding the cutoff with highest TPR/FPR</li>
 </ul>
 <p>Different threshold produces different performance metrics (Accuracy, Recall, Precision and Specificity and F1-score). As an example, picture below shows how threshold influences the ROC curve.</p>
 <div class="figure">
@@ -250,22 +253,47 @@ If <strong>cutoff threshold is lowered</strong> (lower probability to classify a
 </div>
 <div id="cutoff-impact-visualization" class="section level4">
 <h4><span class="header-section-number">11.4.2.2</span> Cutoff Impact Visualization</h4>
-<p>Cutoff and Performance is best visualized using the graphs below:</p>
-<ol style="list-style-type: decimal">
-<li>Threshold vs Accuracy<br />
+<p>Selecting a cutoff threshold depends on the objectives of the researcher. To help understanding the how cutoff changes the performance metircs, try <strong>visualize</strong> them in below graph:</p>
+<p>1.Threshold vs Accuracy<br />
+2.Threshold vs Recall (TPR)<br />
+3.Threshold vs TPR/FPR<br />
+4.Threshold vs Precision<br />
+5.Threshold vs F1 Score<br />
+6.ROC Curve (TPR vs FPR)</p>
+</div>
+</div>
+<div id="model-evaluation" class="section level3">
+<h3><span class="header-section-number">11.4.3</span> Model Evaluation</h3>
+<div id="compare-with-baseline" class="section level4">
+<h4><span class="header-section-number">11.4.3.1</span> Compare With Baseline</h4>
+<p>In an highly unbalanced dataset (eg. patients that is diagnosed with cancer skewed towards negative). Hence, it is essential to make a <strong>lazy baseline comparison</strong> with simply classifying every records with negative (cutoff at 1) or positive (cutoff at 0).</p>
+<p>Put in mind of the dataset used for comparison:</p>
+<ul>
+<li>Use data from training set as model baseline, when concerning training performance<br />
 </li>
-<li>Threshold vs Recall / TPR<br />
+<li>Use dta from test set as model baseline, when concerning test performance</li>
+</ul>
+<p><strong>Model Accuracy is not better than ‘lazy’ baseline !</strong></p>
+<ul>
+<li>In highly bias class, in term of accuracy, the model usually unable to outperform the baseline by good marign<br />
 </li>
-<li>Threshold vs Precision<br />
+<li>Hence <strong>accuracy</strong> is not a good measurement in such case<br />
 </li>
-<li>ROC Curve (TPR vs FPR)</li>
-</ol>
+<li>Model is still useful if the research objective is towards other measurement usch as <strong>recall, precision</strong><br />
+</li>
+<li>Adjust the threshold to achieve optimum better objectives</li>
+</ul>
+</div>
+<div id="combination-of-variables" class="section level4">
+<h4><span class="header-section-number">11.4.3.2</span> Combination of Variables</h4>
+<p>Model AIC to measure the usefullness. It is like R-square in linear regression. Use it to compare model with different combinations of variables.</p>
+<p>Since logistic regression is a actual <strong>linear regression of ln(odds)</strong>, <strong>multicolinearity</strong> rule apply.</p>
 </div>
 </div>
 <div id="run-the-code" class="section level3">
-<h3><span class="header-section-number">11.4.3</span> Run The Code</h3>
+<h3><span class="header-section-number">11.4.4</span> Run The Code</h3>
 <div id="measurement-function" class="section level4">
-<h4><span class="header-section-number">11.4.3.1</span> Measurement Function</h4>
+<h4><span class="header-section-number">11.4.4.1</span> Measurement Function</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#######################################################################################
 #### Function Return Various Performance by Cutoff Threshold
 ##### Input : fit: glm model object that uses probability classifier
@@ -338,7 +366,7 @@ eval.binclass =<span class="st"> </span><span class="cf">function</span>(<span c
 }</code></pre></div>
 </div>
 <div id="train-the-model" class="section level4">
-<h4><span class="header-section-number">11.4.3.2</span> Train The Model</h4>
+<h4><span class="header-section-number">11.4.4.2</span> Train The Model</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Load The Data and Build The Model
 train.data =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.train.csv&#39;</span>)
 
@@ -356,7 +384,7 @@ train.data =<span class="st"> </span><span class="kw">read.csv</span>(<span clas
 my.fit =<span class="st"> </span><span class="kw">glm</span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit), <span class="dt">data =</span> train.data)</code></pre></div>
 </div>
 <div id="run-the-performance-eval-function" class="section level4">
-<h4><span class="header-section-number">11.4.3.3</span> Run the Performance Eval Function</h4>
+<h4><span class="header-section-number">11.4.4.3</span> Run the Performance Eval Function</h4>
 <p><strong>List The Performance Table</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
 r =<span class="st"> </span><span class="kw">eval.binclass</span>(my.fit, <span class="dt">cutoff.by =</span> <span class="fl">0.1</span>)
@@ -537,10 +565,12 @@ r =<span class="st"> </span><span class="kw">eval.binclass</span>(my.fit, <span 
 </tbody>
 </table>
 <p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-3-1.png" width="864" /></p>
-<p><strong><code>$auroc</code></strong> is the <strong>area under ROC</strong>, calculated for each simulated threshold.</p>
+<p><strong>AUROC</strong><br />
+<strong><code>$auroc</code></strong> is the <strong>area under ROC</strong>, calculated for each simulated threshold.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r<span class="op">$</span>auroc
 ## [1] 0.8400424</code></pre></div>
-<p><strong><code>$best.metrics</code></strong> provides <strong>optimal threshold</strong> that maximize individual metrics, based on the simulated thresholds.</p>
+<p><strong>Summary Best Metrics</strong><br />
+<strong><code>$best.metrics</code></strong> provides <strong>optimal threshold</strong> that maximize individual metrics, based on the simulated thresholds.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r<span class="op">$</span>best.metrics
 ##                      max cutoff
 ## best.accuracy  0.8333333    1.0

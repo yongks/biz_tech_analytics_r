@@ -72,6 +72,7 @@ If **cutoff threshold is lowered** (lower probability to classify as Postive), t
 - However, **TPR and FPR increases at different rate**:  
     - If TPR increases faster than FPR -> this is **good**, as the lowered threshold generated more TP than FP  
     - If FPR increases faster then TPR -> this is **not good**, as the lowered threhsold generated more FP than TP  
+- The cutoff with highest TPR/FPR value is the optimal  means optimum point whereby It is possible to discover the optimum cutoff by finding the cutoff with highest TPR/FPR
 
 Different threshold produces different performance metrics (Accuracy, Recall, Precision and Specificity and F1-score). As an example, picture below shows how threshold influences the ROC curve.  
 
@@ -81,12 +82,39 @@ The only way to estimate the **optimum threshold** for each of the performance m
 
 #### Cutoff Impact Visualization
 
-Cutoff and Performance is best visualized using the graphs below:  
+Selecting a cutoff threshold depends on the objectives of the researcher. To help understanding the how cutoff changes the performance metircs, try **visualize** them in below graph:  
 
-1. Threshold vs Accuracy  
-2. Threshold vs Recall / TPR  
-3. Threshold vs Precision  
-4. ROC Curve (TPR vs FPR) 
+1.Threshold vs Accuracy  
+2.Threshold vs Recall (TPR)  
+3.Threshold vs TPR/FPR  
+4.Threshold vs Precision  
+5.Threshold vs F1 Score  
+6.ROC Curve (TPR vs FPR)  
+
+
+### Model Evaluation
+
+#### Compare With Baseline
+
+In an highly unbalanced dataset (eg. patients that is diagnosed with cancer skewed towards negative).  Hence, it is essential to make a **lazy baseline comparison** with simply classifying every records with negative (cutoff at 1) or positive (cutoff at 0).  
+
+Put in mind of the dataset used for comparison:  
+
+- Use data from training set as model baseline, when concerning training performance  
+- Use dta from test set as model baseline, when concerning test performance  
+
+**Model Accuracy is not better than 'lazy' baseline !**  
+
+- In highly bias class, in term of accuracy, the model usually unable to outperform the baseline by good marign  
+- Hence **accuracy** is not a good measurement in such case    
+- Model is still useful if the research objective is towards other measurement usch as **recall, precision**  
+- Adjust the threshold to achieve optimum better objectives  
+
+#### Combination of Variables
+
+Model AIC to measure the usefullness. It is like R-square in linear regression.  Use it to compare model with different combinations of variables. 
+
+Since logistic regression is a actual **linear regression of ln(odds)**, **multicolinearity** rule apply.  
 
 ### Run The Code
 
@@ -188,12 +216,14 @@ r = eval.binclass(my.fit, cutoff.by = 0.1)
 kable(r$perf.tab)
 ```
 
+**AUROC**  
 **`$auroc`** is the **area under ROC**, calculated for each simulated threshold.  
 
 ```{r collapse=T}
 r$auroc
 ```
 
+**Summary Best Metrics**  
 **`$best.metrics`** provides **optimal threshold** that maximize individual metrics, based on the simulated thresholds. 
 
 ```{r collapse=T}
@@ -252,6 +282,35 @@ $odds = \frac{p}{1-p} = e^{\beta_0 + \beta_1 x_1 + ... + \beta_n x_n}$
 - $p$ can be further derived as below sigmoid function. $p$ is **non-linear** against independent varibales :  
 $p = \frac{1}{1+e^{-\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}$  
 
+- The logistic graph below shows P(Y=1) vs $\beta_0 + \beta_1 x_1 + ... + \beta_n x_n$. **Intuitively, larger coefficients and independence varibles values increases the chance of being classified as Y=1*8  
+
+- Compare the graph below to understand why logistic regression is better than linear regression in binary classification  
+
+$\quad$ ![Logistic Classifier](./images/logistic_vs_linear.png)  
+
+#### High School Log Formula
+
+Some of the high scholl maths are useful for calculating the logistic scores. Remember them by heart.  
+
+- **What is ls log**  
+$y = 10^a$  
+$log(y) = a$  
+
+$y = e^a$  
+$ln(y) = a$  
+
+- Ln is log **base e**  
+$ln(a) = log_e(a)$  
+
+- Basic **properties** of log  
+$ln(1) = log(1) = 0$  
+$ln(0) = log(0) = Inf$  
+
+- Log of **division** becomes substration of log  
+$ln\bigg(\frac{a}{b}\bigg) = ln(a) - ln(b)$ 
+  
+- Exponential of **summation** becomes multiplication of exponential   
+$e^{a+b} = e^a * e^b$  
 
 ### Sample Data
 

@@ -1,7 +1,7 @@
 ```{r classification, echo=FALSE}
 ## global chunk option ##
 library('knitr')
-knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=9, fig.height=5, fig.show='hold') 
 ```
 
 # Classification
@@ -41,7 +41,7 @@ There are many performance measurement used for binary classification.  Here are
 #### Precision
 
 - Precison answers the question:  **Out of all the samples classifier predicted as positive, what fraction were correct ?**  
-- $Precision = \frac{TP}{TP+FN}$
+- $Precision = \frac{TP}{TP+FP}$
 
 #### F1 Score
 
@@ -118,117 +118,159 @@ Since logistic regression is a actual **linear regression of ln(odds)**, **multi
 
 ### Run The Code
 
-#### Measurement Function
+#### Library
+
+ROCR is a great and fast library for measuring calssification performance. I
 
 ```{r}
-#######################################################################################
-#### Function Return Various Performance by Cutoff Threshold
-##### Input : fit: glm model object that uses probability classifier
-#######################################################################################
-eval.binclass = function(fit = NULL, cutoff.min = 0, cutoff.max = 1, cutoff.by = 0.1) {
-
-    ## Calculate Key Measurements For One Cutoff
-    calc.metrics = function(x) {
-        actual = factor(as.logical(fit$model[[1]]), levels = c(TRUE, FALSE))
-        predicted = factor(fit$fitted.values > x, levels = c(TRUE, FALSE))
-        ct = table(actual, predicted, useNA = 'no', exclude = c(NA)) #confusion table
-        accuracy = (ct[1] + ct[4]) / (sum(ct))
-        recall = ct[1] / (ct[1] + ct[3])
-        precision = ct[1] / (ct[1] + ct[2])
-        specificity = ct[4] / (ct[2] + ct[4])
-        data.frame(cutoff = x, accuracy = accuracy, recall = recall, precision = precision,
-            specificity = specificity, fscore = 2 * (precision * recall / (precision + recall)), fpr = 1 - specificity,
-            tpr_fpr = recall / (1 - specificity), tp = ct[1], fp = ct[2], fn=ct[3], tn=ct[4])
-    }
-
-    ## Derive cutoff breakpoints, and loop to calculate measures for each breakpoint
-    cutoffs = seq(cutoff.min, cutoff.max, by = cutoff.by)
-    perf.tab = do.call(rbind, lapply(cutoffs, FUN = calc.metrics))
-
-    ## Calculate AUC
-    h = (perf.tab$recall[-1] + perf.tab$recall[-length(perf.tab$recall)]) / 2
-    w = abs(diff(perf.tab$fpr))
-    auc = sum(h*w)
-
-    ## Summarize optimal cutoff for max performance on various metrics
-    best.metrics = rbind(
-        best.accuracy = c(max = max(perf.tab$accuracy, na.rm = TRUE),   cutoff = perf.tab$cutoff[which.max(perf.tab$accuracy)]),
-        best.precision = c(max = max(perf.tab$precision, na.rm = TRUE), cutoff = perf.tab$cutoff[which.max(perf.tab$precision)]),
-        best.recall = c(max = max(perf.tab$recall, na.rm = TRUE),       cutoff = perf.tab$cutoff[which.max(perf.tab$recall)]),
-        best.fscore = c(max = max(perf.tab$fscore, na.rm = TRUE),       cutoff = perf.tab$cutoff[which.max(perf.tab$fscore)])
-    )
-
-    ## Plot ROC graphs
-    plot(perf.tab$fpr, perf.tab$recall, type = 'b', main = paste('ROC Curve, auc=',auc),
-        xlab='False Positive Rate, or (1-Specificity)', ylab='Recall or True Positive Rate')
-    grid()
-    abline(0, 1, col = "red", lty = 2)
-
-    ## Plot Accuracy graph
-    plot(perf.tab$cutoff, perf.tab$accuracy, type = 'b', main = 'Accuracy over Cutoffs',
-        xlab = 'Cutoff Thresholds', ylab = 'Accuracy')
-    grid()
-    text(best.metrics['best.accuracy', 'cutoff'], min(perf.tab$accuracy, na.rm = T) + diff(range(perf.tab$accuracy, na.rm = T)) / 10, best.metrics['best.accuracy', 'cutoff'], col = "red")
-    abline(v = best.metrics['best.accuracy', 'cutoff'], col = "red", lty = 2)
-    abline(h = best.metrics['best.accuracy', 'max'], col = "red", lty = 2)
-
-    ## Plot Precision graph
-    plot(perf.tab$cutoff, perf.tab$precision, type = 'b', main = 'Precision over Cutoffs',
-        xlab = 'Cutoff Thresholds', ylab = 'Precision')
-    grid()
-    text(best.metrics['best.precision', 'cutoff'], min(perf.tab$precision,na.rm = T)+diff(range(perf.tab$precision, na.rm=T))/10, best.metrics['best.precision', 'cutoff'], col = "red")
-    abline(v = best.metrics['best.precision', 'cutoff'], col = "red", lty = 2)
-    abline(h = best.metrics['best.precision', 'max'], col = "red", lty = 2)
-
-    ## Plot F1 Scoregraph
-    plot(perf.tab$cutoff, perf.tab$fscore, type = 'b', main = 'F1-Score over Cutoffs',
-        xlab = 'Cutoff Thresholds', ylab = 'F1-Score')
-    grid()
-    text(best.metrics['best.fscore', 'cutoff'], min(perf.tab$fscore, na.rm = T) + diff(range(perf.tab$fscore, na.rm = T)) / 10, best.metrics['best.fscore', 'cutoff'], col = "red")
-    abline(v = best.metrics['best.fscore', 'cutoff'], col = "red", lty = 2)
-    abline(h = best.metrics['best.fscore', 'max'], col = "red", lty = 2)
-
-    # return performance table, and optimal values per metric
-    return(list(perf.tab = perf.tab, auroc = auc, best.metrics = best.metrics))
-}
+library(ROCR)
 ```
 
-#### Train The Model
+#### Import Data and Train The Model
 
 ```{r collapse=T}
-### Load The Data and Build The Model
-train.data = read.csv('./datasets/hr.train.csv')
-
+### Load The Data
+train = read.csv('./datasets/hr.train.csv')
+test = read.csv('./datasets/hr.test.csv')
 str(train.data)
 
 ## Trian The Model Using Logistic Regression
-my.fit = glm(left ~ ., family = binomial(link = logit), data = train.data)
+fit = glm(left ~ ., family = binomial, data = train)
+pred = predict(fit, type = 'response', newdata = test)
 ```
 
-#### Run the Performance Eval Function
+#### Construct the Performance Metric
 
-**List The Performance Table**
+`ROCR::prediction`is the main function to crate prediction object that contains key data such as thresholds, TP, FP, TN, FP. With these data points, we can plot and calculate multiple performacne and visualization.  
+
+It takes only two inputs:  
+1. **Score** (probability of being POSITIVE)  
+2. **Label** (actual POSITVE)  
+
+```{r}
+rocr.pred = prediction(pred, test$left)
+
+rocr.metrics = data.frame(
+    cutoff = rocr.pred@cutoffs[[1]],
+    accuracy = (rocr.pred@tp[[1]] + rocr.pred@tn[[1]]) / (rocr.pred@tp[[1]] + rocr.pred@tn[[1]] + rocr.pred@fp[[1]] + rocr.pred@fn[[1]]),
+    tpr = rocr.pred@tp[[1]] / (rocr.pred@tp[[1]] + rocr.pred@fn[[1]]),
+    fpr = rocr.pred@fp[[1]] / (rocr.pred@fp[[1]] + rocr.pred@tn[[1]]),
+    ppv = rocr.pred@tp[[1]] / (rocr.pred@tp[[1]] + rocr.pred@fp[[1]])
+    )
+rocr.metrics$fscore = 2 * (rocr.metrics$tpr * rocr.metrics$ppv) / (rocr.metrics$tpr + rocr.metrics$ppv)
+rocr.metrics$tpr_fpr = rocr.metrics$tpr / rocr.metrics$fpr
+```
+
+####List The Performance Table
+
+The code below discover the **optimum threshold** for few metrices.  Threhold for the highest estiamtes is summarized.   
 
 ```{r collapse=T,fig.width=9, fig.height=9}
-par(mfrow=c(2,2))
-r = eval.binclass(my.fit, cutoff.by = 0.1)
+## discovery the optimal threshold for various metrics
+rocr.best = rbind(
+  best.accuracy = c(max = max(rocr.metrics$accuracy, na.rm = TRUE), cutoff = rocr.metrics$cutoff[which.max(rocr.metrics$accuracy)]),
+  best.ppv = c(max = max(rocr.metrics$ppv, na.rm = TRUE), cutoff = rocr.metrics$cutoff[which.max(rocr.metrics$ppv)]),
+  best.recall = c(max = max(rocr.metrics$tpr, na.rm = TRUE), cutoff = rocr.metrics$cutoff[which.max(rocr.metrics$tpr)]),
+  best.fscore = c(max = max(rocr.metrics$fscore, na.rm = TRUE), cutoff = rocr.metrics$cutoff[which.max(rocr.metrics$fscore)]),
+  best.tpr_fpr = c(max = max(rocr.metrics$tpr_fpr, na.rm = TRUE), cutoff = rocr.metrics$cutoff[which.max(rocr.metrics$tpr_fpr)])
+)
 
-kable(r$perf.tab)
+kable(rocr.best)
 ```
 
-**AUROC**  
-**`$auroc`** is the **area under ROC**, calculated for each simulated threshold.  
+####Visualize The Data and Performance
 
+**Plot TP, Tn, FP and FN**  
+These data are available in the `ROCR::prediction` object.  
+```{r}
+plot (rocr.pred@cutoffs[[1]], rocr.pred@tp[[1]],xlim=c(0,1), ylim=c(0,12000), col='green')
+lines(rocr.pred@cutoffs[[1]], rocr.pred@tn[[1]], xlim = c(0, 1), ylim = c(0, 12000),col='red')
+lines(rocr.pred@cutoffs[[1]], rocr.pred@fp[[1]], xlim = c(0, 1), ylim = c(0, 12000), col='blue')
+lines(rocr.pred@cutoffs[[1]], rocr.pred@fn[[1]], xlim = c(0, 1), ylim = c(0, 12000),col='orange')
+legend("top",
+       inset = .05, cex = 1, title = "Legend",
+       c("TP", "TN", "FP","FN"), horiz = TRUE,
+       lty = c(1, 1), lwd = c(2, 2),
+       col = c("green", "red", "blue",'orange'), bg = "grey96")
+```
+
+**Plot ROC Curve**  
+We can build a **`ROCR::performance` object, and plot it** !  AUC is calculated with `ROCR::performance` as well.  
 ```{r collapse=T}
-r$auroc
+rocr.perf = performance(rocr.pred, measure = "tpr", x.measure = "fpr")
+rocr.auc = as.numeric(performance(rocr.pred, "auc")@y.values)
+plot(rocr.perf,
+    lwd = 3, colorize = TRUE,
+    print.cutoffs.at = seq(0, 1, by = 0.1),
+    text.adj = c(-0.2, 1.7),
+    main = 'ROC Curve'
+    )
+mtext(paste('auc : ', round(rocr.auc, 5)))
+abline(0, 1, col = "red", lty = 2)
 ```
 
-**Summary Best Metrics**  
-**`$best.metrics`** provides **optimal threshold** that maximize individual metrics, based on the simulated thresholds. 
-
-```{r collapse=T}
-r$best.metrics
+**Plot Accuracy**
+```{r}
+rocr.perf = performance(rocr.pred, measure = "acc")
+best.x = rocr.perf@x.values[[1]][which.max(rocr.perf@y.values[[1]])]
+best.y = max(rocr.perf@y.values[[1]])
+plot(rocr.perf, main = 'Accuracy vs Cutoff', xlim = c(0, 1), ylim = c(0, 1))
+abline(v = best.x, col = 'red', lty = 2)
+abline(h = best.y, col = 'red', lty = 2)
+text(best.x + 0.1, 0.05, round(best.x, 5), col = "red")
+text(0.05, best.y + 0.05, round(best.y, 5), col = "red")
 ```
+
+**Plot Precesion**
+```{r}
+rocr.perf = performance(rocr.pred, measure = "prec")
+best.x = rocr.perf@x.values[[1]][which.max(rocr.perf@y.values[[1]])]
+best.y = max(rocr.perf@y.values[[1]][is.finite(rocr.perf@y.values[[1]])])
+plot(rocr.perf, main = 'Precision vs Cutoff', xlim = c(0, 1), ylim = c(0, 1))
+abline(v = best.x, col = 'red', lty = 2)
+abline(h = best.y, col = 'red', lty = 2)
+text(best.x + 0.1, 0.05, round(best.x, 5), col = "red")
+text(0.05, best.y + 0.05, round(best.y, 5), col = "red")
+```
+
+**Plot Multiple Metrices Into One Graph**  
+As we can see, `ROCR::performance` is good to build measure and build plot for single y-axis measurement.  It unfortunately **does not support** polotting multiple y-axis into one graph.  Threfore, we shall build the plot using metrices table constructed earlier (variable `rocr.metrics`).  
+```{r}
+### set initial margin of the plot
+par(mar = c(5, 5, 4, 6))
+
+## plot graph on left hand side scale
+plot(rocr.metrics$cutoff, rocr.metrics$tpr, axes = FALSE,, ylab = '', xlab = '', col = 'green', main = 'Multiple Performances vs Cutoff', ylim = c(0, 1))
+lines(rocr.metrics$cutoff, rocr.metrics$fpr, col = 'red', ylim = c(0, 1))
+axis(1, pretty(range(rocr.metrics$cutoff[is.finite(rocr.metrics$cutoff)]), 10))
+axis(2, ylim = c(0, 1), col = "black", las = 1) ## las=1 makes horizontal labels
+lines(rocr.metrics$fpr, rocr.metrics$tpr, lwd = 3, col = 'black', ylim = c(0, 1), xlim = c(0, 1))
+lines(rocr.metrics$cutoff, rocr.metrics$accuracy, col = 'purple', ylim = c(0, 1), xlim = c(0, 1))
+lines(rocr.metrics$cutoff, rocr.metrics$ppv, col = 'cyan', ylim = c(0, 1), xlim = c(0, 1))
+lines(rocr.metrics$cutoff, rocr.metrics$fscore, col = 'pink', ylim = c(0, 1), xlim = c(0, 1))
+abline(0, 1, lty = 2, col = 'black')
+
+## plot graph on right hand side scale
+par(new = TRUE)
+plot(rocr.metrics$cutoff, rocr.metrics$tpr_fpr, axes = FALSE, ylab = '', xlab = '', col = 'orange')
+axis(4, col = "orange", las = 1) ## las=1 makes horizontal labels
+best = rocr.metrics$cutoff[which.max(rocr.metrics$tpr_fpr[is.finite(rocr.metrics$tpr_fpr)])]
+abline(v = best, col = 'red', lty = 2)
+text(best + 0.075, 0.05, round(best, 5), col = "red")
+
+## axis labels
+mtext("cutoff", side = 1, col = "black", line = 2.5)
+mtext("tpr, fpr, accuracy, precision, f1-scaore", side = 2, col = "black", line = 2.5)
+mtext("tpr/fpr", side = 4, col = "black", line = 2.5)
+
+## legend
+legend("topright",
+       inset = .05, cex = 1, title = "Legend",
+       c("TPR", "FPR", "TPR/FPR", "ROC", "Accuracy", "Precision", "F1-Score"),
+       horiz = FALSE, lty = c(1, 1), lwd = c(2, 2),
+       col = c("green", "red", "orange", 'black', 'purple', 'cyan', 'pink'), bg = "grey96")
+```
+
 
 ## Logistic Regression
 

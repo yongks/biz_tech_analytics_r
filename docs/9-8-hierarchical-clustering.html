@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-23">
+<meta name="date" content="2017-06-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -255,6 +255,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.6.3" data-path="7-6-box-plot.html"><a href="7-6-box-plot.html#two-one-dimension-data-2"><i class="fa fa-check"></i><b>7.6.3</b> Two + One Dimension Data</a></li>
 </ul></li>
 <li class="chapter" data-level="7.7" data-path="7-7-pie-chart.html"><a href="7-7-pie-chart.html"><i class="fa fa-check"></i><b>7.7</b> Pie Chart</a></li>
+<li class="chapter" data-level="7.8" data-path="7-8-advance.html"><a href="7-8-advance.html"><i class="fa fa-check"></i><b>7.8</b> Advance</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="7-8-advance.html"><a href="7-8-advance.html#double-y-axis-scale"><i class="fa fa-check"></i><b>7.8.1</b> Double Y-Axis Scale</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a><ul>
 <li class="chapter" data-level="8.1" data-path="8-1-sample-data-6.html"><a href="8-1-sample-data-6.html"><i class="fa fa-check"></i><b>8.1</b> Sample Data</a></li>
@@ -337,7 +340,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html"><i class="fa fa-check"></i><b>11.4</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.4.1" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.4.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.4.2" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#cutoff-threshold-optimization"><i class="fa fa-check"></i><b>11.4.2</b> Cutoff Threshold Optimization</a></li>
-<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code-5"><i class="fa fa-check"></i><b>11.4.3</b> Run The Code</a></li>
+<li class="chapter" data-level="11.4.3" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.4.3</b> Model Evaluation</a></li>
+<li class="chapter" data-level="11.4.4" data-path="11-4-performance-measurement.html"><a href="11-4-performance-measurement.html#run-the-code-5"><i class="fa fa-check"></i><b>11.4.4</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html"><i class="fa fa-check"></i><b>11.5</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="11.5.1" data-path="11-5-logistic-regression.html"><a href="11-5-logistic-regression.html#the-concept-1"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
@@ -348,7 +352,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a><ul>
-<li class="chapter" data-level="12.1" data-path="12-1-library-5.html"><a href="12-1-library-5.html"><i class="fa fa-check"></i><b>12.1</b> Library</a></li>
+<li class="chapter" data-level="12.1" data-path="12-1-library-6.html"><a href="12-1-library-6.html"><i class="fa fa-check"></i><b>12.1</b> Library</a></li>
 <li class="chapter" data-level="12.2" data-path="12-2-sample-data-10.html"><a href="12-2-sample-data-10.html"><i class="fa fa-check"></i><b>12.2</b> Sample Data</a></li>
 <li class="chapter" data-level="12.3" data-path="12-3-the-code.html"><a href="12-3-the-code.html"><i class="fa fa-check"></i><b>12.3</b> The Code</a></li>
 <li class="chapter" data-level="12.4" data-path="12-4-performance-evaluation.html"><a href="12-4-performance-evaluation.html"><i class="fa fa-check"></i><b>12.4</b> Performance Evaluation</a></li>
@@ -451,7 +455,7 @@ clusters
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
 <span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-173-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-173-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-174-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-174-2.png" width="384" /></p>
 </div>
 <div id="using-factoextra-package" class="section level4">
 <h4><span class="header-section-number">9.8.3.2</span> Using <code>factoextra</code> Package</h4>
@@ -479,7 +483,7 @@ clusters
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-177-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-177-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-178-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-178-2.png" width="384" /></p>
 </div>
 </div>
 </div>

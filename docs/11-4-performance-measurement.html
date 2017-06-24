@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-23">
+<meta name="date" content="2017-06-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -191,7 +191,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>Precison answers the question: <strong>Out of all the samples classifier predicted as positive, what fraction were correct ?</strong><br />
 </li>
-<li><span class="math inline">\(Precision = \frac{TP}{TP+FN}\)</span></li>
+<li><span class="math inline">\(Precision = \frac{TP}{TP+FP}\)</span></li>
 </ul>
 </div>
 <div id="f1-score" class="section level4">
@@ -292,84 +292,16 @@ If <strong>cutoff threshold is lowered</strong> (lower probability to classify a
 </div>
 <div id="run-the-code" class="section level3">
 <h3><span class="header-section-number">11.4.4</span> Run The Code</h3>
-<div id="measurement-function" class="section level4">
-<h4><span class="header-section-number">11.4.4.1</span> Measurement Function</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">#######################################################################################
-#### Function Return Various Performance by Cutoff Threshold
-##### Input : fit: glm model object that uses probability classifier
-#######################################################################################
-eval.binclass =<span class="st"> </span><span class="cf">function</span>(<span class="dt">fit =</span> <span class="ot">NULL</span>, <span class="dt">cutoff.min =</span> <span class="dv">0</span>, <span class="dt">cutoff.max =</span> <span class="dv">1</span>, <span class="dt">cutoff.by =</span> <span class="fl">0.1</span>) {
-
-    ## Calculate Key Measurements For One Cutoff
-    calc.metrics =<span class="st"> </span><span class="cf">function</span>(x) {
-        actual =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(fit<span class="op">$</span>model[[<span class="dv">1</span>]]), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))
-        predicted =<span class="st"> </span><span class="kw">factor</span>(fit<span class="op">$</span>fitted.values <span class="op">&gt;</span><span class="st"> </span>x, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))
-        ct =<span class="st"> </span><span class="kw">table</span>(actual, predicted, <span class="dt">useNA =</span> <span class="st">&#39;no&#39;</span>, <span class="dt">exclude =</span> <span class="kw">c</span>(<span class="ot">NA</span>)) <span class="co">#confusion table</span>
-        accuracy =<span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>]) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(ct))
-        recall =<span class="st"> </span>ct[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">3</span>])
-        precision =<span class="st"> </span>ct[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">2</span>])
-        specificity =<span class="st"> </span>ct[<span class="dv">4</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>])
-        <span class="kw">data.frame</span>(<span class="dt">cutoff =</span> x, <span class="dt">accuracy =</span> accuracy, <span class="dt">recall =</span> recall, <span class="dt">precision =</span> precision,
-            <span class="dt">specificity =</span> specificity, <span class="dt">fscore =</span> <span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(precision <span class="op">*</span><span class="st"> </span>recall <span class="op">/</span><span class="st"> </span>(precision <span class="op">+</span><span class="st"> </span>recall)), <span class="dt">fpr =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>specificity,
-            <span class="dt">tpr_fpr =</span> recall <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>specificity), <span class="dt">tp =</span> ct[<span class="dv">1</span>], <span class="dt">fp =</span> ct[<span class="dv">2</span>], <span class="dt">fn=</span>ct[<span class="dv">3</span>], <span class="dt">tn=</span>ct[<span class="dv">4</span>])
-    }
-
-    ## Derive cutoff breakpoints, and loop to calculate measures for each breakpoint
-    cutoffs =<span class="st"> </span><span class="kw">seq</span>(cutoff.min, cutoff.max, <span class="dt">by =</span> cutoff.by)
-    perf.tab =<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">lapply</span>(cutoffs, <span class="dt">FUN =</span> calc.metrics))
-
-    ## Calculate AUC
-    h =<span class="st"> </span>(perf.tab<span class="op">$</span>recall[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>perf.tab<span class="op">$</span>recall[<span class="op">-</span><span class="kw">length</span>(perf.tab<span class="op">$</span>recall)]) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-    w =<span class="st"> </span><span class="kw">abs</span>(<span class="kw">diff</span>(perf.tab<span class="op">$</span>fpr))
-    auc =<span class="st"> </span><span class="kw">sum</span>(h<span class="op">*</span>w)
-
-    ## Summarize optimal cutoff for max performance on various metrics
-    best.metrics =<span class="st"> </span><span class="kw">rbind</span>(
-        <span class="dt">best.accuracy =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(perf.tab<span class="op">$</span>accuracy, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),   <span class="dt">cutoff =</span> perf.tab<span class="op">$</span>cutoff[<span class="kw">which.max</span>(perf.tab<span class="op">$</span>accuracy)]),
-        <span class="dt">best.precision =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(perf.tab<span class="op">$</span>precision, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">cutoff =</span> perf.tab<span class="op">$</span>cutoff[<span class="kw">which.max</span>(perf.tab<span class="op">$</span>precision)]),
-        <span class="dt">best.recall =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(perf.tab<span class="op">$</span>recall, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),       <span class="dt">cutoff =</span> perf.tab<span class="op">$</span>cutoff[<span class="kw">which.max</span>(perf.tab<span class="op">$</span>recall)]),
-        <span class="dt">best.fscore =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(perf.tab<span class="op">$</span>fscore, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),       <span class="dt">cutoff =</span> perf.tab<span class="op">$</span>cutoff[<span class="kw">which.max</span>(perf.tab<span class="op">$</span>fscore)])
-    )
-
-    ## Plot ROC graphs
-    <span class="kw">plot</span>(perf.tab<span class="op">$</span>fpr, perf.tab<span class="op">$</span>recall, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">main =</span> <span class="kw">paste</span>(<span class="st">&#39;ROC Curve, auc=&#39;</span>,auc),
-        <span class="dt">xlab=</span><span class="st">&#39;False Positive Rate, or (1-Specificity)&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;Recall or True Positive Rate&#39;</span>)
-    <span class="kw">grid</span>()
-    <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-
-    ## Plot Accuracy graph
-    <span class="kw">plot</span>(perf.tab<span class="op">$</span>cutoff, perf.tab<span class="op">$</span>accuracy, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Accuracy over Cutoffs&#39;</span>,
-        <span class="dt">xlab =</span> <span class="st">&#39;Cutoff Thresholds&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Accuracy&#39;</span>)
-    <span class="kw">grid</span>()
-    <span class="kw">text</span>(best.metrics[<span class="st">&#39;best.accuracy&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="kw">min</span>(perf.tab<span class="op">$</span>accuracy, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">diff</span>(<span class="kw">range</span>(perf.tab<span class="op">$</span>accuracy, <span class="dt">na.rm =</span> T)) <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, best.metrics[<span class="st">&#39;best.accuracy&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-    <span class="kw">abline</span>(<span class="dt">v =</span> best.metrics[<span class="st">&#39;best.accuracy&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-    <span class="kw">abline</span>(<span class="dt">h =</span> best.metrics[<span class="st">&#39;best.accuracy&#39;</span>, <span class="st">&#39;max&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-
-    ## Plot Precision graph
-    <span class="kw">plot</span>(perf.tab<span class="op">$</span>cutoff, perf.tab<span class="op">$</span>precision, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Precision over Cutoffs&#39;</span>,
-        <span class="dt">xlab =</span> <span class="st">&#39;Cutoff Thresholds&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;Precision&#39;</span>)
-    <span class="kw">grid</span>()
-    <span class="kw">text</span>(best.metrics[<span class="st">&#39;best.precision&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="kw">min</span>(perf.tab<span class="op">$</span>precision,<span class="dt">na.rm =</span> T)<span class="op">+</span><span class="kw">diff</span>(<span class="kw">range</span>(perf.tab<span class="op">$</span>precision, <span class="dt">na.rm=</span>T))<span class="op">/</span><span class="dv">10</span>, best.metrics[<span class="st">&#39;best.precision&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-    <span class="kw">abline</span>(<span class="dt">v =</span> best.metrics[<span class="st">&#39;best.precision&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-    <span class="kw">abline</span>(<span class="dt">h =</span> best.metrics[<span class="st">&#39;best.precision&#39;</span>, <span class="st">&#39;max&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-
-    ## Plot F1 Scoregraph
-    <span class="kw">plot</span>(perf.tab<span class="op">$</span>cutoff, perf.tab<span class="op">$</span>fscore, <span class="dt">type =</span> <span class="st">&#39;b&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;F1-Score over Cutoffs&#39;</span>,
-        <span class="dt">xlab =</span> <span class="st">&#39;Cutoff Thresholds&#39;</span>, <span class="dt">ylab =</span> <span class="st">&#39;F1-Score&#39;</span>)
-    <span class="kw">grid</span>()
-    <span class="kw">text</span>(best.metrics[<span class="st">&#39;best.fscore&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="kw">min</span>(perf.tab<span class="op">$</span>fscore, <span class="dt">na.rm =</span> T) <span class="op">+</span><span class="st"> </span><span class="kw">diff</span>(<span class="kw">range</span>(perf.tab<span class="op">$</span>fscore, <span class="dt">na.rm =</span> T)) <span class="op">/</span><span class="st"> </span><span class="dv">10</span>, best.metrics[<span class="st">&#39;best.fscore&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
-    <span class="kw">abline</span>(<span class="dt">v =</span> best.metrics[<span class="st">&#39;best.fscore&#39;</span>, <span class="st">&#39;cutoff&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-    <span class="kw">abline</span>(<span class="dt">h =</span> best.metrics[<span class="st">&#39;best.fscore&#39;</span>, <span class="st">&#39;max&#39;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-
-    <span class="co"># return performance table, and optimal values per metric</span>
-    <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">perf.tab =</span> perf.tab, <span class="dt">auroc =</span> auc, <span class="dt">best.metrics =</span> best.metrics))
-}</code></pre></div>
+<div id="library" class="section level4">
+<h4><span class="header-section-number">11.4.4.1</span> Library</h4>
+<p>ROCR is a great and fast library for measuring calssification performance. I</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ROCR)</code></pre></div>
 </div>
-<div id="train-the-model" class="section level4">
-<h4><span class="header-section-number">11.4.4.2</span> Train The Model</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Load The Data and Build The Model
-train.data =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.train.csv&#39;</span>)
-
+<div id="import-data-and-train-the-model" class="section level4">
+<h4><span class="header-section-number">11.4.4.2</span> Import Data and Train The Model</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Load The Data
+train =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.train.csv&#39;</span>)
+test =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.test.csv&#39;</span>)
 <span class="kw">str</span>(train.data)
 ## &#39;data.frame&#39;:    12000 obs. of  7 variables:
 ##  $ S      : num  0.38 0.8 0.11 0.72 0.37 0.41 0.1 0.92 0.89 0.42 ...
@@ -381,202 +313,160 @@ train.data =<span class="st"> </span><span class="kw">read.csv</span>(<span clas
 ##  $ left   : int  1 1 1 1 1 1 1 1 1 1 ...
 
 ## Trian The Model Using Logistic Regression
-my.fit =<span class="st"> </span><span class="kw">glm</span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> logit), <span class="dt">data =</span> train.data)</code></pre></div>
+fit =<span class="st"> </span><span class="kw">glm</span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)
+pred =<span class="st"> </span><span class="kw">predict</span>(fit, <span class="dt">type =</span> <span class="st">&#39;response&#39;</span>, <span class="dt">newdata =</span> test)</code></pre></div>
 </div>
-<div id="run-the-performance-eval-function" class="section level4">
-<h4><span class="header-section-number">11.4.4.3</span> Run the Performance Eval Function</h4>
-<p><strong>List The Performance Table</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
-r =<span class="st"> </span><span class="kw">eval.binclass</span>(my.fit, <span class="dt">cutoff.by =</span> <span class="fl">0.1</span>)
+<div id="construct-the-performance-metric" class="section level4">
+<h4><span class="header-section-number">11.4.4.3</span> Construct the Performance Metric</h4>
+<p><code>ROCR::prediction</code>is the main function to crate prediction object that contains key data such as thresholds, TP, FP, TN, FP. With these data points, we can plot and calculate multiple performacne and visualization.</p>
+<p>It takes only two inputs:<br />
+1. <strong>Score</strong> (probability of being POSITIVE)<br />
+2. <strong>Label</strong> (actual POSITVE)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.pred =<span class="st"> </span><span class="kw">prediction</span>(pred, test<span class="op">$</span>left)
 
-<span class="kw">kable</span>(r<span class="op">$</span>perf.tab)</code></pre></div>
+rocr.metrics =<span class="st"> </span><span class="kw">data.frame</span>(
+    <span class="dt">cutoff =</span> rocr.pred<span class="op">@</span>cutoffs[[<span class="dv">1</span>]],
+    <span class="dt">accuracy =</span> (rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>tn[[<span class="dv">1</span>]]) <span class="op">/</span><span class="st"> </span>(rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>tn[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>fp[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>fn[[<span class="dv">1</span>]]),
+    <span class="dt">tpr =</span> rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]] <span class="op">/</span><span class="st"> </span>(rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>fn[[<span class="dv">1</span>]]),
+    <span class="dt">fpr =</span> rocr.pred<span class="op">@</span>fp[[<span class="dv">1</span>]] <span class="op">/</span><span class="st"> </span>(rocr.pred<span class="op">@</span>fp[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>tn[[<span class="dv">1</span>]]),
+    <span class="dt">ppv =</span> rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]] <span class="op">/</span><span class="st"> </span>(rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]] <span class="op">+</span><span class="st"> </span>rocr.pred<span class="op">@</span>fp[[<span class="dv">1</span>]])
+    )
+rocr.metrics<span class="op">$</span>fscore =<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(rocr.metrics<span class="op">$</span>tpr <span class="op">*</span><span class="st"> </span>rocr.metrics<span class="op">$</span>ppv) <span class="op">/</span><span class="st"> </span>(rocr.metrics<span class="op">$</span>tpr <span class="op">+</span><span class="st"> </span>rocr.metrics<span class="op">$</span>ppv)
+rocr.metrics<span class="op">$</span>tpr_fpr =<span class="st"> </span>rocr.metrics<span class="op">$</span>tpr <span class="op">/</span><span class="st"> </span>rocr.metrics<span class="op">$</span>fpr</code></pre></div>
+</div>
+<div id="list-the-performance-table" class="section level4">
+<h4><span class="header-section-number">11.4.4.4</span> List The Performance Table</h4>
+<p>The code below discover the <strong>optimum threshold</strong> for few metrices. Threhold for the highest estiamtes is summarized.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## discovery the optimal threshold for various metrics
+rocr.best =<span class="st"> </span><span class="kw">rbind</span>(
+  <span class="dt">best.accuracy =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(rocr.metrics<span class="op">$</span>accuracy, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">cutoff =</span> rocr.metrics<span class="op">$</span>cutoff[<span class="kw">which.max</span>(rocr.metrics<span class="op">$</span>accuracy)]),
+  <span class="dt">best.ppv =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(rocr.metrics<span class="op">$</span>ppv, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">cutoff =</span> rocr.metrics<span class="op">$</span>cutoff[<span class="kw">which.max</span>(rocr.metrics<span class="op">$</span>ppv)]),
+  <span class="dt">best.recall =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(rocr.metrics<span class="op">$</span>tpr, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">cutoff =</span> rocr.metrics<span class="op">$</span>cutoff[<span class="kw">which.max</span>(rocr.metrics<span class="op">$</span>tpr)]),
+  <span class="dt">best.fscore =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(rocr.metrics<span class="op">$</span>fscore, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">cutoff =</span> rocr.metrics<span class="op">$</span>cutoff[<span class="kw">which.max</span>(rocr.metrics<span class="op">$</span>fscore)]),
+  <span class="dt">best.tpr_fpr =</span> <span class="kw">c</span>(<span class="dt">max =</span> <span class="kw">max</span>(rocr.metrics<span class="op">$</span>tpr_fpr, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">cutoff =</span> rocr.metrics<span class="op">$</span>cutoff[<span class="kw">which.max</span>(rocr.metrics<span class="op">$</span>tpr_fpr)])
+)
+
+<span class="kw">kable</span>(rocr.best)</code></pre></div>
 <table>
 <thead>
 <tr class="header">
+<th></th>
+<th align="right">max</th>
 <th align="right">cutoff</th>
-<th align="right">accuracy</th>
-<th align="right">recall</th>
-<th align="right">precision</th>
-<th align="right">specificity</th>
-<th align="right">fscore</th>
-<th align="right">fpr</th>
-<th align="right">tpr_fpr</th>
-<th align="right">tp</th>
-<th align="right">fp</th>
-<th align="right">fn</th>
-<th align="right">tn</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">0.0</td>
-<td align="right">0.1666667</td>
-<td align="right">1.0000</td>
-<td align="right">0.1666667</td>
-<td align="right">0.0000</td>
-<td align="right">0.2857143</td>
-<td align="right">1.0000</td>
+<td>best.accuracy</td>
+<td align="right">0.8400000</td>
+<td align="right">0.2563290</td>
+</tr>
+<tr class="even">
+<td>best.ppv</td>
+<td align="right">0.5143781</td>
+<td align="right">0.2563290</td>
+</tr>
+<tr class="odd">
+<td>best.recall</td>
 <td align="right">1.0000000</td>
-<td align="right">2000</td>
-<td align="right">10000</td>
-<td align="right">0</td>
-<td align="right">0</td>
+<td align="right">0.0083197</td>
 </tr>
 <tr class="even">
-<td align="right">0.1</td>
-<td align="right">0.6498333</td>
-<td align="right">0.9505</td>
-<td align="right">0.3166223</td>
-<td align="right">0.5897</td>
-<td align="right">0.4750125</td>
-<td align="right">0.4103</td>
-<td align="right">2.3165976</td>
-<td align="right">1901</td>
-<td align="right">4103</td>
-<td align="right">99</td>
-<td align="right">5897</td>
+<td>best.fscore</td>
+<td align="right">0.6009448</td>
+<td align="right">0.2467452</td>
 </tr>
 <tr class="odd">
-<td align="right">0.2</td>
-<td align="right">0.8126667</td>
-<td align="right">0.8025</td>
-<td align="right">0.4641411</td>
-<td align="right">0.8147</td>
-<td align="right">0.5881275</td>
-<td align="right">0.1853</td>
-<td align="right">4.3308149</td>
-<td align="right">1605</td>
-<td align="right">1853</td>
-<td align="right">395</td>
-<td align="right">8147</td>
-</tr>
-<tr class="even">
-<td align="right">0.3</td>
-<td align="right">0.8195000</td>
-<td align="right">0.4730</td>
-<td align="right">0.4596696</td>
-<td align="right">0.8888</td>
-<td align="right">0.4662395</td>
-<td align="right">0.1112</td>
-<td align="right">4.2535971</td>
-<td align="right">946</td>
-<td align="right">1112</td>
-<td align="right">1054</td>
-<td align="right">8888</td>
-</tr>
-<tr class="odd">
-<td align="right">0.4</td>
-<td align="right">0.8129167</td>
-<td align="right">0.2610</td>
-<td align="right">0.4049651</td>
-<td align="right">0.9233</td>
-<td align="right">0.3174217</td>
-<td align="right">0.0767</td>
-<td align="right">3.4028683</td>
-<td align="right">522</td>
-<td align="right">767</td>
-<td align="right">1478</td>
-<td align="right">9233</td>
-</tr>
-<tr class="even">
-<td align="right">0.5</td>
-<td align="right">0.8204167</td>
-<td align="right">0.1905</td>
-<td align="right">0.4154853</td>
-<td align="right">0.9464</td>
-<td align="right">0.2612273</td>
-<td align="right">0.0536</td>
-<td align="right">3.5541045</td>
-<td align="right">381</td>
-<td align="right">536</td>
-<td align="right">1619</td>
-<td align="right">9464</td>
-</tr>
-<tr class="odd">
-<td align="right">0.6</td>
-<td align="right">0.8105000</td>
-<td align="right">0.0385</td>
-<td align="right">0.1799065</td>
-<td align="right">0.9649</td>
-<td align="right">0.0634267</td>
-<td align="right">0.0351</td>
-<td align="right">1.0968661</td>
-<td align="right">77</td>
-<td align="right">351</td>
-<td align="right">1923</td>
-<td align="right">9649</td>
-</tr>
-<tr class="even">
-<td align="right">0.7</td>
-<td align="right">0.8190833</td>
-<td align="right">0.0120</td>
-<td align="right">0.1095890</td>
-<td align="right">0.9805</td>
-<td align="right">0.0216314</td>
-<td align="right">0.0195</td>
-<td align="right">0.6153846</td>
-<td align="right">24</td>
-<td align="right">195</td>
-<td align="right">1976</td>
-<td align="right">9805</td>
-</tr>
-<tr class="odd">
-<td align="right">0.8</td>
-<td align="right">0.8280833</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000000</td>
-<td align="right">0.9937</td>
-<td align="right">NaN</td>
-<td align="right">0.0063</td>
-<td align="right">0.0000000</td>
-<td align="right">0</td>
-<td align="right">63</td>
-<td align="right">2000</td>
-<td align="right">9937</td>
-</tr>
-<tr class="even">
-<td align="right">0.9</td>
-<td align="right">0.8331667</td>
-<td align="right">0.0000</td>
-<td align="right">0.0000000</td>
-<td align="right">0.9998</td>
-<td align="right">NaN</td>
-<td align="right">0.0002</td>
-<td align="right">0.0000000</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">2000</td>
-<td align="right">9998</td>
-</tr>
-<tr class="odd">
-<td align="right">1.0</td>
-<td align="right">0.8333333</td>
-<td align="right">0.0000</td>
-<td align="right">NaN</td>
-<td align="right">1.0000</td>
-<td align="right">NaN</td>
-<td align="right">0.0000</td>
-<td align="right">NaN</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2000</td>
-<td align="right">10000</td>
+<td>best.tpr_fpr</td>
+<td align="right">5.2960770</td>
+<td align="right">0.2563290</td>
 </tr>
 </tbody>
 </table>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-3-1.png" width="864" /></p>
-<p><strong>AUROC</strong><br />
-<strong><code>$auroc</code></strong> is the <strong>area under ROC</strong>, calculated for each simulated threshold.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r<span class="op">$</span>auroc
-## [1] 0.8400424</code></pre></div>
-<p><strong>Summary Best Metrics</strong><br />
-<strong><code>$best.metrics</code></strong> provides <strong>optimal threshold</strong> that maximize individual metrics, based on the simulated thresholds.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">r<span class="op">$</span>best.metrics
-##                      max cutoff
-## best.accuracy  0.8333333    1.0
-## best.precision 0.4641411    0.2
-## best.recall    1.0000000    0.0
-## best.fscore    0.5881275    0.2</code></pre></div>
+</div>
+<div id="visualize-the-data-and-performance" class="section level4">
+<h4><span class="header-section-number">11.4.4.5</span> Visualize The Data and Performance</h4>
+<p><strong>Plot TP, Tn, FP and FN</strong><br />
+These data are available in the <code>ROCR::prediction</code> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span> (rocr.pred<span class="op">@</span>cutoffs[[<span class="dv">1</span>]], rocr.pred<span class="op">@</span>tp[[<span class="dv">1</span>]],<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">12000</span>), <span class="dt">col=</span><span class="st">&#39;green&#39;</span>)
+<span class="kw">lines</span>(rocr.pred<span class="op">@</span>cutoffs[[<span class="dv">1</span>]], rocr.pred<span class="op">@</span>tn[[<span class="dv">1</span>]], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12000</span>),<span class="dt">col=</span><span class="st">&#39;red&#39;</span>)
+<span class="kw">lines</span>(rocr.pred<span class="op">@</span>cutoffs[[<span class="dv">1</span>]], rocr.pred<span class="op">@</span>fp[[<span class="dv">1</span>]], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12000</span>), <span class="dt">col=</span><span class="st">&#39;blue&#39;</span>)
+<span class="kw">lines</span>(rocr.pred<span class="op">@</span>cutoffs[[<span class="dv">1</span>]], rocr.pred<span class="op">@</span>fn[[<span class="dv">1</span>]], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">12000</span>),<span class="dt">col=</span><span class="st">&#39;orange&#39;</span>)
+<span class="kw">legend</span>(<span class="st">&quot;top&quot;</span>,
+       <span class="dt">inset =</span> .<span class="dv">05</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">title =</span> <span class="st">&quot;Legend&quot;</span>,
+       <span class="kw">c</span>(<span class="st">&quot;TP&quot;</span>, <span class="st">&quot;TN&quot;</span>, <span class="st">&quot;FP&quot;</span>,<span class="st">&quot;FN&quot;</span>), <span class="dt">horiz =</span> <span class="ot">TRUE</span>,
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>,<span class="st">&#39;orange&#39;</span>), <span class="dt">bg =</span> <span class="st">&quot;grey96&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-5-1.png" width="864" /></p>
+<p><strong>Plot ROC Curve</strong><br />
+We can build a <strong><code>ROCR::performance</code> object, and plot it</strong> ! AUC is calculated with <code>ROCR::performance</code> as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;tpr&quot;</span>, <span class="dt">x.measure =</span> <span class="st">&quot;fpr&quot;</span>)
+rocr.auc =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">performance</span>(rocr.pred, <span class="st">&quot;auc&quot;</span>)<span class="op">@</span>y.values)
+<span class="kw">plot</span>(rocr.perf,
+    <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">colorize =</span> <span class="ot">TRUE</span>,
+    <span class="dt">print.cutoffs.at =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> <span class="fl">0.1</span>),
+    <span class="dt">text.adj =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.2</span>, <span class="fl">1.7</span>),
+    <span class="dt">main =</span> <span class="st">&#39;ROC Curve&#39;</span>
+    )
+<span class="kw">mtext</span>(<span class="kw">paste</span>(<span class="st">&#39;auc : &#39;</span>, <span class="kw">round</span>(rocr.auc, <span class="dv">5</span>)))
+<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-6-1.png" width="864" /></p>
+<p><strong>Plot Accuracy</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;acc&quot;</span>)
+best.x =<span class="st"> </span>rocr.perf<span class="op">@</span>x.values[[<span class="dv">1</span>]][<span class="kw">which.max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])]
+best.y =<span class="st"> </span><span class="kw">max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])
+<span class="kw">plot</span>(rocr.perf, <span class="dt">main =</span> <span class="st">&#39;Accuracy vs Cutoff&#39;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">v =</span> best.x, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> best.y, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">text</span>(best.x <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best.x, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">text</span>(<span class="fl">0.05</span>, best.y <span class="op">+</span><span class="st"> </span><span class="fl">0.05</span>, <span class="kw">round</span>(best.y, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+<p><strong>Plot Precesion</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;prec&quot;</span>)
+best.x =<span class="st"> </span>rocr.perf<span class="op">@</span>x.values[[<span class="dv">1</span>]][<span class="kw">which.max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])]
+best.y =<span class="st"> </span><span class="kw">max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]][<span class="kw">is.finite</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])])
+<span class="kw">plot</span>(rocr.perf, <span class="dt">main =</span> <span class="st">&#39;Precision vs Cutoff&#39;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dt">v =</span> best.x, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> best.y, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">text</span>(best.x <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best.x, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+<span class="kw">text</span>(<span class="fl">0.05</span>, best.y <span class="op">+</span><span class="st"> </span><span class="fl">0.05</span>, <span class="kw">round</span>(best.y, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-8-1.png" width="864" /></p>
+<p><strong>Plot Multiple Metrices Into One Graph</strong><br />
+As we can see, <code>ROCR::performance</code> is good to build measure and build plot for single y-axis measurement. It unfortunately <strong>does not support</strong> polotting multiple y-axis into one graph. Threfore, we shall build the plot using metrices table constructed earlier (variable <code>rocr.metrics</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### set initial margin of the plot
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">6</span>))
+
+## plot graph on left hand side scale
+<span class="kw">plot</span>(rocr.metrics<span class="op">$</span>cutoff, rocr.metrics<span class="op">$</span>tpr, <span class="dt">axes =</span> <span class="ot">FALSE</span>,, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">xlab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;green&#39;</span>, <span class="dt">main =</span> <span class="st">&#39;Multiple Performances vs Cutoff&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">lines</span>(rocr.metrics<span class="op">$</span>cutoff, rocr.metrics<span class="op">$</span>fpr, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">axis</span>(<span class="dv">1</span>, <span class="kw">pretty</span>(<span class="kw">range</span>(rocr.metrics<span class="op">$</span>cutoff[<span class="kw">is.finite</span>(rocr.metrics<span class="op">$</span>cutoff)]), <span class="dv">10</span>))
+<span class="kw">axis</span>(<span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>) ## las=1 makes horizontal labels
+<span class="kw">lines</span>(rocr.metrics<span class="op">$</span>fpr, rocr.metrics<span class="op">$</span>tpr, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">lines</span>(rocr.metrics<span class="op">$</span>cutoff, rocr.metrics<span class="op">$</span>accuracy, <span class="dt">col =</span> <span class="st">&#39;purple&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">lines</span>(rocr.metrics<span class="op">$</span>cutoff, rocr.metrics<span class="op">$</span>ppv, <span class="dt">col =</span> <span class="st">&#39;cyan&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">lines</span>(rocr.metrics<span class="op">$</span>cutoff, rocr.metrics<span class="op">$</span>fscore, <span class="dt">col =</span> <span class="st">&#39;pink&#39;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))
+<span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)
+
+## plot graph on right hand side scale
+<span class="kw">par</span>(<span class="dt">new =</span> <span class="ot">TRUE</span>)
+<span class="kw">plot</span>(rocr.metrics<span class="op">$</span>cutoff, rocr.metrics<span class="op">$</span>tpr_fpr, <span class="dt">axes =</span> <span class="ot">FALSE</span>, <span class="dt">ylab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">xlab =</span> <span class="st">&#39;&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;orange&#39;</span>)
+<span class="kw">axis</span>(<span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>) ## las=1 makes horizontal labels
+best =<span class="st"> </span>rocr.metrics<span class="op">$</span>cutoff[<span class="kw">which.max</span>(rocr.metrics<span class="op">$</span>tpr_fpr[<span class="kw">is.finite</span>(rocr.metrics<span class="op">$</span>tpr_fpr)])]
+<span class="kw">abline</span>(<span class="dt">v =</span> best, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">text</span>(best <span class="op">+</span><span class="st"> </span><span class="fl">0.075</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
+
+## axis labels
+<span class="kw">mtext</span>(<span class="st">&quot;cutoff&quot;</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">line =</span> <span class="fl">2.5</span>)
+<span class="kw">mtext</span>(<span class="st">&quot;tpr, fpr, accuracy, precision, f1-scaore&quot;</span>, <span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">line =</span> <span class="fl">2.5</span>)
+<span class="kw">mtext</span>(<span class="st">&quot;tpr/fpr&quot;</span>, <span class="dt">side =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">line =</span> <span class="fl">2.5</span>)
+
+## legend
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>,
+       <span class="dt">inset =</span> .<span class="dv">05</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">title =</span> <span class="st">&quot;Legend&quot;</span>,
+       <span class="kw">c</span>(<span class="st">&quot;TPR&quot;</span>, <span class="st">&quot;FPR&quot;</span>, <span class="st">&quot;TPR/FPR&quot;</span>, <span class="st">&quot;ROC&quot;</span>, <span class="st">&quot;Accuracy&quot;</span>, <span class="st">&quot;Precision&quot;</span>, <span class="st">&quot;F1-Score&quot;</span>),
+       <span class="dt">horiz =</span> <span class="ot">FALSE</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;purple&#39;</span>, <span class="st">&#39;cyan&#39;</span>, <span class="st">&#39;pink&#39;</span>), <span class="dt">bg =</span> <span class="st">&quot;grey96&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-9-1.png" width="864" /></p>
 </div>
 </div>
 </div>

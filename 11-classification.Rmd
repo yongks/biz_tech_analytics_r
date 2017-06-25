@@ -8,10 +8,90 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=9, fig.
 
 ## Introduction
 
-## Application
+The goal of classification prediction is to estimate binary outcome of TRUE or FALSE.  
 
-## Comparing Algorithm
+### Application
 
+### Types of Classification
+
+#### Probability Outcome
+
+- Logistic regression falls into this category  
+- It predicts the probability of binary outcome  
+- Researcher need to determine the cutoff threshold to derive binary outcome  
+- Cutoff determines variuos  performance metrics, hence usefulness of the model  
+
+#### Binary Outcome  
+
+Here are the list of algorithm produce direct binary prediction:  
+
+1.Decision Tree  
+2.Conditional Forest  
+3.Ensemble Learning  
+4.Support Vector Machine (SVM)  
+5.Neural Networks  
+6.Tree Ensembles  
+    - Random Forest  
+    - Gradient Boosted Trees  
+7.Deep Learning  
+
+### Comparing Algorithm
+
+## Library
+
+```{r}
+library(ROCR)
+```
+
+## Sample Dataset
+
+This chapter will use a **Human Resource** dataset that contain 12,000 training records.  
+
+```{r collapse=T, results='markup'}
+### Load The Data
+train = read.csv('./datasets/hr.train.csv')
+test = read.csv('./datasets/hr.test.csv')
+```
+
+### The Variables
+
+#### Dependent Variable
+
+- **left**: employee had left the company (binary)
+
+#### Independent Variables
+
+- **S**: Satisfied Employee (binary, obtained through survey)  
+- **NP**: Number of Project Currently Handled  
+- **LPE**: Last Project Evaluation  
+- **ANH**:  Average Number of Monthly Hours  
+- **TIC**: Time in company (in years)  
+- **Newborn**: Had a new born in last 12 months  
+
+```{r results = 'markup'}
+str(train)
+```
+
+#### Explore The Data
+
+Check the structure and samples.  
+
+```{r results = 'markup'}
+summary(train)
+head(train)
+```
+
+Check any **class bias** (skewed towards )
+
+```{r results = 'markup'}
+barplot(table(train$left), ylab='left', xlab='1=Yes, 0=No')
+```
+
+Calculate the **baseline** - that is, probability of TRUE(1) or FALSE(0), whichever is higher.  
+
+```{r results = 'markup'}
+prop.table( table(train$left) )
+```
 
 ## Performance Measurement
 
@@ -49,6 +129,8 @@ There are many performance measurement used for binary classification.  Here are
 - $Precision = 2*\frac{Recall * Precision}{Recall + Precision}$  
 - F1 is usually more useful than accuracy, especially if you have an unbalanced class distribution  
   
+### Performance related to Logistic Regression
+
 #### Area Under ROC (AUROC)
 
 - ROC curve is basically a graph of **TPR vs FPR** (some refer to as Recall vs (1-Sensitivity), plotted for **different thresholds**  
@@ -60,9 +142,7 @@ There are many performance measurement used for binary classification.  Here are
     
 ![AUROC and Thresholds](./images/roc_curve.gif)  
   
-### Cutoff Threshold Optimization
-
-#### Understanding Cutoff Impacts
+#### Cutoff Threshold Impact
 
 Cutoff threshold **direclty influence** the value of TP, FP, TN, FN.  
 If **cutoff threshold is lowered** (lower probability to classify as Postive), the results are:  
@@ -80,7 +160,7 @@ Different threshold produces different performance metrics (Accuracy, Recall, Pr
 
 The only way to estimate the **optimum threshold** for each of the performance measurement will be to measure them for a **wide range of threshold**.  
 
-#### Cutoff Impact Visualization
+#### Cutoff Visualization
 
 Selecting a cutoff threshold depends on the objectives of the researcher. To help understanding the how cutoff changes the performance metircs, try **visualize** them in below graph:  
 
@@ -195,7 +275,8 @@ legend("top",
 ```
 
 **Plot ROC Curve**  
-We can build a **`ROCR::performance` object, and plot it** !  AUC is calculated with `ROCR::performance` as well.  
+We can build a **`ROCR::performance` object, and plot it** !  
+AUC is calculated with `ROCR::performance` as well.  
 ```{r collapse=T}
 rocr.perf = performance(rocr.pred, measure = "tpr", x.measure = "fpr")
 rocr.auc = as.numeric(performance(rocr.pred, "auc")@y.values)
@@ -203,8 +284,7 @@ plot(rocr.perf,
     lwd = 3, colorize = TRUE,
     print.cutoffs.at = seq(0, 1, by = 0.1),
     text.adj = c(-0.2, 1.7),
-    main = 'ROC Curve'
-    )
+    main = 'ROC Curve')
 mtext(paste('auc : ', round(rocr.auc, 5)))
 abline(0, 1, col = "red", lty = 2)
 ```
@@ -234,7 +314,7 @@ text(0.05, best.y + 0.05, round(best.y, 5), col = "red")
 ```
 
 **Plot Multiple Metrices Into One Graph**  
-As we can see, `ROCR::performance` is good to build measure and build plot for single y-axis measurement.  It unfortunately **does not support** polotting multiple y-axis into one graph.  Threfore, we shall build the plot using metrices table constructed earlier (variable `rocr.metrics`).  
+As we can see, `ROCR::performance` is good to build measure and plot for single y-axis measurement.  It unfortunately **does not support** plotting multiple y-axis into one graph.  Threfore, we shall build the plot using metrices table constructed earlier (variable `rocr.metrics`).  
 ```{r}
 ### set initial margin of the plot
 par(mar = c(5, 5, 4, 6))
@@ -330,7 +410,7 @@ $p = \frac{1}{1+e^{-\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}$
 
 $\quad$ ![Logistic Classifier](./images/logistic_vs_linear.png)  
 
-#### High School Log Formula
+### High School Formula
 
 Some of the high scholl maths are useful for calculating the logistic scores. Remember them by heart.  
 
@@ -373,4 +453,15 @@ $e^{a+b} = e^a * e^b$
 glm (y ~ x1 + x2 + x3 , family=binomial(logit), data=my.df)
 ```
 
+## Decision Tree
+
+### The Concept
+
+### Run The Code
+
+## Random Forest
+
+### The Concept
+
+### Run The Code
 

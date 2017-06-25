@@ -39,8 +39,29 @@ Here are the list of algorithm produce direct binary prediction:
 
 ## Library
 
+**Summary of Libraries And Functions**  
+
+|   | Package      | Function      | Purpose                                           |
+|---|--------------|---------------|---------------------------------------------------|
+| 1 | Base - R     | glm           | General linear model, use for logistic regression |
+| 2 | ROCR         | prediction    | (logistic regression use only) create prediction object from score and label, simulate confusion table for multiple thresholds  |
+|   |              | performance   | (logistic regression use only) create performane object from prediction object, and support plotting |
+| 3 | rpart        | rpart         | Create a decision tree model  |
+|   |              | plotcp        | Visualize decision tree model |
+| 4 | rpart.plot   | prp           | |
+| 5 | party        | ctree         | Create a conditional inference tree model  |
+| 6 | randomForest | randomForest  | Create a random forest model               |
+| 7 | e1071        | svm           | Create a SVM model                         |
+
+**Load the R libraries**  
+
 ```{r}
 library(ROCR)
+library(rpart)
+library(rpart.plot)
+library(party)
+library(randomForest)
+library(e1071)
 ```
 
 ## Sample Dataset
@@ -57,9 +78,13 @@ test = read.csv('./datasets/hr.test.csv')
 
 #### Dependent Variable
 
+We want to predict who are the employees that are likely to leave the company.  
+
 - **left**: employee had left the company (binary)
 
 #### Independent Variables
+
+Here are the variables that are relevant to predicting employees leaving.  
 
 - **S**: Satisfied Employee (binary, obtained through survey)  
 - **NP**: Number of Project Currently Handled  
@@ -72,26 +97,197 @@ test = read.csv('./datasets/hr.test.csv')
 str(train)
 ```
 
-#### Explore The Data
+### Explore The Data
 
-Check the structure and samples.  
+Check the **structure and samples**.  
 
 ```{r results = 'markup'}
 summary(train)
 head(train)
 ```
 
-Check any **class bias** (skewed towards )
+Check any **class bias** (skewness)
 
-```{r results = 'markup'}
+```{r results = 'markup', fig.height=2.5}
 barplot(table(train$left), ylab='left', xlab='1=Yes, 0=No')
 ```
 
-Calculate the **baseline** - that is, probability of TRUE(1) or FALSE(0), whichever is higher.  
+Calculate the **Accuracy baseline** - that is, probability of True(1) or False(0). Use whichever is higher.  
 
 ```{r results = 'markup'}
 prop.table( table(train$left) )
 ```
+
+
+## Logistic Regression
+
+### The Concept
+
+Logistic Regression is a actually a **classification** algorithm. It is used to predict: 
+
+- Binary outcome (1=Yes/Sucess, 0=No/Failure), given a set of independent variables. 
+- Multinomial outcome (more than two categories) - however, reference category for comparison must be specified, otehrwise, must run multiple regressions with different refence categories  
+
+Logistic Regression as a **special case** of linear regression where:  
+
+- The outcome variable is categorical   
+- **Ln of odds** as dependent variable  
+
+Linear regression cannot be used for classification because:  
+
+- Binary data does not have a normal distribution, which is a condition for many types of regressions  
+- Predicted values can go beyond 0 and 1, which violates the definition of probability  
+- Probabilities are often not linear  
+
+### Assumptions
+
+Since logistic regression is related to linear combination of IVs, it share some common asssumptions regarding IVs and error terms:  
+
+1. Dependent variable must be 1/0 type eg. 'sucess/failure', 'male/female', 'yes/no'. Must not be ordinal and continous  
+2. Observations must be independent  
+3. Like OLS, Linearity between logit with all independent variables  
+4. Like OLS, NO multicollinearity - if found, create interaction term, or drop one of the IVs  
+5. Like OLS, error terms are assumed uncorrelated  
+
+Although **logit**  is a linear relation with independent variables, logistic regression (which use MLE) is **different from OLS** Linear Regression as below, due to the fact that DV is categorical and not continuuous:  
+
+- Can handle categorical independent variables  
+- Does not assume normality of DV and IVs: becauae $p$ follow Bernoulli distribution  
+- Does not assume linearity between DV and IVs: because DV is categorical  
+- Does not assume homoscedasticity  
+- Does not assume normal errors  
+
+### Equations
+
+- The goal of logistic regression is to estimate $p$ (the probability of 'Success') for a **linear combination** of the independent variables  
+- This is done by 'linking' the linear combination of independent variables to Bernoulli probability distribution (with domain from 0 to 1), to predict the probability of success  
+
+- The **link function** is called **logit**, which is the natural log of odds ratio. It is a linear function against independent variables:  
+$logit(p) = ln(odds) = ln\bigg(\frac{p}{1-p}\bigg) = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n$  
+
+- Derive **Odd ratio** by anti-log. It measures the 'strength' of IV in affecting the outcome, p:  
+$odds = \frac{p}{1-p} = e^{\beta_0 + \beta_1 x_1 + ... + \beta_n x_n}$  
+
+- $p$ can be further derived as below sigmoid function. $p$ is **non-linear** against independent varibales :  
+$p = \frac{1}{1+e^{-(\beta_0 + \beta_1x_1 + ... +  \beta_nx_n)}}$  
+
+- The logistic graph below shows P(Y=1) vs $\beta_0 + \beta_1 x_1 + ... + \beta_n x_n$. **Intuitively, larger coefficients and independence varibles values increases the chance of being classified as Y=1*8  
+
+- Compare the graph below to understand why logistic regression is better than linear regression in binary classification. However, it is simplied to illustrate single independent variable as multiple variables cannot be represented in 2D graph  
+
+$\quad$ ![Logistic Classifier](./images/logistic_vs_linear.png)  
+
+### High School Formula
+
+Some of the high scholl maths are useful for calculating the logistic scores. Remember them by heart.  
+
+- **What is log**  
+$y = 10^a$  
+$log(y) = a$  
+$y = e^a$  
+$ln(y) = a$  
+
+- Ln is log **base e**  
+$ln(a) = log_e(a)$  
+
+- Basic **properties** of log  
+$ln(1) = log(1) = 0$  
+$ln(0) = log(0) = Inf$  
+
+- Log of **division** becomes substration of log  
+$ln\bigg(\frac{a}{b}\bigg) = ln(a) - ln(b)$ 
+  
+- Exponential of **summation** becomes multiplication of exponential   
+$e^{a+b} = e^a * e^b$  
+
+### Run The Code
+
+> **`glm`** `(formula, family=gaussian(link=identity), data)`  
+> $\quad$ `formula : example y ~ x1 + x2 + x3`  
+> $\quad$ `family  : binomial, gaussian, poisson, quasi etc  
+> $\quad$ `link    : logit:default for binomial, identity:default for gaussian, log:default for poisson`  
+
+```{r collapse=T}
+fit.logit = glm(left ~ ., family = binomial, data = train)
+pred.logit = predict(fit.logit, type = 'response', newdata = test)
+
+# alternative with specifying link function
+# fit = glm(left ~ ., family = binomial (link=logit), data = train)
+```
+
+## Decision Tree
+
+```{r, eval=FALSE}
+library(rpart)
+fit.dtree <- rpart(left ~ ., data=train, method="class", parms=list(split="information"))
+print(fit.dtree)
+summary(fit.dtree)
+fit.dtree$cptable
+plotcp(fit.dtree)
+dtree.pruned <- prune(fit.dtree, cp=.0125)
+```
+
+```{r eval=FALSE}
+library(rpart.plot)
+prp(dtree.pruned, type = 2, extra = 104, fallen.leaves = TRUE, main="Decision Tree")
+dtree.pred <- predict(dtree.pruned, test, type="class")
+dtree.perf <- table(train$class, dtree.pred, dnn=c("Actual", "Predicted"))
+dtree.perf
+```
+
+## Conditional Inference Tree
+
+```{r, eval=FALSE, include=FALSE}
+library(party)
+fit.ctree <- ctree(left~., data=train)
+plot(fit.ctree, main="Conditional Inference Tree")
+ctree.pred <- predict(fit.ctree, test, type="response")
+ctree.perf <- table(test$class, ctree.pred, dnn=c("Actual", "Predicted"))
+ctree.perf
+```
+
+## Random Forest
+
+```{r, eval=F}
+library(randomForest)
+set.seed(1234)
+fit.forest <- randomForest(left~., data=train, na.action=na.roughfix,importance=TRUE)
+fit.forest
+importance(fit.forest, type=2)
+
+forest.pred <- predict(fit.forest, test)
+forest.perf <- table(test$class, forest.pred, dnn=c("Actual", "Predicted"))
+forest.perf
+```
+
+
+## SVM
+
+```{r,eval=F}
+library(e1071)
+set.seed(1234)
+
+fit.svm <- svm(class~., data=train)
+fit.svm
+
+#By default, the svm() function sets gamma to 1 / (number of predictors) and cost to 1.
+
+svm.pred <- predict(fit.svm, na.omit(test))
+svm.perf <- table(na.omit(test)$class, svm.pred, dnn=c("Actual", "Predicted"))
+svm.perf
+
+set.seed(1234)
+tuned <- tune.svm(left~., data=train, gamma=10^(-6:1), cost=10^(-10:10))
+tuned
+
+fit.svm <- svm(left~., data=train, gamma=.01, cost=1)
+fit.svm
+svm.pred <- predict(fit.svm, na.omit(test))
+svm.perf <- table(na.omit(test)$class, svm.pred, dnn=c("Actual", "Predicted"))
+svm.perf
+```
+
+### Run The Code
 
 ## Performance Measurement
 
@@ -198,28 +394,43 @@ Since logistic regression is a actual **linear regression of ln(odds)**, **multi
 
 ### Run The Code
 
-#### Library
+#### General Function
 
-ROCR is a great and fast library for measuring calssification performance. I
+This is a custom general function to evaluate all key metrics for Classification. 
+
+> **`eval.bincalss ( score=NULL, label=NULL, cutoff=NULL)`**  
+> `score: predicted value, either probability or binary`  
+> `label: actual value`  
+> `cutoff:  threshold (0-1) if score is probability`  
 
 ```{r}
-library(ROCR)
+eval.binclass = function(score = NULL, label = NULL, cutoff=NULL) {
+  actual    = factor(as.logical(label), levels = c(TRUE, FALSE))
+  if (is.null(cutoff)) 
+    predicted = factor(as.logical(score), levels = c(TRUE, FALSE)) # binary
+  else
+    predicted = factor(as.logical(score > cutoff), levels = c(TRUE, FALSE))  # regression
+  ct  = table(actual, predicted, useNA = 'no', exclude = c(NA)) #confusion table
+  tp = ct[1]
+  fp = ct[2]
+  fn = ct[3]
+  tn = ct[4] 
+  accuracy  = (ct[1] + ct[4]) / (sum(ct))
+  recall    = ct[1] / (ct[1] + ct[3])
+  precision = ct[1] / (ct[1] + ct[2])
+  fpr       = ct[2] / (ct[2] + ct[4])
+  specificity = ct[4] / (ct[2] + ct[4])
+  tpr_fpr     = recall / (1 - specificity)
+  fscore = 2  * (precision * recall / (precision + recall))
+  data.frame(cutoff = cutoff, accuracy = accuracy, recall = recall, precision = precision, 
+             specificity = specificity, fscore = fscore, fpr = fpr, tpr_fpr = tpr_fpr, 
+             tp = tp, fp = fp, fn=fn, tn=tn )
+}
+
+eval.binclass(score=pred.logit, label=test$left, cutoff=0.5)
 ```
 
-#### Import Data and Train The Model
-
-```{r collapse=T}
-### Load The Data
-train = read.csv('./datasets/hr.train.csv')
-test = read.csv('./datasets/hr.test.csv')
-str(train.data)
-
-## Trian The Model Using Logistic Regression
-fit = glm(left ~ ., family = binomial, data = train)
-pred = predict(fit, type = 'response', newdata = test)
-```
-
-#### Construct the Performance Metric
+#### ROCR::Construct the Performance Metric
 
 `ROCR::prediction`is the main function to crate prediction object that contains key data such as thresholds, TP, FP, TN, FP. With these data points, we can plot and calculate multiple performacne and visualization.  
 
@@ -228,7 +439,7 @@ It takes only two inputs:
 2. **Label** (actual POSITVE)  
 
 ```{r}
-rocr.pred = prediction(pred, test$left)
+rocr.pred = prediction(pred.logit, test$left)
 
 rocr.metrics = data.frame(
     cutoff = rocr.pred@cutoffs[[1]],
@@ -241,7 +452,7 @@ rocr.metrics$fscore = 2 * (rocr.metrics$tpr * rocr.metrics$ppv) / (rocr.metrics$
 rocr.metrics$tpr_fpr = rocr.metrics$tpr / rocr.metrics$fpr
 ```
 
-####List The Performance Table
+####ROCR::List The Performance Table
 
 The code below discover the **optimum threshold** for few metrices.  Threhold for the highest estiamtes is summarized.   
 
@@ -258,7 +469,7 @@ rocr.best = rbind(
 kable(rocr.best)
 ```
 
-####Visualize The Data and Performance
+####ROCR::Visualize The Data and Performance
 
 **Plot TP, Tn, FP and FN**  
 These data are available in the `ROCR::prediction` object.  
@@ -350,118 +561,4 @@ legend("topright",
        horiz = FALSE, lty = c(1, 1), lwd = c(2, 2),
        col = c("green", "red", "orange", 'black', 'purple', 'cyan', 'pink'), bg = "grey96")
 ```
-
-
-## Logistic Regression
-
-### The Concept
-
-Logistic Regression is a actually a **classification** algorithm. It is used to predict: 
-
-- Binary outcome (1=Yes/Sucess, 0=No/Failure), given a set of independent variables. 
-- Multinomial outcome (more than two categories) - however, reference category for comparison must be specified, otehrwise, must run multiple regressions with different refence categories  
-
-Logistic Regression as a **special case** of linear regression where:  
-
-- The outcome variable is categorical   
-- **Ln of odds** as dependent variable  
-
-Linear regression cannot be used for classification because:  
-
-- Binary data does not have a normal distribution, which is a condition for many types of regressions  
-- Predicted values can go beyond 0 and 1, which violates the definition of probability  
-- Probabilities are often not linear  
-
-### Assumptions
-
-Since logistic regression is related to linear combination of IVs, it share some common asssumptions regarding IVs and error terms:  
-
-1. Dependent variable must be 1/0 type eg. 'sucess/failure', 'male/female', 'yes/no'. Must not be ordinal and continous  
-2. Observations must be independent  
-3. Like OLS, Linearity between logit with all independent variables  
-4. Like OLS, NO multicollinearity - if found, create interaction term, or drop one of the IVs  
-5. Like OLS, error terms are assumed uncorrelated  
-
-Although **logit**  is a linear relation with independent variables, logistic regression (which use MLE) is **different from OLS** Linear Regression as below, due to the fact that DV is categorical and not continuuous:  
-
-- Can handle categorical independent variables  
-- Does not assume normality of DV and IVs: becauae $p$ follow Bernoulli distribution  
-- Does not assume linearity between DV and IVs: because DV is categorical  
-- Does not assume homoscedasticity  
-- Does not assume normal errors  
-
-### Equations
-
-- The goal of logistic regression is to estimate $p$ (the probability of 'Success') for a **linear combination** of the independent variables  
-- This is done by 'linking' the linear combination of independent variables to Bernoulli probability distribution (with domain from 0 to 1), to predict the probability of success  
-
-- The **link function** is called **logit**, which is the natural log of odds ratio. It is a linear function against independent variables:  
-$logit(p) = ln(odds) = ln\bigg(\frac{p}{1-p}\bigg) = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n$  
-
-- Derive **Odd ratio** by anti-log. It measures the 'strength' of IV in affecting the outcome, p:  
-$odds = \frac{p}{1-p} = e^{\beta_0 + \beta_1 x_1 + ... + \beta_n x_n}$  
-
-- $p$ can be further derived as below sigmoid function. $p$ is **non-linear** against independent varibales :  
-$p = \frac{1}{1+e^{-\beta_0 + \beta_1x_1 + ... +  \beta_nx_n}}$  
-
-- The logistic graph below shows P(Y=1) vs $\beta_0 + \beta_1 x_1 + ... + \beta_n x_n$. **Intuitively, larger coefficients and independence varibles values increases the chance of being classified as Y=1*8  
-
-- Compare the graph below to understand why logistic regression is better than linear regression in binary classification  
-
-$\quad$ ![Logistic Classifier](./images/logistic_vs_linear.png)  
-
-### High School Formula
-
-Some of the high scholl maths are useful for calculating the logistic scores. Remember them by heart.  
-
-- **What is ls log**  
-$y = 10^a$  
-$log(y) = a$  
-
-$y = e^a$  
-$ln(y) = a$  
-
-- Ln is log **base e**  
-$ln(a) = log_e(a)$  
-
-- Basic **properties** of log  
-$ln(1) = log(1) = 0$  
-$ln(0) = log(0) = Inf$  
-
-- Log of **division** becomes substration of log  
-$ln\bigg(\frac{a}{b}\bigg) = ln(a) - ln(b)$ 
-  
-- Exponential of **summation** becomes multiplication of exponential   
-$e^{a+b} = e^a * e^b$  
-
-### Sample Data
-
-### Run The Code
-
-> **`glm`** `(formula, family=gaussian(link=identity), data)`  
-> $\quad$ `formula : example y ~ x1 + x2 + x3`  
-> $\quad$ `family  : binomial, gaussian, poisson, quasi etc  
-> $\quad$ `link    : logit-default for binomial(), identity-default for gaussian, log-default for poisson`  
-
-#### Binomial
-
-
-
-**Binomial Example**
-
-```
-glm (y ~ x1 + x2 + x3 , family=binomial(logit), data=my.df)
-```
-
-## Decision Tree
-
-### The Concept
-
-### Run The Code
-
-## Random Forest
-
-### The Concept
-
-### Run The Code
 

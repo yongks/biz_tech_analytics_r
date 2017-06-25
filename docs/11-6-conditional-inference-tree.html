@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="11-3-sample-dataset.html">
-<link rel="next" href="11-5-decision-tree.html">
+<link rel="prev" href="11-5-decision-tree.html">
+<link rel="next" href="11-7-random-forest.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -163,115 +163,16 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="logistic-regression" class="section level2">
-<h2><span class="header-section-number">11.4</span> Logistic Regression</h2>
-<div id="the-concept" class="section level3">
-<h3><span class="header-section-number">11.4.1</span> The Concept</h3>
-<p>Logistic Regression is a actually a <strong>classification</strong> algorithm. It is used to predict:</p>
-<ul>
-<li>Binary outcome (1=Yes/Sucess, 0=No/Failure), given a set of independent variables.</li>
-<li>Multinomial outcome (more than two categories) - however, reference category for comparison must be specified, otehrwise, must run multiple regressions with different refence categories</li>
-</ul>
-<p>Logistic Regression as a <strong>special case</strong> of linear regression where:</p>
-<ul>
-<li>The outcome variable is categorical<br />
-</li>
-<li><strong>Ln of odds</strong> as dependent variable</li>
-</ul>
-<p>Linear regression cannot be used for classification because:</p>
-<ul>
-<li>Binary data does not have a normal distribution, which is a condition for many types of regressions<br />
-</li>
-<li>Predicted values can go beyond 0 and 1, which violates the definition of probability<br />
-</li>
-<li>Probabilities are often not linear</li>
-</ul>
-</div>
-<div id="assumptions" class="section level3">
-<h3><span class="header-section-number">11.4.2</span> Assumptions</h3>
-<p>Since logistic regression is related to linear combination of IVs, it share some common asssumptions regarding IVs and error terms:</p>
-<ol style="list-style-type: decimal">
-<li>Dependent variable must be 1/0 type eg. ‘sucess/failure’, ‘male/female’, ‘yes/no’. Must not be ordinal and continous<br />
-</li>
-<li>Observations must be independent<br />
-</li>
-<li>Like OLS, Linearity between logit with all independent variables<br />
-</li>
-<li>Like OLS, NO multicollinearity - if found, create interaction term, or drop one of the IVs<br />
-</li>
-<li>Like OLS, error terms are assumed uncorrelated</li>
-</ol>
-<p>Although <strong>logit</strong> is a linear relation with independent variables, logistic regression (which use MLE) is <strong>different from OLS</strong> Linear Regression as below, due to the fact that DV is categorical and not continuuous:</p>
-<ul>
-<li>Can handle categorical independent variables<br />
-</li>
-<li>Does not assume normality of DV and IVs: becauae <span class="math inline">\(p\)</span> follow Bernoulli distribution<br />
-</li>
-<li>Does not assume linearity between DV and IVs: because DV is categorical<br />
-</li>
-<li>Does not assume homoscedasticity<br />
-</li>
-<li>Does not assume normal errors</li>
-</ul>
-</div>
-<div id="equations" class="section level3">
-<h3><span class="header-section-number">11.4.3</span> Equations</h3>
-<ul>
-<li>The goal of logistic regression is to estimate <span class="math inline">\(p\)</span> (the probability of ‘Success’) for a <strong>linear combination</strong> of the independent variables<br />
-</li>
-<li><p>This is done by ‘linking’ the linear combination of independent variables to Bernoulli probability distribution (with domain from 0 to 1), to predict the probability of success</p></li>
-<li><p>The <strong>link function</strong> is called <strong>logit</strong>, which is the natural log of odds ratio. It is a linear function against independent variables:<br />
-<span class="math inline">\(logit(p) = ln(odds) = ln\bigg(\frac{p}{1-p}\bigg) = \beta_0 + \beta_1 x_1 + ... + \beta_n x_n\)</span></p></li>
-<li><p>Derive <strong>Odd ratio</strong> by anti-log. It measures the ‘strength’ of IV in affecting the outcome, p:<br />
-<span class="math inline">\(odds = \frac{p}{1-p} = e^{\beta_0 + \beta_1 x_1 + ... + \beta_n x_n}\)</span></p></li>
-<li><p><span class="math inline">\(p\)</span> can be further derived as below sigmoid function. <span class="math inline">\(p\)</span> is <strong>non-linear</strong> against independent varibales :<br />
-<span class="math inline">\(p = \frac{1}{1+e^{-(\beta_0 + \beta_1x_1 + ... + \beta_nx_n)}}\)</span></p></li>
-<li><p>The logistic graph below shows P(Y=1) vs <span class="math inline">\(\beta_0 + \beta_1 x_1 + ... + \beta_n x_n\)</span>. **Intuitively, larger coefficients and independence varibles values increases the chance of being classified as Y=1*8</p></li>
-<li><p>Compare the graph below to understand why logistic regression is better than linear regression in binary classification. However, it is simplied to illustrate single independent variable as multiple variables cannot be represented in 2D graph</p></li>
-</ul>
-<p><span class="math inline">\(\quad\)</span> <img src="images/logistic_vs_linear.png" alt="Logistic Classifier" /></p>
-</div>
-<div id="high-school-formula" class="section level3">
-<h3><span class="header-section-number">11.4.4</span> High School Formula</h3>
-<p>Some of the high scholl maths are useful for calculating the logistic scores. Remember them by heart.</p>
-<ul>
-<li><p><strong>What is log</strong><br />
-<span class="math inline">\(y = 10^a\)</span><br />
-<span class="math inline">\(log(y) = a\)</span><br />
-<span class="math inline">\(y = e^a\)</span><br />
-<span class="math inline">\(ln(y) = a\)</span></p></li>
-<li><p>Ln is log <strong>base e</strong><br />
-<span class="math inline">\(ln(a) = log_e(a)\)</span></p></li>
-<li><p>Basic <strong>properties</strong> of log<br />
-<span class="math inline">\(ln(1) = log(1) = 0\)</span><br />
-<span class="math inline">\(ln(0) = log(0) = Inf\)</span></p></li>
-<li><p>Log of <strong>division</strong> becomes substration of log<br />
-<span class="math inline">\(ln\bigg(\frac{a}{b}\bigg) = ln(a) - ln(b)\)</span></p></li>
-<li><p>Exponential of <strong>summation</strong> becomes multiplication of exponential<br />
-<span class="math inline">\(e^{a+b} = e^a * e^b\)</span></p></li>
-</ul>
-</div>
-<div id="run-the-code" class="section level3">
-<h3><span class="header-section-number">11.4.5</span> Run The Code</h3>
-<blockquote>
-<p><strong><code>glm</code></strong> <code>(formula, family=gaussian(link=identity), data)</code><br />
-<span class="math inline">\(\quad\)</span> <code>formula : example y ~ x1 + x2 + x3</code><br />
-<span class="math inline">\(\quad\)</span> <code>family  : binomial, gaussian, poisson, quasi etc   $\quad$</code>link : logit:default for binomial, identity:default for gaussian, log:default for poisson`</p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.logit =<span class="st"> </span><span class="kw">glm</span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">family =</span> binomial, <span class="dt">data =</span> train)
-pred.logit =<span class="st"> </span><span class="kw">predict</span>(fit.logit, <span class="dt">type =</span> <span class="st">&#39;response&#39;</span>, <span class="dt">newdata =</span> test)
-
-<span class="co"># alternative with specifying link function</span>
-<span class="co"># fit = glm(left ~ ., family = binomial (link=logit), data = train)</span></code></pre></div>
-</div>
+<div id="conditional-inference-tree" class="section level2">
+<h2><span class="header-section-number">11.6</span> Conditional Inference Tree</h2>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="11-3-sample-dataset.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="11-5-decision-tree.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="11-5-decision-tree.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="11-7-random-forest.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

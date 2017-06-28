@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-25">
+<meta name="date" content="2017-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -132,20 +132,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4.4" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#high-school-formula"><i class="fa fa-check"></i><b>11.4.4</b> High School Formula</a></li>
 <li class="chapter" data-level="11.4.5" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#run-the-code"><i class="fa fa-check"></i><b>11.4.5</b> Run The Code</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a></li>
+<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#the-concept-1"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-building"><i class="fa fa-check"></i><b>11.5.2</b> Tree Building</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#splitting-criteria"><i class="fa fa-check"></i><b>11.5.3</b> Splitting Criteria</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#pruning-tree"><i class="fa fa-check"></i><b>11.5.4</b> Pruning Tree</a></li>
+<li class="chapter" data-level="11.5.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-selection"><i class="fa fa-check"></i><b>11.5.5</b> Tree Selection</a></li>
+<li class="chapter" data-level="11.5.6" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#run-the-code-1"><i class="fa fa-check"></i><b>11.5.6</b> Run The Code</a></li>
+</ul></li>
 <li class="chapter" data-level="11.6" data-path="11-6-conditional-inference-tree.html"><a href="11-6-conditional-inference-tree.html"><i class="fa fa-check"></i><b>11.6</b> Conditional Inference Tree</a></li>
 <li class="chapter" data-level="11.7" data-path="11-7-random-forest.html"><a href="11-7-random-forest.html"><i class="fa fa-check"></i><b>11.7</b> Random Forest</a></li>
 <li class="chapter" data-level="11.8" data-path="11-8-svm.html"><a href="11-8-svm.html"><i class="fa fa-check"></i><b>11.8</b> SVM</a><ul>
-<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-1"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
+<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-2"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.9" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html"><i class="fa fa-check"></i><b>11.9</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.9.1" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.9.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.9.2" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#performance-related-to-logistic-regression"><i class="fa fa-check"></i><b>11.9.2</b> Performance related to Logistic Regression</a></li>
 <li class="chapter" data-level="11.9.3" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.9.3</b> Model Evaluation</a></li>
-<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-2"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
+<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-3"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-model-optimization.html"><a href="13-model-optimization.html"><i class="fa fa-check"></i><b>13</b> Model Optimization</a></li>
 </ul>
 
       </nav>
@@ -165,10 +173,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="sample-dataset" class="section level2">
 <h2><span class="header-section-number">11.3</span> Sample Dataset</h2>
-<p>This chapter will use a <strong>Human Resource</strong> dataset that contain 12,000 training records.</p>
+<p>This chapter will use a <strong>Human Resource</strong> dataset that contain 12,000 training records.<br />
+The dataset will be split into training set (70%), and test set (30%).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Load The Data
-train =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.train.csv&#39;</span>)
-test =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.test.csv&#39;</span>)</code></pre></div>
+<span class="kw">set.seed</span>(<span class="dv">1234</span>)
+train =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.csv&#39;</span>)
+train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(train), <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(train) )
+train =<span class="st"> </span>train[train.rows,]
+test =<span class="st"> </span>train[<span class="op">-</span>train.rows,]</code></pre></div>
 <div id="the-variables" class="section level3">
 <h3><span class="header-section-number">11.3.1</span> The Variables</h3>
 <div id="dependent-variable" class="section level4">
@@ -195,50 +207,50 @@ test =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st"
 <li><strong>Newborn</strong>: Had a new born in last 12 months</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(train)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    12000 obs. of  7 variables:
-##  $ S      : num  0.38 0.8 0.11 0.72 0.37 0.41 0.1 0.92 0.89 0.42 ...
-##  $ LPE    : num  0.53 0.86 0.88 0.87 0.52 0.5 0.77 0.85 1 0.53 ...
-##  $ NP     : int  2 5 7 5 2 2 6 5 5 2 ...
-##  $ ANH    : int  157 262 272 223 159 153 247 259 224 142 ...
-##  $ TIC    : int  3 6 4 5 3 3 4 5 5 3 ...
-##  $ Newborn: int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ left   : int  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    8400 obs. of  7 variables:
+##  $ S      : num  0.41 0.57 0.83 0.77 0.64 0.72 0.9 0.16 0.34 0.86 ...
+##  $ LPE    : num  0.52 0.42 0.91 0.96 0.43 0.89 0.96 0.97 0.76 0.74 ...
+##  $ NP     : int  2 2 4 3 5 4 4 6 6 2 ...
+##  $ ANH    : int  147 248 210 232 269 217 258 235 237 178 ...
+##  $ TIC    : int  3 4 4 2 3 3 5 3 5 3 ...
+##  $ Newborn: int  0 0 0 1 0 0 0 0 0 0 ...
+##  $ left   : int  1 0 0 0 0 0 1 0 0 0 ...</code></pre>
 </div>
 </div>
 <div id="explore-the-data" class="section level3">
 <h3><span class="header-section-number">11.3.2</span> Explore The Data</h3>
 <p>Check the <strong>structure and samples</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(train)</code></pre></div>
-<pre><code>##        S               LPE               NP             ANH       
-##  Min.   :0.0900   Min.   :0.3600   Min.   :2.000   Min.   : 96.0  
-##  1st Qu.:0.4800   1st Qu.:0.5700   1st Qu.:3.000   1st Qu.:157.0  
-##  Median :0.6600   Median :0.7200   Median :4.000   Median :199.5  
-##  Mean   :0.6295   Mean   :0.7166   Mean   :3.802   Mean   :200.4  
-##  3rd Qu.:0.8200   3rd Qu.:0.8600   3rd Qu.:5.000   3rd Qu.:243.0  
-##  Max.   :1.0000   Max.   :1.0000   Max.   :7.000   Max.   :310.0  
+<pre><code>##        S              LPE               NP             ANH       
+##  Min.   :0.090   Min.   :0.3600   Min.   :2.000   Min.   : 96.0  
+##  1st Qu.:0.480   1st Qu.:0.5700   1st Qu.:3.000   1st Qu.:158.0  
+##  Median :0.660   Median :0.7200   Median :4.000   Median :200.0  
+##  Mean   :0.631   Mean   :0.7143   Mean   :3.804   Mean   :200.8  
+##  3rd Qu.:0.830   3rd Qu.:0.8600   3rd Qu.:5.000   3rd Qu.:244.0  
+##  Max.   :1.000   Max.   :1.0000   Max.   :7.000   Max.   :310.0  
 ##       TIC           Newborn            left       
 ##  Min.   :2.000   Min.   :0.0000   Min.   :0.0000  
 ##  1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:0.0000  
 ##  Median :3.000   Median :0.0000   Median :0.0000  
-##  Mean   :3.229   Mean   :0.1542   Mean   :0.1667  
+##  Mean   :3.222   Mean   :0.1537   Mean   :0.1645  
 ##  3rd Qu.:4.000   3rd Qu.:0.0000   3rd Qu.:0.0000  
 ##  Max.   :6.000   Max.   :1.0000   Max.   :1.0000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(train)</code></pre></div>
-<pre><code>##      S  LPE NP ANH TIC Newborn left
-## 1 0.38 0.53  2 157   3       0    1
-## 2 0.80 0.86  5 262   6       0    1
-## 3 0.11 0.88  7 272   4       0    1
-## 4 0.72 0.87  5 223   5       0    1
-## 5 0.37 0.52  2 159   3       0    1
-## 6 0.41 0.50  2 153   3       0    1</code></pre>
+<pre><code>##          S  LPE NP ANH TIC Newborn left
+## 1365  0.41 0.52  2 147   3       0    1
+## 7467  0.57 0.42  2 248   4       0    0
+## 7311  0.83 0.91  4 210   4       0    0
+## 7479  0.77 0.96  3 232   2       1    0
+## 10328 0.64 0.43  5 269   3       0    0
+## 7681  0.72 0.89  4 217   3       0    0</code></pre>
 <p>Check any <strong>class bias</strong> (skewness)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(train<span class="op">$</span>left), <span class="dt">ylab=</span><span class="st">&#39;left&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;1=Yes, 0=No&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-5-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-6-1.png" width="864" /></p>
 <p>Calculate the <strong>Accuracy baseline</strong> - that is, probability of True(1) or False(0). Use whichever is higher.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>( <span class="kw">table</span>(train<span class="op">$</span>left) )</code></pre></div>
 <pre><code>## 
 ##         0         1 
-## 0.8333333 0.1666667</code></pre>
+## 0.8354762 0.1645238</code></pre>
 </div>
 </div>
             </section>

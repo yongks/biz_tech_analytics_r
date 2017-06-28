@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-25">
+<meta name="date" content="2017-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -132,20 +132,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4.4" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#high-school-formula"><i class="fa fa-check"></i><b>11.4.4</b> High School Formula</a></li>
 <li class="chapter" data-level="11.4.5" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#run-the-code"><i class="fa fa-check"></i><b>11.4.5</b> Run The Code</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a></li>
+<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#the-concept-1"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-building"><i class="fa fa-check"></i><b>11.5.2</b> Tree Building</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#splitting-criteria"><i class="fa fa-check"></i><b>11.5.3</b> Splitting Criteria</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#pruning-tree"><i class="fa fa-check"></i><b>11.5.4</b> Pruning Tree</a></li>
+<li class="chapter" data-level="11.5.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-selection"><i class="fa fa-check"></i><b>11.5.5</b> Tree Selection</a></li>
+<li class="chapter" data-level="11.5.6" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#run-the-code-1"><i class="fa fa-check"></i><b>11.5.6</b> Run The Code</a></li>
+</ul></li>
 <li class="chapter" data-level="11.6" data-path="11-6-conditional-inference-tree.html"><a href="11-6-conditional-inference-tree.html"><i class="fa fa-check"></i><b>11.6</b> Conditional Inference Tree</a></li>
 <li class="chapter" data-level="11.7" data-path="11-7-random-forest.html"><a href="11-7-random-forest.html"><i class="fa fa-check"></i><b>11.7</b> Random Forest</a></li>
 <li class="chapter" data-level="11.8" data-path="11-8-svm.html"><a href="11-8-svm.html"><i class="fa fa-check"></i><b>11.8</b> SVM</a><ul>
-<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-1"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
+<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-2"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.9" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html"><i class="fa fa-check"></i><b>11.9</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.9.1" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.9.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.9.2" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#performance-related-to-logistic-regression"><i class="fa fa-check"></i><b>11.9.2</b> Performance related to Logistic Regression</a></li>
 <li class="chapter" data-level="11.9.3" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.9.3</b> Model Evaluation</a></li>
-<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-2"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
+<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-3"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-model-optimization.html"><a href="13-model-optimization.html"><i class="fa fa-check"></i><b>13</b> Model Optimization</a></li>
 </ul>
 
       </nav>
@@ -303,7 +311,7 @@ If <strong>cutoff threshold is lowered</strong> (lower probability to classify a
 <p>Since logistic regression is a actual <strong>linear regression of ln(odds)</strong>, <strong>multicolinearity</strong> rule apply.</p>
 </div>
 </div>
-<div id="run-the-code-2" class="section level3">
+<div id="run-the-code-3" class="section level3">
 <h3><span class="header-section-number">11.9.4</span> Run The Code</h3>
 <div id="general-function" class="section level4">
 <h4><span class="header-section-number">11.9.4.1</span> General Function</h4>
@@ -314,34 +322,34 @@ If <strong>cutoff threshold is lowered</strong> (lower probability to classify a
 <code>label: actual value</code><br />
 <code>cutoff:  threshold (0-1) if score is probability</code></p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eval.binclass =<span class="st"> </span><span class="cf">function</span>(<span class="dt">score =</span> <span class="ot">NULL</span>, <span class="dt">label =</span> <span class="ot">NULL</span>, <span class="dt">cutoff=</span><span class="ot">NULL</span>) {
-  actual    =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(label), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))
-  <span class="cf">if</span> (<span class="kw">is.null</span>(cutoff)) 
-    predicted =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(score), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)) <span class="co"># binary</span>
-  <span class="cf">else</span>
-    predicted =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(score <span class="op">&gt;</span><span class="st"> </span>cutoff), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))  <span class="co"># regression</span>
-  ct  =<span class="st"> </span><span class="kw">table</span>(actual, predicted, <span class="dt">useNA =</span> <span class="st">&#39;no&#39;</span>, <span class="dt">exclude =</span> <span class="kw">c</span>(<span class="ot">NA</span>)) <span class="co">#confusion table</span>
-  tp =<span class="st"> </span>ct[<span class="dv">1</span>]
-  fp =<span class="st"> </span>ct[<span class="dv">2</span>]
-  fn =<span class="st"> </span>ct[<span class="dv">3</span>]
-  tn =<span class="st"> </span>ct[<span class="dv">4</span>] 
-  accuracy  =<span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>]) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(ct))
-  recall    =<span class="st"> </span>ct[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">3</span>])
-  precision =<span class="st"> </span>ct[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">2</span>])
-  fpr       =<span class="st"> </span>ct[<span class="dv">2</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>])
-  specificity =<span class="st"> </span>ct[<span class="dv">4</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>])
-  tpr_fpr     =<span class="st"> </span>recall <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>specificity)
-  fscore =<span class="st"> </span><span class="dv">2</span>  <span class="op">*</span><span class="st"> </span>(precision <span class="op">*</span><span class="st"> </span>recall <span class="op">/</span><span class="st"> </span>(precision <span class="op">+</span><span class="st"> </span>recall))
-  <span class="kw">data.frame</span>(<span class="dt">cutoff =</span> cutoff, <span class="dt">accuracy =</span> accuracy, <span class="dt">recall =</span> recall, <span class="dt">precision =</span> precision, 
-             <span class="dt">specificity =</span> specificity, <span class="dt">fscore =</span> fscore, <span class="dt">fpr =</span> fpr, <span class="dt">tpr_fpr =</span> tpr_fpr, 
-             <span class="dt">tp =</span> tp, <span class="dt">fp =</span> fp, <span class="dt">fn=</span>fn, <span class="dt">tn=</span>tn )
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eval.binclass =<span class="st"> </span><span class="cf">function</span>(<span class="dt">score =</span> <span class="ot">NULL</span>, <span class="dt">label =</span> <span class="ot">NULL</span>, <span class="dt">cutoff =</span> <span class="ot">NA</span>) {
+    actual =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(<span class="kw">as.integer</span>(<span class="kw">as.character</span>(label))), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>))
+    <span class="cf">if</span> (<span class="kw">is.na</span>(cutoff))
+        predicted =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(<span class="kw">as.integer</span>(<span class="kw">as.character</span>(score))), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)) <span class="co"># binary</span>
+    <span class="cf">else</span>
+        predicted =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">as.logical</span>(score <span class="op">&gt;</span><span class="st"> </span>cutoff), <span class="dt">levels =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>)) <span class="co"># regression</span>
+    ct =<span class="st"> </span><span class="kw">table</span>(actual, predicted, <span class="dt">useNA =</span> <span class="st">&#39;no&#39;</span>, <span class="dt">exclude =</span> <span class="kw">c</span>(<span class="ot">NA</span>)) <span class="co">#confusion table</span>
+    tp =<span class="st"> </span>ct[<span class="dv">1</span>]
+    fp =<span class="st"> </span>ct[<span class="dv">2</span>]
+    fn =<span class="st"> </span>ct[<span class="dv">3</span>]
+    tn =<span class="st"> </span>ct[<span class="dv">4</span>]
+    accuracy =<span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>]) <span class="op">/</span><span class="st"> </span>(<span class="kw">sum</span>(ct))
+    recall =<span class="st"> </span>ct[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">3</span>])
+    precision =<span class="st"> </span>ct[<span class="dv">1</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">2</span>])
+    fpr =<span class="st"> </span>ct[<span class="dv">2</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>])
+    specificity =<span class="st"> </span>ct[<span class="dv">4</span>] <span class="op">/</span><span class="st"> </span>(ct[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>ct[<span class="dv">4</span>])
+    tpr_fpr =<span class="st"> </span>recall <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>specificity)
+    fscore =<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(precision <span class="op">*</span><span class="st"> </span>recall <span class="op">/</span><span class="st"> </span>(precision <span class="op">+</span><span class="st"> </span>recall))
+    <span class="kw">data.frame</span>(<span class="dt">cutoff =</span> cutoff, <span class="dt">accuracy =</span> accuracy, <span class="dt">recall =</span> recall, <span class="dt">precision =</span> precision,
+             <span class="dt">specificity =</span> specificity, <span class="dt">fscore =</span> fscore, <span class="dt">fpr =</span> fpr, <span class="dt">tpr_fpr =</span> tpr_fpr,
+             <span class="dt">tp =</span> tp, <span class="dt">fp =</span> fp, <span class="dt">fn =</span> fn, <span class="dt">tn =</span> tn)
 }
 
 <span class="kw">eval.binclass</span>(<span class="dt">score=</span>pred.logit, <span class="dt">label=</span>test<span class="op">$</span>left, <span class="dt">cutoff=</span><span class="fl">0.5</span>)</code></pre></div>
-<pre><code>##   cutoff  accuracy recall precision specificity    fscore    fpr  tpr_fpr
-## 1    0.5 0.8204167 0.1905 0.4154853      0.9464 0.2612273 0.0536 3.554104
-##    tp  fp   fn   tn
-## 1 381 536 1619 9464</code></pre>
+<pre><code>##   cutoff  accuracy    recall precision specificity    fscore        fpr
+## 1    0.5 0.8283582 0.2114014 0.4587629   0.9505882 0.2894309 0.04941176
+##    tpr_fpr tp  fp  fn   tn
+## 1 4.278362 89 105 332 2020</code></pre>
 </div>
 <div id="rocrconstruct-the-performance-metric" class="section level4">
 <h4><span class="header-section-number">11.9.4.2</span> ROCR::Construct the Performance Metric</h4>
@@ -385,28 +393,28 @@ rocr.best =<span class="st"> </span><span class="kw">rbind</span>(
 <tbody>
 <tr class="odd">
 <td>best.accuracy</td>
-<td align="right">0.8400000</td>
-<td align="right">0.2563290</td>
+<td align="right">0.8464258</td>
+<td align="right">0.2527940</td>
 </tr>
 <tr class="even">
 <td>best.ppv</td>
-<td align="right">0.5143781</td>
-<td align="right">0.2563290</td>
+<td align="right">0.5253378</td>
+<td align="right">0.2527940</td>
 </tr>
 <tr class="odd">
 <td>best.recall</td>
 <td align="right">1.0000000</td>
-<td align="right">0.0083197</td>
+<td align="right">0.0238659</td>
 </tr>
 <tr class="even">
 <td>best.fscore</td>
-<td align="right">0.6009448</td>
-<td align="right">0.2467452</td>
+<td align="right">0.6179018</td>
+<td align="right">0.2379097</td>
 </tr>
 <tr class="odd">
 <td>best.tpr_fpr</td>
-<td align="right">5.2960770</td>
-<td align="right">0.2563290</td>
+<td align="right">5.5863856</td>
+<td align="right">0.2527940</td>
 </tr>
 </tbody>
 </table>
@@ -424,7 +432,7 @@ These data are available in the <code>ROCR::prediction</code> object.</p>
        <span class="kw">c</span>(<span class="st">&quot;TP&quot;</span>, <span class="st">&quot;TN&quot;</span>, <span class="st">&quot;FP&quot;</span>,<span class="st">&quot;FN&quot;</span>), <span class="dt">horiz =</span> <span class="ot">TRUE</span>,
        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>,<span class="st">&#39;orange&#39;</span>), <span class="dt">bg =</span> <span class="st">&quot;grey96&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-16-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-22-1.png" width="864" /></p>
 <p><strong>Plot ROC Curve</strong><br />
 We can build a <strong><code>ROCR::performance</code> object, and plot it</strong> !<br />
 AUC is calculated with <code>ROCR::performance</code> as well.</p>
@@ -437,7 +445,7 @@ rocr.auc =<span class="st"> </span><span class="kw">as.numeric</span>(<span clas
     <span class="dt">main =</span> <span class="st">&#39;ROC Curve&#39;</span>)
 <span class="kw">mtext</span>(<span class="kw">paste</span>(<span class="st">&#39;auc : &#39;</span>, <span class="kw">round</span>(rocr.auc, <span class="dv">5</span>)))
 <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-17-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-23-1.png" width="864" /></p>
 <p><strong>Plot Accuracy</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;acc&quot;</span>)
 best.x =<span class="st"> </span>rocr.perf<span class="op">@</span>x.values[[<span class="dv">1</span>]][<span class="kw">which.max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])]
@@ -447,7 +455,7 @@ best.y =<span class="st"> </span><span class="kw">max</span>(rocr.perf<span clas
 <span class="kw">abline</span>(<span class="dt">h =</span> best.y, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">text</span>(best.x <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best.x, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">text</span>(<span class="fl">0.05</span>, best.y <span class="op">+</span><span class="st"> </span><span class="fl">0.05</span>, <span class="kw">round</span>(best.y, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-18-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-24-1.png" width="864" /></p>
 <p><strong>Plot Precesion</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;prec&quot;</span>)
 best.x =<span class="st"> </span>rocr.perf<span class="op">@</span>x.values[[<span class="dv">1</span>]][<span class="kw">which.max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])]
@@ -457,7 +465,7 @@ best.y =<span class="st"> </span><span class="kw">max</span>(rocr.perf<span clas
 <span class="kw">abline</span>(<span class="dt">h =</span> best.y, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">text</span>(best.x <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best.x, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">text</span>(<span class="fl">0.05</span>, best.y <span class="op">+</span><span class="st"> </span><span class="fl">0.05</span>, <span class="kw">round</span>(best.y, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-19-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
 <p><strong>Plot Multiple Metrices Into One Graph</strong><br />
 As we can see, <code>ROCR::performance</code> is good to build measure and plot for single y-axis measurement. It unfortunately <strong>does not support</strong> plotting multiple y-axis into one graph. Threfore, we shall build the plot using metrices table constructed earlier (variable <code>rocr.metrics</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### set initial margin of the plot
@@ -493,7 +501,7 @@ best =<span class="st"> </span>rocr.metrics<span class="op">$</span>cutoff[<span
        <span class="kw">c</span>(<span class="st">&quot;TPR&quot;</span>, <span class="st">&quot;FPR&quot;</span>, <span class="st">&quot;TPR/FPR&quot;</span>, <span class="st">&quot;ROC&quot;</span>, <span class="st">&quot;Accuracy&quot;</span>, <span class="st">&quot;Precision&quot;</span>, <span class="st">&quot;F1-Score&quot;</span>),
        <span class="dt">horiz =</span> <span class="ot">FALSE</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;purple&#39;</span>, <span class="st">&#39;cyan&#39;</span>, <span class="st">&#39;pink&#39;</span>), <span class="dt">bg =</span> <span class="st">&quot;grey96&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-20-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-26-1.png" width="864" /></p>
 
 </div>
 </div>

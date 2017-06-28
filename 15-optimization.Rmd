@@ -1,0 +1,7 @@
+# Model Optimization
+
+## Occam’s Razor 
+
+- Given two models of similar generalization errors,  one should prefer the simpler model over the more complex model  
+- For complex models, there is a greater chance that it was fitted accidentally by errors in data  
+- Therefore, one should include model complexity when evaluating a model  

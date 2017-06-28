@@ -1,7 +1,7 @@
 ```{r classification, echo=FALSE}
 ## global chunk option ##
 library('knitr')
-knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=9, fig.height=5, fig.show='hold') 
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=9, fig.height=5, fig.show='hold', results='markup', collapse=F) 
 ```
 
 # Classification
@@ -64,14 +64,44 @@ library(randomForest)
 library(e1071)
 ```
 
+
+```{r, echo=FALSE}
+eval.binclass = function(score = NULL, label = NULL, cutoff = NA) {
+    actual = factor(as.logical(as.integer(as.character(label))), levels = c(TRUE, FALSE))
+    if (is.na(cutoff))
+        predicted = factor(as.logical(as.integer(as.character(score))), levels = c(TRUE, FALSE)) # binary
+    else
+        predicted = factor(as.logical(score > cutoff), levels = c(TRUE, FALSE)) # regression
+    ct = table(actual, predicted, useNA = 'no', exclude = c(NA)) #confusion table
+    tp = ct[1]
+    fp = ct[2]
+    fn = ct[3]
+    tn = ct[4]
+    accuracy = (ct[1] + ct[4]) / (sum(ct))
+    recall = ct[1] / (ct[1] + ct[3])
+    precision = ct[1] / (ct[1] + ct[2])
+    fpr = ct[2] / (ct[2] + ct[4])
+    specificity = ct[4] / (ct[2] + ct[4])
+    tpr_fpr = recall / (1 - specificity)
+    fscore = 2 * (precision * recall / (precision + recall))
+    data.frame(cutoff = cutoff, accuracy = accuracy, recall = recall, precision = precision,
+             specificity = specificity, fscore = fscore, fpr = fpr, tpr_fpr = tpr_fpr,
+             tp = tp, fp = fp, fn = fn, tn = tn)
+}
+```
+
 ## Sample Dataset
 
 This chapter will use a **Human Resource** dataset that contain 12,000 training records.  
+The dataset will be split into training set (70%), and test set (30%).  
 
 ```{r collapse=T, results='markup'}
 ### Load The Data
-train = read.csv('./datasets/hr.train.csv')
-test = read.csv('./datasets/hr.test.csv')
+set.seed(1234)
+train = read.csv('./datasets/hr.csv')
+train.rows = sample( 1:nrow(train), 0.7 * nrow(train) )
+train = train[train.rows,]
+test = train[-train.rows,]
 ```
 
 ### The Variables
@@ -217,23 +247,258 @@ pred.logit = predict(fit.logit, type = 'response', newdata = test)
 
 ## Decision Tree
 
-```{r, eval=FALSE}
-library(rpart)
-fit.dtree <- rpart(left ~ ., data=train, method="class", parms=list(split="information"))
-print(fit.dtree)
-summary(fit.dtree)
-fit.dtree$cptable
-plotcp(fit.dtree)
-dtree.pruned <- prune(fit.dtree, cp=.0125)
+### The Concept
+
+- A decision tree is a machine learning algorithm that partitions the data into subsets  
+- It is a form of tree structure, containing three types of **nodes**:  
+    - **Root Node**: no incoming, zero or more outgoing  
+    - **Internal/Branch Nodes**: one incoming and two or more outgoing   
+    - **Terminal/Leaf Nodes**: at the bottom of the tree, no outgoing edge  
+  $\quad$ ![Decision Tree Structure](./images/dtree_structure.jpg)  
+- The tree building process starts with a split at the root, and continues splitting through branches until no further splits can be made  (leaf node reached)  
+- N number of splits will create N+1 leafs  
+- It classify observations by starting at the root of the tree and moving through it until a leaf node.  
+
+#### The Goal
+
+- The goal of a decision tree is to encapsulate the training data in the **smallest possible tree**  
+- The rationale for minimizing the tree size is the logical rule that the **simplest possible explanation for a set of phenomena is preferred** over other explanations  
+- **Small trees produce decisions faster than large trees**, and they are much easier to look at and understand  
+- There are various methods and techniques to control the depth, or prune, of the tree  
+
+#### Advantage
+
+- Popular among non-statistician, as the model is very **easy to interpret**  
+- **None-parametric**, therefore does not require normality assumption  
+- Support **many data types**: continuous, categorical, ordinal and binary variable  Yes
+- **Transformation is not required**  
+- Useful for **detecting important variables, interactions and identifying outliers**  
+
+### Tree Building
+
+Construcing a good decision tree involves below three processes:  
+
+a. **Splitting Criteria** for each level of the tree:  
+    - Selecting the variable to split  
+    - Choosing the value to split  
+    - Condition to stop splitting  
+b. **Pruning**  
+c. **Tree Selection**  
+
+After a good decision tree model is built, you are ready to use it for **prediction**.  
+
+### Splitting Criteria
+
+Splitting is the process of partitioning the data set into subsets, from root to leaf nodes.  
+
+- Splits are formed on a particular **variable and in a particular location**  
+- For each split, two determinations are made:  
+    - **Splitting variable** - The predictor variable used for the split   
+    - **Split point** - The **set of values** for the predictor variable (which are split between the left child node and the right child node)  
+        
+- The **goal** of splitting each node is to select a combination of **splitting variable** and **splitting point** that minimizes the error (or maximizes the purity).  Two algorithmns (with impurity measure) can be used to make this decision:  
+    
+
+
+#### Information Gain (basedo on Entropy value)
+        
+$Entropy = \sum_{i=1}^c{-p_i * log_2(p_i)}$  
+$\quad$ c = number of class (1 if only single splitting variable), p = the probability of class  
+$Information Gain = Entropy(Parent Node) - Entropy (Child Node)$  
+
+- Partition the data into subsets that contain instances with similar values (**homogenous**)  
+- Perfectly classified (**completely homogeneous**), the entropy is zero  
+- Maximum Entropy is 1 for (binary class)  
+- Weights probability of class by **log(base=2)**  
+- The parent node will select a variable that maximize information gain (smallest Child Entropy) as its child node  
+
+#### Gini (Gini Index)
+        
+$Gini = 1 - \sum_{i=1}^c (p_i)^2$  
+$\quad$ c = number of class (1 if only single splitting variable), p = the probability of class  
+
+- Partition the data into subsets that contain instances with similar values (**homogenous**)  
+- Perfectly classified, Gini index would be zero (pure)  
+- Maximum Gini Index is 1  
+- Split that has lowest Gini index value is chosen (most pure)  
+- Weights probability of class by **square**  
+
+#### Gini or Information Gain ?
+        
+- **Gini index calculation is faster** compared to Information gain becuase it doesn't use log computation  
+- This could be a reason why gini is **the default method** in some machine learning packages  
+- Studies have shown that choice of impurity measures has **little effect** on the performance of the decision tree. This is because they are **quite consistent with each other**, as shown below:  
+![Entropy vs Gini](./images/entropy_gini.jpg)  
+
+#### Splitting **stops when**
+
+- All samples belongs to same class (**pure**)  
+- Most samples belongs to same class. This is **generalization** of the above approach with some error threshold  
+- There are **no more variabels with samples** to be partitioned  
+- There is **no more samples** for the branch test attributes  
+- Additionally, some program will implement **extra parameters** to control the size of the tree, eg. `rpart::rpart.control`  
+
+### Pruning Tree
+
+#### Pruning Benefits
+
+A decision tree can expanded until the it perfectly fit the training data (error is zero). However, it will perform poorly in test data (test error will be large). Such model does not generalize well to the test data, also known as **overfitting**.  The solution is called **pruning**:  
+
+- Prunning a tree has greater impact than choosing the impurity measure  
+- The larger the tree (more nodes), the more complex the tree is, the more risk of overfitting  
+
+The **reason** and **benefits** of smaller tree size are:  
+
+- Lower branches may be strongly affected by **outliers**. Pruning enables you to find the next largest tree and minimize this concern  
+- A simpler tree **often avoids over-fitting**  
+
+#### Pruning Process
+
+Pruning **reduces the size of the tree** using **bottom-up appraoch**:  
+
+- Pruning removes leaf nodes under original branch  
+- Pruning turns some branch nodes into leaf nodes (**bottom-up approach**)  
+
+#### When To Prune
+
+- **Pre-Pruning**  
+    - Stop the algorithm before it becomes a fully grown tree  
+
+- **Post-Pruning**  
+    - Grow decision tree to its entirety
+    - Trim the nodes from bottom-up fashion  
+    - If generalization error improves after trimming, replace the sub-tree by a leaf noes
+
+### Tree Selection
+
+- The process of finding the **smallest tree that fits the data**  
+- This is the tree that yields the **lowest cross-validated error**  
+
+
+### Run The Code
+
+#### Build The Model
+
+> **`rpart`** `(formula, method=, na.action=na.rpart, model=FALSE, x=FALSE, y=FALSE, data=)`  
+> $\quad$ `formula  : example y ~ x1 + x2 + x3`  
+> $\quad$ `data     : binomial, gaussian, poisson, quasi etc`  
+> $\quad$ `method   : splitting method - 'class' for classification`  
+> $\quad$ `control  : (optional) parameter used for controlling tree growth, default as following`  
+> $\quad$ `na.action: default action delete all observations with y is missing`  
+> $\quad$ `model: keep a copy of model in the result`  
+> $\quad$ `x    : keep a copy of x matrix in result`  
+> $\quad$ `y    : keep a copy of dependent variable y in result`  
+
+`rpart.control` specifies the paramters that limits the growth of tree.  
+
+> `rpart.control(minsplit = 20,  minbucket = round(minsplit/3), cp = 0.01,` 
+> `              maxcompete = 4, maxsurrogate = 5, usesurrogate = 2, xval = 10,surrogatestyle = 0, maxdepth = 30)`  
+
+The default `rpart.control` parameters specifies belowcriteria to be met before splitting a node:  
+
+- **minsplit**: minimum number of observations in node to be 20  
+- **minbucket**: if splitted, both sides must have at least 20/3 observations  
+- **cp**: if splitted, the overall relative Cost of the entire tree must reduce by cp*T (T is number of terminal nodes). Cost is calculated as sum of square errors.  Relative cost is compared to baseline (where there is no split, with baseline error is scaled to 1)  
+  **Low cp value** relaxed the error reduction expectation, hence creates **larger tree**  
+- **maxdept**: tree depth not more than 30 levels
+
+```{r}
+fit.dtree <- rpart(left ~ ., method = "class", control = rpart.control(cp = 0.001), data = train)
+
+dtree.pred.train = predict(fit.dtree, newdata= train, type = "class")
+eval.binclass(score=dtree.pred.train, label=train$left)
 ```
 
-```{r eval=FALSE}
-library(rpart.plot)
-prp(dtree.pruned, type = 2, extra = 104, fallen.leaves = TRUE, main="Decision Tree")
-dtree.pred <- predict(dtree.pruned, test, type="class")
-dtree.perf <- table(train$class, dtree.pred, dnn=c("Actual", "Predicted"))
-dtree.perf
+#### Visualize The Model
+
+**Visualize with Text**
+```{r}
+fit.dtree  
 ```
+
+**Visualize with Graph**  
+
+Use `rpart::prp` to plot rpart model (prp is shortform for 'plot rpart').  
+Notice that the graph has the below characteristics:  
+
+- Nodes at the same depth level addes up to 100% probability  
+- Leafs nodes are formed at different depth levels  
+- All leaf nodes adds up to 100% probability  
+
+```{r}
+prp(fit.dtree, type = 2, extra = 104, fallen.leaves = TRUE, main="Decision Tree")
+```
+
+#### Cross Validation Analysis
+
+Yes, `rpart` has built-in cross validation, calculated when a model is created !  
+
+- Use `rpart::cptable` to find out the lowest value of cross validation error (column **`xerror`**), and its cross standard deviation (column **`xstd`**)  
+- Use **`xerror + xstd`** as the cutting point for best tree size for optimization (pruning), see `plotcp` below  
+
+`cptable` is stored in the model built with `rpart`.  
+
+```{r, results='hold'}
+printcp(fit.dtree)
+#fit.dtree$cptable  # alternative 
+```
+
+**Visualize** `cptable` with `rpart::plotcp`.  
+
+- `size of tree` means the number of nodes in the tree, it is the number of splits + 1  
+- Horizontal line is the valued at lowest `xerror` + its `xstd`  
+- Optimum tree size for pruning is **below the horizontal line**, use this chart to determine the **optimum tree size, and its cp value**, prune with this cp value  
+
+```{r}
+plotcp(fit.dtree)
+```
+
+#### Pruning Tree
+
+- The decision tree was originally built with some constrains (rpart::control) to limits its tree size  
+- The tree size **can be further reduced by pruning**, with the use the **cp** value in prunning command  
+- Prune the tree size that yields lowest **xerror**, based on the **cp analysis** above  
+- Pruning creates new, reduced nodes decision tree model  
+- For this example, we purposely prune the tree to one size smaller, for the sake of demonstration  
+- Bigger tree size (lower complexity parameter, cp) means higher accuracy of the model to training data, hence it always reduce the errors (`error` in $cptable). However, cross validation error (xerror) may go up and down as the tree size increases  
+- To choose pruning cp value, first choose the tree size:  
+    - From `cptable`, pruning cp value = sqrt(cpvalue for tree-size N * cpvalue for tree-size N-1)  
+    - From `plotcp`, choose a tree size, pruning cp value = corresponding cpvalue at the y-axis  
+    - Remember **tree size = nsplit + 1**  
+
+```{r}
+fit.dtree.prune = prune(fit.dtree, cp = 0.005)
+printcp(fit.dtree.prune)
+plotcp(fit.dtree.prune)
+```
+
+#### Prediction
+
+We would like to compare the model performance:  
+a. Original Model with training set  
+b. Pruned Model with training set  
+c. Pruned Model with test set  
+
+Overall, we can see that the performance dropped slightly after prunning for datset.  
+
+```{r, results='markup'}
+# original model with training set
+dtree.pred.train  = predict(fit.dtree,  newdata=train, type="class")
+eval.binclass(score=dtree.pred.train, label=train$left)[2:5]
+
+# original model with test set
+dtree.pred.test1 = predict(fit.dtree,        newdata=test, type="class")
+eval.binclass(score=dtree.pred.test1, label=test$left)[2:5]
+
+# pruned model with training set
+dtree.pred.train.pruned = predict(fit.dtree.pruned, data=train, type="class")
+eval.binclass(score=dtree.pred.train.pruned, label=train$left)[2:5]
+
+# pruned model with test set
+dtree.pred.test2 = predict(fit.dtree.pruned, newdata=test, type="class")
+eval.binclass(score=dtree.pred.test2, label=test$left)[2:5]
+```
+
 
 ## Conditional Inference Tree
 
@@ -242,7 +507,7 @@ library(party)
 fit.ctree <- ctree(left~., data=train)
 plot(fit.ctree, main="Conditional Inference Tree")
 ctree.pred <- predict(fit.ctree, test, type="response")
-ctree.perf <- table(test$class, ctree.pred, dnn=c("Actual", "Predicted"))
+ctree.perf <- table(test$left, ctree.pred, dnn=c("Actual", "Predicted"))
 ctree.perf
 ```
 
@@ -404,27 +669,27 @@ This is a custom general function to evaluate all key metrics for Classification
 > `cutoff:  threshold (0-1) if score is probability`  
 
 ```{r}
-eval.binclass = function(score = NULL, label = NULL, cutoff=NULL) {
-  actual    = factor(as.logical(label), levels = c(TRUE, FALSE))
-  if (is.null(cutoff)) 
-    predicted = factor(as.logical(score), levels = c(TRUE, FALSE)) # binary
-  else
-    predicted = factor(as.logical(score > cutoff), levels = c(TRUE, FALSE))  # regression
-  ct  = table(actual, predicted, useNA = 'no', exclude = c(NA)) #confusion table
-  tp = ct[1]
-  fp = ct[2]
-  fn = ct[3]
-  tn = ct[4] 
-  accuracy  = (ct[1] + ct[4]) / (sum(ct))
-  recall    = ct[1] / (ct[1] + ct[3])
-  precision = ct[1] / (ct[1] + ct[2])
-  fpr       = ct[2] / (ct[2] + ct[4])
-  specificity = ct[4] / (ct[2] + ct[4])
-  tpr_fpr     = recall / (1 - specificity)
-  fscore = 2  * (precision * recall / (precision + recall))
-  data.frame(cutoff = cutoff, accuracy = accuracy, recall = recall, precision = precision, 
-             specificity = specificity, fscore = fscore, fpr = fpr, tpr_fpr = tpr_fpr, 
-             tp = tp, fp = fp, fn=fn, tn=tn )
+eval.binclass = function(score = NULL, label = NULL, cutoff = NA) {
+    actual = factor(as.logical(as.integer(as.character(label))), levels = c(TRUE, FALSE))
+    if (is.na(cutoff))
+        predicted = factor(as.logical(as.integer(as.character(score))), levels = c(TRUE, FALSE)) # binary
+    else
+        predicted = factor(as.logical(score > cutoff), levels = c(TRUE, FALSE)) # regression
+    ct = table(actual, predicted, useNA = 'no', exclude = c(NA)) #confusion table
+    tp = ct[1]
+    fp = ct[2]
+    fn = ct[3]
+    tn = ct[4]
+    accuracy = (ct[1] + ct[4]) / (sum(ct))
+    recall = ct[1] / (ct[1] + ct[3])
+    precision = ct[1] / (ct[1] + ct[2])
+    fpr = ct[2] / (ct[2] + ct[4])
+    specificity = ct[4] / (ct[2] + ct[4])
+    tpr_fpr = recall / (1 - specificity)
+    fscore = 2 * (precision * recall / (precision + recall))
+    data.frame(cutoff = cutoff, accuracy = accuracy, recall = recall, precision = precision,
+             specificity = specificity, fscore = fscore, fpr = fpr, tpr_fpr = tpr_fpr,
+             tp = tp, fp = fp, fn = fn, tn = tn)
 }
 
 eval.binclass(score=pred.logit, label=test$left, cutoff=0.5)

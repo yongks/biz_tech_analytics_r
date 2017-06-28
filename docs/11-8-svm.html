@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-25">
+<meta name="date" content="2017-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -132,20 +132,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4.4" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#high-school-formula"><i class="fa fa-check"></i><b>11.4.4</b> High School Formula</a></li>
 <li class="chapter" data-level="11.4.5" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#run-the-code"><i class="fa fa-check"></i><b>11.4.5</b> Run The Code</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a></li>
+<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#the-concept-1"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-building"><i class="fa fa-check"></i><b>11.5.2</b> Tree Building</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#splitting-criteria"><i class="fa fa-check"></i><b>11.5.3</b> Splitting Criteria</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#pruning-tree"><i class="fa fa-check"></i><b>11.5.4</b> Pruning Tree</a></li>
+<li class="chapter" data-level="11.5.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-selection"><i class="fa fa-check"></i><b>11.5.5</b> Tree Selection</a></li>
+<li class="chapter" data-level="11.5.6" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#run-the-code-1"><i class="fa fa-check"></i><b>11.5.6</b> Run The Code</a></li>
+</ul></li>
 <li class="chapter" data-level="11.6" data-path="11-6-conditional-inference-tree.html"><a href="11-6-conditional-inference-tree.html"><i class="fa fa-check"></i><b>11.6</b> Conditional Inference Tree</a></li>
 <li class="chapter" data-level="11.7" data-path="11-7-random-forest.html"><a href="11-7-random-forest.html"><i class="fa fa-check"></i><b>11.7</b> Random Forest</a></li>
 <li class="chapter" data-level="11.8" data-path="11-8-svm.html"><a href="11-8-svm.html"><i class="fa fa-check"></i><b>11.8</b> SVM</a><ul>
-<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-1"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
+<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-2"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.9" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html"><i class="fa fa-check"></i><b>11.9</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.9.1" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.9.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.9.2" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#performance-related-to-logistic-regression"><i class="fa fa-check"></i><b>11.9.2</b> Performance related to Logistic Regression</a></li>
 <li class="chapter" data-level="11.9.3" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.9.3</b> Model Evaluation</a></li>
-<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-2"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
+<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-3"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-model-optimization.html"><a href="13-model-optimization.html"><i class="fa fa-check"></i><b>13</b> Model Optimization</a></li>
 </ul>
 
       </nav>
@@ -186,7 +194,7 @@ fit.svm
 svm.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.svm, <span class="kw">na.omit</span>(test))
 svm.perf &lt;-<span class="st"> </span><span class="kw">table</span>(<span class="kw">na.omit</span>(test)<span class="op">$</span>class, svm.pred, <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))
 svm.perf</code></pre></div>
-<div id="run-the-code-1" class="section level3">
+<div id="run-the-code-2" class="section level3">
 <h3><span class="header-section-number">11.8.1</span> Run The Code</h3>
 </div>
 </div>

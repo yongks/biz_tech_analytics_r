@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-06-25">
+<meta name="date" content="2017-06-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -132,20 +132,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="11.4.4" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#high-school-formula"><i class="fa fa-check"></i><b>11.4.4</b> High School Formula</a></li>
 <li class="chapter" data-level="11.4.5" data-path="11-4-logistic-regression.html"><a href="11-4-logistic-regression.html#run-the-code"><i class="fa fa-check"></i><b>11.4.5</b> Run The Code</a></li>
 </ul></li>
-<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a></li>
+<li class="chapter" data-level="11.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html"><i class="fa fa-check"></i><b>11.5</b> Decision Tree</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#the-concept-1"><i class="fa fa-check"></i><b>11.5.1</b> The Concept</a></li>
+<li class="chapter" data-level="11.5.2" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-building"><i class="fa fa-check"></i><b>11.5.2</b> Tree Building</a></li>
+<li class="chapter" data-level="11.5.3" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#splitting-criteria"><i class="fa fa-check"></i><b>11.5.3</b> Splitting Criteria</a></li>
+<li class="chapter" data-level="11.5.4" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#pruning-tree"><i class="fa fa-check"></i><b>11.5.4</b> Pruning Tree</a></li>
+<li class="chapter" data-level="11.5.5" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#tree-selection"><i class="fa fa-check"></i><b>11.5.5</b> Tree Selection</a></li>
+<li class="chapter" data-level="11.5.6" data-path="11-5-decision-tree.html"><a href="11-5-decision-tree.html#run-the-code-1"><i class="fa fa-check"></i><b>11.5.6</b> Run The Code</a></li>
+</ul></li>
 <li class="chapter" data-level="11.6" data-path="11-6-conditional-inference-tree.html"><a href="11-6-conditional-inference-tree.html"><i class="fa fa-check"></i><b>11.6</b> Conditional Inference Tree</a></li>
 <li class="chapter" data-level="11.7" data-path="11-7-random-forest.html"><a href="11-7-random-forest.html"><i class="fa fa-check"></i><b>11.7</b> Random Forest</a></li>
 <li class="chapter" data-level="11.8" data-path="11-8-svm.html"><a href="11-8-svm.html"><i class="fa fa-check"></i><b>11.8</b> SVM</a><ul>
-<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-1"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
+<li class="chapter" data-level="11.8.1" data-path="11-8-svm.html"><a href="11-8-svm.html#run-the-code-2"><i class="fa fa-check"></i><b>11.8.1</b> Run The Code</a></li>
 </ul></li>
 <li class="chapter" data-level="11.9" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html"><i class="fa fa-check"></i><b>11.9</b> Performance Measurement</a><ul>
 <li class="chapter" data-level="11.9.1" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#confusion-matrix"><i class="fa fa-check"></i><b>11.9.1</b> Confusion Matrix</a></li>
 <li class="chapter" data-level="11.9.2" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#performance-related-to-logistic-regression"><i class="fa fa-check"></i><b>11.9.2</b> Performance related to Logistic Regression</a></li>
 <li class="chapter" data-level="11.9.3" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#model-evaluation"><i class="fa fa-check"></i><b>11.9.3</b> Model Evaluation</a></li>
-<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-2"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
+<li class="chapter" data-level="11.9.4" data-path="11-9-performance-measurement.html"><a href="11-9-performance-measurement.html#run-the-code-3"><i class="fa fa-check"></i><b>11.9.4</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-model-optimization.html"><a href="13-model-optimization.html"><i class="fa fa-check"></i><b>13</b> Model Optimization</a></li>
 </ul>
 
       </nav>
@@ -165,18 +173,410 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="decision-tree" class="section level2">
 <h2><span class="header-section-number">11.5</span> Decision Tree</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart)
-fit.dtree &lt;-<span class="st"> </span><span class="kw">rpart</span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">data=</span>train, <span class="dt">method=</span><span class="st">&quot;class&quot;</span>, <span class="dt">parms=</span><span class="kw">list</span>(<span class="dt">split=</span><span class="st">&quot;information&quot;</span>))
-<span class="kw">print</span>(fit.dtree)
-<span class="kw">summary</span>(fit.dtree)
-fit.dtree<span class="op">$</span>cptable
-<span class="kw">plotcp</span>(fit.dtree)
-dtree.pruned &lt;-<span class="st"> </span><span class="kw">prune</span>(fit.dtree, <span class="dt">cp=</span>.<span class="dv">0125</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rpart.plot)
-<span class="kw">prp</span>(dtree.pruned, <span class="dt">type =</span> <span class="dv">2</span>, <span class="dt">extra =</span> <span class="dv">104</span>, <span class="dt">fallen.leaves =</span> <span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Decision Tree&quot;</span>)
-dtree.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(dtree.pruned, test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
-dtree.perf &lt;-<span class="st"> </span><span class="kw">table</span>(train<span class="op">$</span>class, dtree.pred, <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))
-dtree.perf</code></pre></div>
+<div id="the-concept-1" class="section level3">
+<h3><span class="header-section-number">11.5.1</span> The Concept</h3>
+<ul>
+<li>A decision tree is a machine learning algorithm that partitions the data into subsets<br />
+</li>
+<li>It is a form of tree structure, containing three types of <strong>nodes</strong>:
+<ul>
+<li><strong>Root Node</strong>: no incoming, zero or more outgoing<br />
+</li>
+<li><strong>Internal/Branch Nodes</strong>: one incoming and two or more outgoing<br />
+</li>
+<li><strong>Terminal/Leaf Nodes</strong>: at the bottom of the tree, no outgoing edge<br />
+<span class="math inline">\(\quad\)</span> <img src="images/dtree_structure.jpg" alt="Decision Tree Structure" /><br />
+</li>
+</ul></li>
+<li>The tree building process starts with a split at the root, and continues splitting through branches until no further splits can be made (leaf node reached)<br />
+</li>
+<li>N number of splits will create N+1 leafs<br />
+</li>
+<li>It classify observations by starting at the root of the tree and moving through it until a leaf node.</li>
+</ul>
+<div id="the-goal" class="section level4">
+<h4><span class="header-section-number">11.5.1.1</span> The Goal</h4>
+<ul>
+<li>The goal of a decision tree is to encapsulate the training data in the <strong>smallest possible tree</strong><br />
+</li>
+<li>The rationale for minimizing the tree size is the logical rule that the <strong>simplest possible explanation for a set of phenomena is preferred</strong> over other explanations<br />
+</li>
+<li><strong>Small trees produce decisions faster than large trees</strong>, and they are much easier to look at and understand<br />
+</li>
+<li>There are various methods and techniques to control the depth, or prune, of the tree</li>
+</ul>
+</div>
+<div id="advantage" class="section level4">
+<h4><span class="header-section-number">11.5.1.2</span> Advantage</h4>
+<ul>
+<li>Popular among non-statistician, as the model is very <strong>easy to interpret</strong><br />
+</li>
+<li><strong>None-parametric</strong>, therefore does not require normality assumption<br />
+</li>
+<li>Support <strong>many data types</strong>: continuous, categorical, ordinal and binary variable Yes</li>
+<li><strong>Transformation is not required</strong><br />
+</li>
+<li>Useful for <strong>detecting important variables, interactions and identifying outliers</strong></li>
+</ul>
+</div>
+</div>
+<div id="tree-building" class="section level3">
+<h3><span class="header-section-number">11.5.2</span> Tree Building</h3>
+<p>Construcing a good decision tree involves below three processes:</p>
+<ol style="list-style-type: lower-alpha">
+<li><strong>Splitting Criteria</strong> for each level of the tree:
+<ul>
+<li>Selecting the variable to split<br />
+</li>
+<li>Choosing the value to split<br />
+</li>
+<li>Condition to stop splitting<br />
+</li>
+</ul></li>
+<li><strong>Pruning</strong><br />
+</li>
+<li><strong>Tree Selection</strong></li>
+</ol>
+<p>After a good decision tree model is built, you are ready to use it for <strong>prediction</strong>.</p>
+</div>
+<div id="splitting-criteria" class="section level3">
+<h3><span class="header-section-number">11.5.3</span> Splitting Criteria</h3>
+<p>Splitting is the process of partitioning the data set into subsets, from root to leaf nodes.</p>
+<ul>
+<li>Splits are formed on a particular <strong>variable and in a particular location</strong><br />
+</li>
+<li>For each split, two determinations are made:
+<ul>
+<li><strong>Splitting variable</strong> - The predictor variable used for the split<br />
+</li>
+<li><strong>Split point</strong> - The <strong>set of values</strong> for the predictor variable (which are split between the left child node and the right child node)</li>
+</ul></li>
+<li>The <strong>goal</strong> of splitting each node is to select a combination of <strong>splitting variable</strong> and <strong>splitting point</strong> that minimizes the error (or maximizes the purity). Two algorithmns (with impurity measure) can be used to make this decision:</li>
+</ul>
+<div id="information-gain-basedo-on-entropy-value" class="section level4">
+<h4><span class="header-section-number">11.5.3.1</span> Information Gain (basedo on Entropy value)</h4>
+<p><span class="math inline">\(Entropy = \sum_{i=1}^c{-p_i * log_2(p_i)}\)</span><br />
+<span class="math inline">\(\quad\)</span> c = number of class (1 if only single splitting variable), p = the probability of class<br />
+<span class="math inline">\(Information Gain = Entropy(Parent Node) - Entropy (Child Node)\)</span></p>
+<ul>
+<li>Partition the data into subsets that contain instances with similar values (<strong>homogenous</strong>)<br />
+</li>
+<li>Perfectly classified (<strong>completely homogeneous</strong>), the entropy is zero<br />
+</li>
+<li>Maximum Entropy is 1 for (binary class)<br />
+</li>
+<li>Weights probability of class by <strong>log(base=2)</strong><br />
+</li>
+<li>The parent node will select a variable that maximize information gain (smallest Child Entropy) as its child node</li>
+</ul>
+</div>
+<div id="gini-gini-index" class="section level4">
+<h4><span class="header-section-number">11.5.3.2</span> Gini (Gini Index)</h4>
+<p><span class="math inline">\(Gini = 1 - \sum_{i=1}^c (p_i)^2\)</span><br />
+<span class="math inline">\(\quad\)</span> c = number of class (1 if only single splitting variable), p = the probability of class</p>
+<ul>
+<li>Partition the data into subsets that contain instances with similar values (<strong>homogenous</strong>)<br />
+</li>
+<li>Perfectly classified, Gini index would be zero (pure)<br />
+</li>
+<li>Maximum Gini Index is 1<br />
+</li>
+<li>Split that has lowest Gini index value is chosen (most pure)<br />
+</li>
+<li>Weights probability of class by <strong>square</strong></li>
+</ul>
+</div>
+<div id="gini-or-information-gain" class="section level4">
+<h4><span class="header-section-number">11.5.3.3</span> Gini or Information Gain ?</h4>
+<ul>
+<li><strong>Gini index calculation is faster</strong> compared to Information gain becuase it doesn’t use log computation<br />
+</li>
+<li>This could be a reason why gini is <strong>the default method</strong> in some machine learning packages<br />
+</li>
+<li>Studies have shown that choice of impurity measures has <strong>little effect</strong> on the performance of the decision tree. This is because they are <strong>quite consistent with each other</strong>, as shown below:<br />
+<img src="images/entropy_gini.jpg" alt="Entropy vs Gini" /></li>
+</ul>
+</div>
+<div id="splitting-stops-when" class="section level4">
+<h4><span class="header-section-number">11.5.3.4</span> Splitting <strong>stops when</strong></h4>
+<ul>
+<li>All samples belongs to same class (<strong>pure</strong>)<br />
+</li>
+<li>Most samples belongs to same class. This is <strong>generalization</strong> of the above approach with some error threshold<br />
+</li>
+<li>There are <strong>no more variabels with samples</strong> to be partitioned<br />
+</li>
+<li>There is <strong>no more samples</strong> for the branch test attributes<br />
+</li>
+<li>Additionally, some program will implement <strong>extra parameters</strong> to control the size of the tree, eg. <code>rpart::rpart.control</code></li>
+</ul>
+</div>
+</div>
+<div id="pruning-tree" class="section level3">
+<h3><span class="header-section-number">11.5.4</span> Pruning Tree</h3>
+<div id="pruning-benefits" class="section level4">
+<h4><span class="header-section-number">11.5.4.1</span> Pruning Benefits</h4>
+<p>A decision tree can expanded until the it perfectly fit the training data (error is zero). However, it will perform poorly in test data (test error will be large). Such model does not generalize well to the test data, also known as <strong>overfitting</strong>. The solution is called <strong>pruning</strong>:</p>
+<ul>
+<li>Prunning a tree has greater impact than choosing the impurity measure<br />
+</li>
+<li>The larger the tree (more nodes), the more complex the tree is, the more risk of overfitting</li>
+</ul>
+<p>The <strong>reason</strong> and <strong>benefits</strong> of smaller tree size are:</p>
+<ul>
+<li>Lower branches may be strongly affected by <strong>outliers</strong>. Pruning enables you to find the next largest tree and minimize this concern<br />
+</li>
+<li>A simpler tree <strong>often avoids over-fitting</strong></li>
+</ul>
+</div>
+<div id="pruning-process" class="section level4">
+<h4><span class="header-section-number">11.5.4.2</span> Pruning Process</h4>
+<p>Pruning <strong>reduces the size of the tree</strong> using <strong>bottom-up appraoch</strong>:</p>
+<ul>
+<li>Pruning removes leaf nodes under original branch<br />
+</li>
+<li>Pruning turns some branch nodes into leaf nodes (<strong>bottom-up approach</strong>)</li>
+</ul>
+</div>
+<div id="when-to-prune" class="section level4">
+<h4><span class="header-section-number">11.5.4.3</span> When To Prune</h4>
+<ul>
+<li><strong>Pre-Pruning</strong>
+<ul>
+<li>Stop the algorithm before it becomes a fully grown tree</li>
+</ul></li>
+<li><strong>Post-Pruning</strong>
+<ul>
+<li>Grow decision tree to its entirety</li>
+<li>Trim the nodes from bottom-up fashion<br />
+</li>
+<li>If generalization error improves after trimming, replace the sub-tree by a leaf noes</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="tree-selection" class="section level3">
+<h3><span class="header-section-number">11.5.5</span> Tree Selection</h3>
+<ul>
+<li>The process of finding the <strong>smallest tree that fits the data</strong><br />
+</li>
+<li>This is the tree that yields the <strong>lowest cross-validated error</strong></li>
+</ul>
+</div>
+<div id="run-the-code-1" class="section level3">
+<h3><span class="header-section-number">11.5.6</span> Run The Code</h3>
+<div id="build-the-model" class="section level4">
+<h4><span class="header-section-number">11.5.6.1</span> Build The Model</h4>
+<blockquote>
+<p><strong><code>rpart</code></strong> <code>(formula, method=, na.action=na.rpart, model=FALSE, x=FALSE, y=FALSE, data=)</code><br />
+<span class="math inline">\(\quad\)</span> <code>formula  : example y ~ x1 + x2 + x3</code><br />
+<span class="math inline">\(\quad\)</span> <code>data     : binomial, gaussian, poisson, quasi etc</code><br />
+<span class="math inline">\(\quad\)</span> <code>method   : splitting method - 'class' for classification</code><br />
+<span class="math inline">\(\quad\)</span> <code>control  : (optional) parameter used for controlling tree growth, default as following</code><br />
+<span class="math inline">\(\quad\)</span> <code>na.action: default action delete all observations with y is missing</code><br />
+<span class="math inline">\(\quad\)</span> <code>model: keep a copy of model in the result</code><br />
+<span class="math inline">\(\quad\)</span> <code>x    : keep a copy of x matrix in result</code><br />
+<span class="math inline">\(\quad\)</span> <code>y    : keep a copy of dependent variable y in result</code></p>
+</blockquote>
+<p><code>rpart.control</code> specifies the paramters that limits the growth of tree.</p>
+<blockquote>
+<p><code>rpart.control(minsplit = 20,  minbucket = round(minsplit/3), cp = 0.01,</code> <code>maxcompete = 4, maxsurrogate = 5, usesurrogate = 2, xval = 10,surrogatestyle = 0, maxdepth = 30)</code></p>
+</blockquote>
+<p>The default <code>rpart.control</code> parameters specifies belowcriteria to be met before splitting a node:</p>
+<ul>
+<li><strong>minsplit</strong>: minimum number of observations in node to be 20<br />
+</li>
+<li><strong>minbucket</strong>: if splitted, both sides must have at least 20/3 observations<br />
+</li>
+<li><strong>cp</strong>: if splitted, the overall relative Cost of the entire tree must reduce by cp*T (T is number of terminal nodes). Cost is calculated as sum of square errors. Relative cost is compared to baseline (where there is no split, with baseline error is scaled to 1)<br />
+<strong>Low cp value</strong> relaxed the error reduction expectation, hence creates <strong>larger tree</strong><br />
+</li>
+<li><strong>maxdept</strong>: tree depth not more than 30 levels</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.dtree &lt;-<span class="st"> </span><span class="kw">rpart</span>(left <span class="op">~</span><span class="st"> </span>., <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>, <span class="dt">control =</span> <span class="kw">rpart.control</span>(<span class="dt">cp =</span> <span class="fl">0.001</span>), <span class="dt">data =</span> train)
+
+dtree.pred.train =<span class="st"> </span><span class="kw">predict</span>(fit.dtree, <span class="dt">newdata=</span> train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
+<span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.train, <span class="dt">label=</span>train<span class="op">$</span>left)</code></pre></div>
+<pre><code>##   cutoff  accuracy    recall precision specificity    fscore         fpr
+## 1     NA 0.9838095 0.9124457 0.9882445   0.9978626 0.9488337 0.002137361
+##    tpr_fpr   tp fp  fn   tn
+## 1 426.9029 1261 15 121 7003</code></pre>
+</div>
+<div id="visualize-the-model" class="section level4">
+<h4><span class="header-section-number">11.5.6.2</span> Visualize The Model</h4>
+<p><strong>Visualize with Text</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.dtree  </code></pre></div>
+<pre><code>## n= 8400 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##   1) root 8400 1382 0 (0.835476190 0.164523810)  
+##     2) S&gt;=0.465 6403  410 0 (0.935967515 0.064032485)  
+##       4) TIC&lt; 4.5 5688   56 0 (0.990154712 0.009845288)  
+##         8) ANH&lt; 286.5 5681   51 0 (0.991022707 0.008977293) *
+##         9) ANH&gt;=286.5 7    2 1 (0.285714286 0.714285714) *
+##       5) TIC&gt;=4.5 715  354 0 (0.504895105 0.495104895)  
+##        10) LPE&lt; 0.805 262   10 0 (0.961832061 0.038167939) *
+##        11) LPE&gt;=0.805 453  109 1 (0.240618102 0.759381898)  
+##          22) ANH&lt; 215.5 71    6 0 (0.915492958 0.084507042) *
+##          23) ANH&gt;=215.5 382   44 1 (0.115183246 0.884816754)  
+##            46) S&lt; 0.715 29    5 0 (0.827586207 0.172413793) *
+##            47) S&gt;=0.715 353   20 1 (0.056657224 0.943342776)  
+##              94) NP&lt; 3.5 10    0 0 (1.000000000 0.000000000) *
+##              95) NP&gt;=3.5 343   10 1 (0.029154519 0.970845481) *
+##     3) S&lt; 0.465 1997  972 0 (0.513269905 0.486730095)  
+##       6) NP&gt;=2.5 1264  383 0 (0.696993671 0.303006329)  
+##        12) S&gt;=0.115 920   39 0 (0.957608696 0.042391304) *
+##        13) S&lt; 0.115 344    0 1 (0.000000000 1.000000000) *
+##       7) NP&lt; 2.5 733  144 1 (0.196452933 0.803547067)  
+##        14) LPE&gt;=0.575 92    5 0 (0.945652174 0.054347826) *
+##        15) LPE&lt; 0.575 641   57 1 (0.088923557 0.911076443)  
+##          30) LPE&lt; 0.445 25    0 0 (1.000000000 0.000000000) *
+##          31) LPE&gt;=0.445 616   32 1 (0.051948052 0.948051948)  
+##            62) S&lt; 0.35 18    4 0 (0.777777778 0.222222222) *
+##            63) S&gt;=0.35 598   18 1 (0.030100334 0.969899666)  
+##             126) ANH&lt; 125 8    0 0 (1.000000000 0.000000000) *
+##             127) ANH&gt;=125 590   10 1 (0.016949153 0.983050847)  
+##               254) ANH&gt;=165.5 8    1 0 (0.875000000 0.125000000) *
+##               255) ANH&lt; 165.5 582    3 1 (0.005154639 0.994845361) *</code></pre>
+<p><strong>Visualize with Graph</strong></p>
+<p>Use <code>rpart::prp</code> to plot rpart model (prp is shortform for ‘plot rpart’).<br />
+Notice that the graph has the below characteristics:</p>
+<ul>
+<li>Nodes at the same depth level addes up to 100% probability<br />
+</li>
+<li>Leafs nodes are formed at different depth levels<br />
+</li>
+<li>All leaf nodes adds up to 100% probability</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prp</span>(fit.dtree, <span class="dt">type =</span> <span class="dv">2</span>, <span class="dt">extra =</span> <span class="dv">104</span>, <span class="dt">fallen.leaves =</span> <span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Decision Tree&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-11-1.png" width="864" /></p>
+</div>
+<div id="cross-validation-analysis" class="section level4">
+<h4><span class="header-section-number">11.5.6.3</span> Cross Validation Analysis</h4>
+<p>Yes, <code>rpart</code> has built-in cross validation, calculated when a model is created !</p>
+<ul>
+<li>Use <code>rpart::cptable</code> to find out the lowest value of cross validation error (column <strong><code>xerror</code></strong>), and its cross standard deviation (column <strong><code>xstd</code></strong>)<br />
+</li>
+<li>Use <strong><code>xerror + xstd</code></strong> as the cutting point for best tree size for optimization (pruning), see <code>plotcp</code> below</li>
+</ul>
+<p><code>cptable</code> is stored in the model built with <code>rpart</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">printcp</span>(fit.dtree)
+<span class="co">#fit.dtree$cptable  # alternative </span></code></pre></div>
+<pre><code>## 
+## Classification tree:
+## rpart(formula = left ~ ., data = train, method = &quot;class&quot;, control = rpart.control(cp = 0.001))
+## 
+## Variables actually used in tree construction:
+## [1] ANH LPE NP  S   TIC
+## 
+## Root node error: 1382/8400 = 0.16452
+## 
+## n= 8400 
+## 
+##           CP nsplit rel error  xerror      xstd
+## 1  0.1609986      0  1.000000 1.00000 0.0245874
+## 2  0.0850217      3  0.429088 0.42909 0.0169872
+## 3  0.0593343      5  0.259045 0.26194 0.0134673
+## 4  0.0426918      6  0.199711 0.20260 0.0119045
+## 5  0.0180897      7  0.157019 0.16064 0.0106378
+## 6  0.0137482      8  0.138929 0.14327 0.0100611
+## 7  0.0072359      9  0.125181 0.13025 0.0096034
+## 8  0.0057887     11  0.110709 0.12663 0.0094719
+## 9  0.0043415     12  0.104920 0.11505 0.0090373
+## 10 0.0021708     13  0.100579 0.11216 0.0089251
+## 11 0.0010000     14  0.098408 0.11143 0.0088968</code></pre>
+<p><strong>Visualize</strong> <code>cptable</code> with <code>rpart::plotcp</code>.</p>
+<ul>
+<li><code>size of tree</code> means the number of nodes in the tree, it is the number of splits + 1<br />
+</li>
+<li>Horizontal line is the valued at lowest <code>xerror</code> + its <code>xstd</code><br />
+</li>
+<li>Optimum tree size for pruning is <strong>below the horizontal line</strong>, use this chart to determine the <strong>optimum tree size, and its cp value</strong>, prune with this cp value</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-13-1.png" width="864" /></p>
+</div>
+<div id="pruning-tree-1" class="section level4">
+<h4><span class="header-section-number">11.5.6.4</span> Pruning Tree</h4>
+<ul>
+<li>The decision tree was originally built with some constrains (rpart::control) to limits its tree size<br />
+</li>
+<li>The tree size <strong>can be further reduced by pruning</strong>, with the use the <strong>cp</strong> value in prunning command<br />
+</li>
+<li>Prune the tree size that yields lowest <strong>xerror</strong>, based on the <strong>cp analysis</strong> above<br />
+</li>
+<li>Pruning creates new, reduced nodes decision tree model<br />
+</li>
+<li>For this example, we purposely prune the tree to one size smaller, for the sake of demonstration<br />
+</li>
+<li>Bigger tree size (lower complexity parameter, cp) means higher accuracy of the model to training data, hence it always reduce the errors (<code>error</code> in $cptable). However, cross validation error (xerror) may go up and down as the tree size increases<br />
+</li>
+<li>To choose pruning cp value, first choose the tree size:
+<ul>
+<li>From <code>cptable</code>, pruning cp value = sqrt(cpvalue for tree-size N * cpvalue for tree-size N-1)<br />
+</li>
+<li>From <code>plotcp</code>, choose a tree size, pruning cp value = corresponding cpvalue at the y-axis<br />
+</li>
+<li>Remember <strong>tree size = nsplit + 1</strong></li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit.dtree.prune =<span class="st"> </span><span class="kw">prune</span>(fit.dtree, <span class="dt">cp =</span> <span class="fl">0.005</span>)
+<span class="kw">printcp</span>(fit.dtree.prune)</code></pre></div>
+<pre><code>## 
+## Classification tree:
+## rpart(formula = left ~ ., data = train, method = &quot;class&quot;, control = rpart.control(cp = 0.001))
+## 
+## Variables actually used in tree construction:
+## [1] ANH LPE NP  S   TIC
+## 
+## Root node error: 1382/8400 = 0.16452
+## 
+## n= 8400 
+## 
+##          CP nsplit rel error  xerror      xstd
+## 1 0.1609986      0   1.00000 1.00000 0.0245874
+## 2 0.0850217      3   0.42909 0.42909 0.0169872
+## 3 0.0593343      5   0.25904 0.26194 0.0134673
+## 4 0.0426918      6   0.19971 0.20260 0.0119045
+## 5 0.0180897      7   0.15702 0.16064 0.0106378
+## 6 0.0137482      8   0.13893 0.14327 0.0100611
+## 7 0.0072359      9   0.12518 0.13025 0.0096034
+## 8 0.0057887     11   0.11071 0.12663 0.0094719
+## 9 0.0050000     12   0.10492 0.11505 0.0090373</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree.prune)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-14-1.png" width="864" /></p>
+</div>
+<div id="prediction" class="section level4">
+<h4><span class="header-section-number">11.5.6.5</span> Prediction</h4>
+<p>We would like to compare the model performance:<br />
+a. Original Model with training set<br />
+b. Pruned Model with training set<br />
+c. Pruned Model with test set</p>
+<p>Overall, we can see that the performance dropped slightly after prunning for datset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># original model with training set</span>
+dtree.pred.train  =<span class="st"> </span><span class="kw">predict</span>(fit.dtree,  <span class="dt">newdata=</span>train, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+<span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.train, <span class="dt">label=</span>train<span class="op">$</span>left)[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##    accuracy    recall precision specificity
+## 1 0.9838095 0.9124457 0.9882445   0.9978626</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># original model with test set</span>
+dtree.pred.test1 =<span class="st"> </span><span class="kw">predict</span>(fit.dtree,        <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+<span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.test1, <span class="dt">label=</span>test<span class="op">$</span>left)[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##    accuracy    recall precision specificity
+## 1 0.9862529 0.9216152 0.9948718   0.9990588</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pruned model with training set</span>
+dtree.pred.train.pruned =<span class="st"> </span><span class="kw">predict</span>(fit.dtree.pruned, <span class="dt">data=</span>train, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+<span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.train.pruned, <span class="dt">label=</span>train<span class="op">$</span>left)[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##    accuracy    recall precision specificity
+## 1 0.9794048 0.9124457  0.960396   0.9925905</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pruned model with test set</span>
+dtree.pred.test2 =<span class="st"> </span><span class="kw">predict</span>(fit.dtree.pruned, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+<span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.test2, <span class="dt">label=</span>test<span class="op">$</span>left)[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
+<pre><code>##    accuracy    recall precision specificity
+## 1 0.9803614 0.9144893 0.9649123   0.9934118</code></pre>
+</div>
+</div>
 </div>
             </section>
 

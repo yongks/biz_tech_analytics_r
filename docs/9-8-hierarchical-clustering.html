@@ -213,9 +213,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
 <li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
-<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Train and Test Dataset</a><ul>
-<li class="chapter" data-level="5.11.1" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
-<li class="chapter" data-level="5.11.2" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
+<li class="chapter" data-level="5.11" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html"><i class="fa fa-check"></i><b>5.11</b> Radom Dataset Splitting</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
+<li class="chapter" data-level="5.11.2" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a><ul>
@@ -484,7 +484,7 @@ clusters
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
 <span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-176-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-176-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-177-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-177-2.png" width="384" /></p>
 </div>
 <div id="using-factoextra-package" class="section level4">
 <h4><span class="header-section-number">9.8.3.2</span> Using <code>factoextra</code> Package</h4>
@@ -512,7 +512,7 @@ clusters
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-180-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-180-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-181-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-181-2.png" width="384" /></p>
 </div>
 </div>
 </div>

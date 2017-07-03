@@ -213,9 +213,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
 <li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
-<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Train and Test Dataset</a><ul>
-<li class="chapter" data-level="5.11.1" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
-<li class="chapter" data-level="5.11.2" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
+<li class="chapter" data-level="5.11" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html"><i class="fa fa-check"></i><b>5.11</b> Radom Dataset Splitting</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
+<li class="chapter" data-level="5.11.2" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a><ul>
@@ -407,19 +407,26 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">11.7</span> Random Forest</h2>
 <div id="the-concept-3" class="section level3">
 <h3><span class="header-section-number">11.7.1</span> The Concept</h3>
-<p>Random forest model contain multiple decision trees</p>
+<p>Random forest is a type of Ensemble Method, which enjoy all the ensemble benefits.<br />
+Random forest model contain large amount of decision trees as oppose to tranditional single decision tree.</p>
 <div id="how-does-it-work" class="section level4">
 <h4><span class="header-section-number">11.7.1.1</span> How Does It Work ?</h4>
 <ul>
-<li>Divides training data into multiple random subsets<br />
+<li>Divides training data into large amount random subsets, each subset will draw samples from training data using bagging method (with replacement). Each subset will contain the same number of observations as training set<br />
 </li>
-<li>Create a tree for each subsets of random data, resulting multiple trees (henced called Forest)<br />
+<li>Create a decision tree for each subset, resulting multiple trees (henced called Forest)<br />
 </li>
-<li>Each tree contains splitting of random variables (not all variables are being used in each tree)</li>
+<li>Each tree uses different set of random variables for splitting (not all variables are being used in each tree)<br />
+</li>
+<li>When doing prediction, all tress will votes and majority wins</li>
 </ul>
+<div class="figure">
+<img src="images/random_forest.png" alt="Random Forest Process Flow" />
+<p class="caption">Random Forest Process Flow</p>
 </div>
-<div id="why-is-it-good" class="section level4">
-<h4><span class="header-section-number">11.7.1.2</span> Why Is It Good ?</h4>
+</div>
+<div id="the-beliefs" class="section level4">
+<h4><span class="header-section-number">11.7.1.2</span> The Beliefs</h4>
 <p>Random Forest provides much better accuracy compared to single decision tree. The major belief why this works are:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Most of the trees can provide correct prediction for most part of the data<br />
@@ -428,24 +435,99 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ol>
 <p>Hence, major votes for classification result expected to be closer to correct classification</p>
 </div>
-<div id="advantage-1" class="section level4">
-<h4><span class="header-section-number">11.7.1.3</span> Advantage</h4>
+<div id="advantages-and-disadvantages" class="section level4">
+<h4><span class="header-section-number">11.7.1.3</span> Advantages and Disadvantages</h4>
+<p><strong>Advantages</strong></p>
 <ul>
-<li>No need for cross-validation or a separate test set to get an unbiased estimate of the test set error. It is estimated internally, during the run, as follows:</li>
+<li>A single decision tree suffers from the phenomena of overfitting, as the signle tree model <strong>memorize</strong> the data<br />
+</li>
+<li>Randomforest uses bagging (with replacement) to ‘artificially’ creates different types of dataset, hence reducing the phenomena of <strong>memorizing</strong><br />
+</li>
+<li><strong>Cross validation is not required</strong>, since each subset are already being randomized<br />
+</li>
+<li>It is usually <strong>more accurate</strong> than single tree, but no <strong>guarantee</strong></li>
+</ul>
+<p><strong>Disadvantage</strong></p>
+<ul>
+<li>Ensemble method such as random forest is not interpretable</li>
 </ul>
 </div>
 </div>
 <div id="run-the-code-7" class="section level3">
 <h3><span class="header-section-number">11.7.2</span> Run The Code</h3>
+<div id="determine-class-or-probability-outcome" class="section level4">
+<h4><span class="header-section-number">11.7.2.1</span> Determine Class or Probability Outcome</h4>
+<p><strong><code>randomForest</code></strong> can build both <strong>class</strong> and <strong>probability</strong> model, depending on the dependent variable:</p>
+<ul>
+<li>If the depenedent variable is factor, it will build a model for class prediction<br />
+</li>
+<li>If the depenedent variable is number, it will build a model for probability prediction</li>
+</ul>
+<p>For 0/1 dependent variable, if not factorized, it is treated as number, and therefore for probability prediction.<br />
+Here we convert all independent variable to factor for class prediction.</p>
+<blockquote>
+<p>This step is different from rpart (single decision tree), as rpart does not require this step. rpart can predict both class and probability by just specifying the type=‘class’ or type=‘response’</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train<span class="op">$</span>left =<span class="st"> </span><span class="kw">as.factor</span>(train<span class="op">$</span>left)
+test<span class="op">$</span>left  =<span class="st"> </span><span class="kw">as.factor</span>(test<span class="op">$</span>left)</code></pre></div>
+</div>
+<div id="build-the-model-2" class="section level4">
+<h4><span class="header-section-number">11.7.2.2</span> Build The Model</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(randomForest)
 <span class="kw">set.seed</span>(<span class="dv">1234</span>)
-fit.forest &lt;-<span class="st"> </span><span class="kw">randomForest</span>(left<span class="op">~</span>., <span class="dt">data=</span>train, <span class="dt">na.action=</span>na.roughfix,<span class="dt">importance=</span><span class="ot">TRUE</span>)
-fit.forest
-<span class="kw">importance</span>(fit.forest, <span class="dt">type=</span><span class="dv">2</span>)
-
-forest.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.forest, test)
-forest.perf &lt;-<span class="st"> </span><span class="kw">table</span>(test<span class="op">$</span>class, forest.pred, <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))
-forest.perf</code></pre></div>
+fit.forest &lt;-<span class="st"> </span><span class="kw">randomForest</span>(left<span class="op">~</span>., <span class="dt">data=</span>train)</code></pre></div>
+</div>
+<div id="class-prediction" class="section level4">
+<h4><span class="header-section-number">11.7.2.3</span> Class Prediction</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">forest.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(fit.forest, <span class="dt">newdata=</span>test)
+confusion &lt;-<span class="st"> </span><span class="kw">table</span>(test<span class="op">$</span>left, forest.pred, <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))
+confusion</code></pre></div>
+<pre><code>##       Predicted
+## Actual    0    1
+##      0 2975    7
+##      1   48  570</code></pre>
+</div>
+<div id="analyize-vairable-importance" class="section level4">
+<h4><span class="header-section-number">11.7.2.4</span> Analyize Vairable Importance</h4>
+<p><strong>What Variables Are Important ?</strong></p>
+<ul>
+<li><code>randomForest::importance</code> output matrix of all variable used in the randomForest and <strong>their contribution</strong> in term of decreasing GiniIndex (decreasing impurity and increasing purity)<br />
+</li>
+<li>The higher the value, means the variable is more important in <strong>contributing to accuracy</strong> of the model</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">forest.imp =<span class="st"> </span><span class="kw">importance</span>(fit.forest)
+forest.imp[<span class="kw">order</span>(forest.imp, <span class="dt">decreasing=</span>T),, drop=<span class="ot">FALSE</span>]  ## order descendingly</code></pre></div>
+<pre><code>##         MeanDecreaseGini
+## S             782.815405
+## NP            419.376853
+## TIC           400.909756
+## ANH           358.655346
+## LPE           289.506732
+## Newborn         9.953228</code></pre>
+<p><strong>Visualize The Importance</strong></p>
+<p><strong><code>randomForest::varImpPlot</code></strong> comes with handy plotting utility to plot the variable importance data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">varImpPlot</span>(fit.forest)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-216-1.png" width="864" /></p>
+</div>
+<div id="frequent-used-variables" class="section level4">
+<h4><span class="header-section-number">11.7.2.5</span> Frequent Used Variables</h4>
+<ul>
+<li>Random forest models work by building a large collection of trees. As a result, we lose some of the interpretability that comes with CART in terms of seeing how predictions are made and which variables are important<br />
+</li>
+<li>However, one of the way to give us insight into which variables are important, other than the decrease of impurity above, we can calculate how frequent a variable is being used for decision making (splitting)</li>
+</ul>
+<p><strong><code>randomForest::varUsed</code></strong> returns a vector of frequency of each variable used.<br />
+However, it doesn’t comes with the variable name, which can be obtained from <strong><code>$forest$xlevels</code></strong>.</p>
+<blockquote>
+<p><strong><code>randomForest::varUsed(x, by.tree=FALSE, count=TRUE)</code></strong> <code>x       : model object of randomForest</code><br />
+<code>by.tree : FALSE, default display per variable appearance, and not per tree</code><br />
+<code>count   : TRUE, default aggregate all varibales appearance into frequency, otherwise display individual appearance</code></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vu =<span class="st"> </span><span class="kw">varUsed</span>(fit.forest, <span class="dt">count =</span> <span class="ot">TRUE</span>)
+vusorted =<span class="st"> </span><span class="kw">sort</span>(vu, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>, <span class="dt">index.return =</span> <span class="ot">TRUE</span>)
+<span class="kw">dotchart</span>(vusorted<span class="op">$</span>x, <span class="kw">names</span>(fit.forest<span class="op">$</span>forest<span class="op">$</span>xlevels[vusorted<span class="op">$</span>ix]))</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-217-1.png" width="864" /></p>
+</div>
 </div>
 </div>
             </section>

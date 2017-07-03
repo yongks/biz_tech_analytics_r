@@ -213,9 +213,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
 <li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
-<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Train and Test Dataset</a><ul>
-<li class="chapter" data-level="5.11.1" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
-<li class="chapter" data-level="5.11.2" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
+<li class="chapter" data-level="5.11" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html"><i class="fa fa-check"></i><b>5.11</b> Radom Dataset Splitting</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
+<li class="chapter" data-level="5.11.2" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a><ul>
@@ -406,13 +406,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="sample-dataset" class="section level2">
 <h2><span class="header-section-number">11.3</span> Sample Dataset</h2>
 <p>This chapter will use a <strong>Human Resource</strong> dataset that contain 12,000 training records.<br />
-The dataset will be split into training set (70%), and test set (30%).</p>
+The dataset will be splited into training set (70%), and test set (30%).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### Load The Data
 <span class="kw">set.seed</span>(<span class="dv">1234</span>)
-train =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.csv&#39;</span>)
-train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(train), <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(train) )
-train =<span class="st"> </span>train[train.rows,]
-test =<span class="st"> </span>train[<span class="op">-</span>train.rows,]</code></pre></div>
+raw =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;./datasets/hr.csv&#39;</span>)
+
+### Split Data
+train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(raw), <span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(raw) )
+train =<span class="st"> </span>raw[train.rows,]
+test  =<span class="st"> </span>raw[<span class="op">-</span>train.rows,]</code></pre></div>
 <div id="the-variables" class="section level3">
 <h3><span class="header-section-number">11.3.1</span> The Variables</h3>
 <div id="dependent-variable" class="section level4">
@@ -452,37 +454,37 @@ test =<span class="st"> </span>train[<span class="op">-</span>train.rows,]</code
 <div id="explore-the-data" class="section level3">
 <h3><span class="header-section-number">11.3.2</span> Explore The Data</h3>
 <p>Check the <strong>structure and samples</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(train)</code></pre></div>
-<pre><code>##        S              LPE               NP             ANH       
-##  Min.   :0.090   Min.   :0.3600   Min.   :2.000   Min.   : 96.0  
-##  1st Qu.:0.480   1st Qu.:0.5700   1st Qu.:3.000   1st Qu.:158.0  
-##  Median :0.660   Median :0.7200   Median :4.000   Median :200.0  
-##  Mean   :0.631   Mean   :0.7143   Mean   :3.804   Mean   :200.8  
-##  3rd Qu.:0.830   3rd Qu.:0.8600   3rd Qu.:5.000   3rd Qu.:244.0  
-##  Max.   :1.000   Max.   :1.0000   Max.   :7.000   Max.   :310.0  
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(raw)</code></pre></div>
+<pre><code>##        S               LPE               NP             ANH       
+##  Min.   :0.0900   Min.   :0.3600   Min.   :2.000   Min.   : 96.0  
+##  1st Qu.:0.4800   1st Qu.:0.5700   1st Qu.:3.000   1st Qu.:157.0  
+##  Median :0.6600   Median :0.7200   Median :4.000   Median :199.5  
+##  Mean   :0.6295   Mean   :0.7166   Mean   :3.802   Mean   :200.4  
+##  3rd Qu.:0.8200   3rd Qu.:0.8600   3rd Qu.:5.000   3rd Qu.:243.0  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :7.000   Max.   :310.0  
 ##       TIC           Newborn            left       
 ##  Min.   :2.000   Min.   :0.0000   Min.   :0.0000  
 ##  1st Qu.:2.000   1st Qu.:0.0000   1st Qu.:0.0000  
 ##  Median :3.000   Median :0.0000   Median :0.0000  
-##  Mean   :3.222   Mean   :0.1537   Mean   :0.1645  
+##  Mean   :3.229   Mean   :0.1542   Mean   :0.1667  
 ##  3rd Qu.:4.000   3rd Qu.:0.0000   3rd Qu.:0.0000  
 ##  Max.   :6.000   Max.   :1.0000   Max.   :1.0000</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(train)</code></pre></div>
-<pre><code>##          S  LPE NP ANH TIC Newborn left
-## 1365  0.41 0.52  2 147   3       0    1
-## 7467  0.57 0.42  2 248   4       0    0
-## 7311  0.83 0.91  4 210   4       0    0
-## 7479  0.77 0.96  3 232   2       1    0
-## 10328 0.64 0.43  5 269   3       0    0
-## 7681  0.72 0.89  4 217   3       0    0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(raw)</code></pre></div>
+<pre><code>##      S  LPE NP ANH TIC Newborn left
+## 1 0.38 0.53  2 157   3       0    1
+## 2 0.80 0.86  5 262   6       0    1
+## 3 0.11 0.88  7 272   4       0    1
+## 4 0.72 0.87  5 223   5       0    1
+## 5 0.37 0.52  2 159   3       0    1
+## 6 0.41 0.50  2 153   3       0    1</code></pre>
 <p>Check any <strong>class bias</strong> (skewness)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(train<span class="op">$</span>left), <span class="dt">ylab=</span><span class="st">&#39;left&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;1=Yes, 0=No&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-200-1.png" width="864" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(raw<span class="op">$</span>left), <span class="dt">ylab=</span><span class="st">&#39;left&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;1=Yes, 0=No&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-201-1.png" width="864" /></p>
 <p>Calculate the <strong>Accuracy baseline</strong> - that is, probability of True(1) or False(0). Use whichever is higher.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>( <span class="kw">table</span>(train<span class="op">$</span>left) )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>( <span class="kw">table</span>(raw<span class="op">$</span>left) )</code></pre></div>
 <pre><code>## 
 ##         0         1 
-## 0.8354762 0.1645238</code></pre>
+## 0.8333333 0.1666667</code></pre>
 </div>
 </div>
             </section>

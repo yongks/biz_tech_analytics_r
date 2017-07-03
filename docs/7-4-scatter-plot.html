@@ -213,9 +213,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
 <li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
 </ul></li>
-<li class="chapter" data-level="5.11" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html"><i class="fa fa-check"></i><b>5.11</b> Splitting Into Train and Test Dataset</a><ul>
-<li class="chapter" data-level="5.11.1" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
-<li class="chapter" data-level="5.11.2" data-path="5-11-splitting-into-train-and-test-dataset.html"><a href="5-11-splitting-into-train-and-test-dataset.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
+<li class="chapter" data-level="5.11" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html"><i class="fa fa-check"></i><b>5.11</b> Radom Dataset Splitting</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
+<li class="chapter" data-level="5.11.2" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a><ul>
@@ -414,11 +414,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>qplot default to <strong>geom_point</strong> when two numerical value is supplied for x and y</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-135-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-136-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-136-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-136-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-136-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-137-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-137-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-137-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data" class="section level3">
 <h3><span class="header-section-number">7.4.2</span> Two + One Dimension Data</h3>
@@ -428,11 +428,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>Note that <strong>fill has not effect</strong> on scatter plot. <strong>fill</strong> should only be used for bar like chart eg. <strong>geom_hist</strong> or <strong>gem_bar</strong></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-137-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-138-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">color =</span> grp, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">color =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-138-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-138-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-138-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-139-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-139-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-139-3.png" width="256.6656" /></p>
 </div>
 </div>
             </section>

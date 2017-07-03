@@ -93,15 +93,17 @@ eval.binclass = function(score = NULL, label = NULL, cutoff = NA) {
 ## Sample Dataset
 
 This chapter will use a **Human Resource** dataset that contain 12,000 training records.  
-The dataset will be split into training set (70%), and test set (30%).  
+The dataset will be splited into training set (70%), and test set (30%).  
 
 ```{r collapse=T, results='markup'}
 ### Load The Data
 set.seed(1234)
-train = read.csv('./datasets/hr.csv')
-train.rows = sample( 1:nrow(train), 0.7 * nrow(train) )
-train = train[train.rows,]
-test = train[-train.rows,]
+raw = read.csv('./datasets/hr.csv')
+
+### Split Data
+train.rows = sample( 1:nrow(raw), 0.7 * nrow(raw) )
+train = raw[train.rows,]
+test  = raw[-train.rows,]
 ```
 
 ### The Variables
@@ -132,20 +134,20 @@ str(train)
 Check the **structure and samples**.  
 
 ```{r results = 'markup'}
-summary(train)
-head(train)
+summary(raw)
+head(raw)
 ```
 
 Check any **class bias** (skewness)
 
 ```{r results = 'markup', fig.height=2.5}
-barplot(table(train$left), ylab='left', xlab='1=Yes, 0=No')
+barplot(table(raw$left), ylab='left', xlab='1=Yes, 0=No')
 ```
 
 Calculate the **Accuracy baseline** - that is, probability of True(1) or False(0). Use whichever is higher.  
 
 ```{r results = 'markup'}
-prop.table( table(train$left) )
+prop.table( table(raw$left) )
 ```
 
 
@@ -519,15 +521,19 @@ ctree.perf
 
 ### The Concept
 
-Random forest model contain multiple decision trees
+Random forest is a type of Ensemble Method, which enjoy all the ensemble benefits.  
+Random forest model contain large amount of decision trees as oppose to tranditional single decision tree.  
 
 #### How Does It Work ?
 
-- Divides training data into multiple random subsets  
-- Create a tree for each subsets of random data, resulting multiple trees (henced called Forest)  
-- Each tree contains splitting of random variables (not all variables are being used in each tree)  
+- Divides training data into large amount random subsets, each subset will draw samples from training data using bagging method (with  replacement). Each subset will contain the same number of observations as training set  
+- Create a decision tree for each subset, resulting multiple trees (henced called Forest)  
+- Each tree uses different set of random variables for splitting (not all variables are being used in each tree)  
+- When doing prediction, all tress will votes and majority wins  
 
-#### Why Is It Good ?
+![Random Forest Process Flow](./images/random_forest.png)
+
+#### The Beliefs
 
 Random Forest provides much better accuracy compared to single decision tree. The major belief why this works are:  
 
@@ -536,28 +542,93 @@ b. The tree are making mistake at different place
 
 Hence, major votes for classification result expected to be closer to correct classification  
 
-#### Advantage
+#### Advantages and Disadvantages
 
-- No need for cross-validation or a separate test set to get an unbiased estimate of the test set error. It is estimated internally, during the run, as follows:
+**Advantages**
 
+- A single decision tree suffers from the phenomena of overfitting, as the signle tree model **memorize** the data  
+- Randomforest uses bagging (with replacement) to 'artificially' creates different types of dataset, hence reducing the phenomena of **memorizing**  
+- **Cross validation is not required**, since each subset are already being randomized  
+- It is usually **more accurate** than single tree, but no **guarantee**  
 
+**Disadvantage**
+
+- Ensemble method such as random forest is not interpretable  
 
 ### Run The Code
 
+#### Determine Class or Probability Outcome
 
+**`randomForest`** can build both **class** and **probability** model, depending on the dependent variable:  
 
-```{r, eval=F}
-library(randomForest)
-set.seed(1234)
-fit.forest <- randomForest(left~., data=train, na.action=na.roughfix,importance=TRUE)
-fit.forest
-importance(fit.forest, type=2)
+- If the depenedent variable is factor, it will build a model for class prediction  
+- If the depenedent variable is number, it will build a model for probability prediction  
 
-forest.pred <- predict(fit.forest, test)
-forest.perf <- table(test$class, forest.pred, dnn=c("Actual", "Predicted"))
-forest.perf
+For 0/1 dependent variable, if not factorized, it is treated as number, and therefore for probability prediction.  
+Here we convert all independent variable to factor for class prediction.  
+
+> This step is different from rpart (single decision tree), as rpart does not require this step.  rpart can predict both class and probability by just specifying the type='class'  or type='response'  
+
+```{r, eval=T}
+train$left = as.factor(train$left)
+test$left  = as.factor(test$left)
 ```
 
+#### Build The Model
+
+```{r, eval=T}
+library(randomForest)
+set.seed(1234)
+fit.forest <- randomForest(left~., data=train)
+```
+
+#### Class Prediction
+
+```{r}
+forest.pred <- predict(fit.forest, newdata=test)
+confusion <- table(test$left, forest.pred, dnn=c("Actual", "Predicted"))
+confusion
+```
+
+#### Analyize Vairable Importance
+
+**What Variables Are Important ?**  
+
+- `randomForest::importance` output matrix of all variable used in the randomForest and **their contribution** in term of decreasing GiniIndex (decreasing impurity and increasing purity)  
+- The higher the value, means the variable is more important in **contributing to accuracy** of the model  
+
+```{r}
+forest.imp = importance(fit.forest)
+forest.imp[order(forest.imp, decreasing=T),, drop=FALSE]  ## order descendingly
+```
+
+**Visualize The Importance**  
+
+**`randomForest::varImpPlot`** comes with handy plotting utility to plot the variable importance data.  
+
+```{r}
+varImpPlot(fit.forest)
+```
+
+
+#### Frequent Used Variables
+
+- Random forest models work by building a large collection of trees. As a result, we lose some of the interpretability that comes with CART in terms of seeing how predictions are made and which variables are important  
+- However, one of the way to give us insight into which variables are important, other than the decrease of impurity above, we can calculate how frequent a variable is being used for decision making (splitting)  
+
+**`randomForest::varUsed`** returns a vector of frequency of each variable used.  
+However, it doesn't comes with the variable name, which can be obtained from **`$forest$xlevels`**.  
+
+> **`randomForest::varUsed(x, by.tree=FALSE, count=TRUE)`**
+> `x       : model object of randomForest`  
+> `by.tree : FALSE, default display per variable appearance, and not per tree`  
+> `count   : TRUE, default aggregate all varibales appearance into frequency, otherwise display individual appearance`  
+
+```{r}
+vu = varUsed(fit.forest, count = TRUE)
+vusorted = sort(vu, decreasing = FALSE, index.return = TRUE)
+dotchart(vusorted$x, names(fit.forest$forest$xlevels[vusorted$ix]))
+```
 
 ## SVM
 

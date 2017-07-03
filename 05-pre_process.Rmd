@@ -498,9 +498,11 @@ table(my.df[,c('dept')])
 
 #### Create The Spliting Logical Vector
 
-Create the logical vector of the split, while maintaining the underlying factor ratio
+**`caTools::sample.split`** is the right tool for this job:  
 
-**`caTools::sample.split`** takes a **vector (or a column from a data.frame)**, randomly assign TRUE (training data) and FALSE (test data) according to a specified ratio.  It returns a **logical vector for data subsetting** purpose.
+- It takes a **vector (or a column from a data.frame)**, randomly assign TRUE (training data) and FALSE (test data) according to a specified ratio  
+- While doing so, it  automatically maintaining the data value ratio within the split  
+- It returns a **logical vector for data subsetting** purpose  
 
 > **`sample.split (Y, SplitRatio = 2/3, group = NULL)`**  
 > $\quad$ `Y = vector, of which ratio of value to be maintained`  

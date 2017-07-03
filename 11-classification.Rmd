@@ -268,11 +268,11 @@ pred.logit = predict(fit.logit, type = 'response', newdata = test)
 - **Small trees produce decisions faster than large trees**, and they are much easier to look at and understand  
 - There are various methods and techniques to control the depth, or prune, of the tree  
 
-#### Advantage
+#### Advantages
 
 - Popular among non-statistician, as the model is very **easy to interpret**  
 - **None-parametric**, therefore does not require normality assumption  
-- Support **many data types**: continuous, categorical, ordinal and binary variable  Yes
+- Support **many data types**: continuous, categorical, ordinal and binary variable  
 - **Transformation is not required**  
 - Useful for **detecting important variables, interactions and identifying outliers**  
 
@@ -298,7 +298,7 @@ Splitting is the process of partitioning the data set into subsets, from root to
     - **Splitting variable** - The predictor variable used for the split   
     - **Split point** - The **set of values** for the predictor variable (which are split between the left child node and the right child node)  
         
-- The **goal** of splitting each node is to select a combination of **splitting variable** and **splitting point** that minimizes the error (or maximizes the purity).  Two algorithmns (with impurity measure) can be used to make this decision:  
+- The **goal** of splitting each node is to select a combination of **splitting variable** and **splitting point** that minimizes the error (or maximizes the purity).  Two algorithmns (with **impurity measure**) can be used to make this decision:  
     
 
 The picture below illustrates spliting of simple tree with two variables, X and Y with 3 splits  
@@ -306,7 +306,7 @@ The picture below illustrates spliting of simple tree with two variables, X and 
 
 
 
-#### Information Gain (basedo on Entropy value)
+#### Information Gain (based on Entropy value)
         
 $Entropy = \sum_{i=1}^c{-p_i * log_2(p_i)}$  
 $\quad$ c = number of class (1 if only single splitting variable), p = the probability of class  
@@ -620,9 +620,9 @@ varImpPlot(fit.forest)
 However, it doesn't comes with the variable name, which can be obtained from **`$forest$xlevels`**.  
 
 > **`randomForest::varUsed(x, by.tree=FALSE, count=TRUE)`**
-> `x       : model object of randomForest`  
-> `by.tree : FALSE, default display per variable appearance, and not per tree`  
-> `count   : TRUE, default aggregate all varibales appearance into frequency, otherwise display individual appearance`  
+> $\quad$ `x       : model object of randomForest`  
+> $\quad$ `by.tree : FALSE, default display per variable appearance, and not per tree`  
+> $\quad$ `count   : TRUE, default aggregate all varibales appearance into frequency, otherwise display individual appearance`  
 
 ```{r}
 vu = varUsed(fit.forest, count = TRUE)

@@ -438,14 +438,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>There are various methods and techniques to control the depth, or prune, of the tree</li>
 </ul>
 </div>
-<div id="advantage" class="section level4">
-<h4><span class="header-section-number">11.5.1.2</span> Advantage</h4>
+<div id="advantages" class="section level4">
+<h4><span class="header-section-number">11.5.1.2</span> Advantages</h4>
 <ul>
 <li>Popular among non-statistician, as the model is very <strong>easy to interpret</strong><br />
 </li>
 <li><strong>None-parametric</strong>, therefore does not require normality assumption<br />
 </li>
-<li>Support <strong>many data types</strong>: continuous, categorical, ordinal and binary variable Yes</li>
+<li>Support <strong>many data types</strong>: continuous, categorical, ordinal and binary variable<br />
+</li>
 <li><strong>Transformation is not required</strong><br />
 </li>
 <li>Useful for <strong>detecting important variables, interactions and identifying outliers</strong></li>
@@ -483,12 +484,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </li>
 <li><strong>Split point</strong> - The <strong>set of values</strong> for the predictor variable (which are split between the left child node and the right child node)</li>
 </ul></li>
-<li>The <strong>goal</strong> of splitting each node is to select a combination of <strong>splitting variable</strong> and <strong>splitting point</strong> that minimizes the error (or maximizes the purity). Two algorithmns (with impurity measure) can be used to make this decision:</li>
+<li>The <strong>goal</strong> of splitting each node is to select a combination of <strong>splitting variable</strong> and <strong>splitting point</strong> that minimizes the error (or maximizes the purity). Two algorithmns (with <strong>impurity measure</strong>) can be used to make this decision:</li>
 </ul>
 <p>The picture below illustrates spliting of simple tree with two variables, X and Y with 3 splits<br />
 <img src="images/dtree_split.jpg" alt="Split Example" /></p>
-<div id="information-gain-basedo-on-entropy-value" class="section level4">
-<h4><span class="header-section-number">11.5.3.1</span> Information Gain (basedo on Entropy value)</h4>
+<div id="information-gain-based-on-entropy-value" class="section level4">
+<h4><span class="header-section-number">11.5.3.1</span> Information Gain (based on Entropy value)</h4>
 <p><span class="math inline">\(Entropy = \sum_{i=1}^c{-p_i * log_2(p_i)}\)</span><br />
 <span class="math inline">\(\quad\)</span> c = number of class (1 if only single splitting variable), p = the probability of class<br />
 <span class="math inline">\(Information Gain = Entropy(Parent Node) - Entropy (Child Node)\)</span></p>

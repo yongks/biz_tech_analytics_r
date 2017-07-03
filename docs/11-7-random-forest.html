@@ -519,9 +519,9 @@ forest.imp[<span class="kw">order</span>(forest.imp, <span class="dt">decreasing
 <p><strong><code>randomForest::varUsed</code></strong> returns a vector of frequency of each variable used.<br />
 However, it doesn’t comes with the variable name, which can be obtained from <strong><code>$forest$xlevels</code></strong>.</p>
 <blockquote>
-<p><strong><code>randomForest::varUsed(x, by.tree=FALSE, count=TRUE)</code></strong> <code>x       : model object of randomForest</code><br />
-<code>by.tree : FALSE, default display per variable appearance, and not per tree</code><br />
-<code>count   : TRUE, default aggregate all varibales appearance into frequency, otherwise display individual appearance</code></p>
+<p><strong><code>randomForest::varUsed(x, by.tree=FALSE, count=TRUE)</code></strong> <span class="math inline">\(\quad\)</span> <code>x       : model object of randomForest</code><br />
+<span class="math inline">\(\quad\)</span> <code>by.tree : FALSE, default display per variable appearance, and not per tree</code><br />
+<span class="math inline">\(\quad\)</span> <code>count   : TRUE, default aggregate all varibales appearance into frequency, otherwise display individual appearance</code></p>
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vu =<span class="st"> </span><span class="kw">varUsed</span>(fit.forest, <span class="dt">count =</span> <span class="ot">TRUE</span>)
 vusorted =<span class="st"> </span><span class="kw">sort</span>(vu, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>, <span class="dt">index.return =</span> <span class="ot">TRUE</span>)

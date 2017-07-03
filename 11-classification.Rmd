@@ -299,6 +299,10 @@ Splitting is the process of partitioning the data set into subsets, from root to
 - The **goal** of splitting each node is to select a combination of **splitting variable** and **splitting point** that minimizes the error (or maximizes the purity).  Two algorithmns (with impurity measure) can be used to make this decision:  
     
 
+The picture below illustrates spliting of simple tree with two variables, X and Y with 3 splits  
+![Split Example](./images/dtree_split.jpg)  
+
+
 
 #### Information Gain (basedo on Entropy value)
         
@@ -330,7 +334,7 @@ $\quad$ c = number of class (1 if only single splitting variable), p = the proba
 - Studies have shown that choice of impurity measures has **little effect** on the performance of the decision tree. This is because they are **quite consistent with each other**, as shown below:  
 ![Entropy vs Gini](./images/entropy_gini.jpg)  
 
-#### Splitting **stops when**
+#### Splitting **Stops When**
 
 - All samples belongs to same class (**pure**)  
 - Most samples belongs to same class. This is **generalization** of the above approach with some error threshold  
@@ -464,7 +468,7 @@ plotcp(fit.dtree)
 - To choose pruning cp value, first choose the tree size:  
     - From `cptable`, pruning cp value = sqrt(cpvalue for tree-size N * cpvalue for tree-size N-1)  
     - From `plotcp`, choose a tree size, pruning cp value = corresponding cpvalue at the y-axis  
-    - Remember **tree size = nsplit + 1**  
+    - Remember, **tree size = nsplit + 1**  
 
 ```{r}
 fit.dtree.prune = prune(fit.dtree, cp = 0.005)
@@ -512,6 +516,35 @@ ctree.perf
 ```
 
 ## Random Forest
+
+### The Concept
+
+Random forest model contain multiple decision trees
+
+#### How Does It Work ?
+
+- Divides training data into multiple random subsets  
+- Create a tree for each subsets of random data, resulting multiple trees (henced called Forest)  
+- Each tree contains splitting of random variables (not all variables are being used in each tree)  
+
+#### Why Is It Good ?
+
+Random Forest provides much better accuracy compared to single decision tree. The major belief why this works are:  
+
+a. Most of the trees can provide correct prediction for most part of the data  
+b. The tree are making mistake at different place  
+
+Hence, major votes for classification result expected to be closer to correct classification  
+
+#### Advantage
+
+- No need for cross-validation or a separate test set to get an unbiased estimate of the test set error. It is estimated internally, during the run, as follows:
+
+
+
+### Run The Code
+
+
 
 ```{r, eval=F}
 library(randomForest)

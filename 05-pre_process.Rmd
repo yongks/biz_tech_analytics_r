@@ -35,8 +35,8 @@ Below summarizes all packages, their functions and purposes used in this **Data 
 
 ```{r results='markup'}
 my.df <- read.csv ( file="./datasets/import_sample.csv", 
-    na.strings=c('NA','NULL',''),
-    stringsAsFactors = FALSE )
+    na.strings=c('NA','NULL',''))
+#    stringsAsFactors = FALSE )
 my.df
 str(my.df)
 ```
@@ -356,13 +356,13 @@ Scaling section will use sample data generated as below:
 
 ```{r}
 set.seed(1234)
-my.df = data.frame(
+num.df = data.frame(
   id = paste('ID_', 1:5, sep = ''),
   value1 = sample(50:100, 5),
   value2 = sample(10:50, 5),
   stringsAsFactors = F
 )
-my.df
+num.df
 ```
 
 ### Z-Score Scaling
@@ -377,8 +377,8 @@ my.df
 >$\quad$ $\quad$ `output scaled:scale  --> sd`  
 
 ```{r results='markdown'}
-scale( my.df[,2:3] )
-scale( my.df[,2:3], scale=F )
+scale( num.df[,2:3] )
+scale( num.df[,2:3], scale=F )
 ```
 
 ### Min Max Scaling
@@ -388,7 +388,7 @@ Easiest way to perform this transformation is to write a function then `apply`.
 
 ```{r}
 min_max = function(x){(x-min(x))/(max(x)-min(x))}
-apply( my.df[,2:3], MARGIN = 2, FUN = min_max )  ## 2 means column-wise
+apply( num.df[,2:3], MARGIN = 2, FUN = min_max )  ## 2 means column-wise
 ```
 
 
@@ -436,62 +436,97 @@ data.frame(p,g)
 creates a logical vector, indicating. Ratio specified in SplitRatio will be have value 'TRUE'
 
 
-## Splitting Into Train and Test Dataset
+## Radom Dataset Splitting
 
 When we have only ONE dataset, we can split them into training and testing, example 0.7/0.3 split. 
 
-#### Using Base R Method
+### Simple Random Split
 
-**First, create the vector of row numbers for training data**.  
+#### Verify Dataset
+
+Verify the total number of rows before splitting.  
+
+```{r}
+nrow(my.df)
+```
+
+#### Create Randomized Row Numbers Vector
+
+- Randomly pick 60% of elements from a bag of all row numbers, with no replacement.  
+- Verify that 60% of full observations are picked.  
 
 ```{r}
 set.seed(8034)
 train.rows = sample( 1:nrow(my.df), 0.6 * nrow(my.df) )
+length(train.rows)
+train.rows
 ```
 
-**Then split the data into two**.  
+```{r, echo=FALSE}
+my.df = my.df[,-1]
+```
 
-Subseting for the **training data**
+#### Split Data Into Two Sets
 
-```{r, collapse=TRUE }
+Subseting for the **training data**, using **`[,]`** row selection method.  
+
+```{r}
 my.df [train.rows, ]          # Training Data (0.6)
 ```
 
 Subsetting the test data by **negating** the splitting row numbers.  
 
-```{r, collapse=TRUE }
+```{r }
 my.df [-train.rows, ]         # Training Data (0.4)
 ```
 
-We can of course **reverse** by the splitting row vector as test rows instead of training rows. This will **reduce memory footprint** of the splitting row vector as test row numbers are generally smaller.  
+### Random Split (Maintaining Data Value Ratio)
 
-#### Using caTools::sample.split
+Sometimes we want to maintain the original data value ratio. For example, if original factor variable contains 40%A, 30%B and 30%C, and we want the splitted sample to maintain 40-30-30 ratio.  
+
+- For prediction on **classification/clustering**, usually the **dependent variable** (categorical/binary) is used as spliting parameter  
+- For regression prediction of continuous data, it **doesn't make sense to use dependent variable for spliting**, as the ratio cannot be determined with continuous data  
+- Maintaining the ratio is **key difference** to **`sample`** approach which does not care about the original balance  
+
+#### Verify Data Value Ratio
+
+We are going to split the data frame, **while maintaining the ratio** of `dept` variable. Here is distribution dept variable.
+
+```{r}
+table(my.df[,c('dept')])
+```
+
+#### Create The Spliting Logical Vector
+
+Create the logical vector of the split, while maintaining the underlying factor ratio
 
 **`caTools::sample.split`** takes a **vector (or a column from a data.frame)**, randomly assign TRUE (training data) and FALSE (test data) according to a specified ratio.  It returns a **logical vector for data subsetting** purpose.
 
 > **`sample.split (Y, SplitRatio = 2/3, group = NULL)`**  
-> $\quad$ `Y = vector`  
+> $\quad$ `Y = vector, of which ratio of value to be maintained`  
 > $\quad$ `SplitRatio = ratio of split`  
-
-**First, create the logical vector of the split**. Randomly split the data and verify the **logical vector** output.  
 
 ```{r}
 set.seed(8034)
-split.data = sample.split(my.df$id, 0.6)  # randomly 0.6 set to TRUE, remaining FALSE
-split.data
+spl = sample.split(my.df$dept, 0.6)  # randomly 0.6 set to TRUE, remaining FALSE
+spl
 ```
 
-**Then split the data into two**.  
+#### Split Data Into Two Sets
 
-Subseting for the **training data**
+Subseting for the **training data**, using **`subset`** or **`[,]`** row selection method
 
-```{r, collapse=TRUE }
-subset( my.df, split.data )   # Training Data (0.6)
+```{r }
+# my.df[split.data,]        # alternative
+s1 = subset( my.df, spl )   # Training Data (0.6)
+table(s1[,'dept'])
 ```
 
 Subsetting the test data by **negating** the splitting logical vector.  
 
-```{r, collapse=TRUE }
-subset( my.df, !split.data )  # Testing Data (0.4)
+```{r}
+# my.df[!spl,]              # alternative
+s2 = subset( my.df, !spl )  # Testing Data (0.4)
+table(s2[,'dept'])
 ```
 

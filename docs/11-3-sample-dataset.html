@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-03">
+<meta name="date" content="2017-07-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,8 +123,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -181,6 +186,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
 <li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
 <li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
@@ -479,7 +486,7 @@ test  =<span class="st"> </span>raw[<span class="op">-</span>train.rows,]</code>
 ## 6 0.41 0.50  2 153   3       0    1</code></pre>
 <p>Check any <strong>class bias</strong> (skewness)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(raw<span class="op">$</span>left), <span class="dt">ylab=</span><span class="st">&#39;left&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;1=Yes, 0=No&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-201-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-211-1.png" width="864" /></p>
 <p>Calculate the <strong>Accuracy baseline</strong> - that is, probability of True(1) or False(0). Use whichever is higher.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>( <span class="kw">table</span>(raw<span class="op">$</span>left) )</code></pre></div>
 <pre><code>## 

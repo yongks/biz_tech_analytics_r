@@ -3,8 +3,9 @@
 ## Library
 
 ```{r}
-library('lubridate')
-library('caTools')
+library(lubridate)
+library(caTools)
+library(dplyr)
 ```
 
 Below summarizes all packages, their functions and purposes used in this **Data Preprocessing** chapter.  
@@ -27,8 +28,9 @@ Below summarizes all packages, their functions and purposes used in this **Data 
 |   |                      | merge         | Merge two data.frame together based on common key                                                       |
 |   |                      | nrow, ncol    | How many columns / rows in the dataset ?                                                                |
 |   |                      | length        | How many elements in a vector ?                                                                         |
-|   | caTools              | sample.split  | Split vector into two with a ratio, return result in logical vector                                     |
-
+| 6 | caTools              | sample.split  | Split vector into two with a ratio, whiel maintain data value ratio, return result in logical vector    |
+| 7 | dplyr                | select        | extract columns from existing data.frame                                                                |
+|   |                      | mutate        | Add new columns, from existing data.frame                                                                |
 
 
 ## Sample Data
@@ -50,7 +52,7 @@ Duplicate single column using `$` selector
 ```{r}
 my.df$Z1 = my.df$X
 my.df$Z2 = my.df$X
-str(my.df)
+glimpse(my.df)
 ```
 
 ### Delete Columns
@@ -69,7 +71,7 @@ Use multiple columns selector `[,vector]`, with vector containing column numbers
 
 ```{r}
 my.df[,c('X','Z2')] = NULL
-str(my.df)
+glimpse(my.df)
 ```
 
 ### Renaming Columns
@@ -86,11 +88,50 @@ colnames(my.df)
 
 Use **colnames** to rename single or multiple columns. Use `[]` to select the specific column(s).  
 
-```{r, results='hold'}
+```{r}
 colnames(my.df)[c(1,9)] = c('id','date_first')
 colnames(my.df)
 ```
 
+### Columns Selection
+
+#### base R
+
+Use `[,]` notation to select columns
+
+```{r}
+head( my.df[,c('dept','gender','weight','height','amount','date_birth')] )
+```
+
+#### dplyr
+
+As you can see, **dplyr::select** is more intuitive as compared to base **[,]** notation  
+
+```{r, results='hold'}
+select(my.df, dept, gender, weight, height, amount, date_birth)   %>%
+  head
+```
+
+### Create New Columns
+
+#### base '$' notation
+**$ and [,]** are common useful notation in base R for data manipulation  
+```{r}
+my.df$birth_month = month(my.df$date_birth)
+my.df$birth_year = year(my.df$date_birth)
+head( my.df[,c('date_birth', 'birth_year','birth_month')] )
+```
+
+#### dplyr::mutate
+
+- Using **dplyr** family, we avoids repeating the data.frame name in the parameters  
+- See how elegantly we combined the statements using **%>%** to improve readability by intuitive syntax construct and avoid repetition
+```{r}
+  mutate(my.df, birth_month = month(date_birth), 
+                birth_year = year(date_birth))   %>%
+  select(date_birth, birth_year, birth_month)    %>% 
+  head
+```
 
 ## Missing Data
 

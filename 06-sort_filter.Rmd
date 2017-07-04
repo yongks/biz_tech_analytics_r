@@ -7,6 +7,10 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, fig.width=2.6736,
 
 ## Library
 
+```{r}
+library(dplyr)
+```
+
 Functions and libraries used in this chapter are as below:  
 
 |   | Package              | Function      | Purpose                                                                                                 |
@@ -14,6 +18,9 @@ Functions and libraries used in this chapter are as below:
 | 1 | Base R               | match         | return the position(s) of first match                                                                   |
 |   |                      | order         | return the positions for each vector element with order                                                 |
 |   |                      | which         | return the positions of value TRUE of a logical vector                                                  |
+|   |                      | subset        | return a new data.frame that match the criterias                                                        |
+| 2 | dplyr                | filter        | return a new data.frame that match the criterias                                                        |
+|   |                      | arrange       | return a new data.frame that match the criterias                                                        |
 
 ## Sample Data
 
@@ -122,7 +129,7 @@ head( my.df[the.order,] )
 
 #### Multi Levels Ordering
 
-Order the data.frame based on two columns. However, all columns follow the same decreasing (ascending/desceding).  
+Order the data.frame based on two columns. **However, all columns follow the same decreasing** (ascending/desceding).  
 
 ```{r results='hold'}
 attach(my.df)
@@ -131,14 +138,25 @@ head( my.df[the.order,] )
 detach(my.df)
 ```
 
+#### dplyr::arrange
+
+- **dplyr::arrange** offers the best flexibility and simplicity  
+- It overcomes base **order()** with ability to order multiple columns with different ascending/descending mode  
+- It assume all ascending ordering unless **desc** is specified  
+
+```{r}
+arrange(my.df, dept, desc(value1))
+# my.df %>% arrnage(dept, desc(value1))
+```
 
 ## Filtering Data
 
-There are two methods of filtering data:  
+There are multiple methods of filtering data:  
 
 - Using **logical vector**  
-- Using **`subset`** function  
+- Using **`subset()`** function  
 - Using row numbers: **`which()`**  
+- Using **`dplyr::filter()`** function  
 
 With these methods, **row.names are retained** in the output vector/dataframe.  
 
@@ -236,4 +254,22 @@ my.df [ lvector, ]
 ```{r}
 z = which (my.df$x<10 & my.df$y<297)
 my.df [ z, ]
+```
+
+
+#### Using dplyr::filter()
+
+- Logical comparison operator '&, |' can be used, just like **subset()**  
+- Multiple filter criterias seperate with ',' are considered as '&' condition  
+
+```{r, collapse=TRUE}
+filter(my.df, x<10, y<297)
+
+filter(my.df, x<10 & y<297)
+```
+
+**Elegantly**, dplyr powerful **%>%** comes into play:  
+
+```{r}
+my.df %>% filter( x<10, y<297)
 ```

@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-03">
+<meta name="date" content="2017-07-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,8 +123,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -181,6 +186,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
 <li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
 <li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
@@ -424,16 +431,16 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 }
 
 my.slinear =<span class="st"> </span><span class="kw">gen_slinear</span>(<span class="dt">n =</span> <span class="dv">250</span>, <span class="dt">start=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">30</span>, <span class="dt">coef =</span> <span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">10</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-34-1.png" width="864" /></p>
 <div id="example-of-random-normal-x" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Example of Random Normal X</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.slinear =<span class="st"> </span><span class="kw">gen_slinear</span>(<span class="dt">n =</span> <span class="dv">250</span>, <span class="dt">start=</span><span class="op">-</span><span class="dv">1</span>, <span class="dt">intercept =</span> <span class="dv">30</span>, <span class="dt">coef =</span> <span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">10</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-33-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-35-1.png" width="864" /></p>
 </div>
 <div id="example-of-sequantial-x-non-random" class="section level3">
 <h3><span class="header-section-number">3.1.2</span> Example of Sequantial X (non-random)</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.slinear =<span class="st"> </span><span class="kw">gen_slinear</span>(<span class="dt">n =</span> <span class="dv">250</span>, <span class="dt">start=</span><span class="dv">0</span>, <span class="dt">intercept =</span> <span class="dv">30</span>, <span class="dt">coef =</span> <span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">10</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-34-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-36-1.png" width="864" /></p>
 </div>
 </div>
             </section>

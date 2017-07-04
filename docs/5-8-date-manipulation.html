@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-03">
+<meta name="date" content="2017-07-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,8 +123,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -181,6 +186,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
 <li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
 <li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
@@ -410,16 +417,18 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>When import date date from text file using <code>read()</code>, often date column are imported as string or factor. Note that <code>lubridate::dmy,ymd</code> can convert from string only, whereas <code>as.Date</code> can convert from both string and factor.</p>
 <p><strong>Before Conversion</strong>, verify that all dates column are actually <code>chr</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.df)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    10 obs. of  9 variables:
-##  $ id        : Factor w/ 13 levels &quot;ID101&quot;,&quot;ID102&quot;,..: 1 2 3 4 5 6 7 8 9 10
-##  $ dept      : Factor w/ 3 levels &quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;: 1 2 3 1 1 3 2 1 3 2
-##  $ gender    : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 2 2 1 2 2 1 2
-##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
-##  $ height    : int  173 164 178 182 159 166 153 159 166 163
-##  $ date_birth: Factor w/ 10 levels &quot;1/7/1973&quot;,&quot;12/1/1997&quot;,..: 1 8 9 2 4 7 5 4 3 6
-##  $ amount    : int  100 121 152 133 143 155 117 143 155 117
-##  $ date_last : Factor w/ 10 levels &quot;10/31/2015&quot;,&quot;11/1/2016&quot;,..: 6 9 1 2 10 4 8 10 3 7
-##  $ date_first: Factor w/ 10 levels &quot;2011-06-15&quot;,&quot;2012-04-02&quot;,..: 6 7 9 10 3 5 8 1 2 4
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  11 variables:
+##  $ id         : Factor w/ 13 levels &quot;ID101&quot;,&quot;ID102&quot;,..: 1 2 3 4 5 6 7 8 9 10
+##  $ dept       : Factor w/ 3 levels &quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;: 1 2 3 1 1 3 2 1 3 2
+##  $ gender     : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 2 2 1 2 2 1 2
+##  $ weight     : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height     : int  173 164 178 182 159 166 153 159 166 163
+##  $ date_birth : Factor w/ 10 levels &quot;1/7/1973&quot;,&quot;12/1/1997&quot;,..: 1 8 9 2 4 7 5 4 3 6
+##  $ amount     : int  100 121 152 133 143 155 117 143 155 117
+##  $ date_last  : Factor w/ 10 levels &quot;10/31/2015&quot;,&quot;11/1/2016&quot;,..: 6 9 1 2 10 4 8 10 3 7
+##  $ date_first : Factor w/ 10 levels &quot;2011-06-15&quot;,&quot;2012-04-02&quot;,..: 6 7 9 10 3 5 8 1 2 4
+##  $ birth_month: num  7 2 12 1 1 7 8 1 7 8
+##  $ birth_year : num  1 28 31 12 2 26 21 2 13 24
 ##  - attr(*, &quot;na.action&quot;)=Class &#39;omit&#39;  Named int [1:3] 11 12 13
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;11&quot; &quot;12&quot; &quot;13&quot;</code></pre>
 <p>Two ways to convert string to date:</p>
@@ -433,16 +442,18 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 my.df<span class="op">$</span>date_last  =<span class="st"> </span><span class="kw">mdy</span>( my.df<span class="op">$</span>date_last  )    <span class="co"># lubridate </span>
 my.df<span class="op">$</span>date_first =<span class="st"> </span><span class="kw">ymd</span>( my.df<span class="op">$</span>date_first )    <span class="co"># lubridate</span>
 <span class="kw">str</span>(my.df)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    10 obs. of  9 variables:
-##  $ id        : Factor w/ 13 levels &quot;ID101&quot;,&quot;ID102&quot;,..: 1 2 3 4 5 6 7 8 9 10
-##  $ dept      : Factor w/ 3 levels &quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;: 1 2 3 1 1 3 2 1 3 2
-##  $ gender    : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 2 2 1 2 2 1 2
-##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
-##  $ height    : int  173 164 178 182 159 166 153 159 166 163
-##  $ date_birth: Date, format: &quot;1973-07-01&quot; &quot;1980-02-28&quot; ...
-##  $ amount    : int  100 121 152 133 143 155 117 143 155 117
-##  $ date_last : Date, format: &quot;2016-02-29&quot; &quot;2017-04-01&quot; ...
-##  $ date_first: Date, format: &quot;2013-07-31&quot; &quot;2013-08-31&quot; ...
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  11 variables:
+##  $ id         : Factor w/ 13 levels &quot;ID101&quot;,&quot;ID102&quot;,..: 1 2 3 4 5 6 7 8 9 10
+##  $ dept       : Factor w/ 3 levels &quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;: 1 2 3 1 1 3 2 1 3 2
+##  $ gender     : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 2 2 1 2 2 1 2
+##  $ weight     : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height     : int  173 164 178 182 159 166 153 159 166 163
+##  $ date_birth : Date, format: &quot;1973-07-01&quot; &quot;1980-02-28&quot; ...
+##  $ amount     : int  100 121 152 133 143 155 117 143 155 117
+##  $ date_last  : Date, format: &quot;2016-02-29&quot; &quot;2017-04-01&quot; ...
+##  $ date_first : Date, format: &quot;2013-07-31&quot; &quot;2013-08-31&quot; ...
+##  $ birth_month: num  7 2 12 1 1 7 8 1 7 8
+##  $ birth_year : num  1 28 31 12 2 26 21 2 13 24
 ##  - attr(*, &quot;na.action&quot;)=Class &#39;omit&#39;  Named int [1:3] 11 12 13
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;11&quot; &quot;12&quot; &quot;13&quot;</code></pre>
 </div>

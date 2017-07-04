@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-03">
+<meta name="date" content="2017-07-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,8 +123,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -181,6 +186,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
 <li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
 <li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
@@ -686,7 +693,7 @@ Notice that the graph has the below characteristics:</p>
 <li>All leaf nodes adds up to 100% probability</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prp</span>(fit.dtree, <span class="dt">type =</span> <span class="dv">2</span>, <span class="dt">extra =</span> <span class="dv">104</span>, <span class="dt">fallen.leaves =</span> <span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Decision Tree&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-206-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-216-1.png" width="864" /></p>
 </div>
 <div id="cross-validation-analysis" class="section level4">
 <h4><span class="header-section-number">11.5.6.3</span> Cross Validation Analysis</h4>
@@ -731,7 +738,7 @@ Notice that the graph has the below characteristics:</p>
 <li>Optimum tree size for pruning is <strong>below the horizontal line</strong>, use this chart to determine the <strong>optimum tree size, and its cp value</strong>, prune with this cp value</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-208-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-218-1.png" width="864" /></p>
 </div>
 <div id="pruning-tree-1" class="section level4">
 <h4><span class="header-section-number">11.5.6.4</span> Pruning Tree</h4>
@@ -781,7 +788,7 @@ Notice that the graph has the below characteristics:</p>
 ## 8 0.0057887     11   0.11071 0.12663 0.0094719
 ## 9 0.0050000     12   0.10492 0.11505 0.0090373</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree.prune)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-209-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-219-1.png" width="864" /></p>
 </div>
 <div id="prediction" class="section level4">
 <h4><span class="header-section-number">11.5.6.5</span> Prediction</h4>
@@ -801,15 +808,15 @@ dtree.pred.test1 =<span class="st"> </span><span class="kw">predict</span>(fit.d
 <pre><code>##    accuracy    recall precision specificity
 ## 1 0.9816667 0.9110032 0.9808362   0.9963112</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pruned model with training set</span>
-dtree.pred.train.pruned =<span class="st"> </span><span class="kw">predict</span>(fit.dtree.pruned, <span class="dt">data=</span>train, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+dtree.pred.train.pruned =<span class="st"> </span><span class="kw">predict</span>(fit.dtree.prune, <span class="dt">data=</span>train, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
 <span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.train.pruned, <span class="dt">label=</span>train<span class="op">$</span>left)[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>##    accuracy    recall precision specificity
-## 1 0.9794048 0.9124457  0.960396   0.9925905</code></pre>
+## 1 0.9827381 0.9095514 0.9843383   0.9971502</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pruned model with test set</span>
-dtree.pred.test2 =<span class="st"> </span><span class="kw">predict</span>(fit.dtree.pruned, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
+dtree.pred.test2 =<span class="st"> </span><span class="kw">predict</span>(fit.dtree.prune, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)
 <span class="kw">eval.binclass</span>(<span class="dt">score=</span>dtree.pred.test2, <span class="dt">label=</span>test<span class="op">$</span>left)[<span class="dv">2</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>##    accuracy    recall precision specificity
-## 1 0.9772222 0.9142395 0.9511785    0.990275</code></pre>
+## 1 0.9802778 0.9110032 0.9723661   0.9946345</code></pre>
 </div>
 </div>
 </div>

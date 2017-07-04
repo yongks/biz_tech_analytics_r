@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-03">
+<meta name="date" content="2017-07-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,8 +123,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -181,6 +186,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
 <li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
 <li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
@@ -418,7 +425,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ## [1] 3.273339 6.168633 8.354514 6.308610 5.739688</code></pre>
 <p>Notice that the numbers generated are uniformly distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">runif</span>(<span class="dv">300</span>, <span class="dt">min=</span><span class="dv">3</span>, <span class="dt">max=</span><span class="dv">9</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-23-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
 </div>
 <div id="normal-distribution" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> Normal Distribution</h3>
@@ -433,7 +440,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ## [1] 5.572597 3.691374 1.102408 1.969721 2.331507</code></pre>
 <p>Notice that the numbers generated are uniformly distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rnorm</span>(<span class="dv">300</span>, <span class="dt">mean=</span><span class="dv">3</span>, <span class="dt">sd=</span><span class="fl">1.5</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-25-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-27-1.png" width="864" /></p>
 </div>
 <div id="binomial-distribution" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> Binomial Distribution</h3>
@@ -462,7 +469,7 @@ Theoritically, when n approaches infitity, a binomial is a normal distribution</
 ##  [36] 6 6 2 4 3 6 5 2 5 3 2 6 2 5 3 1 4 2 3 4 4 5 3 4 4 5 5 5 6 7 4 4 3 4 3
 ##  [71] 1 5 4 2 3 4 2 2 4 3 6 3 1 6 3 4 4 3 3 4 4 4 5 5 4 4 1 0 8 2</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rbinom</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="fl">0.4</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-27-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-29-1.png" width="256.6656" /></p>
 </div>
 <div id="beta-distribution" class="section level3">
 <h3><span class="header-section-number">2.2.4</span> Beta Distribution</h3>
@@ -470,11 +477,11 @@ Theoritically, when n approaches infitity, a binomial is a normal distribution</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">1</span>,    <span class="dv">1</span>))     <span class="co"># no left and right skewness = uniform</span>
 <span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">10</span>,   <span class="dv">10</span>))    <span class="co"># balanced left and right skew</span>
 <span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">100</span>,  <span class="dv">100</span>))   <span class="co"># more balanced left and right skew</span></code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-28-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-28-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-28-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-30-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-30-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-30-3.png" width="256.6656" /></p>
 <p><strong>Left or Right Skew</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">1000</span>, <span class="dv">10</span>))    <span class="co"># left skewed more</span>
 <span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">100</span>,  <span class="dv">1000</span>))  <span class="co"># right skew more</span></code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-29-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-29-2.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-31-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-31-2.png" width="256.6656" /></p>
 </div>
 <div id="drawing-from-a-bag" class="section level3">
 <h3><span class="header-section-number">2.2.5</span> Drawing From A Bag</h3>

@@ -497,11 +497,11 @@ dtree.pred.test1 = predict(fit.dtree,        newdata=test, type="class")
 eval.binclass(score=dtree.pred.test1, label=test$left)[2:5]
 
 # pruned model with training set
-dtree.pred.train.pruned = predict(fit.dtree.pruned, data=train, type="class")
+dtree.pred.train.pruned = predict(fit.dtree.prune, data=train, type="class")
 eval.binclass(score=dtree.pred.train.pruned, label=train$left)[2:5]
 
 # pruned model with test set
-dtree.pred.test2 = predict(fit.dtree.pruned, newdata=test, type="class")
+dtree.pred.test2 = predict(fit.dtree.prune, newdata=test, type="class")
 eval.binclass(score=dtree.pred.test2, label=test$left)[2:5]
 ```
 

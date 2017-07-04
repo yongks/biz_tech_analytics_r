@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-03">
+<meta name="date" content="2017-07-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,8 +123,13 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
 </ul></li>
 <li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
-<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.1</b> Working Directory</a></li>
-<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#importing-csv"><i class="fa fa-check"></i><b>1.5.2</b> Importing CSV</a></li>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a><ul>
@@ -181,6 +186,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
 <li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
 <li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
@@ -405,37 +412,84 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="data-import" class="section level2">
 <h2><span class="header-section-number">1.5</span> Data Import</h2>
+<div id="data-import-performance" class="section level3">
+<h3><span class="header-section-number">1.5.1</span> Data Import Performance</h3>
+<p>There are multiple ways to import data into R, most common ones are discussed here:</p>
+<ul>
+<li>Base <strong>read.table</strong><br />
+</li>
+<li><strong>data.table::fread</strong><br />
+</li>
+<li><strong>readr::read_csv</strong></li>
+</ul>
+<div id="comparison" class="section level4">
+<h4><span class="header-section-number">1.5.1.1</span> Comparison</h4>
+<p>Below comparison charts shows <strong>reading performance relative to data.table::fread</strong>:</p>
+<ul>
+<li>Base <strong>read.table</strong> is more than 5x slower on large files<br />
+</li>
+<li><strong>readr</strong> performance is acceptable, and improving <strong>closer to fread</strong> at larger data file</li>
+</ul>
+<p><img src="images/read_performance.jpg" alt="Fast Data Reading" /><br />
+<a href="https://csgillespie.github.io/efficientR/5-3-importing-data.html#fast-data-reading">Source</a></p>
+</div>
+</div>
+<div id="what-to-choose" class="section level3">
+<h3><span class="header-section-number">1.5.2</span> What To Choose</h3>
+<p>Few criterias must be considered when choosing the right import:</p>
+<p><strong>Performance</strong></p>
+<ul>
+<li><strong>fread</strong> is very high speed, follow by <strong>readr</strong><br />
+</li>
+<li><strong>read.table</strong> is slow, and not suitable for large datasets</li>
+</ul>
+<p><strong>Parsing Detection</strong></p>
+<ul>
+<li><strong>fread</strong> autmatically detect header<br />
+</li>
+<li><strong>fread</strong> autmatically detect column delimeter and decimal<br />
+</li>
+<li><strong>readr</strong> auto parse date/time format if data in format “yyyy-mm-dd”</li>
+</ul>
+<p><strong>Factor Conversion</strong></p>
+<ul>
+<li><strong>fread</strong> and <strong>read.table</strong> both has <strong>stringAsFactor=TRUE</strong> option for auto conver string to factor<br />
+</li>
+<li>In <strong>readr</strong>, need to manually specify which column to convert to factor, and all the factor levels values required definition upfront (downside)</li>
+</ul>
+<p><strong>Progress Bar</strong></p>
+<ul>
+<li><strong>fread</strong> and <strong>readr</strong> provides progress info when the loading is going to take a while</li>
+</ul>
+<p><strong>Other Features</strong></p>
+<ul>
+<li><strong>readr</strong> is part of tidyverse ecosystem, readr returns tibble and datafrma eobject<br />
+</li>
+<li><strong>fread</strong> has advance data manipulation functions at high speed, fread return data.table and data.frame object</li>
+</ul>
+</div>
 <div id="working-directory" class="section level3">
-<h3><span class="header-section-number">1.5.1</span> Working Directory</h3>
+<h3><span class="header-section-number">1.5.3</span> Working Directory</h3>
+<p>Before importing data into R, we must first check the <strong>current working directory</strong>, so that we can specify the <strong>relative path</strong> for the files we want to import.</p>
 <p>To display the current working directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">getwd</span>()
 ## [1] &quot;C:/Users/YKS-NIC/Dropbox/R/business_technical_analytics_r&quot;</code></pre></div>
 <p>To set the working directory, use below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;...new path...)</span></code></pre></div>
 </div>
-<div id="importing-csv" class="section level3">
-<h3><span class="header-section-number">1.5.2</span> Importing CSV</h3>
-<p><strong>read.csv</strong> is a similar to <strong>read.table</strong> but with some defaults value set as below for convenience of CSV import.</p>
-<p>In the resulting data.frame, row.names attribute are automatically assigned with sequence number starting from 1.</p>
-<blockquote>
-<p><strong>read.csv</strong> ( file,<br />
-<span class="math inline">\(\quad\)</span> header = TRUE - contain header row<br />
-<span class="math inline">\(\quad\)</span> sep = “,” - column seperator marked as ‘,’<br />
-<span class="math inline">\(\quad\)</span> dec = “.” - decimals marked as ‘.’<br />
-<span class="math inline">\(\quad\)</span> na.strings = “NA” - vectors that define missing data marking <NA><br />
-<span class="math inline">\(\quad\)</span> check.names = TRUE - col names with white space replaced with ‘.’<br />
-<span class="math inline">\(\quad\)</span> stringsAsFactors = TRUE - convert string to factor</p>
-</blockquote>
-<p>Examine the below example of data import process (Excel–&gt;csv–&gt;R data.frame):</p>
+<div id="sample-data-file" class="section level3">
+<h3><span class="header-section-number">1.5.4</span> Sample Data File</h3>
+<p>We use sample data from excel, exported to CSV.<br />
+Following importing method shows the process of Excel–&gt;csv–&gt;R data.frame.</p>
 <div id="original-excel-data-source" class="section level4">
-<h4><span class="header-section-number">1.5.2.1</span> Original Excel Data Source</h4>
+<h4><span class="header-section-number">1.5.4.1</span> Original Excel Data Source</h4>
 <div class="figure">
 <img src="images/sample_excel_import.jpg" alt="Check out the Yellow areas in codes below !" />
 <p class="caption">Check out the Yellow areas in codes below !</p>
 </div>
 </div>
 <div id="exported-csv-file-from-excel" class="section level4">
-<h4><span class="header-section-number">1.5.2.2</span> Exported CSV File from Excel</h4>
+<h4><span class="header-section-number">1.5.4.2</span> Exported CSV File from Excel</h4>
 <pre><code>,,dept,gender,weight,height,date_birth,amount,date_last,date first
 1,ID101,D1,Male,35,173,1/7/1973,100,2/29/2016,2013-07-31
 2,ID102,D2,Female,37.1,164,28/2/1980,121,4/1/2017,2013-08-31
@@ -449,17 +503,39 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 10,ID110,D2,Male,63.2,163,24/8/1982,117,3/12/2016,2013-03-12
 11,ID111,D3,Female,75.1,170,9/8/1979,135,2/1/2015,
 12,ID112,D2,Male,52.1,169,NULL,128,NA,
-13,ID113,D3,NULL,88.8,171,NULL,141,NA,</code></pre>
+13,ID113,D3,NULL,88.8,171,NULL,141,NA,
+### Importing CSV</code></pre>
 </div>
-<div id="import-into-r-data-frame" class="section level4">
-<h4><span class="header-section-number">1.5.2.3</span> Import Into R Data Frame</h4>
-<p>Example below specify multiple string elements that represents <strong>missing data</strong> in the CSV file. Also turn FALSE for stirngsAsFactors so all string columns are not converted to factor automatically.</p>
-<p><strong>./</strong> is a relative path represents current R working directory. It can be replaced with complete non-relative path.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample.df &lt;-<span class="st"> </span><span class="kw">read.csv</span> ( <span class="dt">file=</span><span class="st">&quot;./datasets/import_sample.csv&quot;</span>, 
+</div>
+<div id="baseread.csv" class="section level3">
+<h3><span class="header-section-number">1.5.5</span> Base::read.csv</h3>
+<p><strong>read.csv</strong> is a similar to <strong>read.table</strong> but with some defaults value set as below for convenience of CSV import.</p>
+<p>In the resulting data.frame, row.names attribute are automatically assigned with sequence number starting from 1.</p>
+<blockquote>
+<p><strong>read.csv</strong> ( file,<br />
+<span class="math inline">\(\quad\)</span> header = TRUE - contain header row<br />
+<span class="math inline">\(\quad\)</span> sep = “,” - column seperator marked as ‘,’<br />
+<span class="math inline">\(\quad\)</span> dec = “.” - decimals marked as ‘.’<br />
+<span class="math inline">\(\quad\)</span> na.strings = “NA” - vectors that define missing data marking <NA><br />
+<span class="math inline">\(\quad\)</span> check.names = TRUE - col names with white space replaced with ‘.’<br />
+<span class="math inline">\(\quad\)</span> stringsAsFactors = TRUE - convert string to factor</p>
+</blockquote>
+<p>As an exmple, the import below:</p>
+<ul>
+<li>Specified multiple string elements that represents <strong>missing data</strong> in the CSV file<br />
+</li>
+<li>Set <strong>stirngsAsFactors=FALSE</strong> so that all string columns are not converted to factor automatically, on other words, they are imported as character<br />
+</li>
+<li><strong>./</strong> is a relative path represents current R working directory. It can be replaced with complete non-relative path<br />
+</li>
+<li>Default parameter <strong>check.names=TRUE</strong> automatically named ‘unnamed’ column, as well as replacing white spaces for column names with ‘.’</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample.df &lt;-<span class="st"> </span><span class="kw">read.csv</span> (<span class="st">&quot;./datasets/import_sample.csv&quot;</span>, 
     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>,
     <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;NA&#39;</span>,<span class="st">&#39;NULL&#39;</span>,<span class="st">&#39;&#39;</span>),
     <span class="dt">encoding=</span><span class="st">&quot;UTF-8&quot;</span>)
-sample.df</code></pre></div>
+
+sample.df [,<span class="op">-</span><span class="dv">10</span>]</code></pre></div>
 <pre><code>##     X   X.1 dept gender   weight height date_birth amount  date_last
 ## 1   1 ID101   D1   Male 35.00000    173   1/7/1973    100  2/29/2016
 ## 2   2 ID102   D2 Female 37.10000    164  28/2/1980    121   4/1/2017
@@ -473,23 +549,7 @@ sample.df</code></pre></div>
 ## 10 10 ID110   D2   Male 63.20000    163  24/8/1982    117  3/12/2016
 ## 11 11 ID111   D3 Female 75.10000    170   9/8/1979    135   2/1/2015
 ## 12 12 ID112   D2   Male 52.10000    169       &lt;NA&gt;    128       &lt;NA&gt;
-## 13 13 ID113   D3   &lt;NA&gt; 88.80000    171       &lt;NA&gt;    141       &lt;NA&gt;
-##    date.first
-## 1  2013-07-31
-## 2  2013-08-31
-## 3  2014-12-31
-## 4  2015-02-28
-## 5  2012-06-15
-## 6  2013-04-28
-## 7  2014-03-01
-## 8  2011-06-15
-## 9  2012-04-02
-## 10 2013-03-12
-## 11       &lt;NA&gt;
-## 12       &lt;NA&gt;
-## 13       &lt;NA&gt;</code></pre>
-<p>Parameter <strong>check.names=TRUE</strong> automatically named ‘unnamed’ column, as well as replacing white spaces for column names with ‘.’.</p>
-<p>All non-numeric data are imported as <strong>chr</strong> due to stringsAsFactor=FALSE.</p>
+## 13 13 ID113   D3   &lt;NA&gt; 88.80000    171       &lt;NA&gt;    141       &lt;NA&gt;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(sample.df)
 ## &#39;data.frame&#39;:    13 obs. of  10 variables:
 ##  $ X         : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -502,8 +562,135 @@ sample.df</code></pre></div>
 ##  $ amount    : int  100 121 152 133 143 155 117 143 155 117 ...
 ##  $ date_last : chr  &quot;2/29/2016&quot; &quot;4/1/2017&quot; &quot;10/31/2015&quot; &quot;11/1/2016&quot; ...
 ##  $ date.first: chr  &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2014-12-31&quot; &quot;2015-02-28&quot; ...</code></pre></div>
-
 </div>
+<div id="data.tablefread" class="section level3">
+<h3><span class="header-section-number">1.5.6</span> data.table::fread</h3>
+<blockquote>
+<p><strong>fread</strong> ( input,<br />
+<span class="math inline">\(\quad\)</span> header = ‘auto’ - auto detect header (if all non empty cells in first row character)<br />
+<span class="math inline">\(\quad\)</span> sep = “auto” - auto detect column seperator<br />
+<span class="math inline">\(\quad\)</span> dec = if (sep!=“.”) “.” else “,”, in a way automatic selected<br />
+<span class="math inline">\(\quad\)</span> na.strings = “NA” - vectors that define missing data marking <NA><br />
+<span class="math inline">\(\quad\)</span> check.names = FALSE - do not replace col names with white space with ‘.’<br />
+<span class="math inline">\(\quad\)</span> stringsAsFactors = FALSE - do not convert string to factor<br />
+<span class="math inline">\(\quad\)</span> nrows = -1 - how many rows to read, default -1 means read all rows<br />
+<span class="math inline">\(\quad\)</span> data.table = TRUE - return data.table object, FALSE - return data.frame object</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(data.table)
+
+my.dt =<span class="st"> </span><span class="kw">fread</span>(<span class="st">&quot;./datasets/import_sample.csv&quot;</span>,
+    <span class="dt">stringsAsFactors =</span> <span class="ot">TRUE</span>,
+    <span class="dt">na.strings=</span><span class="kw">c</span>(<span class="st">&#39;NA&#39;</span>,<span class="st">&#39;NULL&#39;</span>,<span class="st">&#39;&#39;</span>),
+    <span class="dt">check.names =</span> <span class="ot">TRUE</span>,
+    <span class="dt">data.table =</span> <span class="ot">FALSE</span>)
+my.dt[,<span class="op">-</span><span class="dv">10</span>]</code></pre></div>
+<pre><code>##    V1    V2 dept gender   weight height date_birth amount  date_last
+## 1   1 ID101   D1   Male 35.00000    173   1/7/1973    100  2/29/2016
+## 2   2 ID102   D2 Female 37.10000    164  28/2/1980    121   4/1/2017
+## 3   3 ID103   D3 Female 43.12000    178 31/12/1978    152 10/31/2015
+## 4   4 ID104   D1   Male 38.12300    182  12/1/1997    133  11/1/2016
+## 5   5 ID105   D1   Male 54.12340    159   2/1/1982    143  9/30/2016
+## 6   6 ID106   D3 Female 34.12345    166  26/7/1973    155 11/27/2015
+## 7   7 ID107   D2   Male 49.12346    153  21/8/1985    117  3/31/2017
+## 8   8 ID108   D1   Male 50.20000    159   2/1/1982    143  9/30/2016
+## 9   9 ID109   D3 Female 59.10000    166  13/7/1975    155  11/1/2017
+## 10 10 ID110   D2   Male 63.20000    163  24/8/1982    117  3/12/2016
+## 11 11 ID111   D3 Female 75.10000    170   9/8/1979    135   2/1/2015
+## 12 12 ID112   D2   Male 52.10000    169       &lt;NA&gt;    128       &lt;NA&gt;
+## 13 13 ID113   D3   &lt;NA&gt; 88.80000    171       &lt;NA&gt;    141       &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.dt)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    13 obs. of  10 variables:
+##  $ V1        : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ V2        : Factor w/ 13 levels &quot;ID101&quot;,&quot;ID102&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ dept      : Factor w/ 3 levels &quot;D1&quot;,&quot;D2&quot;,&quot;D3&quot;: 1 2 3 1 1 3 2 1 3 2 ...
+##  $ gender    : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 1 1 2 2 1 2 2 1 2 ...
+##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height    : int  173 164 178 182 159 166 153 159 166 163 ...
+##  $ date_birth: Factor w/ 10 levels &quot;1/7/1973&quot;,&quot;12/1/1997&quot;,..: 1 8 9 2 4 7 5 4 3 6 ...
+##  $ amount    : int  100 121 152 133 143 155 117 143 155 117 ...
+##  $ date_last : Factor w/ 10 levels &quot;10/31/2015&quot;,&quot;11/1/2016&quot;,..: 6 9 1 2 10 4 8 10 3 7 ...
+##  $ date.first: Factor w/ 10 levels &quot;2011-06-15&quot;,&quot;2012-04-02&quot;,..: 6 7 9 10 3 5 8 1 2 4 ...</code></pre>
+</div>
+<div id="readrread_csv" class="section level3">
+<h3><span class="header-section-number">1.5.7</span> readr::read_csv</h3>
+<ul>
+<li>read_csv returns object type: <strong>‘tbl_df’, ‘tbl’ and ‘data.frame’</strong></li>
+</ul>
+<blockquote>
+<p><strong>read_csv</strong> ( file,<br />
+<span class="math inline">\(\quad\)</span> col_names = TRUE - first row is header, if FALSE or char vector to specify column names<br />
+<span class="math inline">\(\quad\)</span> col_types = NULL - all columns type will be imputed based on first 100 rows, alternatively specify:<br />
+<span class="math inline">\(\quad\)</span> <span class="math inline">\(\quad\)</span> list( Sepal.Length = col_double(), …) <span class="math inline">\(\quad\)</span> na = c(“”, “NA”) - characters used for detecting missing data <NA><br />
+<span class="math inline">\(\quad\)</span> skip = 0 - no skipping for first number of rows<br />
+<span class="math inline">\(\quad\)</span> n_max = Inf - how many rows to read, default read all</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+
+my.rd =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;./datasets/import_sample.csv&quot;</span>, 
+          <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&#39;NA&#39;</span>,<span class="st">&#39;NULL&#39;</span>,<span class="st">&#39;&#39;</span>),
+          <span class="dt">col_types =</span> <span class="kw">list</span> (
+            <span class="dt">gender=</span><span class="kw">col_factor</span>(<span class="kw">c</span>(<span class="st">&#39;Male&#39;</span>,<span class="st">&#39;Female&#39;</span>))
+          ))</code></pre></div>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1], &#39;X2&#39; [2]</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.rd[,<span class="op">-</span><span class="dv">10</span>]</code></pre></div>
+<pre><code>## # A tibble: 13 x 9
+##       X1    X2  dept gender   weight height date_birth amount  date_last
+##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;fctr&gt;    &lt;dbl&gt;  &lt;int&gt;      &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;
+##  1     1 ID101    D1   Male 35.00000    173   1/7/1973    100  2/29/2016
+##  2     2 ID102    D2 Female 37.10000    164  28/2/1980    121   4/1/2017
+##  3     3 ID103    D3 Female 43.12000    178 31/12/1978    152 10/31/2015
+##  4     4 ID104    D1   Male 38.12300    182  12/1/1997    133  11/1/2016
+##  5     5 ID105    D1   Male 54.12340    159   2/1/1982    143  9/30/2016
+##  6     6 ID106    D3 Female 34.12345    166  26/7/1973    155 11/27/2015
+##  7     7 ID107    D2   Male 49.12346    153  21/8/1985    117  3/31/2017
+##  8     8 ID108    D1   Male 50.20000    159   2/1/1982    143  9/30/2016
+##  9     9 ID109    D3 Female 59.10000    166  13/7/1975    155  11/1/2017
+## 10    10 ID110    D2   Male 63.20000    163  24/8/1982    117  3/12/2016
+## 11    11 ID111    D3 Female 75.10000    170   9/8/1979    135   2/1/2015
+## 12    12 ID112    D2   Male 52.10000    169       &lt;NA&gt;    128       &lt;NA&gt;
+## 13    13 ID113    D3     NA 88.80000    171       &lt;NA&gt;    141       &lt;NA&gt;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.rd)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    13 obs. of  10 variables:
+##  $ X1        : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ X2        : chr  &quot;ID101&quot; &quot;ID102&quot; &quot;ID103&quot; &quot;ID104&quot; ...
+##  $ dept      : chr  &quot;D1&quot; &quot;D2&quot; &quot;D3&quot; &quot;D1&quot; ...
+##  $ gender    : Factor w/ 2 levels &quot;Male&quot;,&quot;Female&quot;: 1 2 2 1 1 2 1 1 2 1 ...
+##  $ weight    : num  35 37.1 43.1 38.1 54.1 ...
+##  $ height    : int  173 164 178 182 159 166 153 159 166 163 ...
+##  $ date_birth: chr  &quot;1/7/1973&quot; &quot;28/2/1980&quot; &quot;31/12/1978&quot; &quot;12/1/1997&quot; ...
+##  $ amount    : int  100 121 152 133 143 155 117 143 155 117 ...
+##  $ date_last : chr  &quot;2/29/2016&quot; &quot;4/1/2017&quot; &quot;10/31/2015&quot; &quot;11/1/2016&quot; ...
+##  $ date first: Date, format: &quot;2013-07-31&quot; &quot;2013-08-31&quot; ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..$ cols   :List of 10
+##   .. ..$ X1        : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
+##   .. ..$ X2        : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   .. ..$ dept      : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   .. ..$ gender    :List of 3
+##   .. .. ..$ levels    : chr  &quot;Male&quot; &quot;Female&quot;
+##   .. .. ..$ ordered   : logi FALSE
+##   .. .. ..$ include_na: logi FALSE
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_factor&quot; &quot;collector&quot;
+##   .. ..$ weight    : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_double&quot; &quot;collector&quot;
+##   .. ..$ height    : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
+##   .. ..$ date_birth: list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   .. ..$ amount    : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
+##   .. ..$ date_last : list()
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
+##   .. ..$ date first:List of 1
+##   .. .. ..$ format: chr &quot;&quot;
+##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_date&quot; &quot;collector&quot;
+##   ..$ default: list()
+##   .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_guess&quot; &quot;collector&quot;
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
+
 </div>
 </div>
 <!-- </div> -->

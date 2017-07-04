@@ -166,7 +166,56 @@ apply( my.df[,5:7], 2, function (x,y) x^y, y=3 )
 
 ## Data Import
 
+### Data Import Performance
+
+There are multiple ways to import data into R, most common ones are discussed here:  
+
+- Base **read.table**  
+- **data.table::fread**  
+- **readr::read_csv**  
+
+#### Comparison
+
+Below comparison charts shows **reading performance relative to data.table::fread**:  
+
+- Base **read.table** is more than 5x slower on large files  
+- **readr** performance is acceptable, and improving **closer to fread** at larger data file  
+
+![Fast Data Reading](./images/read_performance.jpg)  
+[Source](https://csgillespie.github.io/efficientR/5-3-importing-data.html#fast-data-reading)
+
+### What To Choose
+
+Few criterias must be considered when choosing the right import:  
+
+**Performance**  
+
+- **fread** is very high speed, follow by **readr**  
+- **read.table** is slow, and not suitable for large datasets  
+
+**Parsing Detection**  
+
+- **fread** autmatically detect header  
+- **fread** autmatically detect column delimeter and decimal  
+- **readr** auto parse date/time format if data in format "yyyy-mm-dd"  
+
+**Factor Conversion**  
+
+- **fread** and **read.table** both has **stringAsFactor=TRUE** option for auto conver string to factor  
+- In **readr**, need to manually specify which column to convert to factor, and all the factor levels values required definition upfront (downside)  
+
+**Progress Bar**  
+
+- **fread** and **readr** provides progress info when the loading is going to take a while  
+
+**Other Features**  
+
+- **readr** is part of tidyverse ecosystem, readr returns tibble and datafrma eobject  
+- **fread** has advance data manipulation functions at high speed, fread return data.table and data.frame object  
+
 ### Working Directory
+
+Before importing data into R, we must first check the **current working directory**, so that we can specify the **relative path** for the files we want to import.  
 
 To display the current working directory.  
 
@@ -180,21 +229,10 @@ To set the working directory, use below:
 setwd("...new path...)
 ```
 
-### Importing CSV
+### Sample Data File
 
-**read.csv** is a similar to **read.table** but with some defaults value set as below for convenience of CSV import.  
-
-In the resulting data.frame, row.names attribute are automatically assigned with sequence number starting from 1.  
-
-> **read.csv** ( file,   
-> $\quad$ header = TRUE  - contain header row  
-> $\quad$ sep = ","  - column seperator marked as ','  
-> $\quad$ dec = "."  - decimals marked as '.'  
-> $\quad$ na.strings = "NA"  - vectors that define missing data marking <NA>  
-> $\quad$ check.names = TRUE - col names with white space replaced with '.'   
-> $\quad$ stringsAsFactors = TRUE - convert string to factor  
-
-Examine the below example of data import process (Excel-->csv-->R data.frame):  
+We use sample data from excel, exported to CSV.  
+Following importing method shows the process of Excel-->csv-->R data.frame.    
 
 #### Original Excel Data Source
 
@@ -217,25 +255,91 @@ Examine the below example of data import process (Excel-->csv-->R data.frame):
 11,ID111,D3,Female,75.1,170,9/8/1979,135,2/1/2015,
 12,ID112,D2,Male,52.1,169,NULL,128,NA,
 13,ID113,D3,NULL,88.8,171,NULL,141,NA,
+### Importing CSV
 ```
-#### Import Into R Data Frame
 
-Example below specify multiple string elements that represents  **missing data** in the CSV file.  Also turn FALSE for stirngsAsFactors so all string columns are not converted to factor automatically.  
+### Base::read.csv
 
-**./** is a relative path represents  current R working directory. It can be replaced with complete non-relative path.  
+**read.csv** is a similar to **read.table** but with some defaults value set as below for convenience of CSV import.  
+
+In the resulting data.frame, row.names attribute are automatically assigned with sequence number starting from 1.  
+
+> **read.csv** ( file,   
+> $\quad$ header = TRUE  - contain header row  
+> $\quad$ sep = ","  - column seperator marked as ','  
+> $\quad$ dec = "."  - decimals marked as '.'  
+> $\quad$ na.strings = "NA"  - vectors that define missing data marking <NA>  
+> $\quad$ check.names = TRUE - col names with white space replaced with '.'   
+> $\quad$ stringsAsFactors = TRUE - convert string to factor  
+
+As an exmple, the import below:  
+
+- Specified multiple string elements that represents  **missing data** in the CSV file  
+- Set **stirngsAsFactors=FALSE** so that all string columns are not converted to factor automatically, on other words, they are imported as character  
+- **./** is a relative path represents  current R working directory. It can be replaced with complete non-relative path  
+- Default parameter **check.names=TRUE** automatically named 'unnamed' column, as well as replacing white spaces for column names with '.'  
 
 ```{r}
-sample.df <- read.csv ( file="./datasets/import_sample.csv", 
+sample.df <- read.csv ("./datasets/import_sample.csv", 
     stringsAsFactors = FALSE,
     na.strings=c('NA','NULL',''),
     encoding="UTF-8")
-sample.df
+
+sample.df [,-10]
 ```
-
-Parameter **check.names=TRUE** automatically named 'unnamed' column, as well as replacing white spaces for column names with '.'.  
-
-All non-numeric data are imported as **chr** due to stringsAsFactor=FALSE.  
 
 ```{r, collapse=TRUE}
 str(sample.df)
+```
+
+
+### data.table::fread
+
+> **fread** ( input,   
+> $\quad$ header = 'auto'  - auto detect header (if all non empty cells in first row character)  
+> $\quad$ sep = "auto"  - auto detect column  seperator  
+> $\quad$ dec = if (sep!=".") "." else ",", in a way automatic selected  
+> $\quad$ na.strings = "NA"  - vectors that define missing data marking <NA>  
+> $\quad$ check.names = FALSE - do not replace col names with white space  with '.'   
+> $\quad$ stringsAsFactors = FALSE - do not convert string to factor  
+> $\quad$ nrows = -1 - how many rows to read, default -1 means read all rows  
+> $\quad$ data.table = TRUE - return data.table object, FALSE - return data.frame object  
+
+```{r}
+library(data.table)
+
+my.dt = fread("./datasets/import_sample.csv",
+    stringsAsFactors = TRUE,
+    na.strings=c('NA','NULL',''),
+    check.names = TRUE,
+    data.table = FALSE)
+my.dt[,-10]
+
+str(my.dt)
+```
+
+### readr::read_csv
+
+- read_csv returns object type: **‘tbl_df’, ‘tbl’ and 'data.frame'**  
+
+> **read_csv** ( file,   
+> $\quad$ col_names = TRUE - first row is header, if FALSE or char vector to specify column names  
+> $\quad$ col_types = NULL - all columns type will be imputed based on first 100 rows, alternatively specify:  
+> $\quad$ $\quad$ list( Sepal.Length = col_double(), ...) 
+> $\quad$ na = c("", "NA") - characters used for detecting missing data <NA>  
+> $\quad$ skip = 0 - no skipping for first number of rows  
+> $\quad$ n_max = Inf - how many rows to read, default read all  
+
+```{r}
+library(readr)
+
+my.rd = read_csv("./datasets/import_sample.csv", 
+          na = c('NA','NULL',''),
+          col_types = list (
+            gender=col_factor(c('Male','Female'))
+          ))
+
+my.rd[,-10]
+
+str(my.rd)
 ```

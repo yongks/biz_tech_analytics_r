@@ -1,6 +1,6 @@
 ```{r setup_aggregation, echo=FALSE}
 ## global chunk option ##
-knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results = 'hold') 
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
 ```
 
 
@@ -9,6 +9,9 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 
 ## Library
 
+```{r}
+library(dplyr)
+```
 
 ## Sample Data
 Sample data used simulate two categorical-alike feature, and two numeric value feature:  
@@ -31,6 +34,7 @@ my.df = data.frame(
   stringsAsFactors = F
 )
 head(my.df)
+str(my.df)
 ```
 
 ## Frequency Table
@@ -264,6 +268,19 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 # aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above
 ```
 
+### dplyr::group_by, summarise()
+
+- After you learn **the power of dplyr**, you will forget about base R aggregate  
+- Below is the example of two level grouping, and aggregated value calculation of mean, min and max, lastly with the row count for each group  
+
+```{r}
+my.df %>%
+  group_by(com, dept) %>%
+  summarise( avg_value1 = mean(value1),
+             min_value1 = min(value1),
+             max_value1 = max(value1),
+             count = n())
+```
 
 ## R with SQL Emulation
 

@@ -173,6 +173,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html"><i class="fa fa-check"></i><b>4.4</b> Data Aggregation</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#tapply"><i class="fa fa-check"></i><b>4.4.1</b> tapply</a></li>
 <li class="chapter" data-level="4.4.2" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.4.2</b> aggretate - base R</a></li>
+<li class="chapter" data-level="4.4.3" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#dplyrgroup_by-summarise"><i class="fa fa-check"></i><b>4.4.3</b> dplyr::group_by, summarise()</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.5</b> R with SQL Emulation</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html#library-1"><i class="fa fa-check"></i><b>4.5.1</b> Library</a></li>
@@ -486,7 +487,7 @@ test  =<span class="st"> </span>raw[<span class="op">-</span>train.rows,]</code>
 ## 6 0.41 0.50  2 153   3       0    1</code></pre>
 <p>Check any <strong>class bias</strong> (skewness)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(raw<span class="op">$</span>left), <span class="dt">ylab=</span><span class="st">&#39;left&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;1=Yes, 0=No&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-211-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-213-1.png" width="864" /></p>
 <p>Calculate the <strong>Accuracy baseline</strong> - that is, probability of True(1) or False(0). Use whichever is higher.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>( <span class="kw">table</span>(raw<span class="op">$</span>left) )</code></pre></div>
 <pre><code>## 

@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-04">
+<meta name="date" content="2017-07-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -242,7 +242,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.5.2" data-path="6-5-filtering-data.html"><a href="6-5-filtering-data.html#subseting-data-frame"><i class="fa fa-check"></i><b>6.5.2</b> Subseting Data Frame</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a><ul>
+<li class="chapter" data-level="7" data-path="7-data-visualization.html"><a href="7-data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a><ul>
 <li class="chapter" data-level="7.1" data-path="7-1-library-used.html"><a href="7-1-library-used.html"><i class="fa fa-check"></i><b>7.1</b> Library used</a></li>
 <li class="chapter" data-level="7.2" data-path="7-2-sample-data-5.html"><a href="7-2-sample-data-5.html"><i class="fa fa-check"></i><b>7.2</b> Sample Data</a></li>
 <li class="chapter" data-level="7.3" data-path="7-3-histogram.html"><a href="7-3-histogram.html"><i class="fa fa-check"></i><b>7.3</b> Histogram</a><ul>
@@ -252,6 +252,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#single-dimension-data-2"><i class="fa fa-check"></i><b>7.5.1</b> Single Dimension Data</a></li>
@@ -672,7 +673,7 @@ These data are available in the <code>ROCR::prediction</code> object.</p>
        <span class="kw">c</span>(<span class="st">&quot;TP&quot;</span>, <span class="st">&quot;TN&quot;</span>, <span class="st">&quot;FP&quot;</span>,<span class="st">&quot;FN&quot;</span>), <span class="dt">horiz =</span> <span class="ot">TRUE</span>,
        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>,<span class="st">&#39;orange&#39;</span>), <span class="dt">bg =</span> <span class="st">&quot;grey96&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-234-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-237-1.png" width="864" /></p>
 <p><strong>Plot ROC Curve</strong><br />
 We can build a <strong><code>ROCR::performance</code> object, and plot it</strong> !<br />
 AUC is calculated with <code>ROCR::performance</code> as well.</p>
@@ -685,7 +686,7 @@ rocr.auc =<span class="st"> </span><span class="kw">as.numeric</span>(<span clas
     <span class="dt">main =</span> <span class="st">&#39;ROC Curve&#39;</span>)
 <span class="kw">mtext</span>(<span class="kw">paste</span>(<span class="st">&#39;auc : &#39;</span>, <span class="kw">round</span>(rocr.auc, <span class="dv">5</span>)))
 <span class="kw">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-235-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-238-1.png" width="864" /></p>
 <p><strong>Plot Accuracy</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;acc&quot;</span>)
 best.x =<span class="st"> </span>rocr.perf<span class="op">@</span>x.values[[<span class="dv">1</span>]][<span class="kw">which.max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])]
@@ -695,7 +696,7 @@ best.y =<span class="st"> </span><span class="kw">max</span>(rocr.perf<span clas
 <span class="kw">abline</span>(<span class="dt">h =</span> best.y, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">text</span>(best.x <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best.x, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">text</span>(<span class="fl">0.05</span>, best.y <span class="op">+</span><span class="st"> </span><span class="fl">0.05</span>, <span class="kw">round</span>(best.y, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-236-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-239-1.png" width="864" /></p>
 <p><strong>Plot Precesion</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocr.perf =<span class="st"> </span><span class="kw">performance</span>(rocr.pred, <span class="dt">measure =</span> <span class="st">&quot;prec&quot;</span>)
 best.x =<span class="st"> </span>rocr.perf<span class="op">@</span>x.values[[<span class="dv">1</span>]][<span class="kw">which.max</span>(rocr.perf<span class="op">@</span>y.values[[<span class="dv">1</span>]])]
@@ -705,7 +706,7 @@ best.y =<span class="st"> </span><span class="kw">max</span>(rocr.perf<span clas
 <span class="kw">abline</span>(<span class="dt">h =</span> best.y, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">text</span>(best.x <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>, <span class="fl">0.05</span>, <span class="kw">round</span>(best.x, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)
 <span class="kw">text</span>(<span class="fl">0.05</span>, best.y <span class="op">+</span><span class="st"> </span><span class="fl">0.05</span>, <span class="kw">round</span>(best.y, <span class="dv">5</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-237-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-240-1.png" width="864" /></p>
 <p><strong>Plot Multiple Metrices Into One Graph</strong><br />
 As we can see, <code>ROCR::performance</code> is good to build measure and plot for single y-axis measurement. It unfortunately <strong>does not support</strong> plotting multiple y-axis into one graph. Threfore, we shall build the plot using metrices table constructed earlier (variable <code>rocr.metrics</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">### set initial margin of the plot
@@ -741,7 +742,7 @@ best =<span class="st"> </span>rocr.metrics<span class="op">$</span>cutoff[<span
        <span class="kw">c</span>(<span class="st">&quot;TPR&quot;</span>, <span class="st">&quot;FPR&quot;</span>, <span class="st">&quot;TPR/FPR&quot;</span>, <span class="st">&quot;ROC&quot;</span>, <span class="st">&quot;Accuracy&quot;</span>, <span class="st">&quot;Precision&quot;</span>, <span class="st">&quot;F1-Score&quot;</span>),
        <span class="dt">horiz =</span> <span class="ot">FALSE</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">lwd =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>),
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;purple&#39;</span>, <span class="st">&#39;cyan&#39;</span>, <span class="st">&#39;pink&#39;</span>), <span class="dt">bg =</span> <span class="st">&quot;grey96&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-238-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-241-1.png" width="864" /></p>
 
 </div>
 </div>

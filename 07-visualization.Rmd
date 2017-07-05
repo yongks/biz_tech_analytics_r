@@ -3,7 +3,7 @@
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
 ```
 
-# Graphic Visualization
+# Data Visualization
 
 This chapter compares various method to plotting using base-R and ggplot.
 
@@ -41,17 +41,19 @@ head(my.df)
 
 ### Single Dimension Data
 - Require **x** as numerical data
-- In **hist**, **binwidth** setting is not available, only breaks (number of bins) can be specified
-- Default hist/ggplot/qplot number of bins is **30**
-- In **qplot**, single x numerical variable **default to histogram**
-- You can't specify both **bins/breaks** and **bindwidth** together, as it implies each other
 
+#### Base Graphic
+- In **hist**, **binwidth** setting is not available, only breaks (number of bins) can be specified
 ```{r, fig.width=9}
 par(mfrow=c(1,2))
 hist  (my.df$value1) # default breaks = 30
 hist  (my.df$value1, breaks=3)
 ```
 
+#### ggplot2
+- Default hist/ggplot/qplot number of bins is **30**
+- In **qplot**, single x numerical variable **default to histogram**
+- You can't specify both **bins/breaks** and **bindwidth** together, as it implies each other
 ```{r}
 qplot (data = my.df, x=value1)
 qplot (data = my.df, x=value1, geom='histogram')
@@ -60,7 +62,6 @@ ggplot(data = my.df, aes(x=value1)) + geom_histogram() # default bins = 30
 ggplot(data = my.df, aes(x=value1)) + geom_histogram(bins = 15)
 ggplot(data = my.df, aes(x=value1)) + geom_histogram(binwidth = 10)
 ```
-
 
 ### Two Dimension Data
 - x = numerical data  
@@ -75,12 +76,14 @@ ggplot(data = my.df, aes(x=value1, fill=grp)) + geom_histogram()
 ### Two Dimension Data
 - Use scatter plot to represent **correlation** between two numeric variables
 - x = number, y = number  
-- qplot default to **geom_point** when two numerical value is supplied for x and y
 
-```{r, fig.width=8}
+#### Base Graphic
+```{r, fig.height=3.5, fig.width=8}
 plot  (my.df$value1, my.df$value2)
 ```
 
+#### ggplot2
+- qplot default to **geom_point** when two numerical value is supplied for x and y
 ```{r}
 qplot (data = my.df, x = value1, y = value2)
 qplot (data = my.df, x = value1, y = value2, geom='point')
@@ -89,18 +92,59 @@ ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point()
 
 
 ### Two + One Dimension Data
-- Base-R does not support extra dimension visualization
+
+#### Base Graphic
+- Base-R uses **col** parameter to represent third dimension
+- **col** accept vector of number, color name or factor
+- Use **factor** to **automatically** assign colors (ensure it is factor type, otherwise, R will complain invalid color name)
+
+```{r, fig.width=9}
+par(mfrow=c(1,2))
+plot  (my.df$value1, my.df$value2, col=c('green','blue','red'))
+plot  (my.df$value1, my.df$value2, col=as.factor(my.df$grp))
+# plot  (my.df$value1, my.df$value2, col=my.df$grp)  ... error due to not recognized color name
+par(mfrow=c(1,1))
+```
+
+#### ggplot2
 - In **qplot/ggplot**, the third dimension of data can be represented by assigning **color** parameter to the third variable
 - Note that **fill has not effect** on scatter plot. **fill** should only be used for bar like chart eg. **geom_hist** or **gem_bar**
-
-```{r, fig.width=8}
-plot  (my.df$value1, my.df$value2)
-```
 
 ```{r}
 qplot (data = my.df, x = value1, y = value2, color = grp, geom='point')
 ggplot(data = my.df, aes(x=value1, y=value2, color = grp)) + geom_point()
 ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point()
+```
+
+### Overlay Smooth Line
+
+#### Base Graphic
+- Base graphic allow **abline** to superimpose additional line into current plot
+- For add on **linear line**, use abline with lm object
+- **scatter.smooth** make it easy to impose a **loess smoothing line**
+```{r, fig.height=3.5, fig.width=8}
+par(mfrow=c(1,2))
+
+plot  (my.df$value1, my.df$value2, main='linear line')
+abline(lm(my.df$value2~my.df$value1))
+
+scatter.smooth(my.df$value1, my.df$value2, main='smooth line')
+```
+
+#### ggplot2
+- Smooth line is possible for scatter plot, as it require X and Y numeric variables  
+- Smooth line can be added with either **linear or loess** method
+- With overlapping third dimension variable (color), smoothline is also **overlapped**, hence not a good idea
+- default confidence interval is **level=0.95**, specify **0** to hide the interval
+```{r, fig.width=3}
+ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point() + 
+  geom_smooth()          # default method='loess'
+
+ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point() + 
+  geom_smooth(level=0)   # hide interval with level=0
+
+ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point() +
+  geom_smooth(method='lm', level=0.75)
 ```
 
 
@@ -116,6 +160,12 @@ ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point()
 par(mfrow=c(1,2))
 plot(as.factor(my.df$dept))
 barplot(table(my.df$dept))
+```
+
+```{r}
+qplot (data = my.df, x=dept)
+qplot (data = my.df, x=dept, geom='bar')
+ggplot(data = my.df, aes(x=dept)) + geom_bar()
 ```
 
 ```{r}
@@ -207,7 +257,7 @@ ggplot (data = my.df, aes(x=interaction(grp,dept) , y=value1)) + geom_boxplot()
 
 ### Double Y-Axis Scale
 
-```{r}
+```{r fig.width=7, fig.height=4}
 ## set up some fake test data
 time <- seq(0, 72, 12)
 betagal.abs <- c(0.05, 0.18, 0.25, 0.31, 0.32, 0.34, 0.35)

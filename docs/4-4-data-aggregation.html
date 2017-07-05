@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-04">
+<meta name="date" content="2017-07-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -242,7 +242,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="6.5.2" data-path="6-5-filtering-data.html"><a href="6-5-filtering-data.html#subseting-data-frame"><i class="fa fa-check"></i><b>6.5.2</b> Subseting Data Frame</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="7-graphic-visualization.html"><a href="7-graphic-visualization.html"><i class="fa fa-check"></i><b>7</b> Graphic Visualization</a><ul>
+<li class="chapter" data-level="7" data-path="7-data-visualization.html"><a href="7-data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a><ul>
 <li class="chapter" data-level="7.1" data-path="7-1-library-used.html"><a href="7-1-library-used.html"><i class="fa fa-check"></i><b>7.1</b> Library used</a></li>
 <li class="chapter" data-level="7.2" data-path="7-2-sample-data-5.html"><a href="7-2-sample-data-5.html"><i class="fa fa-check"></i><b>7.2</b> Sample Data</a></li>
 <li class="chapter" data-level="7.3" data-path="7-3-histogram.html"><a href="7-3-histogram.html"><i class="fa fa-check"></i><b>7.3</b> Histogram</a><ul>
@@ -252,6 +252,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#single-dimension-data-2"><i class="fa fa-check"></i><b>7.5.1</b> Single Dimension Data</a></li>
@@ -558,8 +559,7 @@ Change from FUN=length to sum results in <strong>error</strong> because sum() ca
 <em><strong><em>aggregate( x = df[,c(…)], by = df[,c(…)]), FUN = function) </em></strong></em><br />
 <em><strong><em>aggregate( x = df[, p:q], by = df[,s:t]), FUN = function) </em></strong></em></p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span>(<span class="dt">x=</span>my.df[, <span class="kw">c</span>(<span class="dt">v1_mean=</span><span class="st">&#39;value1&#39;</span>, <span class="st">&#39;value2&#39;</span>)], <span class="dt">by=</span>my.df[,<span class="kw">c</span>(<span class="dt">GRP=</span><span class="st">&#39;grp&#39;</span>, <span class="st">&#39;dept&#39;</span>)], <span class="dt">FUN=</span>mean)
-<span class="co"># aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">aggregate</span>(<span class="dt">x=</span>my.df[, <span class="kw">c</span>(<span class="dt">v1_mean=</span><span class="st">&#39;value1&#39;</span>, <span class="st">&#39;value2&#39;</span>)], <span class="dt">by=</span>my.df[,<span class="kw">c</span>(<span class="dt">GRP=</span><span class="st">&#39;grp&#39;</span>, <span class="st">&#39;dept&#39;</span>)], <span class="dt">FUN=</span>mean)</code></pre></div>
 <pre><code>##   grp dept   value1   value2
 ## 1  G1   D1 49.19603 19.74277
 ## 2  G2   D1 50.23397 20.99601
@@ -567,6 +567,7 @@ Change from FUN=length to sum results in <strong>error</strong> because sum() ca
 ## 4  G2   D2 52.20157 19.65301
 ## 5  G1   D3 51.81631 19.13836
 ## 6  G2   D3 50.34312 20.54948</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above</span></code></pre></div>
 </div>
 </div>
 <div id="dplyrgroup_by-summarise" class="section level3">

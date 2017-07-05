@@ -1,6 +1,6 @@
 ```{r setup_aggregation, echo=FALSE}
 ## global chunk option ##
-knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold') 
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results='markup') 
 ```
 
 

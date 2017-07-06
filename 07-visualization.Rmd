@@ -14,6 +14,7 @@ This chapter compares various method to plotting using base-R and ggplot.
 
 ```{r}
 library(ggplot2)    ## ggplot, qplot
+library(dplyr)
 ```
 
 
@@ -213,6 +214,19 @@ g + geom_bar(position=position_dodge(1.0))
 
 ### In-Bar Text Labeling
 
+## Pie Chart
+- Pie chart is basically a **geom_col stacked bar**, with **coord_polar()**  
+- Somehow, width=1 is required, otherwise a small empty circle will be formed at the middle  
+```{r}
+g = my.df %>% 
+  group_by(dept) %>%
+  summarize(value1 = sum(value1)) %>%
+  ggplot (aes(x='',y=value1,fill=dept)) + geom_col(width=1) + ylab('Volume 1')
+
+g
+g + coord_polar(theta='y') + 
+  theme(axis.title.y = element_blank())
+```
 
 ## Box Plot
 
@@ -251,9 +265,105 @@ qplot  (data = my.df, x=interaction(grp,dept) , y=value1, geom='boxplot')
 ggplot (data = my.df, aes(x=interaction(grp,dept) , y=value1)) + geom_boxplot()
 ```
 
-## Pie Chart
 
-## Advance
+## ggplot Customization
+
+```{r}
+g = ggplot(data = my.df, aes(x=dept, fill=grp)) + geom_bar()
+```
+
+### Title, Subtitle, Caption and Labels
+
+#### Title and Subtitle
+```{r}
+g + ggtitle('This Is Important Chart')
+g + labs(title='This Is Another Way To Set Main Title', subtitle='Another Subtitle')
+```
+
+#### Axis Label
+```{r}
+g + xlab('My X Axis')
+g + ylab('My Y Axis')
+g + labs(x='My New X Axis Label', y='My New Y Axis Label')
+```
+
+#### Caption
+```{r}
+g + labs(caption = "(based on data from ...ABC)")
+```
+
+### Axis Scale and Ticks  
+
+**Simple Method**  
+
+- **xlim** and **ylim** is a quick way to set axis limit  
+- **Beware** that setting limits too low will **discard** observations that beyonds the limit  
+```{r}
+g + ylim(0,40)
+g + xlim('D3','D2','D5')
+```
+
+**Comprehensive Method with label and breaks**  
+
+- **scale_** is a combination way to set limits, at the same time setting label and breaks, however, it is slightly complex in syntax - **Beware** that setting limits too low will **discard** observations that beyonds the limit  
+- Use **continous** for number, use **discrete** for categorical  
+```{r}
+g + scale_y_continuous('Another Y Label', limits=c(0,40), breaks=seq(0,50,by=5))
+g + scale_x_discrete  ('Another X Label', limits=c('D3','D2','D5'))
+```
+
+
+### Customize Components
+Let's customize a uggly plot:  
+- axis.title changes both axis.title.x and axis.title.y  
+- axis.text  changes both axis.text.x and axis.text.y  
+- axis.ticks changes both axis.ticks.x and axis.ticks.y  
+
+```{r, fig.width=7, fig.height=3}
+g + labs(title='Main Title', subtitle='My Subtitle', caption='(sourced form ABC)') + 
+  theme(
+  plot.title   = element_text (face = "bold", color = 'orange', size = 12.5),
+  axis.title.x = element_text (face = "bold", color = 'blue', size = 12.5),
+  axis.title.y = element_text (face = "bold", color = 'red', size = 12.5),
+  axis.text.x  = element_text (face = 'bold', color = 'red',    size = 10.0, angle = (90), hjust = 1, vjust = 0.5),
+  axis.text.y  = element_text (face = 'bold', color = 'blue',   size = 10.0),
+  axis.ticks   = element_line (color = 'green', size = 5, linetype = 5),
+  axis.line    = element_line (color = 'grey',  size = 2, linetype = 3)
+)
+```
+
+### Clearing Components
+```{r}
+# Hide x an y axis tick mark labels
+g + theme(
+  axis.text.x = element_blank(),
+  axis.text.y = element_blank())
+# Remove axis ticks and tick mark labels
+g + theme(
+  axis.text.x = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks =  element_blank())
+```
+
+### Themes
+```{r,echo=FALSE}
+g <- ggplot(mtcars) + geom_point(aes(x = wt, y = mpg,
+    colour = factor(gear))) + facet_wrap(~am)
+```
+ggplot comes with several **great themes** to quickly set the appearance of the plot.  Difference are the background and grid styles.
+```{r, fig.width=7, fig.height=2.5}
+g + theme_gray() + ggtitle('theme_gray')  # default
+g + theme_bw() + ggtitle('theme_bw')
+g + theme_linedraw() + ggtitle('theme_linedraw')
+g + theme_light() + ggtitle('theme_light')
+g + theme_dark() + ggtitle('theme_dark')
+g + theme_classic() + ggtitle('theme_classic')
+g + theme_minimal() + ggtitle('theme_minimal')
+g + theme_void() + ggtitle('theme_void')
+```
+
+
+## Base Customization
 
 ### Double Y-Axis Scale
 
@@ -292,3 +402,21 @@ legend("topleft", legend = c("Beta Gal", "Cell Density"),
   text.col = c("black", "red"), pch = c(16, 15), col = c("black", "red"))
 
 ```
+
+## Other Aesthetics
+
+### Point Symbols
+ggplot2 correspond to base R point symbols.  While all symbols have a foreground colour, **symbols 19-25** also take a background colour (fill)  
+![Point Shapes](images/point_shapes.jpg)  
+
+
+### Line types
+ggplot2 correspond to base R line types  
+![Line Types](images/line_types.jpg)  
+
+### Colors
+[Source](http://www.sthda.com/english/wiki/colors-in-r)  
+
+
+### Other Sources
+[Monash](http://users.monash.edu.au/~murray/AIMS-R-users/ws/ws11.html)

@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-05">
+<meta name="date" content="2017-07-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -136,7 +136,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="7.7" data-path="7-7-pie-chart.html"><a href="7-7-pie-chart.html"><i class="fa fa-check"></i><b>7.7</b> Pie Chart</a></li>
 <li class="chapter" data-level="7.8" data-path="7-8-advance.html"><a href="7-8-advance.html"><i class="fa fa-check"></i><b>7.8</b> Advance</a><ul>
-<li class="chapter" data-level="7.8.1" data-path="7-8-advance.html"><a href="7-8-advance.html#double-y-axis-scale"><i class="fa fa-check"></i><b>7.8.1</b> Double Y-Axis Scale</a></li>
+<li class="chapter" data-level="7.8.1" data-path="7-8-advance.html"><a href="7-8-advance.html#ggplot-customization"><i class="fa fa-check"></i><b>7.8.1</b> ggplot Customization</a></li>
+<li class="chapter" data-level="7.8.2" data-path="7-8-advance.html"><a href="7-8-advance.html#base-graphics"><i class="fa fa-check"></i><b>7.8.2</b> Base Graphics</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
@@ -164,8 +165,99 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="advance" class="section level2">
 <h2><span class="header-section-number">7.8</span> Advance</h2>
-<div id="double-y-axis-scale" class="section level3">
-<h3><span class="header-section-number">7.8.1</span> Double Y-Axis Scale</h3>
+<div id="ggplot-customization" class="section level3">
+<h3><span class="header-section-number">7.8.1</span> ggplot Customization</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">fill=</span>grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
+<div id="changing-title-subtitle-caption-and-labels" class="section level4">
+<h4><span class="header-section-number">7.8.1.1</span> Changing Title, Subtitle, Caption and Labels</h4>
+<p><strong>Title and Subtitle</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;This Is Important Chart&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;This Is Another Way To Set Main Title&#39;</span>, <span class="dt">subtitle=</span><span class="st">&#39;Another Subtitle&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-24-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-24-2.png" width="256.6656" /></p>
+<p><strong>Axis Label</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&#39;My X Axis&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&#39;My Y Axis&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&#39;My New X Axis Label&#39;</span>, <span class="dt">y=</span><span class="st">&#39;My New Y Axis Label&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-25-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-25-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-25-3.png" width="256.6656" /></p>
+<p><strong>Caption</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&quot;(based on data from ...ABC)&quot;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-26-1.png" width="256.6656" /></p>
+</div>
+<div id="changing-axis-scale-and-ticks" class="section level4">
+<h4><span class="header-section-number">7.8.1.2</span> Changing Axis Scale and Ticks</h4>
+<p><strong>Simple Method</strong></p>
+<ul>
+<li><strong>xlim</strong> and <strong>ylim</strong> is a quick way to set axis limit<br />
+</li>
+<li><strong>Beware</strong> that setting limits too low will <strong>discard</strong> observations that beyonds the limit</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>,<span class="dv">40</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="st">&#39;D3&#39;</span>,<span class="st">&#39;D2&#39;</span>,<span class="st">&#39;D5&#39;</span>)</code></pre></div>
+<pre><code>## Warning: Removed 42 rows containing non-finite values (stat_count).</code></pre>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-27-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-27-2.png" width="256.6656" /></p>
+<p><strong>Comprehensive Method with label and breaks</strong></p>
+<ul>
+<li><strong>scale_</strong> is a combination way to set limits, at the same time setting label and breaks, however, it is slightly complex in syntax - <strong>Beware</strong> that setting limits too low will <strong>discard</strong> observations that beyonds the limit<br />
+</li>
+<li>Use <strong>continous</strong> for number, use <strong>discrete</strong> for categorical</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_continuous</span>(<span class="st">&#39;Another Y Label&#39;</span>, <span class="dt">limits=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">40</span>), <span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dt">by=</span><span class="dv">5</span>))
+g <span class="op">+</span><span class="st"> </span><span class="kw">scale_x_discrete</span>  (<span class="st">&#39;Another X Label&#39;</span>, <span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&#39;D3&#39;</span>,<span class="st">&#39;D2&#39;</span>,<span class="st">&#39;D5&#39;</span>))</code></pre></div>
+<pre><code>## Warning: Removed 42 rows containing non-finite values (stat_count).</code></pre>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-28-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-28-2.png" width="256.6656" /></p>
+</div>
+<div id="customize-components" class="section level4">
+<h4><span class="header-section-number">7.8.1.3</span> Customize Components</h4>
+<ul>
+<li>axis.title changes both axis.title.x and axis.title.y<br />
+</li>
+<li>axis.text changes both axis.text.x and axis.text.y<br />
+</li>
+<li>axis.ticks changes both axis.ticks.x and axis.ticks.y</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&#39;Main Title&#39;</span>, <span class="dt">subtitle=</span><span class="st">&#39;My Subtitle&#39;</span>, <span class="dt">caption=</span><span class="st">&#39;(sourced form ABC)&#39;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme</span>(
+  <span class="dt">plot.title   =</span> <span class="kw">element_text</span> (<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">color =</span> <span class="st">&#39;orange&#39;</span>, <span class="dt">size =</span> <span class="fl">12.5</span>),
+  <span class="dt">axis.title.x =</span> <span class="kw">element_text</span> (<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">color =</span> <span class="st">&#39;blue&#39;</span>, <span class="dt">size =</span> <span class="fl">12.5</span>),
+  <span class="dt">axis.title.y =</span> <span class="kw">element_text</span> (<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">size =</span> <span class="fl">12.5</span>),
+  <span class="dt">axis.text.x  =</span> <span class="kw">element_text</span> (<span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;red&#39;</span>,    <span class="dt">size =</span> <span class="fl">10.0</span>, <span class="dt">angle =</span> (<span class="dv">90</span>), <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>),
+  <span class="dt">axis.text.y  =</span> <span class="kw">element_text</span> (<span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>, <span class="dt">color =</span> <span class="st">&#39;blue&#39;</span>,   <span class="dt">size =</span> <span class="fl">10.0</span>),
+  <span class="dt">axis.ticks   =</span> <span class="kw">element_line</span> (<span class="dt">color =</span> <span class="st">&#39;green&#39;</span>, <span class="dt">size =</span> <span class="dv">5</span>, <span class="dt">linetype =</span> <span class="dv">5</span>),
+  <span class="dt">axis.line    =</span> <span class="kw">element_line</span> (<span class="dt">color =</span> <span class="st">&#39;grey&#39;</span>,  <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">linetype =</span> <span class="dv">3</span>)
+)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+<div id="clearing-components" class="section level4">
+<h4><span class="header-section-number">7.8.1.4</span> Clearing Components</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Hide x an y axis tick mark labels</span>
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(
+  <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),
+  <span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>())
+<span class="co"># Remove axis ticks and tick mark labels</span>
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(
+  <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),
+  <span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),
+  <span class="dt">axis.ticks =</span>  <span class="kw">element_blank</span>())</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-30-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-30-2.png" width="256.6656" /></p>
+</div>
+<div id="themes" class="section level4">
+<h4><span class="header-section-number">7.8.1.5</span> Themes</h4>
+<p>ggplot comes with several great themes to quickly set the appearance of the plot. Difference are the background and grid styles.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g <span class="op">+</span><span class="st"> </span><span class="kw">theme_gray</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_gray&#39;</span>)  <span class="co"># default</span>
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_bw&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_linedraw</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_linedraw&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_light</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_light&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_dark</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_dark&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_classic&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_minimal&#39;</span>)
+g <span class="op">+</span><span class="st"> </span><span class="kw">theme_void</span>() <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(<span class="st">&#39;theme_void&#39;</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-1.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-2.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-3.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-4.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-5.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-6.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-7.png" width="672" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-8.png" width="672" /></p>
+</div>
+</div>
+<div id="base-graphics" class="section level3">
+<h3><span class="header-section-number">7.8.2</span> Base Graphics</h3>
+<div id="double-y-axis-scale" class="section level4">
+<h4><span class="header-section-number">7.8.2.1</span> Double Y-Axis Scale</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## set up some fake test data
 time &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">72</span>, <span class="dv">12</span>)
 betagal.abs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.05</span>, <span class="fl">0.18</span>, <span class="fl">0.25</span>, <span class="fl">0.31</span>, <span class="fl">0.32</span>, <span class="fl">0.34</span>, <span class="fl">0.35</span>)
@@ -198,8 +290,9 @@ cell.density &lt;-<span class="st"> </span><span class="kw">c</span>(<span class
 ## Add Legend
 <span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Beta Gal&quot;</span>, <span class="st">&quot;Cell Density&quot;</span>),
   <span class="dt">text.col =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">16</span>, <span class="dv">15</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 
+</div>
 </div>
 </div>
 <!-- </div> -->

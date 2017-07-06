@@ -175,37 +175,38 @@ qplot (data = my.df, x=dept, geom='bar')
 ggplot(data = my.df, aes(x=dept)) + geom_bar()
 ```
 
-### Two Dimension
+### 1xCatgorical + 1xNumeric
 This is the data, we summarize department, and derive **total value for each department**, and their **proportion**.  
 ```{r}
 tmp = my.df %>%
-  group_by(dept) %>%
+  group_by(dept, grp) %>%
   summarize(total_value1 = sum(value1)) %>%
   mutate(pct_value1 = total_value1/sum(total_value1))
   
 tmp
 ```
 
-#### Base R
-
+#### Normal Bar Chart
+**Base Graphic**  
+Height is actual value for y-axis  
 ```{r}
 barplot(height=tmp$total_value1, names=tmp$dept, col='darkred')
 barplot(height=tmp$total_value1, names=tmp$dept, horiz=TRUE)
 ```
-#### ggplot
-**Normal Bar Chart**  
-Height is actual value  
+
+**ggplot**  
 ```{r}
 ggplot (tmp, aes(x=dept, y=total_value1)) +geom_col()
 ```
 
-**Stacked Bar Chart**  
-Height = 1 (100%)  
+####Stacked Bar Chart
+Stacking in base graphic require matrix data, hence not demonstrated here.  
 ```{r}
 ggplot (tmp, aes(x=0, y=pct_value1, fill=dept)) +geom_col()
 ```
+Height = 1 (100%)  
 
-### Two + One Dimension Data
+### 2xCategorical + 1xFreq
 - Use **fill**  to introduce extra variable visualizion in filling the bar
 - Use **color** to have the extra variable represented with **border** color
 ```{r}
@@ -215,11 +216,14 @@ ggplot(data = my.df, aes(x = dept, fill = grp)) + geom_bar()
 ggplot(data = my.df, aes(x = dept, color= grp)) + geom_bar()
 ```
 
-### Reordering
+### 2xCategorical + 1xNumeric
 
-```{r,fig.width=8}
-
+```{r}
+ggplot (tmp, 
+  aes(x=dept, y=total_value1, fill=grp)) + 
+  geom_col()
 ```
+
 
 ```{r}
 qplot (data = my.df, x=dept)

@@ -175,6 +175,36 @@ qplot (data = my.df, x=dept, geom='bar')
 ggplot(data = my.df, aes(x=dept)) + geom_bar()
 ```
 
+### Two Dimension
+This is the data, we summarize department, and derive **total value for each department**, and their **proportion**.  
+```{r}
+tmp = my.df %>%
+  group_by(dept) %>%
+  summarize(total_value1 = sum(value1)) %>%
+  mutate(pct_value1 = total_value1/sum(total_value1))
+  
+tmp
+```
+
+#### Base R
+
+```{r}
+barplot(height=tmp$total_value1, names=tmp$dept, col='darkred')
+barplot(height=tmp$total_value1, names=tmp$dept, horiz=TRUE)
+```
+#### ggplot
+**Normal Bar Chart**  
+Height is actual value  
+```{r}
+ggplot (tmp, aes(x=dept, y=total_value1)) +geom_col()
+```
+
+**Stacked Bar Chart**  
+Height = 1 (100%)  
+```{r}
+ggplot (tmp, aes(x=0, y=pct_value1, fill=dept)) +geom_col()
+```
+
 ### Two + One Dimension Data
 - Use **fill**  to introduce extra variable visualizion in filling the bar
 - Use **color** to have the extra variable represented with **border** color
@@ -265,6 +295,9 @@ qplot  (data = my.df, x=interaction(grp,dept) , y=value1, geom='boxplot')
 ggplot (data = my.df, aes(x=interaction(grp,dept) , y=value1)) + geom_boxplot()
 ```
 
+## Side By Side Plots
+
+
 
 ## ggplot Customization
 
@@ -276,8 +309,8 @@ g = ggplot(data = my.df, aes(x=dept, fill=grp)) + geom_bar()
 
 #### Title and Subtitle
 ```{r}
-g + ggtitle('This Is Important Chart')
-g + labs(title='This Is Another Way To Set Main Title', subtitle='Another Subtitle')
+g + ggtitle('Main Title')
+g + labs(title='Main Title', subtitle='My Subtitle')
 ```
 
 #### Axis Label
@@ -288,8 +321,9 @@ g + labs(x='My New X Axis Label', y='My New Y Axis Label')
 ```
 
 #### Caption
+Caption is shwon bottom right.  
 ```{r}
-g + labs(caption = "(based on data from ...ABC)")
+g + labs(caption = "(original)")
 ```
 
 ### Axis Scale and Ticks  
@@ -305,7 +339,7 @@ g + xlim('D3','D2','D5')
 
 **Comprehensive Method with label and breaks**  
 
-- **scale_** is a combination way to set limits, at the same time setting label and breaks, however, it is slightly complex in syntax - **Beware** that setting limits too low will **discard** observations that beyonds the limit  
+- **scale_** is a combination way to set limits, at the same time setting label and breaks, however, it is slightly complex in syntax   - **Beware** that setting limits too low will **discard** observations that beyonds the limit  
 - Use **continous** for number, use **discrete** for categorical  
 ```{r}
 g + scale_y_continuous('Another Y Label', limits=c(0,40), breaks=seq(0,50,by=5))
@@ -314,7 +348,7 @@ g + scale_x_discrete  ('Another X Label', limits=c('D3','D2','D5'))
 
 
 ### Customize Components
-Let's customize a uggly plot:  
+Let's customize an ugly plot:  
 - axis.title changes both axis.title.x and axis.title.y  
 - axis.text  changes both axis.text.x and axis.text.y  
 - axis.ticks changes both axis.ticks.x and axis.ticks.y  
@@ -363,10 +397,8 @@ g + theme_void() + ggtitle('theme_void')
 ```
 
 
-## Base Customization
-
-### Double Y-Axis Scale
-
+## Double Y-Axis Scale
+Unfortunately, double Y axis in a single plot is **not supported by ggplot**. 
 ```{r fig.width=7, fig.height=4}
 ## set up some fake test data
 time <- seq(0, 72, 12)

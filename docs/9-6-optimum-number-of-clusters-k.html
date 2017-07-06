@@ -255,7 +255,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#single-dimension-data-2"><i class="fa fa-check"></i><b>7.5.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
 <li class="chapter" data-level="7.5.2" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#xcatgorical-1xnumeric"><i class="fa fa-check"></i><b>7.5.2</b> 1xCatgorical + 1xNumeric</a></li>
 <li class="chapter" data-level="7.5.3" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#xcategorical-1xfreq"><i class="fa fa-check"></i><b>7.5.3</b> 2xCategorical + 1xFreq</a></li>
 <li class="chapter" data-level="7.5.4" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#xcategorical-1xnumeric"><i class="fa fa-check"></i><b>7.5.4</b> 2xCategorical + 1xNumeric</a></li>
@@ -475,7 +475,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)     <span class="co"># mark the optimum K after facts </span>
 ## [1] 28.000000 12.865178  2.467904  2.191659  2.038777  0.785887  1.396947
 ## [8]  1.030988</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-194-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-193-1.png" width="864" /></p>
 <p>The wssplot above indicates that there is a <strong>distinct drop</strong> in the within-groups sum of squares when moving <strong>from 1 to 3 clusters</strong>. After three clusters, this <strong>decrease drops off</strong>, suggestign that a three-cluster solution may be a good fit to the data.</p>
 </div>
 <div id="elbow-codes---using-factoextrafviz_nbclusthcut" class="section level4">
@@ -496,7 +496,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <span class="kw">fviz_nbclust</span>(data.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
 <span class="kw">fviz_nbclust</span>(data.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">3</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-196-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-196-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-196-3.png" width="254.4" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-195-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-195-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-195-3.png" width="254.4" /></p>
 </div>
 </div>
 <div id="average-silhoutte-method" class="section level3">
@@ -537,7 +537,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <span class="kw">fviz_nbclust</span>(data.scaled, kmeans, <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;kmeans&#39;</span>)
 <span class="kw">fviz_nbclust</span>(data.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
 <span class="kw">fviz_nbclust</span>(data.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-198-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-198-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-198-3.png" width="254.4" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-197-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-197-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-197-3.png" width="254.4" /></p>
 </div>
 </div>
 <div id="nbclust-package-with-30-indices" class="section level3">
@@ -604,13 +604,13 @@ nbc.kmeans =<span class="st"> </span><span class="kw">NbClust</span>(data.scaled
 ## 
 ##  0  1  2  3  5  7  8 
 ##  2  1  2 15  1  1  4</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-201-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-201-2.png" width="384" /></p>
 <p><strong>Visualize using <code>factoextra::fviz_nbclust()</code></strong></p>
 <p>Single function <code>fviz_nbclust()</code> from <code>factoextra</code> library will use value in <strong>NbClust</strong> object to visualize the optimal cluster number. <code>fviz_nbclus</code> output <code>ggplot</code> object, hence can be easily customized.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&#39;factoextra&#39;</span>)
 <span class="kw">fviz_nbclust</span>(nbc.hclust) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;H-Cluster&#39;</span>)
 <span class="kw">fviz_nbclust</span>(nbc.kmeans) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;K-Means&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-203-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-203-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-2.png" width="384" /></p>
 </div>
 </div>
 </div>

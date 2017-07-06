@@ -255,7 +255,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
-<li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#single-dimension-data-2"><i class="fa fa-check"></i><b>7.5.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
 <li class="chapter" data-level="7.5.2" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#xcatgorical-1xnumeric"><i class="fa fa-check"></i><b>7.5.2</b> 1xCatgorical + 1xNumeric</a></li>
 <li class="chapter" data-level="7.5.3" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#xcategorical-1xfreq"><i class="fa fa-check"></i><b>7.5.3</b> 2xCategorical + 1xFreq</a></li>
 <li class="chapter" data-level="7.5.4" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#xcategorical-1xnumeric"><i class="fa fa-check"></i><b>7.5.4</b> 2xCategorical + 1xNumeric</a></li>
@@ -506,7 +506,7 @@ clusters
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(clusters), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">plot</span>( fit.average, <span class="dt">main=</span><span class="st">&#39;HCluster, Average-Linkage</span><span class="ch">\n</span><span class="st">3 Clusters Solution&#39;</span> )
 <span class="kw">rect.hclust</span>( fit.average, <span class="dt">k=</span><span class="dv">3</span>, <span class="dt">border =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span> )</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-207-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-207-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-206-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-206-2.png" width="384" /></p>
 </div>
 <div id="using-factoextra-package" class="section level4">
 <h4><span class="header-section-number">9.8.3.2</span> Using <code>factoextra</code> Package</h4>
@@ -534,7 +534,7 @@ clusters
 <p><strong>Display frequency table, Visualize with dendogram, superimpose cluster group</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>( <span class="kw">table</span>(fit.hc<span class="op">$</span>cluster), <span class="dt">xlab=</span><span class="st">&#39;Cluster Group Number&#39;</span>, <span class="dt">ylab=</span><span class="st">&#39;No. of Observations&#39;</span> ) 
 <span class="kw">fviz_dend</span>(fit.hc, <span class="dt">rect =</span> <span class="ot">TRUE</span>, <span class="dt">rect_border =</span> <span class="st">&#39;red&#39;</span>, <span class="dt">cex =</span> <span class="fl">0.5</span>, <span class="dt">lower_rect =</span> <span class="op">-</span><span class="fl">0.5</span>, <span class="dt">horiz =</span> T)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-211-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-211-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-210-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-210-2.png" width="384" /></p>
 </div>
 </div>
 </div>

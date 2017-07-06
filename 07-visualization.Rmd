@@ -151,24 +151,20 @@ ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point() +
 
 ## Bar Chart
 
-### Single Dimension Data
-- Use bar to repfresent **frequency** chart
+### 1x Categorical Data
+Single categorical variable produces **frequency** chart.  
+
+#### base graphic
 - **plot** requre a factor to plot frequency chart
 - **barplot** require conversion of vector into **table** for plotting
-- **qplot** default to **geom_bar** when **single categorical-alike** feature is used
-
 ```{r,fig.width=8}
 par(mfrow=c(1,2))
 plot(as.factor(my.df$dept))
 barplot(table(my.df$dept))
 ```
 
-```{r}
-qplot (data = my.df, x=dept)
-qplot (data = my.df, x=dept, geom='bar')
-ggplot(data = my.df, aes(x=dept)) + geom_bar()
-```
-
+#### ggplot
+**qplot** default to **geom_bar** when **single categorical-alike** feature is used
 ```{r}
 qplot (data = my.df, x=dept)
 qplot (data = my.df, x=dept, geom='bar')
@@ -176,6 +172,8 @@ ggplot(data = my.df, aes(x=dept)) + geom_bar()
 ```
 
 ### 1xCatgorical + 1xNumeric
+
+#### The Data
 This is the data, we summarize department, and derive **total value for each department**, and their **proportion**.  
 ```{r}
 tmp = my.df %>%
@@ -199,7 +197,7 @@ barplot(height=tmp$total_value1, names=tmp$dept, horiz=TRUE)
 ggplot (tmp, aes(x=dept, y=total_value1)) +geom_col()
 ```
 
-####Stacked Bar Chart
+#### Stacked Bar Chart
 Stacking in base graphic require matrix data, hence not demonstrated here.  
 ```{r}
 ggplot (tmp, aes(x=0, y=pct_value1, fill=dept)) +geom_col()
@@ -217,20 +215,18 @@ ggplot(data = my.df, aes(x = dept, color= grp)) + geom_bar()
 ```
 
 ### 2xCategorical + 1xNumeric
+#### The Data
+```{r}
+tmp
+```
 
+#### ggplot
+y is the numeric value, fill is the category variable for stacking.  
 ```{r}
 ggplot (tmp, 
   aes(x=dept, y=total_value1, fill=grp)) + 
   geom_col()
 ```
-
-
-```{r}
-qplot (data = my.df, x=dept)
-qplot (data = my.df, x=dept, geom='bar')
-ggplot(data = my.df, aes(x=dept)) + geom_bar()
-```
-
 
 ### Positioning
 - **qplot does not** support positioning

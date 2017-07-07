@@ -28,9 +28,10 @@ my.df = data.frame(
   dept = paste('D',sample(1:3, 100, replace = T),sep=''),
   grp  = paste('G',sample(1:2, 100, replace = T),sep=''),
   team = paste('T',sample(1:2, 100, replace = T),sep=''),
+  prd  = paste('P',sample(1:5, 100, replace = T),sep=''),
   value1 = rnorm(1:100, mean = 50, sd = 5),
   value2 = rnorm(1:100, mean = 20, sd = 3),
-  value3 = rnorm(1:100, mean = 5, sd = 1),
+  value3 = rnorm(1:100, mean =  5, sd = 1),
   stringsAsFactors = F
 )
 head(my.df)
@@ -268,18 +269,81 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 # aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above
 ```
 
-### dplyr::group_by, summarise()
+### dplyr::Grouping and Summarizing
 
-- After you learn **the power of dplyr**, you will forget about base R aggregate  
-- Below is the example of two level grouping, and aggregated value calculation of mean, min and max, lastly with the row count for each group  
+#### Grouping
+- Gourping returns all rows, with **internal grouping structure**  
+- Display of tibble rows **truncates automatically** if too many rows. Use `print(tbl_df(my.tbl), n=40)` to display more rows (quite troublesome, but look at all the other benefits)  
+- The internal grouping structure can be used for many types of summarization (discussed below)  
+- To get the row numbers for each group, add additional column with **mutate** of **row_number()**  
+```{r}
+d.df = my.df %>%
+  group_by(com,dept, grp) %>%
+  mutate( idx = row_number()) %>% 
+  arrange( com,dept,grp)
 
+print(tbl_df(d.df),n=18)
+```
+Verify the number of group levels in `attr(*, "vars")`
+```{r}
+str(d.df)
+```
+#### Counting
+Group and provide additional column n, which counts the number of rows within the group.  
+```{r}
+d.df = my.df %>%
+  count(com, dept, prd)
+
+d.df
+
+# alternative long methods for similar result
+# my.df %>%
+#   group_by(com, dept, prd) %>%
+#   summarize(count = n())
+```
+Counting reduce grouping by one level.  
+```{r}
+### result in grouping of (com, dept), 'prd' removed
+str(d.df)
+```
+
+#### In-Group Row Numbering
+- Summarize reduce group level by one, hence n() will return the rows within the new group.  
+- Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.  
+```{r}
+d.df = my.df %>%
+  group_by(com,dept,prd) %>%
+  summarize(avg.value1=mean(value1)) %>%
+  mutate (c = 1:n())
+
+d.df
+```
+
+#### In-Group Row Selection
+Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group.  
 ```{r}
 my.df %>%
-  group_by(com, dept) %>%
+  count(com, dept, prd) %>% 
+  slice(which.max(n))
+```
+
+#### In-Group Summarization
+Many functions can be applied that returns a single value, to be assigned as new column.
+```{r}
+d.df = my.df %>%
+  group_by(com, dept, prd) %>%
   summarise( avg_value1 = mean(value1),
              min_value1 = min(value1),
              max_value1 = max(value1),
+             n.team = n_distinct(team),
              count = n())
+
+d.df
+```
+Summarize **reduce the grouping level by one**.  
+```{r}
+### result in grouping of (com, dept), 'prd' removed
+str(d.df)
 ```
 
 ## R with SQL Emulation

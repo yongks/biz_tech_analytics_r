@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-06">
+<meta name="date" content="2017-07-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -173,7 +173,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html"><i class="fa fa-check"></i><b>4.4</b> Data Aggregation</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#tapply"><i class="fa fa-check"></i><b>4.4.1</b> tapply</a></li>
 <li class="chapter" data-level="4.4.2" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.4.2</b> aggretate - base R</a></li>
-<li class="chapter" data-level="4.4.3" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#dplyrgroup_by-summarise"><i class="fa fa-check"></i><b>4.4.3</b> dplyr::group_by, summarise()</a></li>
+<li class="chapter" data-level="4.4.3" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#dplyrgrouping-and-summarizing"><i class="fa fa-check"></i><b>4.4.3</b> dplyr::Grouping and Summarizing</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.5</b> R with SQL Emulation</a><ul>
 <li class="chapter" data-level="4.5.1" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html#library-1"><i class="fa fa-check"></i><b>4.5.1</b> Library</a></li>
@@ -443,28 +443,30 @@ my.df =<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">dept =</span> <span class="kw">paste</span>(<span class="st">&#39;D&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
   <span class="dt">grp  =</span> <span class="kw">paste</span>(<span class="st">&#39;G&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
   <span class="dt">team =</span> <span class="kw">paste</span>(<span class="st">&#39;T&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
+  <span class="dt">prd  =</span> <span class="kw">paste</span>(<span class="st">&#39;P&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
   <span class="dt">value1 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">5</span>),
   <span class="dt">value2 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>),
-  <span class="dt">value3 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>),
+  <span class="dt">value3 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span>  <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">1</span>),
   <span class="dt">stringsAsFactors =</span> F
 )
 <span class="kw">head</span>(my.df)</code></pre></div>
-<pre><code>##   com dept grp team   value1   value2   value3
-## 1  C1   D1  G2   T1 52.42613 18.26013 3.773185
-## 2  C2   D2  G2   T2 53.48384 17.14016 5.036153
-## 3  C2   D1  G1   T2 50.92757 19.46171 4.578607
-## 4  C2   D1  G2   T1 53.50367 23.02942 4.100636
-## 5  C2   D1  G2   T2 51.55841 20.07088 5.417441
-## 6  C2   D1  G2   T1 53.80231 18.05292 5.153445</code></pre>
+<pre><code>##   com dept grp team prd   value1   value2   value3
+## 1  C1   D1  G2   T1  P4 52.18465 13.05189 5.362667
+## 2  C2   D2  G2   T2  P3 55.30062 21.68742 6.411405
+## 3  C2   D1  G1   T2  P4 52.26095 17.64867 6.367544
+## 4  C2   D1  G2   T1  P4 53.31599 19.32184 4.592824
+## 5  C2   D1  G2   T2  P3 44.31813 15.23869 5.762542
+## 6  C2   D1  G2   T1  P1 48.14751 21.64257 4.348799</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(my.df)</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    100 obs. of  7 variables:
+<pre><code>## &#39;data.frame&#39;:    100 obs. of  8 variables:
 ##  $ com   : chr  &quot;C1&quot; &quot;C2&quot; &quot;C2&quot; &quot;C2&quot; ...
 ##  $ dept  : chr  &quot;D1&quot; &quot;D2&quot; &quot;D1&quot; &quot;D1&quot; ...
 ##  $ grp   : chr  &quot;G2&quot; &quot;G2&quot; &quot;G1&quot; &quot;G2&quot; ...
 ##  $ team  : chr  &quot;T1&quot; &quot;T2&quot; &quot;T2&quot; &quot;T1&quot; ...
-##  $ value1: num  52.4 53.5 50.9 53.5 51.6 ...
-##  $ value2: num  18.3 17.1 19.5 23 20.1 ...
-##  $ value3: num  3.77 5.04 4.58 4.1 5.42 ...</code></pre>
+##  $ prd   : chr  &quot;P4&quot; &quot;P3&quot; &quot;P4&quot; &quot;P4&quot; ...
+##  $ value1: num  52.2 55.3 52.3 53.3 44.3 ...
+##  $ value2: num  13.1 21.7 17.6 19.3 15.2 ...
+##  $ value3: num  5.36 6.41 6.37 4.59 5.76 ...</code></pre>
 </div>
             </section>
 

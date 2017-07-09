@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-07">
+<meta name="date" content="2017-07-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -194,7 +194,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
 <li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data <NA></a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a></li>
+<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-columns"><i class="fa fa-check"></i><b>5.5.1</b> Joining Columns</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-rows-set-operation"><i class="fa fa-check"></i><b>5.5.2</b> Joining Rows: Set Operation</a></li>
+</ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html"><i class="fa fa-check"></i><b>5.6</b> Categorical Data</a><ul>
 <li class="chapter" data-level="5.6.1" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#converting-to-factor"><i class="fa fa-check"></i><b>5.6.1</b> Converting to Factor</a></li>
 <li class="chapter" data-level="5.6.2" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#releveling-factor"><i class="fa fa-check"></i><b>5.6.2</b> Releveling Factor</a></li>
@@ -436,7 +439,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(my.df<span class="op">$</span>value1)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> <span class="st">&#39;&#39;</span> ,  <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>( <span class="dt">x=</span> <span class="st">&#39;&#39;</span>, <span class="dt">y=</span>value1 )) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-172-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-172-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-172-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-181-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-181-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-181-3.png" width="256.6656" /></p>
 </div>
 <div id="two-dimension-data-3" class="section level3">
 <h3><span class="header-section-number">7.7.2</span> Two Dimension Data</h3>
@@ -446,7 +449,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> grp , <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>grp, <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-173-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-173-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-173-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-182-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-182-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-182-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data-1" class="section level3">
 <h3><span class="header-section-number">7.7.3</span> Two + One Dimension Data</h3>
@@ -456,10 +459,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>In <strong>qplot/ggplot</strong>, use <strong>interaction</strong> to specify extra dimension</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp<span class="op">+</span>dept)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-174-1.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-183-1.png" width="772.8" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-175-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-175-2.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-184-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-184-2.png" width="772.8" /></p>
 </div>
 </div>
             </section>

@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-07">
+<meta name="date" content="2017-07-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -194,7 +194,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
 <li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data <NA></a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a></li>
+<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-columns"><i class="fa fa-check"></i><b>5.5.1</b> Joining Columns</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-rows-set-operation"><i class="fa fa-check"></i><b>5.5.2</b> Joining Rows: Set Operation</a></li>
+</ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html"><i class="fa fa-check"></i><b>5.6</b> Categorical Data</a><ul>
 <li class="chapter" data-level="5.6.1" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#converting-to-factor"><i class="fa fa-check"></i><b>5.6.1</b> Converting to Factor</a></li>
 <li class="chapter" data-level="5.6.2" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#releveling-factor"><i class="fa fa-check"></i><b>5.6.2</b> Releveling Factor</a></li>
@@ -436,7 +439,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="base-graphic-1" class="section level4">
 <h4><span class="header-section-number">7.4.1.1</span> Base Graphic</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-155-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-164-1.png" width="768" /></p>
 </div>
 <div id="ggplot2-1" class="section level4">
 <h4><span class="header-section-number">7.4.1.2</span> ggplot2</h4>
@@ -446,7 +449,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-156-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-156-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-156-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-165-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-165-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-165-3.png" width="256.6656" /></p>
 </div>
 </div>
 <div id="two-one-dimension-data" class="section level3">
@@ -463,7 +466,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">plot</span>  (my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2, <span class="dt">col=</span><span class="kw">as.factor</span>(my.df<span class="op">$</span>grp))
 <span class="co"># plot  (my.df$value1, my.df$value2, col=my.df$grp)  ... error due to not recognized color name</span>
 <span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-157-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-166-1.png" width="864" /></p>
 </div>
 <div id="ggplot2-2" class="section level4">
 <h4><span class="header-section-number">7.4.2.2</span> ggplot2</h4>
@@ -474,7 +477,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> value1, <span class="dt">y =</span> value2, <span class="dt">color =</span> grp, <span class="dt">geom=</span><span class="st">&#39;point&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">color =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-158-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-158-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-158-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-167-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-167-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-167-3.png" width="256.6656" /></p>
 </div>
 </div>
 <div id="overlay-smooth-line" class="section level3">
@@ -492,7 +495,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">abline</span>(<span class="kw">lm</span>(my.df<span class="op">$</span>value2<span class="op">~</span>my.df<span class="op">$</span>value1))
 
 <span class="kw">scatter.smooth</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2, <span class="dt">main=</span><span class="st">&#39;smooth line&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-159-1.png" width="768" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-168-1.png" width="768" /></p>
 </div>
 <div id="ggplot2-3" class="section level4">
 <h4><span class="header-section-number">7.4.3.2</span> ggplot2</h4>
@@ -511,7 +514,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">level=</span><span class="fl">0.75</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-160-1.png" width="288" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-160-2.png" width="288" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-160-3.png" width="288" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-169-1.png" width="288" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-169-2.png" width="288" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-169-3.png" width="288" /></p>
 </div>
 </div>
 </div>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-07-09">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="5-data-preprocessing.html">
+<link rel="next" href="5-2-sample-data.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
+<li class="chapter" data-level="5.1" data-path="5-1-library.html"><a href="5-1-library.html"><i class="fa fa-check"></i><b>5.1</b> Library</a></li>
+<li class="chapter" data-level="5.2" data-path="5-2-sample-data.html"><a href="5-2-sample-data.html"><i class="fa fa-check"></i><b>5.2</b> Sample Data</a></li>
+<li class="chapter" data-level="5.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html"><i class="fa fa-check"></i><b>5.3</b> Column Manipulation</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#duplicating-columns"><i class="fa fa-check"></i><b>5.3.1</b> Duplicating Columns</a></li>
+<li class="chapter" data-level="5.3.2" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#delete-columns"><i class="fa fa-check"></i><b>5.3.2</b> Delete Columns</a></li>
+<li class="chapter" data-level="5.3.3" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#renaming-columns"><i class="fa fa-check"></i><b>5.3.3</b> Renaming Columns</a></li>
+<li class="chapter" data-level="5.3.4" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#columns-selection"><i class="fa fa-check"></i><b>5.3.4</b> Columns Selection</a></li>
+<li class="chapter" data-level="5.3.5" data-path="5-3-column-manipulation.html"><a href="5-3-column-manipulation.html#create-new-columns"><i class="fa fa-check"></i><b>5.3.5</b> Create New Columns</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html"><i class="fa fa-check"></i><b>5.4</b> Missing Data</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
+<li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data <NA></a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-columns"><i class="fa fa-check"></i><b>5.5.1</b> Joining Columns</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-rows-set-operation"><i class="fa fa-check"></i><b>5.5.2</b> Joining Rows: Set Operation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html"><i class="fa fa-check"></i><b>5.6</b> Categorical Data</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#converting-to-factor"><i class="fa fa-check"></i><b>5.6.1</b> Converting to Factor</a></li>
+<li class="chapter" data-level="5.6.2" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#releveling-factor"><i class="fa fa-check"></i><b>5.6.2</b> Releveling Factor</a></li>
+<li class="chapter" data-level="5.6.3" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#dropping-levels"><i class="fa fa-check"></i><b>5.6.3</b> Dropping Levels</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html"><i class="fa fa-check"></i><b>5.7</b> String Manipulation</a><ul>
+<li class="chapter" data-level="5.7.1" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html#extration"><i class="fa fa-check"></i><b>5.7.1</b> Extration</a></li>
+<li class="chapter" data-level="5.7.2" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html#removal"><i class="fa fa-check"></i><b>5.7.2</b> Removal</a></li>
+<li class="chapter" data-level="5.7.3" data-path="5-7-string-manipulation.html"><a href="5-7-string-manipulation.html#concatenation"><i class="fa fa-check"></i><b>5.7.3</b> Concatenation</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html"><i class="fa fa-check"></i><b>5.8</b> Date Manipulation</a><ul>
+<li class="chapter" data-level="5.8.1" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#parsing-date"><i class="fa fa-check"></i><b>5.8.1</b> Parsing Date</a></li>
+<li class="chapter" data-level="5.8.2" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#what-daymonthyear"><i class="fa fa-check"></i><b>5.8.2</b> What Day/Month/Year</a></li>
+<li class="chapter" data-level="5.8.3" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#daysmonthsyear-difference"><i class="fa fa-check"></i><b>5.8.3</b> Days/Months/Year Difference</a></li>
+<li class="chapter" data-level="5.8.4" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#daysmonhtsyears-later"><i class="fa fa-check"></i><b>5.8.4</b> Days/Monhts/Years Later</a></li>
+<li class="chapter" data-level="5.8.5" data-path="5-8-date-manipulation.html"><a href="5-8-date-manipulation.html#last-day-of-month"><i class="fa fa-check"></i><b>5.8.5</b> Last Day of Month</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html"><i class="fa fa-check"></i><b>5.9</b> Number Manipulation</a><ul>
+<li class="chapter" data-level="5.9.1" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#sample-data-1"><i class="fa fa-check"></i><b>5.9.1</b> Sample Data</a></li>
+<li class="chapter" data-level="5.9.2" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#z-score-scaling"><i class="fa fa-check"></i><b>5.9.2</b> Z-Score Scaling</a></li>
+<li class="chapter" data-level="5.9.3" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#min-max-scaling"><i class="fa fa-check"></i><b>5.9.3</b> Min Max Scaling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html"><i class="fa fa-check"></i><b>5.10</b> Artificial Grouping</a><ul>
+<li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
+<li class="chapter" data-level="5.10.2" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-based-on-custom-criteria"><i class="fa fa-check"></i><b>5.10.2</b> Grouping based on Custom Criteria</a></li>
+</ul></li>
+<li class="chapter" data-level="5.11" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html"><i class="fa fa-check"></i><b>5.11</b> Radom Dataset Splitting</a><ul>
+<li class="chapter" data-level="5.11.1" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#simple-random-split"><i class="fa fa-check"></i><b>5.11.1</b> Simple Random Split</a></li>
+<li class="chapter" data-level="5.11.2" data-path="5-11-radom-dataset-splitting.html"><a href="5-11-radom-dataset-splitting.html#random-split-maintaining-data-value-ratio"><i class="fa fa-check"></i><b>5.11.2</b> Random Split (Maintaining Data Value Ratio)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-data-visualization.html"><a href="7-data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-model-optimization.html"><a href="13-model-optimization.html"><i class="fa fa-check"></i><b>13</b> Model Optimization</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="library" class="section level2">
+<h2><span class="header-section-number">5.1</span> Library</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
+<span class="kw">library</span>(caTools)
+<span class="kw">library</span>(dplyr)</code></pre></div>
+<p>Below summarizes all packages, their functions and purposes used in this <strong>Data Preprocessing</strong> chapter.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="2%" />
+<col width="15%" />
+<col width="10%" />
+<col width="71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Package</th>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Base R (factor)</td>
+<td>as.factor</td>
+<td>Convert a vector to a new factor</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>droplevels</td>
+<td>Return a new factor with unused levels removed</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>relevel</td>
+<td>Return a new factor with new reference level</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Base R (missing data)</td>
+<td>is.na</td>
+<td>Return TRUE if <NA> is found in vector</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>na.omit</td>
+<td>Return a new vector/dataframe with ALL <NA> removed, with attribute containing info ro rows removed</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>complete.cases</td>
+<td>Return TRUE if vector/data.frame row does not contain any <NA></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Base R (numeric)</td>
+<td>scale</td>
+<td>Centre numeric data (-mean), and optionally normalize it (/sd)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>cut</td>
+<td>Cut numeric vector into breakpoints, and return grouping factor</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td>Base R (date)</td>
+<td>as.Date</td>
+<td>Parse a factor / string to date</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>lubridate</td>
+<td>ymd,mdy,dmy</td>
+<td>Parse a string to date</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>interval</td>
+<td>Return interval object betwen two given dates. Can be further used for deriving days/months in between</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>ceiling.date</td>
+<td>Return next nearest date according to unit (day / month / year)</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Base R (dataset)</td>
+<td>subset</td>
+<td>Return a new data based on input logical vector</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>merge</td>
+<td>Merge two data.frame together based on common key</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>nrow, ncol</td>
+<td>How many columns / rows in the dataset ?</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>length</td>
+<td>How many elements in a vector ?</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>caTools</td>
+<td>sample.split</td>
+<td>Split vector into two with a ratio, whiel maintain data value ratio, return result in logical vector</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>dplyr</td>
+<td>select</td>
+<td>extract columns from existing data.frame</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>mutate</td>
+<td>Add new columns, from existing data.frame</td>
+</tr>
+</tbody>
+</table>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="5-data-preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="5-2-sample-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/05-pre_process.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

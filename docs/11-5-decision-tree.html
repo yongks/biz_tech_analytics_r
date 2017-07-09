@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-07">
+<meta name="date" content="2017-07-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -194,7 +194,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
 <li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data <NA></a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a></li>
+<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-columns"><i class="fa fa-check"></i><b>5.5.1</b> Joining Columns</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-rows-set-operation"><i class="fa fa-check"></i><b>5.5.2</b> Joining Rows: Set Operation</a></li>
+</ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html"><i class="fa fa-check"></i><b>5.6</b> Categorical Data</a><ul>
 <li class="chapter" data-level="5.6.1" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#converting-to-factor"><i class="fa fa-check"></i><b>5.6.1</b> Converting to Factor</a></li>
 <li class="chapter" data-level="5.6.2" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#releveling-factor"><i class="fa fa-check"></i><b>5.6.2</b> Releveling Factor</a></li>
@@ -708,7 +711,7 @@ Notice that the graph has the below characteristics:</p>
 <li>All leaf nodes adds up to 100% probability</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prp</span>(fit.dtree, <span class="dt">type =</span> <span class="dv">2</span>, <span class="dt">extra =</span> <span class="dv">104</span>, <span class="dt">fallen.leaves =</span> <span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Decision Tree&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-242-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-251-1.png" width="864" /></p>
 </div>
 <div id="cross-validation-analysis" class="section level4">
 <h4><span class="header-section-number">11.5.6.3</span> Cross Validation Analysis</h4>
@@ -753,7 +756,7 @@ Notice that the graph has the below characteristics:</p>
 <li>Optimum tree size for pruning is <strong>below the horizontal line</strong>, use this chart to determine the <strong>optimum tree size, and its cp value</strong>, prune with this cp value</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-244-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-253-1.png" width="864" /></p>
 </div>
 <div id="pruning-tree-1" class="section level4">
 <h4><span class="header-section-number">11.5.6.4</span> Pruning Tree</h4>
@@ -803,7 +806,7 @@ Notice that the graph has the below characteristics:</p>
 ## 8 0.0057887     11   0.11071 0.12663 0.0094719
 ## 9 0.0050000     12   0.10492 0.11505 0.0090373</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree.prune)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-245-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-254-1.png" width="864" /></p>
 </div>
 <div id="prediction" class="section level4">
 <h4><span class="header-section-number">11.5.6.5</span> Prediction</h4>

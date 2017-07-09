@@ -181,6 +181,184 @@ na.action(my.df)                  # number of rows removed
 
 ## Merging Data
 
+### Joining Columns
+
+##### Left (Outer) Join
+- Return all rows of x, and rows that match y are also returned with y columns  
+- The column of y in rows that do not match y is NA  
+- If multiple matches occur between x and y, all combinations are returned  
+
+![Left Join](./images/dplyr_left_join.png) 
+
+**dplyr Method**  
+```{r}
+a <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c (  1 ,   2 ,   3 ) )
+
+b <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "D" )  , 
+  x3 = c ( TRUE  ,  FALSE  ,  TRUE ) )
+
+dplyr::left_join ( a , b , by = "x1" )
+```
+
+#### Inner Join
+
+- Returns only the rows matching the columns specified in x and y  
+- If there are multiple matches between x and y, all combinations will be returned  
+
+![Left Inner Join](./images/dplyr_inner_join.png)  
+
+**dplyr Method**  
+```{r}
+a <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c (  1  ,  2 ,   3  ))
+
+b <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "D" )  , 
+  x3 = c ( TRUE  ,  FALSE  ,  TRUE ) )
+
+dplyr::inner_join ( a , b , by = "x1" )
+```
+
+#### Right Join
+- This is a reverse where x and y of left_join are reversed  
+- Return all rows of y, and columns that match x are also returned with columns of x  
+- The column of x of a row not matching x is NA  
+- If multiple matches occur between x and y, all combinations are returned  
+
+![Right Join](./images/dplyr_right_join.png)  
+
+**dplyr Method**  
+```{r}
+a <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c ( 1 , 2 , 3 ) )
+
+b <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "D" )  , 
+  x3 = c ( TRUE  ,  FALSE  ,  TRUE ) )
+
+dplyr :: right_join ( a , b , by = "x1" )
+```
+
+#### Full Join
+- Return all rows and columns of x and y  
+- Where there is no match, it becomes NA  
+
+![Full Join](./images/dplyr_full_join.png)  
+
+**dplyr Method**  
+```{r}
+a <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c ( 1 , 2 , 3 ) )
+
+b <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "D" )  , 
+  x3 = c ( TRUE  ,  FALSE  ,  TRUE ) )
+
+dplyr :: full_join ( a , b , by = "x1" )
+```
+
+#### Semi Join
+- Return all x rows that matched y  
+- Columns returned are all columns of x  
+- Columns of y are not returned; this is **different from inner_join**  
+
+![Semi Join](./images/dplyr_semi_join.png)  
+
+**dplyr Method**  
+```{r}
+a <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c ( 1 , 2 , 3 ) )
+
+b <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "D" )  , 
+  x3 = c ( TRUE  ,  FALSE  ,  TRUE ) )
+
+dplyr::semi_join ( a , b , by = "x1" )
+```
+
+
+#### Anti Join
+- We return all x rows that did not match y  
+- All columns returned are x columns only and y columns are not returned  
+
+![Anti Join](./images/dplyr_anti_join.png)  
+
+**dplyr Method**  
+```{r}
+a <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c ( 1 , 2 , 3 ) )
+
+b <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "D" )  , 
+  x3 = c ( TRUE  ,  FALSE  ,  TRUE ) )
+
+dplyr::anti_join ( a , b , by = "x1" )
+```
+
+### Joining Rows: Set Operation
+
+#### Intersect
+The columns at both x and y are returned  
+
+![Intersect](./images/dplyr_intersect.png)  
+
+**dplyr Method**  
+```{r}
+y <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c (  1  ,  2  ,  3  ) )
+
+z <- dplyr :: data_frame ( 
+  x1 = c ( "B" , "C" , "D" ), 
+  x2 = c (  2  ,  3  ,  4 ) )
+
+dplyr :: intersect ( y , z )
+```
+
+#### Union
+A unique row with no duplication of x and y will be returned.
+
+![Union](./images/dplyr_union.png)  
+
+**dplyr Method**  
+```{r}
+y <- dplyr :: data_frame ( 
+   x1 = c ( "A" , "B" , "C" )  , 
+   x2 = c (  1  ,  2  ,  3  ) )
+
+z <- dplyr :: data_frame ( 
+   x1 = c ( "B" , "C" , "D" ), 
+   x2 = c (  2  ,  3  ,  4 ) )
+
+dplyr :: union ( y , z )
+```
+
+#### Setdiff
+A row of x, not in y, is returned.
+
+![Setdiff](./images/dplyr_setdiff.png)  
+
+**dplyr Method**  
+```{r}
+y <- dplyr :: data_frame ( 
+  x1 = c ( "A" , "B" , "C" )  , 
+  x2 = c (  1  ,  2  ,  3  ) )
+
+z <- dplyr :: data_frame ( 
+  x1 = c ( "B" , "C" , "D" ), 
+  x2 = c (  2  ,  3  ,  4 ) )
+
+dplyr :: setdiff ( y , z )
+```
+
 ## Categorical Data
 
 ### Converting to Factor

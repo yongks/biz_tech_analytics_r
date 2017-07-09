@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-07">
+<meta name="date" content="2017-07-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -194,7 +194,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.4.1" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#detecting-completeincomplete-vectorrow"><i class="fa fa-check"></i><b>5.4.1</b> Detecting Complete/Incomplete Vector/Row</a></li>
 <li class="chapter" data-level="5.4.2" data-path="5-4-missing-data.html"><a href="5-4-missing-data.html#removing-missing-data"><i class="fa fa-check"></i><b>5.4.2</b> Removing Missing Data <NA></a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a></li>
+<li class="chapter" data-level="5.5" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html"><i class="fa fa-check"></i><b>5.5</b> Merging Data</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-columns"><i class="fa fa-check"></i><b>5.5.1</b> Joining Columns</a></li>
+<li class="chapter" data-level="5.5.2" data-path="5-5-merging-data.html"><a href="5-5-merging-data.html#joining-rows-set-operation"><i class="fa fa-check"></i><b>5.5.2</b> Joining Rows: Set Operation</a></li>
+</ul></li>
 <li class="chapter" data-level="5.6" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html"><i class="fa fa-check"></i><b>5.6</b> Categorical Data</a><ul>
 <li class="chapter" data-level="5.6.1" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#converting-to-factor"><i class="fa fa-check"></i><b>5.6.1</b> Converting to Factor</a></li>
 <li class="chapter" data-level="5.6.2" data-path="5-6-categorical-data.html"><a href="5-6-categorical-data.html#releveling-factor"><i class="fa fa-check"></i><b>5.6.2</b> Releveling Factor</a></li>
@@ -440,7 +443,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
 <span class="kw">hist</span>  (my.df<span class="op">$</span>value1) <span class="co"># default breaks = 30</span>
 <span class="kw">hist</span>  (my.df<span class="op">$</span>value1, <span class="dt">breaks=</span><span class="dv">3</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-152-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-161-1.png" width="864" /></p>
 </div>
 <div id="ggplot2" class="section level4">
 <h4><span class="header-section-number">7.3.1.2</span> ggplot2</h4>
@@ -455,7 +458,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>() <span class="co"># default bins = 30</span>
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">bins =</span> <span class="dv">15</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">10</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-153-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-153-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-153-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-153-4.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-153-5.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-153-6.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-162-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-162-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-162-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-162-4.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-162-5.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-162-6.png" width="256.6656" /></p>
 </div>
 </div>
 <div id="two-dimension-data-1" class="section level3">
@@ -467,7 +470,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>value1,  <span class="dt">fill=</span>grp, <span class="dt">geom=</span><span class="st">&#39;histogram&#39;</span>)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">fill=</span>grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-154-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-154-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-163-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-163-2.png" width="384" /></p>
 </div>
 </div>
             </section>

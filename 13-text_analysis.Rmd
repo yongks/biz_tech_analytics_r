@@ -1,0 +1,184 @@
+# Text Analysis
+
+## Library
+
+```{r}
+library(tm)
+library(SnowballC)
+```
+## Concept
+
+### Bag Of Words
+- Count the number of times each words appears  
+- Each word is one feature  
+- Used as a baseline in text analysis and natural language processing  
+- Rquire further 'preprocessing' to dramatically improve performance !
+
+### Text Pre-Processing
+
+#### Convert to Lowercase
+- Computers are very literal by default, eg. Apple and APPLE will be treated as different  variable  
+- Hence, changing all words to **lower-case** or **upper-case** is essential  
+
+#### Cleaning Up Irregularities
+- Punctuations causes problems  
+- Basic approach is to **remove anything that is not alphabet**   
+- For example, `@Apple APPLE! --apple--` should be treated as just `apple`  
+
+#### Removing Unhelpful Terms
+- Many words are frequently used but only meaningful in a sentence  
+- These are called: **stop words**  
+- They are **unlikely to improve** machine learning prediction quality, hence **should be removed**  
+- For example, *the, is, at, which ...*  
+
+#### Stemming
+- Stemming is an **automated process** which produces a **base string** in an attempt to represent related words  
+- For example, **argu** : can be represents: **argu**e, **argu**ed, **argu**es, **argu**ing  
+- There are **two ways** to achive this:  
+
+**Database Of Stems**  
+
+  - Pro: handles exception well as all are predefined  
+  - Cons: won't handle new words, bad for internet  
+
+**Rule-Base Stemming**  
+  
+  - This method is **widely** used totay ! eg. Porter Stemmer (Martin Porter, 1980)
+  - Pro: handles new/unknown words well, eg: dog: dog, dogs
+  - Cons: require many exception; such as prural handling,  child and children (there is no childs)  
+
+```
+original: I cannot describe completely to you how important is children to our nation survivability
+after stemmer: I cannot describ complet to you how import is children to our nation surviv
+```
+### Text Analytic Process
+
+1. **Load data** into dataframe of two columns:
+    - text message  
+    - scoring (numeric)  
+2. **Preprocess** The Data  
+    - convert to lower case  
+    - remove punctuation  
+    - remove stop words  
+3. Create **Document Term Matrix** (Bag of Words with frequency)  
+4. **Optimize** Document Term Matrix (reduce sparseness)  
+5. **Merge term matrix** table to original data.frame  
+    - Each observation represents a document  
+    - Each term is a **new feature** with its frequency as data  
+    
+## Sample Data
+Sample data from tweets on Apple, it contains:  
+
+- **Tweet**: text messages  
+- **Avg**: Average score for potistive or negative feedback on Apple (manually tagged)  
+
+```{r}
+tweets = read.csv('datasets/tweets.csv', stringsAsFactors = FALSE)
+str(tweets)
+kable(head(tweets))
+```
+
+## Run The Code
+
+**`tm`** library is single library is able to handle corpus for text data analysis and pre-processing. 
+
+### Convert Text To Corpus
+- **Corpus** is a **collection of documents** containing (natural language) text  
+- It provide us a neat way to manipulate and work with text data for prediction  
+
+#### Convert Vector to Corpus  
+Use **`tm::Corpus`** to convert text data into corpus.  
+
+> `Corpus(x, control = list(language = "en"))`  
+> $\quad$ `x : VectorSoruce(vector) or DirSource()`
+
+```{r}
+corpus = Corpus(VectorSource(tweets$Tweet))
+```
+
+####Understand Corpus Structure
+- **`Corpus`** treats every element in the vector as a **document**  
+- It returns a **list** object, which contain multiple lists (**one list for each  document**)  
+- Each document list contain two items: **meta** data and **content**  
+
+```{r}
+str(corpus[1])
+corpus[1:3]$content
+corpus[1:3]$meta
+```
+
+####Viewing Corpus Data
+**tm** provides a better way to view the content of corpus using **`inspect()`**  
+```{r}
+inspect(corpus[1:3])
+```
+
+### Preprocess Corpus
+
+#### Converting to lowercase
+Convert entire corpus to lowercase, using base R function **tolower()**.  
+```{r}
+corpus = tm_map(corpus,tolower)
+corpus[1]$content
+```
+
+#### Remove Punctuation
+Remove punctuation for entire corpus, using **tm::removePunctuation**.  
+```{r}
+corpus = tm_map(corpus,removePunctuation)
+corpus[1]$content
+```
+
+#### Remove Stopwords
+**tm::stopwords contain 174** pre-defined stop words. Default is english. 
+```{r}
+stopwords()
+```
+
+Remove all stopwords from the entire corpus, with additional 'apple' stopword.  Notice that, the remmoved character was **replaced with empty spaces**.  
+```{r}
+corpus = tm_map(corpus, removeWords, c('apple', stopwords()))
+corpus[1]$content
+```
+
+### Extract Bag Of Words
+**tm:DocumentTermMatrix** creates a bag of words from the corpus, and derive a frequency table for each words used in the corpus.  
+```{r}
+freq = DocumentTermMatrix(corpus)
+freq
+```
+
+#### View Term Matrix Table
+- **`tm::DocumentTermMatrix`** is an complex object. Viewing with [,] notation won't be possible  
+- Use **`tm::inspect()`** to look at the table content  
+- You will find that most likely the documents are sparsed (most words has 0 frequency)  
+```{r}
+str(freq)
+inspect(freq[1000:1003, 505:511])
+```
+
+#### Most Frequent Terms
+Since the terms are sparsed within the corpus, we should be interested to know what are the most frequent words in the corpus (that appeared more than 100 times).
+```{r}
+findFreqTerms(freq, lowfreq=100)
+```
+
+#### Optimize The Term Matrix Table
+There are obviously too many words in the bag (too many terms) to be useful:  
+
+- We want to reduce the number words by selecting just the most frequent ones  
+- Specifying 0.97 means to select only words that appear in 3% of the documents 
+- Notice the number of terms in the new term matrix table **has been reduced**  
+```{r}
+freq.sparse = removeSparseTerms(freq, 0.97)
+freq.sparse
+```
+
+#### Merge Term Matrix To DataFrame
+We can now convert the term matrix table into data.frame:  
+
+- Each row represents an obervation as in original data  
+- New columns has been created with terms as the new variable, frequency as its data  
+```{r}
+tweets.sparse = as.data.frame(as.matrix(freq.sparse))
+```

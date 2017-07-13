@@ -108,17 +108,19 @@ corpus[1:3]$meta
 ```
 
 ####Viewing Corpus Data
-**tm** provides a better way to view the content of corpus using **`inspect()`**  
+**`tm::inspect`** provides a better way to view the content of corpus, as compare to `[,]$content`  
 ```{r}
 inspect(corpus[1:3])
 ```
 
 ### Preprocess Corpus
+**`tm::tm_map`** is essential to map data to transformation functions such as lower case, remove punctuation, stopwords and stemming to corpus.
 
 #### Converting to lowercase
-Convert entire corpus to lowercase, using base R function **tolower()**.  
+- Convert entire corpus to lowercase, using base R function **tolower()**  
+- Using **non-tm library**  functions for data transformation on corpus data require **`content_transformer`**  
 ```{r}
-corpus = tm_map(corpus,tolower)
+corpus = tm_map(corpus,content_transformer(tolower))
 corpus[1]$content
 ```
 
@@ -130,16 +132,23 @@ corpus[1]$content
 ```
 
 #### Remove Stopwords
-**tm::stopwords contain 174** pre-defined stop words. Default is english. 
+**`tm::stopwords contain 174`** pre-defined stop words. Default is english. 
 ```{r}
 stopwords()
 ```
 
-Remove all stopwords from the entire corpus, with additional 'apple' stopword.  Notice that, the remmoved character was **replaced with empty spaces**.  
+Remove all stopwords from the entire corpus, **replace with empty spaces**. Additional stopwrods can be added.  
 ```{r}
 corpus = tm_map(corpus, removeWords, c('apple', stopwords()))
 corpus[1]$content
 ```
+
+#### Stemming
+```{r}
+corpus = tm_map(corpus, stemDocument)
+corpus[1]$content
+```
+
 
 ### Extract Bag Of Words
 **tm:DocumentTermMatrix** creates a bag of words from the corpus, and derive a frequency table for each words used in the corpus.  
@@ -153,12 +162,13 @@ freq
 - Use **`tm::inspect()`** to look at the table content  
 - You will find that most likely the documents are sparsed (most words has 0 frequency)  
 ```{r}
-str(freq)
 inspect(freq[1000:1003, 505:511])
 ```
 
 #### Most Frequent Terms
-Since the terms are sparsed within the corpus, we should be interested to know what are the most frequent words in the corpus (that appeared more than 100 times).
+- Since the terms are sparsed within the corpus, we should be interested to know what are the most frequent words in the corpus (that appeared more than 100 times)  
+- However, it doesn't tell us if this was seen accorss how many documents  
+- It is **possible** that the most frequent term only **appear in single document** !  
 ```{r}
 findFreqTerms(freq, lowfreq=100)
 ```
@@ -166,19 +176,26 @@ findFreqTerms(freq, lowfreq=100)
 #### Optimize The Term Matrix Table
 There are obviously too many words in the bag (too many terms) to be useful:  
 
-- We want to reduce the number words by selecting just the most frequent ones  
-- Specifying 0.97 means to select only words that appear in 3% of the documents 
+- We want to reduce the number words by selecting those **appear in many documents**  
+- Specifying sparse = 0.97 to select only words that appear in 3% of the documents  
 - Notice the number of terms in the new term matrix table **has been reduced**  
 ```{r}
-freq.sparse = removeSparseTerms(freq, 0.97)
-freq.sparse
+freq.sparse = removeSparseTerms(freq, sparse=0.97)
+colnames(freq.sparse)
+```
+- Since too may terms make up the columns, `str` is not suitable to check the variable names  
+- Use `colnames` instead. term matrix table is quite **matrix-alike**  
+```{r}
+freq.sparse = removeSparseTerms(freq, sparse=0.97)
+colnames(freq.sparse)
 ```
 
 #### Merge Term Matrix To DataFrame
-We can now convert the term matrix table into data.frame:  
+We can now convert the term matrix table into **matrix, then data.frame**:  
 
-- Each row represents an obervation as in original data  
-- New columns has been created with terms as the new variable, frequency as its data  
+- Each **row represents an obervation** as in original data  
+- All terms will become **new variables**, with **frequency** as its data  
 ```{r}
 tweets.sparse = as.data.frame(as.matrix(freq.sparse))
+str(tweets.sparse)
 ```

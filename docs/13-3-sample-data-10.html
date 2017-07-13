@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-11">
+<meta name="date" content="2017-07-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -444,28 +444,52 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="sample-data-10" class="section level2">
 <h2><span class="header-section-number">13.3</span> Sample Data</h2>
-<p>Sample data from tweets on Apple, it contains: - <strong>Tweet</strong>: text messages<br />
-- <strong>Avg</strong>: Average score for potistive or negative feedback on Apple</p>
+<p>Sample data from tweets on Apple, it contains:</p>
+<ul>
+<li><strong>Tweet</strong>: text messages<br />
+</li>
+<li><strong>Avg</strong>: Average score for potistive or negative feedback on Apple (manually tagged)</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tweets =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;datasets/tweets.csv&#39;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
 <span class="kw">str</span>(tweets)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1181 obs. of  2 variables:
 ##  $ Tweet: chr  &quot;I have to say, Apple has by far the best customer care service I have ever received! @Apple @AppStore&quot; &quot;iOS 7 is so fricking smooth &amp; beautiful!! #ThanxApple @Apple&quot; &quot;LOVE U @APPLE&quot; &quot;Thank you @apple, loving my new iPhone 5S!!!!!  #apple #iphone5S pic.twitter.com/XmHJCU4pcb&quot; ...
 ##  $ Avg  : num  2 2 1.8 1.8 1.8 1.8 1.8 1.6 1.6 1.6 ...</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tweets)</code></pre></div>
-<pre><code>##                                                                                                   Tweet
-## 1 I have to say, Apple has by far the best customer care service I have ever received! @Apple @AppStore
-## 2                                          iOS 7 is so fricking smooth &amp; beautiful!! #ThanxApple @Apple
-## 3                                                                                         LOVE U @APPLE
-## 4           Thank you @apple, loving my new iPhone 5S!!!!!  #apple #iphone5S pic.twitter.com/XmHJCU4pcb
-## 5                    .@apple has the best customer service. In and out with a new phone in under 10min!
-## 6                         @apple ear pods are AMAZING! Best sound from in-ear headphones I&#39;ve ever had!
-##   Avg
-## 1 2.0
-## 2 2.0
-## 3 1.8
-## 4 1.8
-## 5 1.8
-## 6 1.8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(<span class="kw">head</span>(tweets))</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Tweet</th>
+<th align="right">Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">I have to say, Apple has by far the best customer care service I have ever received! <span class="citation">(<span class="citeproc-not-found" data-reference-id="Apple"><strong>???</strong></span>)</span> <span class="citation">(<span class="citeproc-not-found" data-reference-id="AppStore"><strong>???</strong></span>)</span></td>
+<td align="right">2.0</td>
+</tr>
+<tr class="even">
+<td align="left">iOS 7 is so fricking smooth &amp; beautiful!! #ThanxApple <span class="citation">(<span class="citeproc-not-found" data-reference-id="Apple"><strong>???</strong></span>)</span></td>
+<td align="right">2.0</td>
+</tr>
+<tr class="odd">
+<td align="left">LOVE U <span class="citation">(<span class="citeproc-not-found" data-reference-id="APPLE"><strong>???</strong></span>)</span></td>
+<td align="right">1.8</td>
+</tr>
+<tr class="even">
+<td align="left">Thank you <span class="citation">(<span class="citeproc-not-found" data-reference-id="apple"><strong>???</strong></span>)</span>, loving my new iPhone 5S!!!!! #apple #iphone5S pic.twitter.com/XmHJCU4pcb</td>
+<td align="right">1.8</td>
+</tr>
+<tr class="odd">
+<td align="left">.<span class="citation">(<span class="citeproc-not-found" data-reference-id="apple"><strong>???</strong></span>)</span> has the best customer service. In and out with a new phone in under 10min!</td>
+<td align="right">1.8</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="citation">(<span class="citeproc-not-found" data-reference-id="apple"><strong>???</strong></span>)</span> ear pods are AMAZING! Best sound from in-ear headphones I’ve ever had!</td>
+<td align="right">1.8</td>
+</tr>
+</tbody>
+</table>
 </div>
             </section>
 

@@ -99,6 +99,7 @@ The dataset will be splited into training set (70%), and test set (30%).
 ### Load The Data
 set.seed(1234)
 raw = read.csv('./datasets/hr.csv')
+raw$left = as.factor(raw$left)
 
 ### Split Data
 train.rows = sample( 1:nrow(raw), 0.7 * nrow(raw) )
@@ -234,18 +235,41 @@ $e^{a+b} = e^a * e^b$
 
 ### Run The Code
 
+#### Build The Model
 > **`glm`** `(formula, family=gaussian(link=identity), data)`  
 > $\quad$ `formula : example y ~ x1 + x2 + x3`  
-> $\quad$ `family  : binomial, gaussian, poisson, quasi etc  
-> $\quad$ `link    : logit:default for binomial, identity:default for gaussian, log:default for poisson`  
+> $\quad$ `family  : binomial, gaussian, poisson, quasi etc`  
+> $\quad$ `link    : logit:default binomial, identity:default gaussian, log:default poisson`  
 
 ```{r collapse=T}
 fit.logit = glm(left ~ ., family = binomial, data = train)
-pred.logit = predict(fit.logit, type = 'response', newdata = test)
 
-# alternative with specifying link function
+# alternative: specifying link function
 # fit = glm(left ~ ., family = binomial (link=logit), data = train)
 ```
+
+#### Prediction
+> **`predict`** `(object, newdata=NULL, type=c('link','response','term')`  
+> $\quad$ `object  : model object from lm, glm, randomForest etc`  
+> $\quad$ `newdata : dataset to predict on, default use train data stored in model`  
+> $\quad$ `type    : for probability output:'response`
+
+Logistic regression always returns prediction with **probability**.  
+
+**Prediction on Test Data**  
+Specify **`newdata`** parameter to predict result for test data.  
+```{r}
+pred.logit.train = predict(fit.logit, newdata = test, type = 'response')
+head(pred.logit.train)
+```
+
+**Prediction on Training Data**  
+Omitting **`newdata`** parameter, prediction default to training data.  
+```{r}
+pred.logit.test = predict(fit.logit, type = 'response')
+head(pred.logit.test)
+```
+
 
 ## Decision Tree
 
@@ -387,20 +411,22 @@ Pruning **reduces the size of the tree** using **bottom-up appraoch**:
 
 > **`rpart`** `(formula, method=, na.action=na.rpart, model=FALSE, x=FALSE, y=FALSE, data=)`  
 > $\quad$ `formula  : example y ~ x1 + x2 + x3`  
-> $\quad$ `data     : binomial, gaussian, poisson, quasi etc`  
+> $\quad$ `data     : training data`  
 > $\quad$ `method   : splitting method - 'class' for classification`  
-> $\quad$ `control  : (optional) parameter used for controlling tree growth, default as following`  
+> $\quad$ `control  : (optional) parameter used for controlling tree growth`  
 > $\quad$ `na.action: default action delete all observations with y is missing`  
 > $\quad$ `model: keep a copy of model in the result`  
 > $\quad$ `x    : keep a copy of x matrix in result`  
 > $\quad$ `y    : keep a copy of dependent variable y in result`  
 
-`rpart.control` specifies the paramters that limits the growth of tree.  
+**`rpart.control`** specifies the paramters that limits the growth of tree:  
 
-> `rpart.control(minsplit = 20,  minbucket = round(minsplit/3), cp = 0.01,` 
-> `              maxcompete = 4, maxsurrogate = 5, usesurrogate = 2, xval = 10,surrogatestyle = 0, maxdepth = 30)`  
+> `rpart.control(`  
+> $\quad$ minsplit = 20,  minbucket = round(minsplit/3), cp = 0.01,`  
+> $\quad$ `maxcompete = 4, maxsurrogate = 5, usesurrogate = 2,`  
+> $\quad$ `xval = 10,surrogatestyle = 0, maxdepth = 30)`  
 
-The default `rpart.control` parameters specifies belowcriteria to be met before splitting a node:  
+The default `rpart.control` parameters specifies below criteria to be met before splitting a node:  
 
 - **minsplit**: minimum number of observations in node to be 20  
 - **minbucket**: if splitted, both sides must have at least 20/3 observations  
@@ -409,10 +435,41 @@ The default `rpart.control` parameters specifies belowcriteria to be met before 
 - **maxdept**: tree depth not more than 30 levels
 
 ```{r}
-fit.dtree <- rpart(left ~ ., method = "class", control = rpart.control(cp = 0.001), data = train)
+fit.dtree1 = rpart(left ~ ., method = "class", data=train, cp = 0.001, minbucket=10)
+fit.dtree2 = rpart(left ~ ., method = "class", data=train)
+```
 
-dtree.pred.train = predict(fit.dtree, newdata= train, type = "class")
-eval.binclass(score=dtree.pred.train, label=train$left)
+#### Prediction
+> **`predict`** `(object, newdata=NULL, type=c('response','class')`  
+> $\quad$ `object  : model object from lm, glm, randomForest etc`  
+> $\quad$ `newdata : dataset to predict on, default use train data stored in model`  
+> $\quad$ `type    : default-'prob', which is probability output, 'class' - class output`  
+
+**Probability Prediction**  
+
+- Probability output is flexble so that researcher can tune the threshold and perform ROC analysis  
+- Output probability as multiple columns, each column represent resutls for one class. (for binary prediction, it will be just two columns)  
+```{r}
+pred.dtree.train1 = predict(fit.dtree1, type='prob')  # default newdata is model train set
+pred.dtree.test1  = predict(fit.dtree2, newdata=test) # default probability output
+head(pred.dtree.train)
+```
+
+**Class Prediction (threshold = 0.5)**  
+
+- Threshold of 0.5 applied  
+- Single column output  
+```{r}
+pred.dtree.train2 = predict(fit.dtree1, type = "class") # default newdata is model train set
+pred.dtree.test2  = predict(fit.dtree2, type = "class", newdata=test)
+head(pred.dtree.train)
+```
+
+#### Confusion Table
+Confusion table below proofs that type='class' is indeed prediction with threshold >0.5.  
+```{r}
+table(test$left, pred.dtree.test1[,2] > 0.5, dnn=c("Actual", "Predicted"))
+table(test$left, pred.dtree.test2,           dnn=c("Actual", "Predicted"))
 ```
 
 #### Visualize The Model
@@ -582,12 +639,40 @@ set.seed(1234)
 fit.forest <- randomForest(left~., data=train)
 ```
 
-#### Class Prediction
+#### Prediction
+Prediction syntax is similar to rpart decision tree.  
 
+> **`predict`** `(object, newdata=NULL, type=c('response','class')`  
+> $\quad$ `object  : model object from lm, glm, randomForest etc`  
+> $\quad$ `newdata : dataset to predict on, default use train data stored in model`  
+> $\quad$ `type    : default-'prob', which is probability output, 'class' - class output`  
+
+**Probability Prediction**  
+
+- Probability output is flexble so that researcher can tune the threshold and perform ROC analysis  
+- Output probability as multiple columns, each column represent resutls for one class. (for binary prediction, it will be just two columns)  
 ```{r}
-forest.pred <- predict(fit.forest, newdata=test)
-confusion <- table(test$left, forest.pred, dnn=c("Actual", "Predicted"))
-confusion
+pred.rf.train1 = predict(fit.forest, type='prob')  # default newdata is model train set
+pred.rf.test1  = predict(fit.forest, type='prob', newdata=test)
+head(pred.rf.train)
+```
+
+**Class Prediction (threshold = 0.5)**  
+
+- Threshold of 0.5 applied  
+- Single column output  
+```{r}
+pred.rf.train2 = predict(fit.forest, type = 'class') # default newdata is model train set
+pred.rf.test2  = predict(fit.forest, newdata=test)   # default type='class' as class output
+head(pred.dtree.train)
+```
+
+#### Confusion Table
+Confusion table below proofs that type='class' is indeed prediction with threshold >0.5.  
+```{r}
+#forest.pred <- predict(fit.forest, newdata=test)
+table(test$left, pred.rf.test1[,2] > 0.5, dnn=c("Actual", "Predicted"))
+table(test$left, pred.rf.test2,           dnn=c("Actual", "Predicted"))
 ```
 
 #### Analyize Vairable Importance

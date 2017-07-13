@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-11">
+<meta name="date" content="2017-07-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -444,6 +444,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="run-the-code-10" class="section level2">
 <h2><span class="header-section-number">13.4</span> Run The Code</h2>
+<p><strong><code>tm</code></strong> library is single library is able to handle corpus for text data analysis and pre-processing.</p>
 <div id="convert-text-to-corpus" class="section level3">
 <h3><span class="header-section-number">13.4.1</span> Convert Text To Corpus</h3>
 <ul>
@@ -451,29 +452,31 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </li>
 <li>It provide us a neat way to manipulate and work with text data for prediction</li>
 </ul>
-<div id="convert-text-data-to-corpus" class="section level4">
-<h4><span class="header-section-number">13.4.1.1</span> Convert Text Data to Corpus</h4>
+<div id="convert-vector-to-corpus" class="section level4">
+<h4><span class="header-section-number">13.4.1.1</span> Convert Vector to Corpus</h4>
 <p>Use <strong><code>tm::Corpus</code></strong> to convert text data into corpus.</p>
+<blockquote>
+<p><code>Corpus(x, control = list(language = &quot;en&quot;))</code><br />
+<span class="math inline">\(\quad\)</span> <code>x : VectorSoruce(vector) or DirSource()</code></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">Corpus</span>(<span class="kw">VectorSource</span>(tweets<span class="op">$</span>Tweet))</code></pre></div>
+</div>
+<div id="understand-corpus-structure" class="section level4">
+<h4><span class="header-section-number">13.4.1.2</span> Understand Corpus Structure</h4>
 <ul>
 <li><strong><code>Corpus</code></strong> treats every element in the vector as a <strong>document</strong><br />
 </li>
-<li>It returns an <strong>list</strong> object, which contain multiple lists (<strong>one list for each document</strong>)<br />
+<li>It returns a <strong>list</strong> object, which contain multiple lists (<strong>one list for each document</strong>)<br />
 </li>
 <li>Each document list contain two items: <strong>meta</strong> data and <strong>content</strong></li>
 </ul>
-<blockquote>
-<p><code>Corpus(x, control = list(language = &quot;en&quot;))</code><br />
-$quad$ <code>x : VectorSoruce(vector) or DirSource()</code></p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">Corpus</span>(<span class="kw">VectorSource</span>(tweets<span class="op">$</span>Tweet))</code></pre></div>
-<p><strong>Understand Corpus Structure</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(corpus[<span class="dv">1</span>])</code></pre></div>
 <pre><code>## List of 1
 ##  $ 1:List of 2
 ##   ..$ content: chr &quot;I have to say, Apple has by far the best customer care service I have ever received! @Apple @AppStore&quot;
 ##   ..$ meta   :List of 7
 ##   .. ..$ author       : chr(0) 
-##   .. ..$ datetimestamp: POSIXlt[1:1], format: &quot;2017-07-11 14:50:08&quot;
+##   .. ..$ datetimestamp: POSIXlt[1:1], format: &quot;2017-07-13 02:50:22&quot;
 ##   .. ..$ description  : chr(0) 
 ##   .. ..$ heading      : chr(0) 
 ##   .. ..$ id           : chr &quot;1&quot;
@@ -493,13 +496,30 @@ $quad$ <code>x : VectorSoruce(vector) or DirSource()</code></p>
 ## attr(,&quot;class&quot;)
 ## [1] &quot;CorpusMeta&quot;</code></pre>
 </div>
+<div id="viewing-corpus-data" class="section level4">
+<h4><span class="header-section-number">13.4.1.3</span> Viewing Corpus Data</h4>
+<p><strong><code>tm::inspect</code></strong> provides a better way to view the content of corpus, as compare to <code>[,]$content</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inspect</span>(corpus[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
+<pre><code>## &lt;&lt;SimpleCorpus&gt;&gt;
+## Metadata:  corpus specific: 1, document level (indexed): 0
+## Content:  documents: 3
+## 
+## [1] I have to say, Apple has by far the best customer care service I have ever received! @Apple @AppStore
+## [2] iOS 7 is so fricking smooth &amp; beautiful!! #ThanxApple @Apple                                         
+## [3] LOVE U @APPLE</code></pre>
+</div>
 </div>
 <div id="preprocess-corpus" class="section level3">
 <h3><span class="header-section-number">13.4.2</span> Preprocess Corpus</h3>
+<p><strong><code>tm::tm_map</code></strong> is essential to map data to transformation functions such as lower case, remove punctuation, stopwords and stemming to corpus.</p>
 <div id="converting-to-lowercase" class="section level4">
 <h4><span class="header-section-number">13.4.2.1</span> Converting to lowercase</h4>
-<p>Convert entire corpus to lowercase, using base R function <strong>tolower()</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">tm_map</span>(corpus,tolower)
+<ul>
+<li>Convert entire corpus to lowercase, using base R function <strong>tolower()</strong><br />
+</li>
+<li>Using <strong>non-tm library</strong> functions for data transformation on corpus data require <strong><code>content_transformer</code></strong></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">tm_map</span>(corpus,<span class="kw">content_transformer</span>(tolower))
 corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></div>
 <pre><code>## [1] &quot;i have to say, apple has by far the best customer care service i have ever received! @apple @appstore&quot;</code></pre>
 </div>
@@ -512,7 +532,7 @@ corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></
 </div>
 <div id="remove-stopwords" class="section level4">
 <h4><span class="header-section-number">13.4.2.3</span> Remove Stopwords</h4>
-<p><strong>tm::stopwords contain 174</strong> pre-defined stop words. Default is english.</p>
+<p><strong><code>tm::stopwords contain 174</code></strong> pre-defined stop words. Default is english.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stopwords</span>()</code></pre></div>
 <pre><code>##   [1] &quot;i&quot;          &quot;me&quot;         &quot;my&quot;         &quot;myself&quot;     &quot;we&quot;        
 ##   [6] &quot;our&quot;        &quot;ours&quot;       &quot;ourselves&quot;  &quot;you&quot;        &quot;your&quot;      
@@ -549,10 +569,16 @@ corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></
 ## [161] &quot;most&quot;       &quot;other&quot;      &quot;some&quot;       &quot;such&quot;       &quot;no&quot;        
 ## [166] &quot;nor&quot;        &quot;not&quot;        &quot;only&quot;       &quot;own&quot;        &quot;same&quot;      
 ## [171] &quot;so&quot;         &quot;than&quot;       &quot;too&quot;        &quot;very&quot;</code></pre>
-<p>Remove all stopwords from the entire corpus, with additional ‘apple’ stopword. Notice that, the remmoved character was <strong>replaced with empty spaces</strong>.</p>
+<p>Remove all stopwords from the entire corpus, <strong>replace with empty spaces</strong>. Additional stopwrods can be added.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">tm_map</span>(corpus, removeWords, <span class="kw">c</span>(<span class="st">&#39;apple&#39;</span>, <span class="kw">stopwords</span>()))
 corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></div>
 <pre><code>## [1] &quot;   say    far  best customer care service   ever received  appstore&quot;</code></pre>
+</div>
+<div id="stemming-1" class="section level4">
+<h4><span class="header-section-number">13.4.2.4</span> Stemming</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">tm_map</span>(corpus, stemDocument)
+corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></div>
+<pre><code>## [1] &quot;say far best custom care servic ever receiv appstor&quot;</code></pre>
 </div>
 </div>
 <div id="extract-bag-of-words" class="section level3">
@@ -560,84 +586,115 @@ corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></
 <p><strong>tm:DocumentTermMatrix</strong> creates a bag of words from the corpus, and derive a frequency table for each words used in the corpus.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq =<span class="st"> </span><span class="kw">DocumentTermMatrix</span>(corpus)
 freq</code></pre></div>
-<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 1181, terms: 3779)&gt;&gt;
-## Non-/sparse entries: 9121/4453878
+<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 1181, terms: 3289)&gt;&gt;
+## Non-/sparse entries: 8980/3875329
 ## Sparsity           : 100%
 ## Maximal term length: 115
 ## Weighting          : term frequency (tf)</code></pre>
 <div id="view-term-matrix-table" class="section level4">
 <h4><span class="header-section-number">13.4.3.1</span> View Term Matrix Table</h4>
 <ul>
-<li>tm::DocumentTermMatrix is an complex object. Viewing with normal [,] notation won’t be possible.<br />
+<li><strong><code>tm::DocumentTermMatrix</code></strong> is an complex object. Viewing with [,] notation won’t be possible<br />
 </li>
-<li>Use <strong><code>tm::inspect()</code></strong> to look at the table<br />
+<li>Use <strong><code>tm::inspect()</code></strong> to look at the table content<br />
 </li>
-<li>However, you will find that the documents are sparsed (most words has 0 frequency)</li>
+<li>You will find that most likely the documents are sparsed (most words has 0 frequency)</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(freq)</code></pre></div>
-<pre><code>## List of 6
-##  $ i       : int [1:9121] 1 1 1 1 1 1 1 1 1 2 ...
-##  $ j       : int [1:9121] 1 2 3 4 5 6 7 8 9 10 ...
-##  $ v       : num [1:9121] 1 1 1 1 1 1 1 1 1 1 ...
-##  $ nrow    : int 1181
-##  $ ncol    : int 3779
-##  $ dimnames:List of 2
-##   ..$ Docs : chr [1:1181] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
-##   ..$ Terms: chr [1:3779] &quot;appstore&quot; &quot;best&quot; &quot;care&quot; &quot;customer&quot; ...
-##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;DocumentTermMatrix&quot; &quot;simple_triplet_matrix&quot;
-##  - attr(*, &quot;weighting&quot;)= chr [1:2] &quot;term frequency&quot; &quot;tf&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inspect</span>(freq[<span class="dv">1000</span><span class="op">:</span><span class="dv">1005</span>, <span class="dv">505</span><span class="op">:</span><span class="dv">515</span>])</code></pre></div>
-<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 6, terms: 11)&gt;&gt;
-## Non-/sparse entries: 1/65
-## Sparsity           : 98%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">inspect</span>(freq[<span class="dv">1000</span><span class="op">:</span><span class="dv">1003</span>, <span class="dv">505</span><span class="op">:</span><span class="dv">511</span>])</code></pre></div>
+<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 4, terms: 7)&gt;&gt;
+## Non-/sparse entries: 0/28
+## Sparsity           : 100%
 ## Maximal term length: 23
 ## Weighting          : term frequency (tf)
 ## Sample             :
 ##       Terms
-## Docs   applestoreamsterdam home itunes itunesmusic musicians office pen
-##   1000                   0    0      1           0         0      0   0
-##   1001                   0    0      0           0         0      0   0
-##   1002                   0    0      0           0         0      0   0
-##   1003                   0    0      0           0         0      0   0
-##   1004                   0    0      0           0         0      0   0
-##   1005                   0    0      0           0         0      0   0
-##       Terms
-## Docs   pictwittercomu1ifcddhei scaleboxapp vintage
-##   1000                       0           0       0
-##   1001                       0           0       0
-##   1002                       0           0       0
-##   1003                       0           0       0
-##   1004                       0           0       0
-##   1005                       0           0       0</code></pre>
+## Docs   asap courtsideassistappforio current follow save ssd support
+##   1000    0                       0       0      0    0   0       0
+##   1001    0                       0       0      0    0   0       0
+##   1002    0                       0       0      0    0   0       0
+##   1003    0                       0       0      0    0   0       0</code></pre>
 </div>
-<div id="most-frequent-words" class="section level4">
-<h4><span class="header-section-number">13.4.3.2</span> Most Frequent Words</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">findFreqTerms</span>(freq, <span class="dt">lowfreq=</span><span class="dv">30</span>)</code></pre></div>
-<pre><code>##  [1] &quot;ios&quot;                  &quot;iphone&quot;               &quot;iphone5s&quot;            
-##  [4] &quot;new&quot;                  &quot;phone&quot;                &quot;can&quot;                 
-##  [7] &quot;make&quot;                 &quot;one&quot;                  &quot;will&quot;                
-## [10] &quot;get&quot;                  &quot;just&quot;                 &quot;iphone5c&quot;            
-## [13] &quot;iphones&quot;              &quot;store&quot;                &quot;now&quot;                 
-## [16] &quot;app&quot;                  &quot;ipad&quot;                 &quot;dont&quot;                
-## [19] &quot;like&quot;                 &quot;itunes&quot;               &quot;apples&quot;              
-## [22] &quot;ipod&quot;                 &quot;ipodplayerpromo&quot;      &quot;itune&quot;               
-## [25] &quot;promoipodplayerpromo&quot; &quot;freak&quot;</code></pre>
+<div id="most-frequent-terms" class="section level4">
+<h4><span class="header-section-number">13.4.3.2</span> Most Frequent Terms</h4>
+<ul>
+<li>Since the terms are sparsed within the corpus, we should be interested to know what are the most frequent words in the corpus (that appeared more than 100 times)<br />
+</li>
+<li>However, it doesn’t tell us if this was seen accorss how many documents<br />
+</li>
+<li>It is <strong>possible</strong> that the most frequent term only <strong>appear in single document</strong> !</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">findFreqTerms</span>(freq, <span class="dt">lowfreq=</span><span class="dv">100</span>)</code></pre></div>
+<pre><code>## [1] &quot;iphon&quot; &quot;new&quot;   &quot;itun&quot;</code></pre>
 </div>
 <div id="optimize-the-term-matrix-table" class="section level4">
-<h4><span class="header-section-number">13.4.3.3</span> Optimize THe Term Matrix Table</h4>
-<p>There are obviously too many words in the bag (too many terms) to be useful. - We want to reduce the number words by selecting just the most frequent ones<br />
-- Specifying 0.97 means to select only words that appear in 3% of the documents</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq.sparse =<span class="st"> </span><span class="kw">removeSparseTerms</span>(freq, <span class="fl">0.97</span>)
-freq.sparse</code></pre></div>
-<pre><code>## &lt;&lt;DocumentTermMatrix (documents: 1181, terms: 18)&gt;&gt;
-## Non-/sparse entries: 1134/20124
-## Sparsity           : 95%
-## Maximal term length: 20
-## Weighting          : term frequency (tf)</code></pre>
+<h4><span class="header-section-number">13.4.3.3</span> Optimize The Term Matrix Table</h4>
+<p>There are obviously too many words in the bag (too many terms) to be useful:</p>
+<ul>
+<li>We want to reduce the number words by selecting those <strong>appear in many documents</strong><br />
+</li>
+<li>Specifying sparse = 0.97 to select only words that appear in 3% of the documents<br />
+</li>
+<li>Notice the number of terms in the new term matrix table <strong>has been reduced</strong></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq.sparse =<span class="st"> </span><span class="kw">removeSparseTerms</span>(freq, <span class="dt">sparse=</span><span class="fl">0.97</span>)
+<span class="kw">colnames</span>(freq.sparse)</code></pre></div>
+<pre><code>##  [1] &quot;iphon&quot;                &quot;iphone5&quot;              &quot;new&quot;                 
+##  [4] &quot;phone&quot;                &quot;can&quot;                  &quot;make&quot;                
+##  [7] &quot;will&quot;                 &quot;get&quot;                  &quot;just&quot;                
+## [10] &quot;store&quot;                &quot;now&quot;                  &quot;use&quot;                 
+## [13] &quot;app&quot;                  &quot;ipad&quot;                 &quot;freak&quot;               
+## [16] &quot;dont&quot;                 &quot;like&quot;                 &quot;itun&quot;                
+## [19] &quot;need&quot;                 &quot;ipod&quot;                 &quot;ipodplayerpromo&quot;     
+## [22] &quot;promoipodplayerpromo&quot;</code></pre>
+<ul>
+<li>Since too may terms make up the columns, <code>str</code> is not suitable to check the variable names<br />
+</li>
+<li>Use <code>colnames</code> instead. term matrix table is quite <strong>matrix-alike</strong></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq.sparse =<span class="st"> </span><span class="kw">removeSparseTerms</span>(freq, <span class="dt">sparse=</span><span class="fl">0.97</span>)
+<span class="kw">colnames</span>(freq.sparse)</code></pre></div>
+<pre><code>##  [1] &quot;iphon&quot;                &quot;iphone5&quot;              &quot;new&quot;                 
+##  [4] &quot;phone&quot;                &quot;can&quot;                  &quot;make&quot;                
+##  [7] &quot;will&quot;                 &quot;get&quot;                  &quot;just&quot;                
+## [10] &quot;store&quot;                &quot;now&quot;                  &quot;use&quot;                 
+## [13] &quot;app&quot;                  &quot;ipad&quot;                 &quot;freak&quot;               
+## [16] &quot;dont&quot;                 &quot;like&quot;                 &quot;itun&quot;                
+## [19] &quot;need&quot;                 &quot;ipod&quot;                 &quot;ipodplayerpromo&quot;     
+## [22] &quot;promoipodplayerpromo&quot;</code></pre>
 </div>
-<div id="convert-term-matrix-to-dataframe" class="section level4">
-<h4><span class="header-section-number">13.4.3.4</span> Convert Term Matrix To DataFrame</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tweets.sparse =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">as.matrix</span>(freq.sparse))</code></pre></div>
+<div id="merge-term-matrix-to-dataframe" class="section level4">
+<h4><span class="header-section-number">13.4.3.4</span> Merge Term Matrix To DataFrame</h4>
+<p>We can now convert the term matrix table into <strong>matrix, then data.frame</strong>:</p>
+<ul>
+<li>Each <strong>row represents an obervation</strong> as in original data<br />
+</li>
+<li>All terms will become <strong>new variables</strong>, with <strong>frequency</strong> as its data</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tweets.sparse =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">as.matrix</span>(freq.sparse))
+<span class="kw">str</span>(tweets.sparse)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1181 obs. of  22 variables:
+##  $ iphon               : num  0 0 0 1 0 0 2 1 0 0 ...
+##  $ iphone5             : num  0 0 0 1 0 0 0 0 0 0 ...
+##  $ new                 : num  0 0 0 1 1 0 0 0 0 2 ...
+##  $ phone               : num  0 0 0 0 1 0 0 0 0 0 ...
+##  $ can                 : num  0 0 0 0 0 0 1 0 0 0 ...
+##  $ make                : num  0 0 0 0 0 0 1 0 0 0 ...
+##  $ will                : num  0 0 0 0 0 0 0 0 1 0 ...
+##  $ get                 : num  0 0 0 0 0 0 0 0 0 1 ...
+##  $ just                : num  0 0 0 0 0 0 0 0 0 1 ...
+##  $ store               : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ now                 : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ use                 : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ app                 : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ ipad                : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ freak               : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ dont                : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ like                : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ itun                : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ need                : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ ipod                : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ ipodplayerpromo     : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ promoipodplayerpromo: num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 
 </div>
 </div>

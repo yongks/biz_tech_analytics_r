@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-11">
+<meta name="date" content="2017-07-13">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -662,9 +662,9 @@ my.rd =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st
           <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&#39;NA&#39;</span>,<span class="st">&#39;NULL&#39;</span>,<span class="st">&#39;&#39;</span>),
           <span class="dt">col_types =</span> <span class="kw">list</span> (
             <span class="dt">gender=</span><span class="kw">col_factor</span>(<span class="kw">c</span>(<span class="st">&#39;Male&#39;</span>,<span class="st">&#39;Female&#39;</span>))
-          ))</code></pre></div>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1], &#39;X2&#39; [2]</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.rd[,<span class="op">-</span><span class="dv">10</span>]</code></pre></div>
+          ))
+
+my.rd[,<span class="op">-</span><span class="dv">10</span>]</code></pre></div>
 <pre><code>## # A tibble: 13 x 9
 ##       X1    X2  dept gender   weight height date_birth amount  date_last
 ##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;fctr&gt;    &lt;dbl&gt;  &lt;int&gt;      &lt;chr&gt;  &lt;int&gt;      &lt;chr&gt;

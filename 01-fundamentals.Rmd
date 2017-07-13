@@ -69,6 +69,10 @@ The solution is to:
 
 ### String
 
+```{r}
+library(stringr)
+```
+
 #### String Comparison
 
 #### String Manipulations
@@ -76,6 +80,14 @@ The solution is to:
 **Splitting**  
 **Combining**  
 **Extracting**  
+
+#### String Statistics
+
+**Length of String (Vectorized)**  
+```{r}
+str_length(c('abc','abcd','abcde','ac'))
+max(str_length(c('abc','abcd','abcde','ac')))
+```
 
 
 ### Dates Manipulation

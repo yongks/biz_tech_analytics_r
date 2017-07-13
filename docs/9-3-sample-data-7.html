@@ -447,25 +447,33 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Sample data used in this chapter emulate two dimensional data points with three groups with clear grouping when visualize.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
 my.df =<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&#39;ID_&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">sep =</span> <span class="st">&#39;&#39;</span>),
-  <span class="dt">grp =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;G1&#39;</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">&#39;G2&#39;</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="st">&#39;G3&#39;</span>, <span class="dv">5</span>)),
-  <span class="dt">value1 =</span> <span class="kw">c</span>( <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">10</span>,  <span class="dt">sd =</span> <span class="dv">3</span>)),
-              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
-              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">3</span>))),
-  <span class="dt">value2 =</span> <span class="kw">c</span>( <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
-              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
-              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">5</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>))),
+  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&#39;ID_&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">sep =</span> <span class="st">&#39;&#39;</span>),
+  <span class="dt">grp =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&#39;G1&#39;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&#39;G2&#39;</span>, <span class="dv">4</span>), <span class="kw">rep</span>(<span class="st">&#39;G3&#39;</span>, <span class="dv">4</span>)),
+  <span class="dt">value1 =</span> <span class="kw">c</span>( <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">10</span>,  <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">30</span>, <span class="dt">sd =</span> <span class="dv">3</span>))),
+  <span class="dt">value2 =</span> <span class="kw">c</span>( <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">10</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>)),
+              <span class="kw">round</span>(<span class="kw">rnorm</span>(<span class="dv">4</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>))),
   <span class="dt">stringsAsFactors =</span> F
 )
 <span class="kw">rownames</span>(my.df) =<span class="st"> </span>my.df[,<span class="dv">1</span>]
-<span class="kw">str</span>(my.df)
+my.df
 <span class="kw">plot</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
 <p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-207-1.png" width="864" /></p>
-<pre><code>## &#39;data.frame&#39;:    15 obs. of  4 variables:
-##  $ id    : chr  &quot;ID_1&quot; &quot;ID_2&quot; &quot;ID_3&quot; &quot;ID_4&quot; ...
-##  $ grp   : chr  &quot;G1&quot; &quot;G1&quot; &quot;G1&quot; &quot;G1&quot; ...
-##  $ value1: num  6 11 13 3 11 12 8 8 8 7 ...
-##  $ value2: num  10 8 7 7 17 20 19 19 21 18 ...</code></pre>
+<pre><code>##          id grp value1 value2
+## ID_1   ID_1  G1      6      8
+## ID_2   ID_2  G1     11     10
+## ID_3   ID_3  G1     13     13
+## ID_4   ID_4  G1      3     10
+## ID_5   ID_5  G2     11     18
+## ID_6   ID_6  G2     12     17
+## ID_7   ID_7  G2      8     17
+## ID_8   ID_8  G2      8     27
+## ID_9   ID_9  G3     28     20
+## ID_10 ID_10  G3     27     19
+## ID_11 ID_11  G3     29     19
+## ID_12 ID_12  G3     27     21</code></pre>
 </div>
             </section>
 

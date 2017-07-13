@@ -465,38 +465,28 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ##   ..$ : chr [1:50] &quot;Alabama&quot; &quot;Alaska&quot; &quot;Arizona&quot; &quot;Arkansas&quot; ...
 ##   ..$ : chr [1:8] &quot;Population&quot; &quot;Income&quot; &quot;Illiteracy&quot; &quot;Life Exp&quot; ...
 ## [[1]]
-##  [1] &quot;Alabama&quot;        &quot;Alaska&quot;         &quot;Arizona&quot;        &quot;Arkansas&quot;      
-##  [5] &quot;California&quot;     &quot;Colorado&quot;       &quot;Connecticut&quot;    &quot;Delaware&quot;      
-##  [9] &quot;Florida&quot;        &quot;Georgia&quot;        &quot;Hawaii&quot;         &quot;Idaho&quot;         
-## [13] &quot;Illinois&quot;       &quot;Indiana&quot;        &quot;Iowa&quot;           &quot;Kansas&quot;        
-## [17] &quot;Kentucky&quot;       &quot;Louisiana&quot;      &quot;Maine&quot;          &quot;Maryland&quot;      
-## [21] &quot;Massachusetts&quot;  &quot;Michigan&quot;       &quot;Minnesota&quot;      &quot;Mississippi&quot;   
-## [25] &quot;Missouri&quot;       &quot;Montana&quot;        &quot;Nebraska&quot;       &quot;Nevada&quot;        
-## [29] &quot;New Hampshire&quot;  &quot;New Jersey&quot;     &quot;New Mexico&quot;     &quot;New York&quot;      
-## [33] &quot;North Carolina&quot; &quot;North Dakota&quot;   &quot;Ohio&quot;           &quot;Oklahoma&quot;      
-## [37] &quot;Oregon&quot;         &quot;Pennsylvania&quot;   &quot;Rhode Island&quot;   &quot;South Carolina&quot;
-## [41] &quot;South Dakota&quot;   &quot;Tennessee&quot;      &quot;Texas&quot;          &quot;Utah&quot;          
-## [45] &quot;Vermont&quot;        &quot;Virginia&quot;       &quot;Washington&quot;     &quot;West Virginia&quot; 
-## [49] &quot;Wisconsin&quot;      &quot;Wyoming&quot;       
+##  [1] &quot;Alabama&quot;        &quot;Alaska&quot;         &quot;Arizona&quot;        &quot;Arkansas&quot;       &quot;California&quot;    
+##  [6] &quot;Colorado&quot;       &quot;Connecticut&quot;    &quot;Delaware&quot;       &quot;Florida&quot;        &quot;Georgia&quot;       
+## [11] &quot;Hawaii&quot;         &quot;Idaho&quot;          &quot;Illinois&quot;       &quot;Indiana&quot;        &quot;Iowa&quot;          
+## [16] &quot;Kansas&quot;         &quot;Kentucky&quot;       &quot;Louisiana&quot;      &quot;Maine&quot;          &quot;Maryland&quot;      
+## [21] &quot;Massachusetts&quot;  &quot;Michigan&quot;       &quot;Minnesota&quot;      &quot;Mississippi&quot;    &quot;Missouri&quot;      
+## [26] &quot;Montana&quot;        &quot;Nebraska&quot;       &quot;Nevada&quot;         &quot;New Hampshire&quot;  &quot;New Jersey&quot;    
+## [31] &quot;New Mexico&quot;     &quot;New York&quot;       &quot;North Carolina&quot; &quot;North Dakota&quot;   &quot;Ohio&quot;          
+## [36] &quot;Oklahoma&quot;       &quot;Oregon&quot;         &quot;Pennsylvania&quot;   &quot;Rhode Island&quot;   &quot;South Carolina&quot;
+## [41] &quot;South Dakota&quot;   &quot;Tennessee&quot;      &quot;Texas&quot;          &quot;Utah&quot;           &quot;Vermont&quot;       
+## [46] &quot;Virginia&quot;       &quot;Washington&quot;     &quot;West Virginia&quot;  &quot;Wisconsin&quot;      &quot;Wyoming&quot;       
 ## 
 ## [[1]]
-## [1] &quot;Population&quot; &quot;Income&quot;     &quot;Illiteracy&quot; &quot;Life Exp&quot;   &quot;Murder&quot;    
-## [6] &quot;HS Grad&quot;    &quot;Frost&quot;      &quot;Area&quot;      
+## [1] &quot;Population&quot; &quot;Income&quot;     &quot;Illiteracy&quot; &quot;Life Exp&quot;   &quot;Murder&quot;     &quot;HS Grad&quot;    &quot;Frost&quot;     
+## [8] &quot;Area&quot;      
 ## 
-##            Population Income Illiteracy Life Exp Murder HS Grad Frost
-## Alabama          3615   3624        2.1    69.05   15.1    41.3    20
-## Alaska            365   6315        1.5    69.31   11.3    66.7   152
-## Arizona          2212   4530        1.8    70.55    7.8    58.1    15
-## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65
-## California      21198   5114        1.1    71.71   10.3    62.6    20
-## Colorado         2541   4884        0.7    72.06    6.8    63.9   166
-##              Area
-## Alabama     50708
-## Alaska     566432
-## Arizona    113417
-## Arkansas    51945
-## California 156361
-## Colorado   103766</code></pre>
+##            Population Income Illiteracy Life Exp Murder HS Grad Frost   Area
+## Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
+## Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432
+## Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417
+## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
+## California      21198   5114        1.1    71.71   10.3    62.6    20 156361
+## Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
 my.df =<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">dept =</span> <span class="kw">paste</span>(<span class="st">&#39;D&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),

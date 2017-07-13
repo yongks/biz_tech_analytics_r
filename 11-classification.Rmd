@@ -259,14 +259,14 @@ Logistic regression always returns prediction with **probability**.
 **Prediction on Test Data**  
 Specify **`newdata`** parameter to predict result for test data.  
 ```{r}
-pred.logit.train = predict(fit.logit, newdata = test, type = 'response')
+pred.logit.test = predict(fit.logit, newdata = test, type = 'response')
 head(pred.logit.train)
 ```
 
 **Prediction on Training Data**  
 Omitting **`newdata`** parameter, prediction default to training data.  
 ```{r}
-pred.logit.test = predict(fit.logit, type = 'response')
+pred.logit.train = predict(fit.logit, type = 'response')
 head(pred.logit.test)
 ```
 
@@ -452,7 +452,7 @@ fit.dtree2 = rpart(left ~ ., method = "class", data=train)
 ```{r}
 pred.dtree.train1 = predict(fit.dtree1, type='prob')  # default newdata is model train set
 pred.dtree.test1  = predict(fit.dtree2, newdata=test) # default probability output
-head(pred.dtree.train)
+head(pred.dtree.train1)
 ```
 
 **Class Prediction (threshold = 0.5)**  
@@ -462,7 +462,7 @@ head(pred.dtree.train)
 ```{r}
 pred.dtree.train2 = predict(fit.dtree1, type = "class") # default newdata is model train set
 pred.dtree.test2  = predict(fit.dtree2, type = "class", newdata=test)
-head(pred.dtree.train)
+head(pred.dtree.train2)
 ```
 
 #### Confusion Table
@@ -476,7 +476,7 @@ table(test$left, pred.dtree.test2,           dnn=c("Actual", "Predicted"))
 
 **Visualize with Text**
 ```{r}
-fit.dtree  
+fit.dtree1  
 ```
 
 **Visualize with Graph**  
@@ -489,7 +489,7 @@ Notice that the graph has the below characteristics:
 - All leaf nodes adds up to 100% probability  
 
 ```{r}
-prp(fit.dtree, type = 2, extra = 104, fallen.leaves = TRUE, main="Decision Tree")
+prp(fit.dtree1, type = 2, extra = 104, fallen.leaves = TRUE, main="Decision Tree")
 ```
 
 #### Cross Validation Analysis
@@ -502,7 +502,7 @@ Yes, `rpart` has built-in cross validation, calculated when a model is created !
 `cptable` is stored in the model built with `rpart`.  
 
 ```{r, results='hold'}
-printcp(fit.dtree)
+printcp(fit.dtree1)
 #fit.dtree$cptable  # alternative 
 ```
 
@@ -513,7 +513,7 @@ printcp(fit.dtree)
 - Optimum tree size for pruning is **below the horizontal line**, use this chart to determine the **optimum tree size, and its cp value**, prune with this cp value  
 
 ```{r}
-plotcp(fit.dtree)
+plotcp(fit.dtree1)
 ```
 
 #### Pruning Tree
@@ -530,7 +530,7 @@ plotcp(fit.dtree)
     - Remember, **tree size = nsplit + 1**  
 
 ```{r}
-fit.dtree.prune = prune(fit.dtree, cp = 0.005)
+fit.dtree.prune = prune(fit.dtree1, cp = 0.005)
 printcp(fit.dtree.prune)
 plotcp(fit.dtree.prune)
 ```
@@ -546,11 +546,11 @@ Overall, we can see that the performance dropped slightly after prunning for dat
 
 ```{r, results='markup'}
 # original model with training set
-dtree.pred.train  = predict(fit.dtree,  newdata=train, type="class")
+dtree.pred.train  = predict(fit.dtree1,  newdata=train, type="class")
 eval.binclass(score=dtree.pred.train, label=train$left)[2:5]
 
 # original model with test set
-dtree.pred.test1 = predict(fit.dtree,        newdata=test, type="class")
+dtree.pred.test1 = predict(fit.dtree1,        newdata=test, type="class")
 eval.binclass(score=dtree.pred.test1, label=test$left)[2:5]
 
 # pruned model with training set
@@ -654,7 +654,7 @@ Prediction syntax is similar to rpart decision tree.
 ```{r}
 pred.rf.train1 = predict(fit.forest, type='prob')  # default newdata is model train set
 pred.rf.test1  = predict(fit.forest, type='prob', newdata=test)
-head(pred.rf.train)
+head(pred.rf.train1)
 ```
 
 **Class Prediction (threshold = 0.5)**  
@@ -664,7 +664,7 @@ head(pred.rf.train)
 ```{r}
 pred.rf.train2 = predict(fit.forest, type = 'class') # default newdata is model train set
 pred.rf.test2  = predict(fit.forest, newdata=test)   # default type='class' as class output
-head(pred.dtree.train)
+head(pred.dtree.train2)
 ```
 
 #### Confusion Table
@@ -880,8 +880,6 @@ eval.binclass = function(score = NULL, label = NULL, cutoff = NA) {
              specificity = specificity, fscore = fscore, fpr = fpr, tpr_fpr = tpr_fpr,
              tp = tp, fp = fp, fn = fn, tn = tn)
 }
-
-eval.binclass(score=pred.logit, label=test$left, cutoff=0.5)
 ```
 
 #### ROCR::Construct the Performance Metric
@@ -893,10 +891,10 @@ It takes only two inputs:
 2. **Label** (actual POSITVE)  
 
 ```{r}
-rocr.pred = prediction(pred.logit, test$left)
+rocr.pred = prediction(pred.logit.test, test$left)
 
 rocr.metrics = data.frame(
-    cutoff = rocr.pred@cutoffs[[1]],
+    cutoff   = rocr.pred@cutoffs[[1]],
     accuracy = (rocr.pred@tp[[1]] + rocr.pred@tn[[1]]) / (rocr.pred@tp[[1]] + rocr.pred@tn[[1]] + rocr.pred@fp[[1]] + rocr.pred@fn[[1]]),
     tpr = rocr.pred@tp[[1]] / (rocr.pred@tp[[1]] + rocr.pred@fn[[1]]),
     fpr = rocr.pred@fp[[1]] / (rocr.pred@fp[[1]] + rocr.pred@tn[[1]]),

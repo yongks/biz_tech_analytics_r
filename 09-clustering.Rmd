@@ -57,27 +57,26 @@ Sample data used in this chapter emulate two dimensional data points with three 
 ```{r fig.width=9, fig.height=4, fig.show='asis'}
 set.seed(1234)
 my.df = data.frame(
-  id = paste('ID_', 1:15, sep = ''),
-  grp = c(rep('G1', 5), rep('G2', 5), rep('G3', 5)),
-  value1 = c( round(rnorm(5, mean = 10,  sd = 3)),
-              round(rnorm(5, mean = 10, sd = 3)),
-              round(rnorm(5, mean = 30, sd = 3))),
-  value2 = c( round(rnorm(5, mean = 10, sd = 3)),
-              round(rnorm(5, mean = 20, sd = 3)),
-              round(rnorm(5, mean = 20, sd = 3))),
+  id = paste('ID_', 1:12, sep = ''),
+  grp = c(rep('G1', 4), rep('G2', 4), rep('G3', 4)),
+  value1 = c( round(rnorm(4, mean = 10,  sd = 3)),
+              round(rnorm(4, mean = 10, sd = 3)),
+              round(rnorm(4, mean = 30, sd = 3))),
+  value2 = c( round(rnorm(4, mean = 10, sd = 3)),
+              round(rnorm(4, mean = 20, sd = 3)),
+              round(rnorm(4, mean = 20, sd = 3))),
   stringsAsFactors = F
 )
 rownames(my.df) = my.df[,1]
-str(my.df)
+my.df
 plot(my.df$value1, my.df$value2)
 ```
-
 
 ## General Steps
 
 1. **Choose appropriate attributes**  
     + This is the most important steps. 
-    + Choose attributes that that actions can be taken upon
+    + Choose attributes that actions can be taken upon
     + A sohisticated cluster analysis can't compensate for a poor choice of variables  <br><br>
 
 2. **Scale Data**  
@@ -138,14 +137,23 @@ plot(my.df$value1, my.df$value2)
 
 ## Distance Algorithm
 
-The choice of an appropriate metric will influence the shape of the clusters, as some elements may be close to one another according to one distance and farther away according to another. 
-
-For example, in a two dimensional data, the distance between the point (1,1) and the origin (0,0) can be 2 under **Manhattan distance**, $\sqrt{2}$ under **Euclidean distance**, or 1 under **Maximum distance**.
+- The choice of an appropriate metric will influence the shape of the clusters  
+- As some elements may be close to one another according to one distance and farther away according to another   
+- For example, in a two dimensional data, the distance between the point (1,1) and the origin (0,0) can be 2 under **Manhattan distance**, $\sqrt{2}$ under **Euclidean distance**, or 1 under **Maximum distance**.
 
 **`dist`** is used to measure distance for all **numeric**  elements in dataframe or matrix. Supplying non-numeric columns for `dist` will incur warning.
 
 > **`dist`**`( x, method = )   default method = 'euclidean'`  
 > $\quad$ `method = 'euclidean', "maximum", "manhattan", "canberra", "binary" or "minkowski"`  
+
+### Computation Overhead
+
+Computation power are heavy for distance calculation for below reason:  
+
+- For N observations, **`dist`** will generate N(N-1)/2 distance matrices  
+- The more variables in the data, the longer it takes to calculate  
+
+For large datasets, it is likely feasible to calcualte distance as it is take too long and too much memory.  
 
 ### Euclidean Distance
 
@@ -416,9 +424,10 @@ fviz_nbclust(nbc.kmeans) + labs(subtitle='K-Means')
 ### Clustering Algorithm
 
 This is how Hierarchical Clustering works:  
+
     1. Initially, put each data point in **its own cluster**  
     2. **Calucate the distances** between each cluster and all other clusters (inter-cluster distance)  
-    3. **Combine the two clusters** with the smallest distance - This reduce cluster number by one  
+    3. **Combine the two clusters** with the **smallest distance** - This reduce cluster number by one  
     4. Repeat step (2) and (3) until all clusters have been **merged into single cluster**  <br>
 
 ### Inter Cluster Distance Method
@@ -442,14 +451,14 @@ Generally, step (A), (B) and (C) are followed for H-clustering analysis.
 
 **A. Before running H-Clustering**  
 
-1. Fiter Data (choose only numeric columns)  
+1. Filter Data (choose only numeric columns)  
 2. Scale Data (if required)  
-3. Calculate distance, using  
+3. Calculate distance, choose a distance algorithm
 
 **B. Performing H-Clustering**  
 
 1. Build H-Cluster model,  require input of **inter-cluster distance method**  
-2. Derive cluster by **cutting* into K number of clusters  
+2. Derive cluster by **cutting** into K number of clusters  
 
 **C. Visualize**
 
@@ -458,11 +467,11 @@ Generally, step (A), (B) and (C) are followed for H-clustering analysis.
 
 #### Using Base-R Utilities
 
-> **`hclust (d, method ='complete')`**  
-> $\quad$ `d      = distance calculated using dist()`  
-> $\quad$ `method = 'single', 'complete', 'average', 'centroid' as cluster distance method`  
-
 **Filter, Scale, Calculate Distance**  
+
+> **`dist (d, method ='euclidean')`**  
+> $\quad$ `x      =  matrix or data.frame`  
+> $\quad$ `method = 'euclidean', "maximum", "manhattan", "canberra", "binary"`  
 
 ```{r}
 data.scaled = scale(my.df[,3:4])   # scale data
@@ -470,6 +479,14 @@ d.euclidean = dist( data.scaled )  # calculate distance
 ```
 
 **Build H-Cluster Model, Cutting into clusters**  
+
+> **`hclust (d, method ='complete')`**  
+> $\quad$ `d      = distance calculated using dist()`  
+> $\quad$ `method = 'single', 'complete', 'average', 'centroid' as cluster distance method`  
+
+> **`cutree (obj, k=NULL, h=NULL)`**  
+> $\quad$ `obj = hclust object`  
+> $\quad$ `k   = integer, total number of expected groups`    
 
 ```{r, collapse=TRUE}
 fit.average  = hclust (d.euclidean, method='average')  # build the model
@@ -554,14 +571,14 @@ fviz_dend(fit.hc, rect = TRUE, rect_border = 'red', cex = 0.5, lower_rect = -0.5
 
 ### Run The Code
 
-Generally, step (A), (B) and (C) are followed for H-clustering analysis.  
+Generally, step (A), (B) and (C) are followed for K-Mean clustering.  
 
-**A. Before running H-Clustering**  
+**A. Before running K-Mean**  
 
-1. Fiter Data (choose only numeric columns)  
+1. Filter Data (choose only numeric columns)  
 2. Scale Data (if required)  
 
-**B. Performing H-Clustering**  
+**B. Performing K-Mean**  
 
 1. Build K-Means Cluster model,  require input  
     + Number of initial centers (clusters K)
@@ -581,12 +598,13 @@ Generally, step (A), (B) and (C) are followed for H-clustering analysis.
 > $\quad$ `nstart    = how many times to randomly try seeding centroids`  
 > $\quad$ `algorithm = "Hartigan-Wong"-default, "Lloyd", "Forgy", "MacQueen"`  
 
-**nstart=25** is a good number to use. `kmeans` output below useful values:  
+**nstart=25** is a good number to use.  
+`kmeans` output below useful values:  
 
-> **`cluster`** ` : cluster number for all observations`  
+> **`cluster`** ` : cluster assignment for all observations`  
 > **`centers`** `: Centre values (of each dimensions) for each cluster`  
 > **`withinss`** `: Total Sum of Squares Within For Each Cluster`  
-> **`size`** `: Number of observations for each cluster number`  
+> **`size`** `: Number of observations for each cluster`  
 
 ```{r, collapse=TRUE}
 fit.kmeans = kmeans(data.scaled, 3, nstart = 25)

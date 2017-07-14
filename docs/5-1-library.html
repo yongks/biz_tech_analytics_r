@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-09">
+<meta name="date" content="2017-07-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -147,6 +147,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.9.1" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#sample-data-1"><i class="fa fa-check"></i><b>5.9.1</b> Sample Data</a></li>
 <li class="chapter" data-level="5.9.2" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#z-score-scaling"><i class="fa fa-check"></i><b>5.9.2</b> Z-Score Scaling</a></li>
 <li class="chapter" data-level="5.9.3" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#min-max-scaling"><i class="fa fa-check"></i><b>5.9.3</b> Min Max Scaling</a></li>
+<li class="chapter" data-level="5.9.4" data-path="5-9-number-manipulation.html"><a href="5-9-number-manipulation.html#transformation-model"><i class="fa fa-check"></i><b>5.9.4</b> Transformation Model</a></li>
 </ul></li>
 <li class="chapter" data-level="5.10" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html"><i class="fa fa-check"></i><b>5.10</b> Artificial Grouping</a><ul>
 <li class="chapter" data-level="5.10.1" data-path="5-10-artificial-grouping.html"><a href="5-10-artificial-grouping.html#grouping-with-numeric-breakpoints"><i class="fa fa-check"></i><b>5.10.1</b> Grouping with Numeric Breakpoints</a></li>
@@ -164,7 +165,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
 <li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
 <li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
-<li class="chapter" data-level="13" data-path="13-model-optimization.html"><a href="13-model-optimization.html"><i class="fa fa-check"></i><b>13</b> Model Optimization</a></li>
+<li class="chapter" data-level="13" data-path="13-text-analysis.html"><a href="13-text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a></li>
+<li class="chapter" data-level="14" data-path="14-model-optimization.html"><a href="14-model-optimization.html"><i class="fa fa-check"></i><b>14</b> Model Optimization</a></li>
 </ul>
 
       </nav>
@@ -186,7 +188,8 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">5.1</span> Library</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
 <span class="kw">library</span>(caTools)
-<span class="kw">library</span>(dplyr)</code></pre></div>
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(caret)</code></pre></div>
 <p>Below summarizes all packages, their functions and purposes used in this <strong>Data Preprocessing</strong> chapter.</p>
 <table style="width:100%;">
 <colgroup>
@@ -317,6 +320,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <td></td>
 <td>mutate</td>
 <td>Add new columns, from existing data.frame</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>caret</td>
+<td>preProcess</td>
+<td>Advance data transofrmation</td>
 </tr>
 </tbody>
 </table>

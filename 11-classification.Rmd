@@ -260,7 +260,7 @@ Logistic regression always returns prediction with **probability**.
 Specify **`newdata`** parameter to predict result for test data.  
 ```{r}
 pred.logit.test = predict(fit.logit, newdata = test, type = 'response')
-head(pred.logit.train)
+head(pred.logit.test)
 ```
 
 **Prediction on Training Data**  

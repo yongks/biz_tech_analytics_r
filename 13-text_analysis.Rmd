@@ -43,9 +43,9 @@ library(SnowballC)
 
 **Rule-Base Stemming**  
   
-  - This method is **widely** used totay ! eg. Porter Stemmer (Martin Porter, 1980)
-  - Pro: handles new/unknown words well, eg: dog: dog, dogs
-  - Cons: require many exception; such as prural handling,  child and children (there is no childs)  
+  - This method is **widely** used today ! eg. Porter Stemmer (Martin Porter, 1980)
+  - **Pro**: handles new/unknown words well, eg, dog is the stem for: dog, dogs
+  - **Cons**: require many exception; such as prural handling,  child and children (there is no childs)  
 
 ```
 original: I cannot describe completely to you how important is children to our nation survivability

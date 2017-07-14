@@ -460,7 +460,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ## [1] 3.273339 6.168633 8.354514 6.308610 5.739688</code></pre>
 <p>Notice that the numbers generated are uniformly distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">runif</span>(<span class="dv">300</span>, <span class="dt">min=</span><span class="dv">3</span>, <span class="dt">max=</span><span class="dv">9</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-27-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-39-1.png" width="864" /></p>
 </div>
 <div id="normal-distribution" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> Normal Distribution</h3>
@@ -475,7 +475,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ## [1] 5.572597 3.691374 1.102408 1.969721 2.331507</code></pre>
 <p>Notice that the numbers generated are uniformly distributed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rnorm</span>(<span class="dv">300</span>, <span class="dt">mean=</span><span class="dv">3</span>, <span class="dt">sd=</span><span class="fl">1.5</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-29-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-41-1.png" width="864" /></p>
 </div>
 <div id="binomial-distribution" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> Binomial Distribution</h3>
@@ -504,7 +504,7 @@ Theoritically, when n approaches infitity, a binomial is a normal distribution</
 ##  [36] 6 6 2 4 3 6 5 2 5 3 2 6 2 5 3 1 4 2 3 4 4 5 3 4 4 5 5 5 6 7 4 4 3 4 3
 ##  [71] 1 5 4 2 3 4 2 2 4 3 6 3 1 6 3 4 4 3 3 4 4 4 5 5 4 4 1 0 8 2</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rbinom</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="fl">0.4</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-31-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-43-1.png" width="256.6656" /></p>
 </div>
 <div id="beta-distribution" class="section level3">
 <h3><span class="header-section-number">2.2.4</span> Beta Distribution</h3>
@@ -512,11 +512,11 @@ Theoritically, when n approaches infitity, a binomial is a normal distribution</
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">1</span>,    <span class="dv">1</span>))     <span class="co"># no left and right skewness = uniform</span>
 <span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">10</span>,   <span class="dv">10</span>))    <span class="co"># balanced left and right skew</span>
 <span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">100</span>,  <span class="dv">100</span>))   <span class="co"># more balanced left and right skew</span></code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-32-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-44-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-44-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-44-3.png" width="256.6656" /></p>
 <p><strong>Left or Right Skew</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">1000</span>, <span class="dv">10</span>))    <span class="co"># left skewed more</span>
 <span class="kw">hist</span>(<span class="kw">rbeta</span>(<span class="dv">1000</span>, <span class="dv">100</span>,  <span class="dv">1000</span>))  <span class="co"># right skew more</span></code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-33-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-33-2.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-45-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-45-2.png" width="256.6656" /></p>
 </div>
 <div id="drawing-from-a-bag" class="section level3">
 <h3><span class="header-section-number">2.2.5</span> Drawing From A Bag</h3>

@@ -36,7 +36,6 @@ library(cluster)
 
 ## Application
 
-
 Finding groups within data and distinguishing observation in your data set that are similar from those that are different. The objective is to find the right balance between similarities and differences. On the one hand we want to treat similar cases in a similar way to benefit from economies of scale.  
 
 Finding groups within data will allow you to allocate your effort more efficiently:  

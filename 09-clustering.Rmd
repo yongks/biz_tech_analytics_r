@@ -26,6 +26,12 @@ Below summarizes all packages, their functions and purposes used in this **Clust
 | 3 | NbClust           | NbClust       | 30 indices to analyze optimal number of cluster, K                                                      |
 | 4 | flexclust         | randIndex     | Agreement measure for two cluster results                                                               |
 
+```{r, results='markdown', collapse=TRUE}
+library(flexclust)
+library(factoextra)
+library(NbClust)
+```
+
 ## Application
 
 
@@ -57,19 +63,25 @@ Sample data used in this chapter emulate two dimensional data points with three 
 ```{r fig.width=9, fig.height=4, fig.show='asis'}
 set.seed(1234)
 my.df = data.frame(
-  id = paste('ID_', 1:12, sep = ''),
-  grp = c(rep('G1', 4), rep('G2', 4), rep('G3', 4)),
-  value1 = c( round(rnorm(4, mean = 10,  sd = 3)),
-              round(rnorm(4, mean = 10, sd = 3)),
-              round(rnorm(4, mean = 30, sd = 3))),
-  value2 = c( round(rnorm(4, mean = 10, sd = 3)),
-              round(rnorm(4, mean = 20, sd = 3)),
-              round(rnorm(4, mean = 20, sd = 3))),
+  id = paste('ID_', 1:18, sep = ''),
+  grp = c(rep('G1', 6), rep('G2', 6), rep('G3', 6)),
+  value1 = c( round(rnorm(6, mean = 10,  sd = 3)),
+              round(rnorm(6, mean = 10, sd = 3)),
+              round(rnorm(6, mean = 30, sd = 3))),
+  value2 = c( round(rnorm(6, mean = 10, sd = 3)),
+              round(rnorm(6, mean = 20, sd = 3)),
+              round(rnorm(6, mean = 20, sd = 3))),
   stringsAsFactors = F
 )
 rownames(my.df) = my.df[,1]
 my.df
 plot(my.df$value1, my.df$value2)
+```
+
+```{r}
+spl = sample(1:nrow(my.df), 0.7*nrow(my.df))
+train = my.df[spl,  ]
+test  = my.df[-spl, ]
 ```
 
 ## General Steps
@@ -165,11 +177,11 @@ $$Euclidean-d(p,q) = \sqrt{\sum_{i=1}^n (p_i-q_i)^2} \quad,n = dimension$$
 Below command measures distance for  numeric columns of **all data points** in my.df, using **euclidean** algorithmn.  
 
 ```{r}
-data.scaled = scale(my.df[,3:4])  # Z-Score scaling
-d.euclidean = dist( data.scaled )          # Euclidean distance
+train.scaled = scale(train[,3:4])    # Z-Score scaling for Train Data
+test.scaled = scale(test[,3:4])      # Z-Score scaling for Test Data
+d.euclidean = dist( train.scaled )   # Euclidean distance
 round (d.euclidean,1)
 ```
-    
 
 ### Manhattan Distance
 
@@ -181,8 +193,9 @@ $$Manhattan - d(p,q) = \sum_{i=1}^n |p_i-q_i| \quad,n = dimension$$
 Below command measures distance for  numeric columns of **all data points** in my.df, using **manhattan** algorithm.  
 
 ```{r}
-data.scaled = scale(my.df[,3:4])  # Z-Score scaling
-d.manhattan = dist( data.scaled, method='manhattan')
+train.scaled = scale(train[,3:4])    # Z-Score scaling for Train Data
+test.scaled = scale(test[,3:4])      # Z-Score scaling for Test Data
+d.manhattan = dist( train.scaled, method='manhattan')
 round (d.manhattan, 1)
 ```
 
@@ -259,7 +272,7 @@ wssplot = function(data, nc=15, seed=1234){
 If number of observations <=nc(default 15), specify smaller nc.  
 
 ```{r, collapse=TRUE, fig.height=4, fig.show='hold'}
-wssplot(data.scaled, nc=8)
+wssplot(train.scaled, nc=6)
 abline(v=3, lty=2)     # mark the optimum K after facts 
 ```
 
@@ -277,12 +290,9 @@ par(mfrow=c(1,3))
 ```
 
 ```{r, fig.height=4, fig.width=2.65, fig.show='hold'}
-library(factoextra)
-library(cluster)
-
-fviz_nbclust(data.scaled, kmeans, method = "wss") + labs(subtitle='kmeans')
-fviz_nbclust(data.scaled, pam,    method = "wss") + labs(subtitle='pam')
-fviz_nbclust(data.scaled, hcut,   method = "wss") + labs(subtitle='hcut') +
+fviz_nbclust(train.scaled, kmeans, method = "wss") + labs(subtitle='kmeans')
+fviz_nbclust(train.scaled, pam,    method = "wss") + labs(subtitle='pam')
+fviz_nbclust(train.scaled, hcut,   method = "wss") + labs(subtitle='hcut') +
   geom_vline(xintercept = 3, linetype = 2)
 ```
 
@@ -317,21 +327,14 @@ par(mfrow=c(1,3))
 ```
 
 ```{r, fig.height=4, fig.width=2.65, fig.show='hold'}
-library(factoextra)
-library(cluster)
-
-fviz_nbclust(data.scaled, kmeans, method = "silhouette") + labs(subtitle='kmeans')
-fviz_nbclust(data.scaled, pam,    method = "silhouette") + labs(subtitle='pam')
-fviz_nbclust(data.scaled, hcut,   method = "silhouette") + labs(subtitle='hcut')
+fviz_nbclust(train.scaled, kmeans, method = "silhouette") + labs(subtitle='kmeans')
+fviz_nbclust(train.scaled, pam,    method = "silhouette") + labs(subtitle='pam')
+fviz_nbclust(train.scaled, hcut,   method = "silhouette") + labs(subtitle='hcut')
 ```
 
 ### NbClust Package (with 30 Indices)
 
 `NbClust` package offers numerous 26 indices for determining the best number of clusters in a cluster analysis.  
-
-```{r}
-library('NbClust')
-```
 
 + Multiple indices are computed  **simultaneously** - a clear advantage  
 + Paramter `index='all'` will utilize all indices to evaluate the optimum number of clusters   
@@ -365,8 +368,8 @@ library('NbClust')
 Run `NbClust` for `average (h-clustering)` and `kmeans` method.  
 
 ```{r, warning=FALSE, results='hide', fig.show='hide', collapse=TRUE}
-nbc.hclust = NbClust(data.scaled, distance="euclidean", min.nc=2, max.nc=8, method="average")
-nbc.kmeans = NbClust(data.scaled,                       min.nc=2, max.nc=8, method="kmeans")
+nbc.hclust = NbClust(train.scaled, distance="euclidean", min.nc=2, max.nc=8, method="average")
+nbc.kmeans = NbClust(train.scaled,                       min.nc=2, max.nc=8, method="kmeans")
 ```
 
 #### Visualize The Result
@@ -396,7 +399,6 @@ barplot( table(nbc.kmeans$Best.nc[1,] ),
 Single function `fviz_nbclust()` from `factoextra` library will use value in **NbClust** object to visualize the optimal cluster number.  `fviz_nbclus` output `ggplot` object, hence can be easily customized.  
 
 ```{r, warning=FALSE, fig.height=3.5, fig.width=4, collapse=TRUE, results='hide'}
-library('factoextra')
 fviz_nbclust(nbc.hclust) + labs(subtitle='H-Cluster')
 fviz_nbclust(nbc.kmeans) + labs(subtitle='K-Means')
 ```
@@ -474,8 +476,8 @@ Generally, step (A), (B) and (C) are followed for H-clustering analysis.
 > $\quad$ `method = 'euclidean', "maximum", "manhattan", "canberra", "binary"`  
 
 ```{r}
-data.scaled = scale(my.df[,3:4])   # scale data
-d.euclidean = dist( data.scaled )  # calculate distance
+train.scaled = scale(train[,3:4])   # scale data
+d.euclidean = dist( train.scaled )  # calculate distance
 ```
 
 **Build H-Cluster Model, Cutting into clusters**  
@@ -511,10 +513,6 @@ rect.hclust( fit.average, k=3, border = 2:5 )
 
 `factoextra` provides single function `hcut` to **scale**, **calcuate distance** and **cutting** into cluster groups. Which is **handy**.  
 
-```{r}
-library("factoextra")
-```
-
 > `hcut(x, k = 2, hc_method = "ward.D2", hc_metric = "euclidean", stand = FALSE, graph = FALSE)`  
 > $\quad$ `x         = matrix or dataframe`  
 > $\quad$ `k         = number of clusters to cut`  
@@ -534,7 +532,7 @@ library("factoextra")
 **Filter, Scale, Calculate Distance, Build H-Cluster Model, Cutting into Clusters**  
 
 ```{r}
-fit.hc = hcut(my.df[,3:4], k=3, hc_method='average', hc_metric='euclidean', stand = TRUE)
+fit.hc = hcut(train[,3:4], k=3, hc_method='average', hc_metric='euclidean', stand = TRUE)
 ```
 
 **Display frequency table, Visualize with dendogram, superimpose cluster group**  
@@ -569,9 +567,11 @@ fviz_dend(fit.hc, rect = TRUE, rect_border = 'red', cex = 0.5, lower_rect = -0.5
    Convergence means none of the observations changed  cluster membership  
 
 
-### Run The Code
+### Run Code: Calc KMeans
 
 Generally, step (A), (B) and (C) are followed for K-Mean clustering.  
+
+#### General Steps
 
 **A. Before running K-Mean**  
 
@@ -590,77 +590,115 @@ Generally, step (A), (B) and (C) are followed for K-Mean clustering.
 1. Display frequency, number of observations for each cluster group  
 2. Plot graph, superimpose cluster group into the plot  
 
-#### 
+#### Run K-Means
 
-> **`kmeans( x, centers, nstart=1, algorithmn='Hartiga-Wong' )`**  
+> **`kmeans( x, centers, iter.max=10 nstart=1, algorithmn='Hartiga-Wong' )`**  
 > $\quad$ `x = matrix or dataframe`  
 > $\quad$ `centers   = number of centroids`  
 > $\quad$ `nstart    = how many times to randomly try seeding centroids`  
-> $\quad$ `algorithm = "Hartigan-Wong"-default, "Lloyd", "Forgy", "MacQueen"`  
+> $\quad$ `algorithm = "Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"`  
+> $\quad$ `iter.max  = maximum number of iterations allowed`  
 
-**nstart=25** is a good number to use.  
+**Choosing `nstart`**
+
+- **nstart=25** is a good number to start with generally  
+- It will run kmeans 25 times with different random centers, and choose the one with **lowest within cluster sum of square**  
+- nstart is a **hard stop**  
+
+**Choosing `iter.max`**  
+
+- kmeans will **iterate** until convergence  
+- Convergence is reach when **errors (measured by sum of square) has been minimized**, in other words, distance between clusters stablized  
+- If **iter.max is too low**, kmeans process will stop before reaching minimum error; hence not optimized  
+
+**Calculate K-Means**  
+```{r, collapse=TRUE}
+kmc = kmeans(train.scaled, 3, nstart = 25)
+```
+
+#### K-Means Output
+
 `kmeans` output below useful values:  
 
 > **`cluster`** ` : cluster assignment for all observations`  
 > **`centers`** `: Centre values (of each dimensions) for each cluster`  
-> **`withinss`** `: Total Sum of Squares Within For Each Cluster`  
+> **`withinss`** `: Total Sum of Squares Within For All Cluster`  
+> **`betweennss`** `: Total Sum of Squares Between clusters`  
 > **`size`** `: Number of observations for each cluster`  
 
 ```{r, collapse=TRUE}
-fit.kmeans = kmeans(data.scaled, 3, nstart = 25)
+str(kmc)
 ```
 
 ```{r, collapse=TRUE}
-fit.kmeans$cluster
+kmc$cluster
 ```
 
 ```{r, collapse=TRUE}
-fit.kmeans$withinss
+kmc$withinss
 ```
 
 ```{r, collapse=TRUE}
-fit.kmeans$size
+kmc$size
 ```
 
-### Visualizing K-Mean Cluster
+#### Visualizing K-Mean Cluster
 
 ```{r, fig.height=5}
-library(factoextra)
-
-fviz_cluster( fit.kmeans, data = data.scaled, 
+fviz_cluster( kmc, data = train.scaled, 
   geom = "point", stand = FALSE, ellipse.type = "norm")
 ```
 
+### Run Code: Build Model
 
-## Agreement With Actual Group Data
-
-The adjusted Rand index provides a measure of the agreement between two sets of grouping data, adjusted for chance. It ranges from -1 (no agreement) to 1 (perfect agreement).  
-
-```{r, results='markdown', collapse=TRUE}
-library('flexclust')
+####Build The Model
+- Kmeans object produced above contain information sufficient to build a model  
+- We build the model with training the kmean object with training data  
+- Unfortunately, there is no single step to calculate kmeans and train the model  
+```{r}
+fit.kcca = as.kcca(kmc, train.scaled)
 ```
 
-### Compare Cluster with Actual Data
-If we know the actual grouping data, we can then run this index analysis against the cluster grouping. 
+####Prediction
+As in any other modeling, we can use `predict` to derive clustering groups on test data  
+```{r}
+pred.kcca = predict(fit.kcca, newdata=test.scaled)
+pred.kcca
+```
 
-Construct a table of cluster groups and actual groups. Then run randIndex on it to reveal the agreement measure.  
+## Cluster Agreement
 
+### Compare Clustering Results
+
+We want to compare clusters in two scenarios:  
+
+- Compare result from cluster algorithm with actual cluster group; measure how close is our model to actual  
+- Comapre result from two cluster algorithms; analyze corresponding cluster number between two algorithmn (if any)  
+
+Comparing allow us know which cluster from one algorithm correspond to which cluster in another algorithm; because the cluster number derived from the alrogithmn does not represent any sequence or meaning.  
+
+### Visualize Cluster Differences
+- Construct a table of cluster groups to be compared  
+- If both agree to each other, the observations matched will be high  
+
+**Compare result with actual grouping**
 ```{r collapse=TRUE}
-# cluster data generated using cutree()
-table(my.df$grp, clusters)  
-
-randIndex( table(my.df$grp, clusters) )
+table(train$grp, clusters)
 ```
-
-### Compare Two Clusters
-
-We can also compare cluster data from two different clusters, eg. clusters using different algorithm.  
-
+**Compare results of two algorithms**
 ```{r collapse=TRUE}
-# cluster data generated using kmeans and factoextra::hcut()
-table(fit.kmeans$cluster, fit.hc$cluster)
-
-randIndex( table(fit.kmeans$cluster, fit.hc$cluster) )
+table(kmc$cluster, fit.hc$cluster, dnn=c('kmeans','hcluster'))
 ```
 
-It this case, both models give similar clustering result.  
+### Agreement Measurement
+- The **adjusted Rand index** provides a measure of the agreement between two sets of grouping data, adjusted for chance  
+- It ranges from -1 (no agreement) to 1 (perfect agreement)  
+- **`flexclust::randIndex`** is the function to calculate this index, it takes **2-dimensional cross-tabulation** of cluster assignments as input  
+**Compare agreement with actual grouping**
+```{r collapse=TRUE}
+randIndex( table(train$grp, clusters) )
+```
+ **Compare agreement with two algorithms**
+```{r collapse=TRUE}
+randIndex( table(kmc$cluster, fit.hc$cluster) )
+```

@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="9-3-sample-data-7.html">
-<link rel="next" href="9-5-distance-algorithm.html">
+<link rel="prev" href="9-9-k-mean-clustering.html">
+<link rel="next" href="10-regression-analysis.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -445,88 +445,68 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="general-steps" class="section level2">
-<h2><span class="header-section-number">9.4</span> General Steps</h2>
-<ol style="list-style-type: decimal">
-<li><strong>Choose appropriate attributes</strong>
+<div id="cluster-agreement" class="section level2">
+<h2><span class="header-section-number">9.10</span> Cluster Agreement</h2>
+<div id="compare-clustering-results" class="section level3">
+<h3><span class="header-section-number">9.10.1</span> Compare Clustering Results</h3>
+<p>We want to compare clusters in two scenarios:</p>
 <ul>
-<li>This is the most important steps.</li>
-<li>Choose attributes that actions can be taken upon</li>
-<li>A sohisticated cluster analysis can’t compensate for a poor choice of variables <br><br></li>
-</ul></li>
-<li><p><strong>Scale Data</strong></p>
-<p><strong>When NOT to scale </strong></p>
-<p>If you have attributes with a well-defined meaning. Say, latitude and longitude, then you should not scale your data, because this will cause distortion</p>
-<p><strong>When To Scale </strong></p>
-<ul>
-<li><p>If you have mixed numerical data, where each attribute is something entirely different (say, shoe size and weight), has different units attached (lb, tons, m, kg …) then these values aren’t really comparable anyway; z-standardizing them is a best-practise to give equal weight to them</p></li>
-<li><p>If variables vary in range, then the variable with the largest value will have the greatest impact on result. This is undesirable</p></li>
-<li><p>Therefore data must be scaled so that they can be compared fairly</p></li>
+<li>Compare result from cluster algorithm with actual cluster group; measure how close is our model to actual<br />
+</li>
+<li>Comapre result from two cluster algorithms; analyze corresponding cluster number between two algorithmn (if any)</li>
 </ul>
-<p><strong>Methods of Scaling</strong></p>
-Popular scaling methods are:
-<ul>
-<li>Normalize to mean=0 and sd=1<br />
-</li>
-<li>Divide by Max<br />
-</li>
-<li>Minus min, divide by Min-Max range <br><br></li>
-</ul></li>
-<li><strong>Screen for Outliers</strong>
-<ul>
-<li>Outliers can distort results. Screen to remove them <br><br></li>
-</ul></li>
-<li><strong>Calculate Data Point Distances</strong>
-<ul>
-<li>Popular measure of distance between two data point is Euclidean distance</li>
-<li>Others are Manhattan, Canberra, Asymmetric Binary, Maximum and Minkowski also available <br><br></li>
-</ul></li>
-<li><p><strong>Chosoe a Clustering Alrorithm, and Inter-Custer Distance Method</strong></p></li>
-<li><p><strong>Try few Clustering Solutions</strong></p>
-<ul>
-<li>Decide the best clustering algorithm, cluster distance method and <strong>number of cluster, K</strong><br />
-</li>
-<li>Use <code>NbClus</code> as a tool to guide choosing K (number of cluster)</li>
-</ul></li>
-<li><strong>Visualize the result</strong>
-<ul>
-<li>Visualization can help you determine the meaning and usefulness of the cluster solution<br />
-</li>
-<li><strong>Hierarchical</strong> clustering are usually presented as a dendrogram<br />
-</li>
-<li><strong>Partitioning</strong> results are typically visualized using a bivariate cluster plot <br><br></li>
-</ul></li>
-<li><strong>Intepret the Cluster</strong>
-<ul>
-<li>Once a cluster solution has been obtained, you must interpret (and possibly name) the clusters</li>
-<li>What do the observations in a cluster have in common?</li>
-<li>How do they differ from the observations in other clusters?</li>
-<li>This step is typically accomplished by obtaining summary statistics for each variable by cluster</li>
-<li>For continuous data, the mean or median for each variable within each cluster is calculated.</li>
-<li>For mixed data (data that contain categorical variables), the summary statistics will also include modes or category distributions <br><br></li>
-</ul></li>
-<li><strong>Validate Result</strong>
-<ul>
-<li>Validating the cluster solution involves asking the question:
-<ul>
-<li>“Are these groupings in some sense real, and not a manifestation of unique aspects of this dataset or statistical technique?”<br />
-</li>
-<li>If a different cluster method or different sample is employed, would the same clusters be obtained?<br />
-</li>
-<li>If actual grouping data is known, run randIndex to measure the degree of agreement<br />
-</li>
-<li>The fpc, clv, and clValid packages each contain functions for evaluating the stability of a clustering solution (not discussed here)</li>
-</ul></li>
-</ul></li>
-</ol>
+<p>Comparing allow us know which cluster from one algorithm correspond to which cluster in another algorithm; because the cluster number derived from the alrogithmn does not represent any sequence or meaning.</p>
 </div>
+<div id="visualize-cluster-differences" class="section level3">
+<h3><span class="header-section-number">9.10.2</span> Visualize Cluster Differences</h3>
+<ul>
+<li>Construct a table of cluster groups to be compared<br />
+</li>
+<li>If both agree to each other, the observations matched will be high</li>
+</ul>
+<p><strong>Compare result with actual grouping</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(train<span class="op">$</span>grp, clusters)
+##     clusters
+##      1 2 3
+##   G1 4 0 1
+##   G2 0 0 3
+##   G3 0 4 0</code></pre></div>
+<p><strong>Compare results of two algorithms</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(kmc<span class="op">$</span>cluster, fit.hc<span class="op">$</span>cluster, <span class="dt">dnn=</span><span class="kw">c</span>(<span class="st">&#39;kmeans&#39;</span>,<span class="st">&#39;hcluster&#39;</span>))
+##       hcluster
+## kmeans 1 2 3
+##      1 4 0 0
+##      2 0 4 0
+##      3 0 0 4</code></pre></div>
+</div>
+<div id="agreement-measurement" class="section level3">
+<h3><span class="header-section-number">9.10.3</span> Agreement Measurement</h3>
+<ul>
+<li>The <strong>adjusted Rand index</strong> provides a measure of the agreement between two sets of grouping data, adjusted for chance<br />
+</li>
+<li>It ranges from -1 (no agreement) to 1 (perfect agreement)<br />
+</li>
+<li><strong><code>flexclust::randIndex</code></strong> is the function to calculate this index, it takes <strong>2-dimensional cross-tabulation</strong> of cluster assignments as input<br />
+<strong>Compare agreement with actual grouping</strong></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">randIndex</span>( <span class="kw">table</span>(train<span class="op">$</span>grp, clusters) )
+##       ARI 
+## 0.7372014</code></pre></div>
+<p><strong>Compare agreement with two algorithms</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">randIndex</span>( <span class="kw">table</span>(kmc<span class="op">$</span>cluster, fit.hc<span class="op">$</span>cluster) )
+## ARI 
+##   1</code></pre></div>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="9-3-sample-data-7.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="9-5-distance-algorithm.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="9-9-k-mean-clustering.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="10-regression-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

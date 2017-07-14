@@ -25,11 +25,13 @@ Below summarizes all packages, their functions and purposes used in this **Clust
 |   |                   | fviz_cluster  | Visualize data points with cluster grouping as ggplot object                                            |
 | 3 | NbClust           | NbClust       | 30 indices to analyze optimal number of cluster, K                                                      |
 | 4 | flexclust         | randIndex     | Agreement measure for two cluster results                                                               |
+| 5 | cluster           | pam           | Partition clustering of data in k clusters 'around medoids', a more robust version of K-means           |
 
 ```{r, results='markdown', collapse=TRUE}
 library(flexclust)
 library(factoextra)
 library(NbClust)
+library(cluster)
 ```
 
 ## Application

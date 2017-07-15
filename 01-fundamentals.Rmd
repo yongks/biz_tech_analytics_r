@@ -78,6 +78,7 @@ library(stringr)
 | 1 | base        | nchar       | Number of characters |
 |   |             | strsplit    | Parse a string to vector                    |
 |   |             | cat         | Concatenate and output to screen/file only, no storage  |
+|   |             | format      | formatting text/number to pretty text format|
 | 2 | string_r    | str_length  | Number of characters, similar to nchar()    |
 |   |             | str_sub     | Extract substrings, similar to substring()  |
 |   |             | str_c       | String concatenation, similar to paste()    |
@@ -98,6 +99,7 @@ c = c(T,    T,  F)
 - Let's look at **multiple elements vectors**, and notice how the vectorization works  
 
 **`paste`** is a vectorized funciton:  
+
 - Iterates through each element of the vectors in parallel  
 - In each iteraction, combine string from the all the vectors' element  
 - Default seperator is ' '  
@@ -114,9 +116,9 @@ paste("May", NA, "The", "Force", NULL, "Be", "With", character(0), "You")
 **`string_r::str_c`** is almost similar to `paste`, with additional **cool** features below:  
 
 - `str_c` has no default seperator  
-- `str_c` silently removed NULL and character(0)  
-- `str_c` warning message if vector length not equal  
-- `str_c` return NA if NA is found on the input; a **more consistant** behavior  
+- `str_c` **silently removed** NULL and character(0)  
+- `str_c` display **warning message** if vector **length not equal**  
+- `str_c` **return NA** if NA is found on the input; a **more consistant** behavior  
 ```{r, collapse=TRUE}
 str_c(a,n,c, sep='.', collapse='/')
 
@@ -141,41 +143,101 @@ Use `cat` for sole purpose of output to screen or file, **NO STORING TO VARIABLE
 n = 1:3
 t = c('Text1', 'Text2', 'Text3')
 cat('Number n=',n,', Text t=', t)
+
 cat('Number n=',n,', Text t=', t, sep=':')
 ```
 
 **Breaking Lines**
 ```{r, collapse=TRUE}
 cat('Number n=',n,', Text t=', t, fill=10)  # line break after 10 chars
-cat('Number n=',n,', Text t=', t, fill=1)  # line break after 1 chars
+
+cat('Number n=',n,', Text t=', t, fill=1)   # line break after 1 chars
 ```
 
 ### Parsing
 
 ```{r, collapse=TRUE}
 strsplit(' I Love   You', split = '')  # split every character
+
 strsplit(' I Love   You', split = ' ') # split with ' ' as seperator
 ```
 
-### Combining
-```{r}
-n = 1:3
-t = c('Text1', 'Text2', 'Text3')
-print(t)
-```
+### Formating
 
-### String Comparison
+**`format()`** allow us to format R object for pretty printing, especially numeric data.  
 
-#### Exact Equality
+> `format(x, trim = FALSE, digits = NULL, nsmall = 0L,`  
+> `      justify = c("left", "right", "centre", "none"),`  
+> `      width = NULL, na.encode = TRUE, scientific = NA,`  
+> `      big.mark   = "",   big.interval = 3L,`  
+> `      small.mark = "", small.interval = 5L,`  
+> `      decimal.mark = getOption("OutDec"),`  
+> `      zero.print = NULL, drop0trailing = FALSE, ...)`  
+
+#### Number Formating : R-Style
+
 ```{r, collapse=TRUE}
-set1 = c('a','b','123.33')
-set2 = c('a','b',123.33)   # number coerce to character
-set3 = c('a',123.33,'b')   # number coerce to character
-identical(set1,set2)  
-identical(set2,set3)       # order matters
+format(c(13.7, 13.123456789))
 ```
 
-### String Statistics
+**`nsmall`** : **minimum** number of digits to the right of the decimal point.
+```{r, collapse=TRUE}
+format(c(13.7, 13.123),       nsmall=6) # zero padded on the right 
+
+format(c(13.7, 13.123456789), nsmall=6) # decimals were truncated
+```
+**`digits`** : how many **significant digits** are to be used for numeric. Default uses getOption("digits").
+```{r, collapse=TRUE}
+format(c(13.7, 13.123),       digits=6) # zero not padded
+
+format(c(13.7, 13.123456789), digits=6) # digits being truncated
+```
+
+**`bigmark`** : decimals will be **ignored**  
+```{r, collapse=TRUE}
+format(1234567.34, big.mark=',')
+```
+
+#### Numer Formating : C-Style
+```{r, collapse=TRUE}
+sprintf("%f", pi)    # '%f' indicates 'fixed point' decimal notation
+
+sprintf("%.3f", pi)  # decimal notation with 3 decimal digits
+
+sprintf("%1.0f", pi) # 1 integer and 0 decimal digits
+
+sprintf("%8.3f", pi) # total width 8 (including demical point), 3 decimals 
+
+sprintf("%+f", pi)   # print with sign (positive)
+
+sprintf("% f", pi)   # prefix a space
+
+sprintf("%-10f.3", pi) # left justified
+
+sprintf("%e", pi)    # exponential 'e' notation
+
+sprintf("%E", pi)    # exponential 'E' notation
+
+sprintf("%g", pi)    # number of significant digits (6 by default)
+```
+
+#### Text Formating
+
+- By default, format() **pads the strings with spaces** so that they are **all the same length**  
+- default justify is 'left'  
+```{r, collapse=TRUE}
+format(c("A", "BB", "CCC","DDDD"))
+```
+
+**`width`** : **minimum** width of the text
+```{r, collapse=TRUE}
+format(c("A", "BB", "CCC","DDDDD"), width = 7, justify = "right")
+```
+
+
+
+
+### Statistics
 
 #### Length of String
 
@@ -194,9 +256,11 @@ nchar(c(T,TRUE,F,FALSE))   # coerce input to 'TRUE','TRUE','FALSE','FALSE'
 
 **stringr::str_length**  
 
-```{r}
+```{r, collapse=TRUE}
 str_length(c('a', 'abc', 'abcde', NA))
+
 str_length(c(133, 5143.34, NA)) # coerce input to '133','514.34', NA
+
 str_length(c(T,TRUE,F,FALSE))   # coerce input to 'TRUE','TRUE','FALSE','FALSE'
 ```
 
@@ -210,9 +274,10 @@ str_length(c(T,TRUE,F,FALSE))   # coerce input to 'TRUE','TRUE','FALSE','FALSE'
 |   |             | setdiff     | Set difference|
 |   |             | setequal    | Equal sets |
 |   |             | identical   | Exact equality (including sequene) |
-|   |             | is.element  | String concatenation, similar to paste()    |
+|   |             | is.element  | String concatenation    |
 |   |             | %in%        | Contains |
-|   |             | sort        | Sorting                               |
+|   |             | sort        | Sorting  |
+
 ### Set Equality
 We want to know if two vectors contain **similar elements**. Order of the elements are not important.  
 ```{r, collapse=TRUE}
@@ -222,6 +287,16 @@ set3 = c('a',123.33,'b')   # number coerce to character
 setequal(set1,set2)  
 
 setequal(set2,set3)        # order doesn't matters
+```
+
+### Exact Equality
+```{r, collapse=TRUE}
+set1 = c('a','b','123.33')
+set2 = c('a','b',123.33)   # number coerce to character
+set3 = c('a',123.33,'b')   # number coerce to character
+identical(set1,set2)  
+
+identical(set2,set3)       # order matters
 ```
 
 ### Element Contained

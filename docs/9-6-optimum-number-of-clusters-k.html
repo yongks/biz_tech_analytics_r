@@ -116,14 +116,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.2.1" data-path="1-2-string.html"><a href="1-2-string.html#library"><i class="fa fa-check"></i><b>1.2.1</b> Library</a></li>
 <li class="chapter" data-level="1.2.2" data-path="1-2-string.html"><a href="1-2-string.html#concatenating"><i class="fa fa-check"></i><b>1.2.2</b> Concatenating</a></li>
 <li class="chapter" data-level="1.2.3" data-path="1-2-string.html"><a href="1-2-string.html#parsing"><i class="fa fa-check"></i><b>1.2.3</b> Parsing</a></li>
-<li class="chapter" data-level="1.2.4" data-path="1-2-string.html"><a href="1-2-string.html#combining"><i class="fa fa-check"></i><b>1.2.4</b> Combining</a></li>
-<li class="chapter" data-level="1.2.5" data-path="1-2-string.html"><a href="1-2-string.html#string-comparison"><i class="fa fa-check"></i><b>1.2.5</b> String Comparison</a></li>
-<li class="chapter" data-level="1.2.6" data-path="1-2-string.html"><a href="1-2-string.html#string-statistics"><i class="fa fa-check"></i><b>1.2.6</b> String Statistics</a></li>
+<li class="chapter" data-level="1.2.4" data-path="1-2-string.html"><a href="1-2-string.html#formating"><i class="fa fa-check"></i><b>1.2.4</b> Formating</a></li>
+<li class="chapter" data-level="1.2.5" data-path="1-2-string.html"><a href="1-2-string.html#statistics"><i class="fa fa-check"></i><b>1.2.5</b> Statistics</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html"><i class="fa fa-check"></i><b>1.3</b> Set Operation</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#library-1"><i class="fa fa-check"></i><b>1.3.1</b> Library</a></li>
 <li class="chapter" data-level="1.3.2" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#set-equality"><i class="fa fa-check"></i><b>1.3.2</b> Set Equality</a></li>
-<li class="chapter" data-level="1.3.3" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#element-contained"><i class="fa fa-check"></i><b>1.3.3</b> Element Contained</a></li>
+<li class="chapter" data-level="1.3.3" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#exact-equality"><i class="fa fa-check"></i><b>1.3.3</b> Exact Equality</a></li>
+<li class="chapter" data-level="1.3.4" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#element-contained"><i class="fa fa-check"></i><b>1.3.4</b> Element Contained</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-loops.html"><a href="1-4-loops.html"><i class="fa fa-check"></i><b>1.4</b> Loops</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-loops.html"><a href="1-4-loops.html#sample-data-1"><i class="fa fa-check"></i><b>1.4.1</b> Sample Data</a></li>
@@ -296,7 +296,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.11.4" data-path="7-11-other-aesthetics.html"><a href="7-11-other-aesthetics.html#other-sources"><i class="fa fa-check"></i><b>7.11.4</b> Other Sources</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a><ul>
+<li class="chapter" data-level="8" data-path="8-statistics-1.html"><a href="8-statistics-1.html"><i class="fa fa-check"></i><b>8</b> Statistics</a><ul>
 <li class="chapter" data-level="8.1" data-path="8-1-sample-data-7.html"><a href="8-1-sample-data-7.html"><i class="fa fa-check"></i><b>8.1</b> Sample Data</a></li>
 <li class="chapter" data-level="8.2" data-path="8-2-descriptive-summary.html"><a href="8-2-descriptive-summary.html"><i class="fa fa-check"></i><b>8.2</b> Descriptive Summary</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="8-2-descriptive-summary.html"><a href="8-2-descriptive-summary.html#single-vector"><i class="fa fa-check"></i><b>8.2.1</b> Single Vector</a></li>
@@ -502,7 +502,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wssplot</span>(train.scaled, <span class="dt">nc=</span><span class="dv">6</span>)
 <span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)     <span class="co"># mark the optimum K after facts </span>
 ## [1] 22.0000000  8.1321413  1.4236421  1.0985026  0.4785128  0.4206385</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-228-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-234-1.png" width="864" /></p>
 <p>The wssplot above indicates that there is a <strong>distinct drop</strong> in the within-groups sum of squares when moving <strong>from 1 to 3 clusters</strong>. After three clusters, this <strong>decrease drops off</strong>, suggestign that a three-cluster solution may be a good fit to the data.</p>
 </div>
 <div id="elbow-codes---using-factoextrafviz_nbclusthcut" class="section level4">
@@ -520,7 +520,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <span class="kw">fviz_nbclust</span>(train.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
 <span class="kw">fviz_nbclust</span>(train.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">3</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-230-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-230-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-230-3.png" width="254.4" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-236-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-236-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-236-3.png" width="254.4" /></p>
 </div>
 </div>
 <div id="average-silhoutte-method" class="section level3">
@@ -558,7 +558,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fviz_nbclust</span>(train.scaled, kmeans, <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;kmeans&#39;</span>)
 <span class="kw">fviz_nbclust</span>(train.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
 <span class="kw">fviz_nbclust</span>(train.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-232-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-232-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-232-3.png" width="254.4" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-238-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-238-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-238-3.png" width="254.4" /></p>
 </div>
 </div>
 <div id="nbclust-package-with-30-indices" class="section level3">
@@ -624,12 +624,12 @@ nbc.kmeans =<span class="st"> </span><span class="kw">NbClust</span>(train.scale
 ## 
 ##  0  1  2  3  6  7  8 
 ##  2  1  2 14  2  1  4</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-235-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-235-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-241-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-241-2.png" width="384" /></p>
 <p><strong>Visualize using <code>factoextra::fviz_nbclust()</code></strong></p>
 <p>Single function <code>fviz_nbclust()</code> from <code>factoextra</code> library will use value in <strong>NbClust</strong> object to visualize the optimal cluster number. <code>fviz_nbclus</code> output <code>ggplot</code> object, hence can be easily customized.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fviz_nbclust</span>(nbc.hclust) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;H-Cluster&#39;</span>)
 <span class="kw">fviz_nbclust</span>(nbc.kmeans) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;K-Means&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-236-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-236-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-242-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-242-2.png" width="384" /></p>
 </div>
 </div>
 </div>

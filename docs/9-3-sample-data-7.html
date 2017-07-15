@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-14">
+<meta name="date" content="2017-07-15">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -112,9 +112,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.4" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-update"><i class="fa fa-check"></i><b>1.1.4</b> Package Update</a></li>
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#string"><i class="fa fa-check"></i><b>1.2.1</b> String</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#dates-manipulation"><i class="fa fa-check"></i><b>1.2.2</b> Dates Manipulation</a></li>
+<li class="chapter" data-level="1.2" data-path="1-2-string.html"><a href="1-2-string.html"><i class="fa fa-check"></i><b>1.2</b> String</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="1-2-string.html"><a href="1-2-string.html#concatenating"><i class="fa fa-check"></i><b>1.2.1</b> Concatenating</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-string.html"><a href="1-2-string.html#string-comparison"><i class="fa fa-check"></i><b>1.2.2</b> String Comparison</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-string.html"><a href="1-2-string.html#parsing"><i class="fa fa-check"></i><b>1.2.3</b> Parsing</a></li>
+<li class="chapter" data-level="1.2.4" data-path="1-2-string.html"><a href="1-2-string.html#string-statistics"><i class="fa fa-check"></i><b>1.2.4</b> String Statistics</a></li>
+<li class="chapter" data-level="1.2.5" data-path="1-2-string.html"><a href="1-2-string.html#dates-manipulation"><i class="fa fa-check"></i><b>1.2.5</b> Dates Manipulation</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-conditioinal-decision.html"><a href="1-3-conditioinal-decision.html"><i class="fa fa-check"></i><b>1.3</b> Conditioinal Decision</a></li>
 <li class="chapter" data-level="1.4" data-path="1-4-loops.html"><a href="1-4-loops.html"><i class="fa fa-check"></i><b>1.4</b> Loops</a><ul>
@@ -463,7 +466,7 @@ my.df =<span class="st"> </span><span class="kw">data.frame</span>(
 <span class="kw">rownames</span>(my.df) =<span class="st"> </span>my.df[,<span class="dv">1</span>]
 my.df
 <span class="kw">plot</span>(my.df<span class="op">$</span>value1, my.df<span class="op">$</span>value2)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-223-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-221-1.png" width="864" /></p>
 <pre><code>##          id grp value1 value2
 ## ID_1   ID_1  G1      6      7
 ## ID_2   ID_2  G1     11     17

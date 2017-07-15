@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-07-15">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="1-1-package-management.html">
+<link rel="next" href="1-3-set-operation.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a><ul>
+<li class="chapter" data-level="1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html"><i class="fa fa-check"></i><b>1.1</b> Package Management</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-storage"><i class="fa fa-check"></i><b>1.1.1</b> Package Storage</a></li>
+<li class="chapter" data-level="1.1.2" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-listing"><i class="fa fa-check"></i><b>1.1.2</b> Package Listing</a></li>
+<li class="chapter" data-level="1.1.3" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-install-removal"><i class="fa fa-check"></i><b>1.1.3</b> Package Install / Removal</a></li>
+<li class="chapter" data-level="1.1.4" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-update"><i class="fa fa-check"></i><b>1.1.4</b> Package Update</a></li>
+<li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="1-2-string.html"><a href="1-2-string.html"><i class="fa fa-check"></i><b>1.2</b> String</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="1-2-string.html"><a href="1-2-string.html#library"><i class="fa fa-check"></i><b>1.2.1</b> Library</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-string.html"><a href="1-2-string.html#concatenating"><i class="fa fa-check"></i><b>1.2.2</b> Concatenating</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-string.html"><a href="1-2-string.html#parsing"><i class="fa fa-check"></i><b>1.2.3</b> Parsing</a></li>
+<li class="chapter" data-level="1.2.4" data-path="1-2-string.html"><a href="1-2-string.html#combining"><i class="fa fa-check"></i><b>1.2.4</b> Combining</a></li>
+<li class="chapter" data-level="1.2.5" data-path="1-2-string.html"><a href="1-2-string.html#string-comparison"><i class="fa fa-check"></i><b>1.2.5</b> String Comparison</a></li>
+<li class="chapter" data-level="1.2.6" data-path="1-2-string.html"><a href="1-2-string.html#string-statistics"><i class="fa fa-check"></i><b>1.2.6</b> String Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html"><i class="fa fa-check"></i><b>1.3</b> Set Operation</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#library-1"><i class="fa fa-check"></i><b>1.3.1</b> Library</a></li>
+<li class="chapter" data-level="1.3.2" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#set-equality"><i class="fa fa-check"></i><b>1.3.2</b> Set Equality</a></li>
+<li class="chapter" data-level="1.3.3" data-path="1-3-set-operation.html"><a href="1-3-set-operation.html#element-contained"><i class="fa fa-check"></i><b>1.3.3</b> Element Contained</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="1-4-loops.html"><a href="1-4-loops.html"><i class="fa fa-check"></i><b>1.4</b> Loops</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="1-4-loops.html"><a href="1-4-loops.html#sample-data-1"><i class="fa fa-check"></i><b>1.4.1</b> Sample Data</a></li>
+<li class="chapter" data-level="1.4.2" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-a-vector"><i class="fa fa-check"></i><b>1.4.2</b> Loop Through A Vector</a></li>
+<li class="chapter" data-level="1.4.3" data-path="1-4-loops.html"><a href="1-4-loops.html#loop-through-multiple-columnsrows"><i class="fa fa-check"></i><b>1.4.3</b> Loop Through Multiple Columns/Rows</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html"><i class="fa fa-check"></i><b>1.5</b> Data Import</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data-import-performance"><i class="fa fa-check"></i><b>1.5.1</b> Data Import Performance</a></li>
+<li class="chapter" data-level="1.5.2" data-path="1-5-data-import.html"><a href="1-5-data-import.html#what-to-choose"><i class="fa fa-check"></i><b>1.5.2</b> What To Choose</a></li>
+<li class="chapter" data-level="1.5.3" data-path="1-5-data-import.html"><a href="1-5-data-import.html#working-directory"><i class="fa fa-check"></i><b>1.5.3</b> Working Directory</a></li>
+<li class="chapter" data-level="1.5.4" data-path="1-5-data-import.html"><a href="1-5-data-import.html#sample-data-file"><i class="fa fa-check"></i><b>1.5.4</b> Sample Data File</a></li>
+<li class="chapter" data-level="1.5.5" data-path="1-5-data-import.html"><a href="1-5-data-import.html#baseread.csv"><i class="fa fa-check"></i><b>1.5.5</b> Base::read.csv</a></li>
+<li class="chapter" data-level="1.5.6" data-path="1-5-data-import.html"><a href="1-5-data-import.html#data.tablefread"><i class="fa fa-check"></i><b>1.5.6</b> data.table::fread</a></li>
+<li class="chapter" data-level="1.5.7" data-path="1-5-data-import.html"><a href="1-5-data-import.html#readrread_csv"><i class="fa fa-check"></i><b>1.5.7</b> readr::read_csv</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-data-visualization.html"><a href="7-data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-text-analysis.html"><a href="13-text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a></li>
+<li class="chapter" data-level="14" data-path="14-model-optimization.html"><a href="14-model-optimization.html"><i class="fa fa-check"></i><b>14</b> Model Optimization</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="string" class="section level2">
+<h2><span class="header-section-number">1.2</span> String</h2>
+<div id="library" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> Library</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Package</th>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>base</td>
+<td>nchar</td>
+<td>Number of characters</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>strsplit</td>
+<td>Parse a string to vector</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>cat</td>
+<td>Concatenate and output to screen/file only, no storage</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>string_r</td>
+<td>str_length</td>
+<td>Number of characters, similar to nchar()</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>str_sub</td>
+<td>Extract substrings, similar to substring()</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>str_c</td>
+<td>String concatenation, similar to paste()</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>str_trim</td>
+<td>Removes leading and trailing whitespace</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>str_pad</td>
+<td>Pads a string</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="concatenating" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Concatenating</h3>
+<div id="sample-data" class="section level4">
+<h4><span class="header-section-number">1.2.2.1</span> Sample Data</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>)
+b =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;c&#39;</span>,<span class="st">&#39;e&#39;</span>)
+n =<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span>,   <span class="dv">20</span>, <span class="dv">30</span> )
+c =<span class="st"> </span><span class="kw">c</span>(T,    T,  F)</code></pre></div>
+</div>
+<div id="element-wise-concatenation" class="section level4">
+<h4><span class="header-section-number">1.2.2.2</span> Element-wise Concatenation</h4>
+<ul>
+<li>So far the example concatenantes single multiple vectors (each with single element)<br />
+</li>
+<li>Let’s look at <strong>multiple elements vectors</strong>, and notice how the vectorization works</li>
+</ul>
+<p><strong><code>paste</code></strong> is a vectorized funciton:<br />
+- Iterates through each element of the vectors in parallel<br />
+- In each iteraction, combine string from the all the vectors’ element<br />
+- Default seperator is ‘’<br />
+- <strong><code>collapse</code></strong> return the output as single vector<br />
+- coerce NA to string !!! Not an usual behavior</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paste</span>(a,n,c)
+## [1] &quot;a 10 TRUE&quot;  &quot;b 20 TRUE&quot;  &quot;c 30 FALSE&quot;
+
+<span class="kw">paste</span>(a,n,c, <span class="dt">sep=</span><span class="st">&#39;.&#39;</span>, <span class="dt">collapse=</span><span class="st">&#39;/&#39;</span>)
+## [1] &quot;a.10.TRUE/b.20.TRUE/c.30.FALSE&quot;
+
+<span class="kw">paste</span>(<span class="st">&quot;May&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;The&quot;</span>, <span class="st">&quot;Force&quot;</span>, <span class="ot">NULL</span>, <span class="st">&quot;Be&quot;</span>, <span class="st">&quot;With&quot;</span>, <span class="kw">character</span>(<span class="dv">0</span>), <span class="st">&quot;You&quot;</span>)
+## [1] &quot;May NA The Force  Be With  You&quot;</code></pre></div>
+<p><strong><code>string_r::str_c</code></strong> is almost similar to <code>paste</code>, with additional <strong>cool</strong> features below:</p>
+<ul>
+<li><code>str_c</code> has no default seperator<br />
+</li>
+<li><code>str_c</code> silently removed NULL and character(0)<br />
+</li>
+<li><code>str_c</code> warning message if vector length not equal<br />
+</li>
+<li><code>str_c</code> return NA if NA is found on the input; a <strong>more consistant</strong> behavior</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_c</span>(a,n,c, <span class="dt">sep=</span><span class="st">&#39;.&#39;</span>, <span class="dt">collapse=</span><span class="st">&#39;/&#39;</span>)
+## [1] &quot;a.10.TRUE/b.20.TRUE/c.30.FALSE&quot;
+
+<span class="kw">str_c</span>(b,n,c, <span class="dt">sep=</span><span class="st">&#39;.&#39;</span>, <span class="dt">collapse=</span><span class="st">&#39;/&#39;</span>) ## FAIL, because vector b is longer than others
+## Warning in stri_c(..., sep = sep, collapse = collapse, ignore_null = TRUE):
+## longer object length is not a multiple of shorter object length
+## [1] &quot;a.10.TRUE/b.20.TRUE/c.30.FALSE/e.10.TRUE&quot;
+
+<span class="kw">str_c</span>(<span class="st">&quot;May&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;The&quot;</span>, <span class="st">&quot;Force&quot;</span>, <span class="ot">NULL</span>, <span class="st">&quot;Be&quot;</span>, <span class="st">&quot;With&quot;</span>, <span class="kw">character</span>(<span class="dv">0</span>), <span class="st">&quot;You&quot;</span>)
+## [1] NA</code></pre></div>
+</div>
+<div id="vector-merging-back-to-back" class="section level4">
+<h4><span class="header-section-number">1.2.2.3</span> Vector Merging (Back To Back)</h4>
+<p><code>c()</code> <strong>join multiple vectors</strong> together into one big vector</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(a,n,c)
+## [1] &quot;a&quot;     &quot;b&quot;     &quot;c&quot;     &quot;10&quot;    &quot;20&quot;    &quot;30&quot;    &quot;TRUE&quot;  &quot;TRUE&quot;  &quot;FALSE&quot;</code></pre></div>
+</div>
+<div id="output-to-screenfile" class="section level4">
+<h4><span class="header-section-number">1.2.2.4</span> Output to Screen/File</h4>
+<p>Use <code>cat</code> for sole purpose of output to screen or file, <strong>NO STORING TO VARIABLE</strong>.</p>
+<blockquote>
+<p>cat(… , file = “”, sep = &quot; “, fill = FALSE, labels = NULL, append = FALSE)</p>
+</blockquote>
+<p><strong>Default Seperator</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>
+t =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Text1&#39;</span>, <span class="st">&#39;Text2&#39;</span>, <span class="st">&#39;Text3&#39;</span>)
+<span class="kw">cat</span>(<span class="st">&#39;Number n=&#39;</span>,n,<span class="st">&#39;, Text t=&#39;</span>, t)
+## Number n= 1 2 3 , Text t= Text1 Text2 Text3
+<span class="kw">cat</span>(<span class="st">&#39;Number n=&#39;</span>,n,<span class="st">&#39;, Text t=&#39;</span>, t, <span class="dt">sep=</span><span class="st">&#39;:&#39;</span>)
+## Number n=:1:2:3:, Text t=:Text1:Text2:Text3</code></pre></div>
+<p><strong>Breaking Lines</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cat</span>(<span class="st">&#39;Number n=&#39;</span>,n,<span class="st">&#39;, Text t=&#39;</span>, t, <span class="dt">fill=</span><span class="dv">10</span>)  <span class="co"># line break after 10 chars</span>
+## Number n= 
+## 1 2 3 
+## , Text t= 
+## Text1 
+## Text2 
+## Text3
+<span class="kw">cat</span>(<span class="st">&#39;Number n=&#39;</span>,n,<span class="st">&#39;, Text t=&#39;</span>, t, <span class="dt">fill=</span><span class="dv">1</span>)  <span class="co"># line break after 1 chars</span>
+## Number n= 
+## 1 
+## 2 
+## 3 
+## , Text t= 
+## Text1 
+## Text2 
+## Text3</code></pre></div>
+</div>
+</div>
+<div id="parsing" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> Parsing</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">strsplit</span>(<span class="st">&#39; I Love   You&#39;</span>, <span class="dt">split =</span> <span class="st">&#39;&#39;</span>)  <span class="co"># split every character</span>
+## [[1]]
+##  [1] &quot; &quot; &quot;I&quot; &quot; &quot; &quot;L&quot; &quot;o&quot; &quot;v&quot; &quot;e&quot; &quot; &quot; &quot; &quot; &quot; &quot; &quot;Y&quot; &quot;o&quot; &quot;u&quot;
+<span class="kw">strsplit</span>(<span class="st">&#39; I Love   You&#39;</span>, <span class="dt">split =</span> <span class="st">&#39; &#39;</span>) <span class="co"># split with &#39; &#39; as seperator</span>
+## [[1]]
+## [1] &quot;&quot;     &quot;I&quot;    &quot;Love&quot; &quot;&quot;     &quot;&quot;     &quot;You&quot;</code></pre></div>
+</div>
+<div id="combining" class="section level3">
+<h3><span class="header-section-number">1.2.4</span> Combining</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>
+t =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Text1&#39;</span>, <span class="st">&#39;Text2&#39;</span>, <span class="st">&#39;Text3&#39;</span>)
+<span class="kw">print</span>(t)</code></pre></div>
+<pre><code>## [1] &quot;Text1&quot; &quot;Text2&quot; &quot;Text3&quot;</code></pre>
+</div>
+<div id="string-comparison" class="section level3">
+<h3><span class="header-section-number">1.2.5</span> String Comparison</h3>
+<div id="exact-equality" class="section level4">
+<h4><span class="header-section-number">1.2.5.1</span> Exact Equality</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">set1 =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;123.33&#39;</span>)
+set2 =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="fl">123.33</span>)   <span class="co"># number coerce to character</span>
+set3 =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="fl">123.33</span>,<span class="st">&#39;b&#39;</span>)   <span class="co"># number coerce to character</span>
+<span class="kw">identical</span>(set1,set2)  
+## [1] TRUE
+<span class="kw">identical</span>(set2,set3)       <span class="co"># order matters</span>
+## [1] FALSE</code></pre></div>
+</div>
+</div>
+<div id="string-statistics" class="section level3">
+<h3><span class="header-section-number">1.2.6</span> String Statistics</h3>
+<div id="length-of-string" class="section level4">
+<h4><span class="header-section-number">1.2.6.1</span> Length of String</h4>
+<p>Both functions below are equivalent.</p>
+<p><strong>base::nchar</strong></p>
+<blockquote>
+<p><strong><code>base::nchar( x )</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>x = char vector</code></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nchar</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;abc&#39;</span>, <span class="st">&#39;abcde&#39;</span>, <span class="ot">NA</span>))
+## [1]  1  3  5 NA
+<span class="kw">nchar</span>(<span class="kw">c</span>(<span class="dv">133</span>, <span class="fl">5143.34</span>, <span class="ot">NA</span>)) <span class="co"># coerce input to &#39;133&#39;,&#39;514.34&#39;, NA</span>
+## [1]  3  7 NA
+<span class="kw">nchar</span>(<span class="kw">c</span>(T,<span class="ot">TRUE</span>,F,<span class="ot">FALSE</span>))   <span class="co"># coerce input to &#39;TRUE&#39;,&#39;TRUE&#39;,&#39;FALSE&#39;,&#39;FALSE&#39;</span>
+## [1] 4 4 5 5</code></pre></div>
+<p><strong>stringr::str_length</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_length</span>(<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>, <span class="st">&#39;abc&#39;</span>, <span class="st">&#39;abcde&#39;</span>, <span class="ot">NA</span>))</code></pre></div>
+<pre><code>## [1]  1  3  5 NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_length</span>(<span class="kw">c</span>(<span class="dv">133</span>, <span class="fl">5143.34</span>, <span class="ot">NA</span>)) <span class="co"># coerce input to &#39;133&#39;,&#39;514.34&#39;, NA</span></code></pre></div>
+<pre><code>## [1]  3  7 NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str_length</span>(<span class="kw">c</span>(T,<span class="ot">TRUE</span>,F,<span class="ot">FALSE</span>))   <span class="co"># coerce input to &#39;TRUE&#39;,&#39;TRUE&#39;,&#39;FALSE&#39;,&#39;FALSE&#39;</span></code></pre></div>
+<pre><code>## [1] 4 4 5 5</code></pre>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="1-1-package-management.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="1-3-set-operation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/01-fundamentals.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

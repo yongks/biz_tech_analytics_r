@@ -65,49 +65,175 @@ The solution is to:
 - Remove the problematic package folder (see where they are stored using **.libPaths()** )  
 - Reinstall the package  
 
-## Data Types
+## String
 
-### String
+### Library
 
 ```{r}
 library(stringr)
 ```
 
-#### String Comparison
+|   | Package     | Function    | Purpose              |
+|---|-------------|-------------|----------------------|
+| 1 | base        | nchar       | Number of characters |
+|   |             | strsplit    | Parse a string to vector                    |
+|   |             | cat         | Concatenate and output to screen/file only, no storage  |
+| 2 | string_r    | str_length  | Number of characters, similar to nchar()    |
+|   |             | str_sub     | Extract substrings, similar to substring()  |
+|   |             | str_c       | String concatenation, similar to paste()    |
+|   |             | str_trim    | Removes leading and trailing whitespace     |
+|   |             | str_pad     | Pads a string                               |
 
-#### String Manipulations
-
-**Splitting**  
-**Combining**  
-**Extracting**  
-
-#### String Statistics
-
-**Length of String (Vectorized)**  
-```{r}
-str_length(c('abc','abcd','abcde','ac'))
-max(str_length(c('abc','abcd','abcde','ac')))
+### Concatenating
+#### Sample Data
+```{r, collapse=TRUE}
+a = c('a', 'b', 'c')
+b = c('a', 'b', 'c','e')
+n = c(10,   20, 30 )
+c = c(T,    T,  F)
 ```
 
+#### Element-wise Concatenation
+- So far the example concatenantes single multiple vectors (each with single element)  
+- Let's look at **multiple elements vectors**, and notice how the vectorization works  
 
-### Dates Manipulation
+**`paste`** is a vectorized funciton:  
+- Iterates through each element of the vectors in parallel  
+- In each iteraction, combine string from the all the vectors' element  
+- Default seperator is ' '  
+- **`collapse`** return the output as single vector  
+- coerce NA to string !!! Not an usual behavior  
+```{r, collapse=TRUE}
+paste(a,n,c)
 
-#### Formatting
+paste(a,n,c, sep='.', collapse='/')
 
-#### Dates Comparison
+paste("May", NA, "The", "Force", NULL, "Be", "With", character(0), "You")
+```
 
-#### Dates Manipulation
+**`string_r::str_c`** is almost similar to `paste`, with additional **cool** features below:  
 
-**Days Between**  
+- `str_c` has no default seperator  
+- `str_c` silently removed NULL and character(0)  
+- `str_c` warning message if vector length not equal  
+- `str_c` return NA if NA is found on the input; a **more consistant** behavior  
+```{r, collapse=TRUE}
+str_c(a,n,c, sep='.', collapse='/')
 
-**First Day of the Month**  
+str_c(b,n,c, sep='.', collapse='/') ## FAIL, because vector b is longer than others
 
-**Last Day of the Month**  
+str_c("May", NA, "The", "Force", NULL, "Be", "With", character(0), "You")
+```
 
-**Days/Months/Years After**  
+#### Vector Merging (Back To Back)
+`c()` **join multiple vectors** together into one big vector
+```{r, collapse=TRUE}
+c(a,n,c)
+```
 
+#### Output to Screen/File
+Use `cat` for sole purpose of output to screen or file, **NO STORING TO VARIABLE**.
 
-## Conditioinal Decision
+> cat(... , file = "", sep = " ", fill = FALSE, labels = NULL, append = FALSE)
+
+**Default Seperator**
+```{r, collapse=TRUE}
+n = 1:3
+t = c('Text1', 'Text2', 'Text3')
+cat('Number n=',n,', Text t=', t)
+cat('Number n=',n,', Text t=', t, sep=':')
+```
+
+**Breaking Lines**
+```{r, collapse=TRUE}
+cat('Number n=',n,', Text t=', t, fill=10)  # line break after 10 chars
+cat('Number n=',n,', Text t=', t, fill=1)  # line break after 1 chars
+```
+
+### Parsing
+
+```{r, collapse=TRUE}
+strsplit(' I Love   You', split = '')  # split every character
+strsplit(' I Love   You', split = ' ') # split with ' ' as seperator
+```
+
+### Combining
+```{r}
+n = 1:3
+t = c('Text1', 'Text2', 'Text3')
+print(t)
+```
+
+### String Comparison
+
+#### Exact Equality
+```{r, collapse=TRUE}
+set1 = c('a','b','123.33')
+set2 = c('a','b',123.33)   # number coerce to character
+set3 = c('a',123.33,'b')   # number coerce to character
+identical(set1,set2)  
+identical(set2,set3)       # order matters
+```
+
+### String Statistics
+
+#### Length of String
+
+Both functions below are equivalent.    
+
+**base::nchar**  
+
+> **`base::nchar( x )`**  
+> $\quad$ `x = char vector`  
+
+```{r, collapse=TRUE}
+nchar(c('a', 'abc', 'abcde', NA))
+nchar(c(133, 5143.34, NA)) # coerce input to '133','514.34', NA
+nchar(c(T,TRUE,F,FALSE))   # coerce input to 'TRUE','TRUE','FALSE','FALSE'
+```
+
+**stringr::str_length**  
+
+```{r}
+str_length(c('a', 'abc', 'abcde', NA))
+str_length(c(133, 5143.34, NA)) # coerce input to '133','514.34', NA
+str_length(c(T,TRUE,F,FALSE))   # coerce input to 'TRUE','TRUE','FALSE','FALSE'
+```
+
+## Set Operation
+
+### Library
+|   | Package     | Function    | Purpose              |
+|---|-------------|-------------|----------------------|
+| 1 | base        | union       | Set union            |
+|   |             | intersect   | Intersection        |
+|   |             | setdiff     | Set difference|
+|   |             | setequal    | Equal sets |
+|   |             | identical   | Exact equality (including sequene) |
+|   |             | is.element  | String concatenation, similar to paste()    |
+|   |             | %in%        | Contains |
+|   |             | sort        | Sorting                               |
+### Set Equality
+We want to know if two vectors contain **similar elements**. Order of the elements are not important.  
+```{r, collapse=TRUE}
+set1 = c('a','b','123.33')
+set2 = c('a','b',123.33)   # number coerce to character
+set3 = c('a',123.33,'b')   # number coerce to character
+setequal(set1,set2)  
+
+setequal(set2,set3)        # order doesn't matters
+```
+
+### Element Contained
+We can check if element(s) is contained in a vector using set operation `is.element` or shortcut %in%.
+```{r,collapse=TRUE}
+set1 = c('a','b',123.33, NA)    # number coerce to character
+is.element(c(123.33,'b'),set1)  # number coerce to character
+
+c(123.33,NA) %in% set1          # number coerce to character
+
+NA %in% set1
+```
 
 ## Loops
 

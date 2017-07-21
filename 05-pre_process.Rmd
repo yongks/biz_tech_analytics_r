@@ -21,26 +21,27 @@ Below summarizes all packages, their functions and purposes used in this **Data 
 |   |                      | complete.cases| Return TRUE if vector/data.frame row does not contain any <NA>                                          |
 | 3 | Base R (numeric)     | scale         | Centre numeric data (-mean), and optionally normalize it (/sd)                                          |
 |   |                      | cut           | Cut numeric vector into breakpoints, and return grouping factor                                         |
-| 4 | Base R (date)        | as.Date       | Parse a factor / string to date                                                                         |
-|   | lubridate            | ymd,mdy,dmy   | Parse a string to date                                                                                  |
+| 4 | Base R (date)        | as.Date       | Parse a factor / string to **date Object**                                                              |
+| 5 | Base R (date/time)   | strptime      | Parse a string to POSIX **date/time object**                                                            |
+| 6 | lubridate            | ymd,mdy,dmy   | Parse a string to date                                                                                  |
 |   |                      | interval      | Return interval object betwen two given dates. Can be further used for deriving days/months in between  |
 |   |                      | ceiling.date  | Return next nearest date according to unit (day / month / year)                                         |
-| 5 | Base R (dataset)     | subset        | Return a new data based on input logical vector                                                         |
+| 7 | Base R (dataset)     | subset        | Return a new data based on input logical vector                                                         |
 |   |                      | merge         | Merge two data.frame together based on common key                                                       |
 |   |                      | nrow, ncol    | How many columns / rows in the dataset ?                                                                |
 |   |                      | length        | How many elements in a vector ?                                                                         |
-| 6 | caTools              | sample.split  | Split vector into two with a ratio, whiel maintain data value ratio, return result in logical vector    |
-| 7 | dplyr                | select        | extract columns from existing data.frame                                                                |
+| 8 | caTools              | sample.split  | Split vector into two with a ratio, whiel maintain data value ratio, return result in logical vector    |
+| 9 | dplyr                | select        | extract columns from existing data.frame                                                                |
 |   |                      | mutate        | Add new columns, from existing data.frame                                                               |
-| 8 | caret                | preProcess    | Advance data transofrmation                                                                             |
+| 10| caret                | preProcess    | Advance data transofrmation                                                                             |
 
 
 ## Sample Data
 
 ```{r results='markup'}
 my.df <- read.csv ( file="./datasets/import_sample.csv", 
-    na.strings=c('NA','NULL',''))
-#    stringsAsFactors = FALSE )
+    na.strings=c('NA','NULL',''),
+    stringsAsFactors = FALSE ))
 my.df
 str(my.df)
 ```
@@ -421,6 +422,7 @@ str(z)
 
 
 ## Date Manipulation
+This section deals with **`Date`** object, which does not handle time.  
 
 ### Parsing Date
 
@@ -567,6 +569,42 @@ ceiling_date(my.df$date_last, "month")
 ```{r}
 ceiling_date(my.df$date_last, "month") - days(1)
 ```
+
+
+
+## Date Time Manipulation
+Datetime is handled through base R **POSIXlt** object (including timezone handling).  
+
+### Parsing Date Time
+When import datetime from text file using `read()`, often date column are imported as string or factor.  Note that `lubridate::dmy,ymd` can convert from string only, whereas `as.Date` can convert from both string and  factor.  
+
+
+#### Import Data
+
+First, verify our variable of interest **date.first** is chr type.  
+```{r}
+my.df2 <- read.csv ( file="./datasets/import_sample.csv", 
+    na.strings=c('NA','NULL',''),
+    stringsAsFactors = FALSE )
+head(my.df2)
+str(my.df2)
+```
+
+
+#### Converting to POSIXlt
+
+```{r}
+d = strptime(my.df2$date.first, format="%Y-%m-%d %H:%M:%S")
+str(d)
+```
+
+#### POSIXlt Properties
+
+```{r}
+d$hour
+
+```
+
 
 
 ## Number Manipulation

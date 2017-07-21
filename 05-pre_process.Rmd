@@ -41,7 +41,7 @@ Below summarizes all packages, their functions and purposes used in this **Data 
 ```{r results='markup'}
 my.df <- read.csv ( file="./datasets/import_sample.csv", 
     na.strings=c('NA','NULL',''),
-    stringsAsFactors = FALSE ))
+    stringsAsFactors = FALSE )
 my.df
 str(my.df)
 ```

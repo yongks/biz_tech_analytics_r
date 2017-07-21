@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-15">
+<meta name="date" content="2017-07-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -265,6 +265,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.4</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
@@ -460,15 +461,15 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </li>
 <li>Somehow, width=1 is required, otherwise a small empty circle will be formed at the middle</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(dept) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">value1 =</span> <span class="kw">sum</span>(value1)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>,<span class="dt">y=</span>value1,<span class="dt">fill=</span>dept)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="dt">width=</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&#39;Volume 1&#39;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span>my.df %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(dept) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">value1 =</span> <span class="kw">sum</span>(value1)) %&gt;%
+<span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&#39;&#39;</span>,<span class="dt">y=</span>value1,<span class="dt">fill=</span>dept)) +<span class="st"> </span><span class="kw">geom_col</span>(<span class="dt">width=</span><span class="dv">1</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">&#39;Volume 1&#39;</span>)
 
 g
-g <span class="op">+</span><span class="st"> </span><span class="kw">coord_polar</span>(<span class="dt">theta=</span><span class="st">&#39;y&#39;</span>) <span class="op">+</span><span class="st"> </span>
+g +<span class="st"> </span><span class="kw">coord_polar</span>(<span class="dt">theta=</span><span class="st">&#39;y&#39;</span>) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>())</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-203-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-203-2.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-218-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-218-2.png" width="256.6656" /></p>
 </div>
             </section>
 

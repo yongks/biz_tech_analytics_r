@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-15">
+<meta name="date" content="2017-07-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -265,6 +265,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.4</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
@@ -458,24 +459,24 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="x-categorical-data" class="section level3">
 <h3><span class="header-section-number">7.5.1</span> 1x Categorical Data</h3>
 <p>Single categorical variable produces <strong>frequency</strong> chart.</p>
-<div id="base-graphic-4" class="section level4">
+<div id="base-graphic-5" class="section level4">
 <h4><span class="header-section-number">7.5.1.1</span> base graphic</h4>
 <ul>
 <li><strong>plot</strong> requre a factor to plot frequency chart</li>
 <li><strong>barplot</strong> require conversion of vector into <strong>table</strong> for plotting</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
-<span class="kw">plot</span>(<span class="kw">as.factor</span>(my.df<span class="op">$</span>dept))
-<span class="kw">barplot</span>(<span class="kw">table</span>(my.df<span class="op">$</span>dept))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-193-1.png" width="768" /></p>
+<span class="kw">plot</span>(<span class="kw">as.factor</span>(my.df$dept))
+<span class="kw">barplot</span>(<span class="kw">table</span>(my.df$dept))</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-208-1.png" width="768" /></p>
 </div>
 <div id="ggplot" class="section level4">
 <h4><span class="header-section-number">7.5.1.2</span> ggplot</h4>
 <p><strong>qplot</strong> default to <strong>geom_bar</strong> when <strong>single categorical-alike</strong> feature is used</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>dept)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x=</span>dept, <span class="dt">geom=</span><span class="st">&#39;bar&#39;</span>)
-<span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>dept)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-194-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-194-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-194-3.png" width="256.6656" /></p>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>dept)) +<span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-209-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-209-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-209-3.png" width="256.6656" /></p>
 </div>
 </div>
 <div id="xcatgorical-1xnumeric" class="section level3">
@@ -483,16 +484,14 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div id="the-data" class="section level4">
 <h4><span class="header-section-number">7.5.2.1</span> The Data</h4>
 <p>This is the data, we summarize department, and derive <strong>total value for each department</strong>, and their <strong>proportion</strong>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp =<span class="st"> </span>my.df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(dept, grp) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_value1 =</span> <span class="kw">sum</span>(value1)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct_value1 =</span> total_value1<span class="op">/</span><span class="kw">sum</span>(total_value1))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp =<span class="st"> </span>my.df %&gt;%
+<span class="st">  </span><span class="kw">group_by</span>(dept, grp) %&gt;%
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_value1 =</span> <span class="kw">sum</span>(value1)) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pct_value1 =</span> total_value1/<span class="kw">sum</span>(total_value1))
   
 tmp</code></pre></div>
-<pre><code>## Source: local data frame [10 x 4]
-## Groups: dept [5]
-## 
-## # A tibble: 10 x 4
+<pre><code>## # A tibble: 10 x 4
+## # Groups:   dept [5]
 ##     dept   grp total_value1 pct_value1
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;
 ##  1    D1    G1     552.1761  0.4272685
@@ -510,18 +509,18 @@ tmp</code></pre></div>
 <h4><span class="header-section-number">7.5.2.2</span> Normal Bar Chart</h4>
 <p><strong>Base Graphic</strong><br />
 Height is actual value for y-axis</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="dt">height=</span>tmp<span class="op">$</span>total_value1, <span class="dt">names=</span>tmp<span class="op">$</span>dept, <span class="dt">col=</span><span class="st">&#39;darkred&#39;</span>)
-<span class="kw">barplot</span>(<span class="dt">height=</span>tmp<span class="op">$</span>total_value1, <span class="dt">names=</span>tmp<span class="op">$</span>dept, <span class="dt">horiz=</span><span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-196-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-196-2.png" width="256.6656" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="dt">height=</span>tmp$total_value1, <span class="dt">names=</span>tmp$dept, <span class="dt">col=</span><span class="st">&#39;darkred&#39;</span>)
+<span class="kw">barplot</span>(<span class="dt">height=</span>tmp$total_value1, <span class="dt">names=</span>tmp$dept, <span class="dt">horiz=</span><span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-211-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-211-2.png" width="256.6656" /></p>
 <p><strong>ggplot</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span> (tmp, <span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">y=</span>total_value1)) <span class="op">+</span><span class="kw">geom_col</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-197-1.png" width="256.6656" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span> (tmp, <span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">y=</span>total_value1)) +<span class="kw">geom_col</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-212-1.png" width="256.6656" /></p>
 </div>
 <div id="stacked-bar-chart" class="section level4">
 <h4><span class="header-section-number">7.5.2.3</span> Stacked Bar Chart</h4>
 <p>Stacking in base graphic require matrix data, hence not demonstrated here.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span> (tmp, <span class="kw">aes</span>(<span class="dt">x=</span><span class="dv">0</span>, <span class="dt">y=</span>pct_value1, <span class="dt">fill=</span>dept)) <span class="op">+</span><span class="kw">geom_col</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-198-1.png" width="256.6656" /> Height = 1 (100%)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span> (tmp, <span class="kw">aes</span>(<span class="dt">x=</span><span class="dv">0</span>, <span class="dt">y=</span>pct_value1, <span class="dt">fill=</span>dept)) +<span class="kw">geom_col</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-213-1.png" width="256.6656" /> Height = 1 (100%)</p>
 </div>
 </div>
 <div id="xcategorical-1xfreq" class="section level3">
@@ -532,19 +531,17 @@ Height is actual value for y-axis</p>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span> (<span class="dt">data =</span> my.df, dept, <span class="dt">fill =</span> grp)
 <span class="kw">qplot</span> (<span class="dt">data =</span> my.df, <span class="dt">x =</span> dept, <span class="dt">fill =</span> grp, <span class="dt">geom=</span><span class="st">&#39;bar&#39;</span>)
-<span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x =</span> dept, <span class="dt">fill =</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()
-<span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x =</span> dept, <span class="dt">color=</span> grp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-199-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-199-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-199-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-199-4.png" width="256.6656" /></p>
+<span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x =</span> dept, <span class="dt">fill =</span> grp)) +<span class="st"> </span><span class="kw">geom_bar</span>()
+<span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x =</span> dept, <span class="dt">color=</span> grp)) +<span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-214-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-214-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-214-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-214-4.png" width="256.6656" /></p>
 </div>
 <div id="xcategorical-1xnumeric" class="section level3">
 <h3><span class="header-section-number">7.5.4</span> 2xCategorical + 1xNumeric</h3>
 <div id="the-data-1" class="section level4">
 <h4><span class="header-section-number">7.5.4.1</span> The Data</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp</code></pre></div>
-<pre><code>## Source: local data frame [10 x 4]
-## Groups: dept [5]
-## 
-## # A tibble: 10 x 4
+<pre><code>## # A tibble: 10 x 4
+## # Groups:   dept [5]
 ##     dept   grp total_value1 pct_value1
 ##    &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;
 ##  1    D1    G1     552.1761  0.4272685
@@ -562,9 +559,9 @@ Height is actual value for y-axis</p>
 <h4><span class="header-section-number">7.5.4.2</span> ggplot</h4>
 <p>y is the numeric value, fill is the category variable for stacking.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span> (tmp, 
-  <span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">y=</span>total_value1, <span class="dt">fill=</span>grp)) <span class="op">+</span><span class="st"> </span>
+  <span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">y=</span>total_value1, <span class="dt">fill=</span>grp)) +<span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_col</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-201-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-216-1.png" width="256.6656" /></p>
 </div>
 </div>
 <div id="positioning" class="section level3">
@@ -575,12 +572,12 @@ Height is actual value for y-axis</p>
 <li>position = ‘dodge’ similar to <strong>position = position_dodge()</strong>, however the later is more flexible with ability to adjust overlapping level between sub-bar (default is 0.9)</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g =<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">fill=</span>grp)) 
-g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="st">&#39;stack&#39;</span>) <span class="co"># default position</span>
-g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="st">&#39;dodge&#39;</span>)
-g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="co"># default 0.9</span>
-g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.5</span>))
-g <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">1.0</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-4.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-202-5.png" width="256.6656" /></p>
+g +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="st">&#39;stack&#39;</span>) <span class="co"># default position</span>
+g +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="st">&#39;dodge&#39;</span>)
+g +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>()) <span class="co"># default 0.9</span>
+g +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.5</span>))
+g +<span class="st"> </span><span class="kw">geom_bar</span>(<span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">1.0</span>))</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-217-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-217-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-217-3.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-217-4.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-217-5.png" width="256.6656" /></p>
 </div>
 <div id="in-bar-text-labeling" class="section level3">
 <h3><span class="header-section-number">7.5.6</span> In-Bar Text Labeling</h3>

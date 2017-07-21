@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-15">
+<meta name="date" content="2017-07-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -265,6 +265,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.4</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
@@ -461,20 +462,20 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>In boxplot(), only single variable need to be supplied</li>
 <li>In <strong>ggplot/qplot</strong>, variable x and y is required. Variable y is the actual value, variable x is the group variable. Case of one dimension, use x=’’ when no grouping is desired</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(my.df<span class="op">$</span>value1)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(my.df$value1)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> <span class="st">&#39;&#39;</span> ,  <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
-<span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>( <span class="dt">x=</span> <span class="st">&#39;&#39;</span>, <span class="dt">y=</span>value1 )) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-204-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-204-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-204-3.png" width="256.6656" /></p>
+<span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>( <span class="dt">x=</span> <span class="st">&#39;&#39;</span>, <span class="dt">y=</span>value1 )) +<span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-219-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-219-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-219-3.png" width="256.6656" /></p>
 </div>
 <div id="two-dimension-data-3" class="section level3">
 <h3><span class="header-section-number">7.7.2</span> Two Dimension Data</h3>
 <ul>
 <li>In <strong>boxplot</strong>, use ~ to specify <strong>y~x</strong>, where <strong>x</strong> is grouping variable</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1~grp)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> grp , <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
-<span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>grp, <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-205-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-205-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-205-3.png" width="256.6656" /></p>
+<span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>grp, <span class="dt">y=</span>value1)) +<span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-220-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-220-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-220-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data-1" class="section level3">
 <h3><span class="header-section-number">7.7.3</span> Two + One Dimension Data</h3>
@@ -483,11 +484,11 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>In <strong>boxplot</strong>, use <strong>+</strong> to specify extra dimension</li>
 <li>In <strong>qplot/ggplot</strong>, use <strong>interaction</strong> to specify extra dimension</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp<span class="op">+</span>dept)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-206-1.png" width="772.8" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1~grp+dept)</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-221-1.png" width="772.8" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
-<span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-207-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-207-2.png" width="772.8" /></p>
+<span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1)) +<span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-222-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-222-2.png" width="772.8" /></p>
 </div>
 </div>
             </section>

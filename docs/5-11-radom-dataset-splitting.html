@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-15">
+<meta name="date" content="2017-07-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -265,6 +265,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.4</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
@@ -472,7 +473,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>Verify that 60% of full observations are picked.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">8034</span>)
-train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(my.df), <span class="fl">0.6</span> <span class="op">*</span><span class="st"> </span><span class="kw">nrow</span>(my.df) )
+train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class="dv">1</span>:<span class="kw">nrow</span>(my.df), <span class="fl">0.6</span> *<span class="st"> </span><span class="kw">nrow</span>(my.df) )
 <span class="kw">length</span>(train.rows)</code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">train.rows</code></pre></div>
@@ -497,7 +498,7 @@ train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class
 ## 1            7          1
 ## 10           8         24</code></pre>
 <p>Subsetting the test data by <strong>negating</strong> the splitting row numbers.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df [<span class="op">-</span>train.rows, ]         <span class="co"># Training Data (0.4)</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df [-train.rows, ]         <span class="co"># Training Data (0.4)</span></code></pre></div>
 <pre><code>##   dept gender   weight height date_birth amount  date_last date_first
 ## 2   D2 Female 37.10000    164 1980-02-28    121 2017-04-01 2013-08-31
 ## 6   D3 Female 34.12345    166 1973-07-26    155 2015-11-27 2013-04-28
@@ -544,7 +545,7 @@ train.rows =<span class="st"> </span><span class="kw">sample</span>( <span class
 <span class="math inline">\(\quad\)</span> <code>SplitRatio = ratio of split</code></p>
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">8034</span>)
-spl =<span class="st"> </span><span class="kw">sample.split</span>(my.df<span class="op">$</span>dept, <span class="fl">0.6</span>)  <span class="co"># randomly 0.6 set to TRUE, remaining FALSE</span>
+spl =<span class="st"> </span><span class="kw">sample.split</span>(my.df$dept, <span class="fl">0.6</span>)  <span class="co"># randomly 0.6 set to TRUE, remaining FALSE</span>
 spl</code></pre></div>
 <pre><code>##  [1] FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE</code></pre>
 </div>
@@ -559,7 +560,7 @@ s1 =<span class="st"> </span><span class="kw">subset</span>( my.df, spl )   <spa
 ##  2  2  2</code></pre>
 <p>Subsetting the test data by <strong>negating</strong> the splitting logical vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># my.df[!spl,]              # alternative</span>
-s2 =<span class="st"> </span><span class="kw">subset</span>( my.df, <span class="op">!</span>spl )  <span class="co"># Testing Data (0.4)</span>
+s2 =<span class="st"> </span><span class="kw">subset</span>( my.df, !spl )  <span class="co"># Testing Data (0.4)</span>
 <span class="kw">table</span>(s2[,<span class="st">&#39;dept&#39;</span>])</code></pre></div>
 <pre><code>## 
 ## D1 D2 D3 

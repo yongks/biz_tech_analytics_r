@@ -203,11 +203,11 @@ my.df[1:20,] %>%
   geom_line(aes(group=1))
 ```
 
-
+### 1x Numeric, 2x Categorical
 ```{r}
 my.df[1:20,] %>%
-  ggplot (aes(x=dept, y=value2)) + 
-  geom_line(aes(group=dept))
+  ggplot (aes(x=dept, y=dept)) + 
+  geom_line(aes(group=grp,col=grp))
 ```
 
 ### 2x Numeric, 1x Categorical

@@ -136,16 +136,96 @@ scatter.smooth(my.df$value1, my.df$value2, main='smooth line')
 - Smooth line is possible for scatter plot, as it require X and Y numeric variables  
 - Smooth line can be added with either **linear or loess** method
 - With overlapping third dimension variable (color), smoothline is also **overlapped**, hence not a good idea
-- default confidence interval is **level=0.95**, specify **0** to hide the interval
+- default confidence interval is **level=0.95**, specify **`se=FALSE`** to hide the interval
 ```{r, fig.width=3}
 ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point() + 
   geom_smooth()          # default method='loess'
 
 ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point() + 
-  geom_smooth(level=0)   # hide interval with level=0
+  geom_smooth(se=FALSE, color='red', lwd=3, lty=5)   # hide interval with level=0
 
 ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point() +
   geom_smooth(method='lm', level=0.75)
+```
+
+### Other Cosmetic
+
+#### Base Graphic
+- `pch` : point shape(s)  
+- `cex` : how many times the point size is bigger/smaller  
+- `lwd` : point line width  
+- `col` : point border color(s)  
+- fill ? : point fill color  
+```{r, fig.width=9}
+par(mfrow=c(1,2))
+plot  (my.df$value1, my.df$value2, col=c('green','blue','red'), 
+  pch=c(2,21), cex=1.9, lwd=4 )
+plot  (my.df$value1, my.df$value2, col=as.factor(my.df$grp), 
+  pch=c(2,21), cex=1.9, lwd=4)
+par(mfrow=c(1,1))
+```
+
+#### ggplot2
+**`geom_pont`** support below parameters:  
+- `shape`  : shape type  
+- `size`   : shape size  
+- `stroke` : point line width  
+- 'color'  : point border color  
+- 'fill'   : point fill color (under aes)  
+- `shape'  : shape types (under aes)
+```{r}
+ggplot(data = my.df, aes(x=value1, y=value2, color=as.factor(grp))) + 
+  geom_point(shape=21, size=10, stroke=3, color='black')
+
+ggplot(data = my.df, aes(x=value1, y=value2, color=grp)) + 
+  geom_point(shape=6, size=10, stroke=4)
+```
+
+## Line Chart
+
+### 2x Numeric Data
+
+#### ggplot
+```{r}
+my.df[1:20,] %>%
+  ggplot (aes(x=value1, y=value2)) + geom_line()
+```
+
+### 1x Numeric, 1x Categorical
+For categorical x-axis, geom_line does not join the lines unless `group` is specified, what a common mistake.  
+```{r}
+my.df[1:20,] %>%
+  ggplot (aes(x=dept, y=value2)) + 
+  geom_line()
+
+my.df[1:20,] %>%
+  ggplot (aes(x=dept, y=value2)) + 
+  geom_line(aes(group=1))
+```
+
+### 1x Numeric, 2x Categorical
+```{r}
+my.df[1:20,] %>%
+  ggplot (aes(x=dept, y=dept)) + 
+  geom_line(aes(group=grp,col=grp))
+```
+
+### 2x Numeric, 1x Categorical
+- `group` : combine lines within the same categorical group  
+- `color` : color lines according to same categorical group  
+- Both `group` and `color` refer to same categorical data  
+```{r}
+my.df[1:20,] %>%
+  ggplot (aes(x=value1, y=value2)) + 
+  geom_line(aes(group=grp, color=grp), size=4)
+```
+
+### 2x Numeric, 2x Categorical
+`group` and `color` uses **different categorical data**.  
+```{r}
+my.df[1:20,] %>%
+  ggplot (aes(x=value1, y=value2)) + 
+  geom_line(aes(group=grp, color=dept), size=4)
 ```
 
 

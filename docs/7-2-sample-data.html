@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Business and Technical Analytics with R</title>
+  <meta name="description" content="This is a study and reference notes to solving various business analytics problems using R.">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Business and Technical Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  <meta name="github-repo" content="yongks/biz_tech_analytics_r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Business and Technical Analytics with R" />
+  
+  <meta name="twitter:description" content="This is a study and reference notes to solving various business analytics problems using R." />
+  
+
+<meta name="author" content="Yong Keh Soon">
+
+
+<meta name="date" content="2017-07-21">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="7-1-library-used.html">
+<link rel="next" href="7-3-histogram.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Business and Technical Analytics /R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="1-fundamentals.html"><a href="1-fundamentals.html"><i class="fa fa-check"></i><b>1</b> R Fundamentals</a></li>
+<li class="chapter" data-level="2" data-path="2-data-generation.html"><a href="2-data-generation.html"><i class="fa fa-check"></i><b>2</b> Data Generation</a></li>
+<li class="chapter" data-level="3" data-path="3-data-simulation.html"><a href="3-data-simulation.html"><i class="fa fa-check"></i><b>3</b> Data Simulation</a></li>
+<li class="chapter" data-level="4" data-path="4-data-summarization.html"><a href="4-data-summarization.html"><i class="fa fa-check"></i><b>4</b> Data Summarization</a></li>
+<li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a></li>
+<li class="chapter" data-level="6" data-path="6-find-order-and-filter-data.html"><a href="6-find-order-and-filter-data.html"><i class="fa fa-check"></i><b>6</b> Find, Order and Filter Data</a></li>
+<li class="chapter" data-level="7" data-path="7-data-visualization.html"><a href="7-data-visualization.html"><i class="fa fa-check"></i><b>7</b> Data Visualization</a><ul>
+<li class="chapter" data-level="7.1" data-path="7-1-library-used.html"><a href="7-1-library-used.html"><i class="fa fa-check"></i><b>7.1</b> Library used</a></li>
+<li class="chapter" data-level="7.2" data-path="7-2-sample-data.html"><a href="7-2-sample-data.html"><i class="fa fa-check"></i><b>7.2</b> Sample Data</a></li>
+<li class="chapter" data-level="7.3" data-path="7-3-histogram.html"><a href="7-3-histogram.html"><i class="fa fa-check"></i><b>7.3</b> Histogram</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="7-3-histogram.html"><a href="7-3-histogram.html#single-dimension-data"><i class="fa fa-check"></i><b>7.3.1</b> Single Dimension Data</a></li>
+<li class="chapter" data-level="7.3.2" data-path="7-3-histogram.html"><a href="7-3-histogram.html#two-dimension-data"><i class="fa fa-check"></i><b>7.3.2</b> Two Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-1"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.4</b> Other Cosmetic</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html"><i class="fa fa-check"></i><b>7.5</b> Line Chart</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-data"><i class="fa fa-check"></i><b>7.5.1</b> 2x Numeric Data</a></li>
+<li class="chapter" data-level="7.5.2" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-1x-categorical"><i class="fa fa-check"></i><b>7.5.2</b> 1x Numeric, 1x Categorical</a></li>
+<li class="chapter" data-level="7.5.3" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-2x-categorical"><i class="fa fa-check"></i><b>7.5.3</b> 1x Numeric, 2x Categorical</a></li>
+<li class="chapter" data-level="7.5.4" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-1x-categorical-1"><i class="fa fa-check"></i><b>7.5.4</b> 2x Numeric, 1x Categorical</a></li>
+<li class="chapter" data-level="7.5.5" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-2x-categorical-1"><i class="fa fa-check"></i><b>7.5.5</b> 2x Numeric, 2x Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html"><i class="fa fa-check"></i><b>7.6</b> Bar Chart</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.6.1</b> 1x Categorical Data</a></li>
+<li class="chapter" data-level="7.6.2" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html#xcatgorical-1xnumeric"><i class="fa fa-check"></i><b>7.6.2</b> 1xCatgorical + 1xNumeric</a></li>
+<li class="chapter" data-level="7.6.3" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html#xcategorical-1xfreq"><i class="fa fa-check"></i><b>7.6.3</b> 2xCategorical + 1xFreq</a></li>
+<li class="chapter" data-level="7.6.4" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html#xcategorical-1xnumeric"><i class="fa fa-check"></i><b>7.6.4</b> 2xCategorical + 1xNumeric</a></li>
+<li class="chapter" data-level="7.6.5" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html#positioning"><i class="fa fa-check"></i><b>7.6.5</b> Positioning</a></li>
+<li class="chapter" data-level="7.6.6" data-path="7-6-bar-chart.html"><a href="7-6-bar-chart.html#in-bar-text-labeling"><i class="fa fa-check"></i><b>7.6.6</b> In-Bar Text Labeling</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="7-7-pie-chart.html"><a href="7-7-pie-chart.html"><i class="fa fa-check"></i><b>7.7</b> Pie Chart</a></li>
+<li class="chapter" data-level="7.8" data-path="7-8-box-plot.html"><a href="7-8-box-plot.html"><i class="fa fa-check"></i><b>7.8</b> Box Plot</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="7-8-box-plot.html"><a href="7-8-box-plot.html#one-dimension-data"><i class="fa fa-check"></i><b>7.8.1</b> One Dimension Data</a></li>
+<li class="chapter" data-level="7.8.2" data-path="7-8-box-plot.html"><a href="7-8-box-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.8.2</b> Two Dimension Data</a></li>
+<li class="chapter" data-level="7.8.3" data-path="7-8-box-plot.html"><a href="7-8-box-plot.html#two-one-dimension-data-1"><i class="fa fa-check"></i><b>7.8.3</b> Two + One Dimension Data</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="7-9-side-by-side-plots.html"><a href="7-9-side-by-side-plots.html"><i class="fa fa-check"></i><b>7.9</b> Side By Side Plots</a></li>
+<li class="chapter" data-level="7.10" data-path="7-10-ggplot-customization.html"><a href="7-10-ggplot-customization.html"><i class="fa fa-check"></i><b>7.10</b> ggplot Customization</a><ul>
+<li class="chapter" data-level="7.10.1" data-path="7-10-ggplot-customization.html"><a href="7-10-ggplot-customization.html#title-subtitle-caption-and-labels"><i class="fa fa-check"></i><b>7.10.1</b> Title, Subtitle, Caption and Labels</a></li>
+<li class="chapter" data-level="7.10.2" data-path="7-10-ggplot-customization.html"><a href="7-10-ggplot-customization.html#axis-scale-and-ticks"><i class="fa fa-check"></i><b>7.10.2</b> Axis Scale and Ticks</a></li>
+<li class="chapter" data-level="7.10.3" data-path="7-10-ggplot-customization.html"><a href="7-10-ggplot-customization.html#customize-components"><i class="fa fa-check"></i><b>7.10.3</b> Customize Components</a></li>
+<li class="chapter" data-level="7.10.4" data-path="7-10-ggplot-customization.html"><a href="7-10-ggplot-customization.html#clearing-components"><i class="fa fa-check"></i><b>7.10.4</b> Clearing Components</a></li>
+<li class="chapter" data-level="7.10.5" data-path="7-10-ggplot-customization.html"><a href="7-10-ggplot-customization.html#themes"><i class="fa fa-check"></i><b>7.10.5</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="7.11" data-path="7-11-double-y-axis-scale.html"><a href="7-11-double-y-axis-scale.html"><i class="fa fa-check"></i><b>7.11</b> Double Y-Axis Scale</a></li>
+<li class="chapter" data-level="7.12" data-path="7-12-other-aesthetics.html"><a href="7-12-other-aesthetics.html"><i class="fa fa-check"></i><b>7.12</b> Other Aesthetics</a><ul>
+<li class="chapter" data-level="7.12.1" data-path="7-12-other-aesthetics.html"><a href="7-12-other-aesthetics.html#point-symbols"><i class="fa fa-check"></i><b>7.12.1</b> Point Symbols</a></li>
+<li class="chapter" data-level="7.12.2" data-path="7-12-other-aesthetics.html"><a href="7-12-other-aesthetics.html#line-types"><i class="fa fa-check"></i><b>7.12.2</b> Line types</a></li>
+<li class="chapter" data-level="7.12.3" data-path="7-12-other-aesthetics.html"><a href="7-12-other-aesthetics.html#colors"><i class="fa fa-check"></i><b>7.12.3</b> Colors</a></li>
+<li class="chapter" data-level="7.12.4" data-path="7-12-other-aesthetics.html"><a href="7-12-other-aesthetics.html#other-sources"><i class="fa fa-check"></i><b>7.12.4</b> Other Sources</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="8-statistics.html"><a href="8-statistics.html"><i class="fa fa-check"></i><b>8</b> Statistics</a></li>
+<li class="chapter" data-level="9" data-path="9-clustering-analysis.html"><a href="9-clustering-analysis.html"><i class="fa fa-check"></i><b>9</b> Clustering Analysis</a></li>
+<li class="chapter" data-level="10" data-path="10-regression-analysis.html"><a href="10-regression-analysis.html"><i class="fa fa-check"></i><b>10</b> Regression Analysis</a></li>
+<li class="chapter" data-level="11" data-path="11-classification.html"><a href="11-classification.html"><i class="fa fa-check"></i><b>11</b> Classification</a></li>
+<li class="chapter" data-level="12" data-path="12-survival-analysis.html"><a href="12-survival-analysis.html"><i class="fa fa-check"></i><b>12</b> Survival Analysis</a></li>
+<li class="chapter" data-level="13" data-path="13-text-analysis.html"><a href="13-text-analysis.html"><i class="fa fa-check"></i><b>13</b> Text Analysis</a></li>
+<li class="chapter" data-level="14" data-path="14-model-optimization.html"><a href="14-model-optimization.html"><i class="fa fa-check"></i><b>14</b> Model Optimization</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business and Technical Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sample-data" class="section level2">
+<h2><span class="header-section-number">7.2</span> Sample Data</h2>
+<p>This chapter uses the sample data generate with below code. The idea is to simulate two categorical-alike feature, and two numeric value feature:</p>
+<ul>
+<li><strong>dept</strong> is random character between ‘D1’, ‘D2’, ‘D3’, ‘D4’ and ‘D5’<br />
+</li>
+<li><strong>grp</strong> is random character with randomly generated ‘G1’, ‘G2’<br />
+</li>
+<li><strong>value1</strong> represents numeric value, normally distributed at mean 50<br />
+</li>
+<li><strong>value2</strong> is numeric value, normally distributed at mean 25</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+my.df =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">dept =</span> <span class="kw">paste</span>(<span class="st">&#39;D&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
+  <span class="dt">grp  =</span> <span class="kw">paste</span>(<span class="st">&#39;G&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
+  <span class="dt">value1 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span>:<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">5</span>),
+  <span class="dt">value2 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span>:<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>),
+  <span class="dt">stringsAsFactors =</span> F
+)
+<span class="kw">head</span>(my.df)</code></pre></div>
+<pre><code>##   dept grp   value1   value2
+## 1   D1  G1 52.07262 21.45568
+## 2   D4  G2 47.62641 22.09031
+## 3   D4  G1 50.32997 20.55654
+## 4   D4  G1 47.48761 22.10220
+## 5   D5  G1 45.87001 20.93504
+## 6   D4  G1 50.83495 22.28139</code></pre>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="7-1-library-used.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="7-3-histogram.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yongks/biz_tech_analytics_r/edit/master/07-visualization.Rmd",
+"text": "Edit"
+},
+"download": ["biz_tech_analytics_r.pdf", "biz_tech_analytics_r.epub", "biz_tech_analytics_r.mobi"],
+"toc": {
+"collapse": "section",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-15">
+<meta name="date" content="2017-07-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -265,6 +265,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-dimension-data-2"><i class="fa fa-check"></i><b>7.4.1</b> Two Dimension Data</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#two-one-dimension-data"><i class="fa fa-check"></i><b>7.4.2</b> Two + One Dimension Data</a></li>
 <li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.3</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.4</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html"><i class="fa fa-check"></i><b>7.5</b> Bar Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-bar-chart.html"><a href="7-5-bar-chart.html#x-categorical-data"><i class="fa fa-check"></i><b>7.5.1</b> 1x Categorical Data</a></li>
@@ -460,9 +461,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <p>Scaling section will use sample data generated as below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
 num.df =<span class="st"> </span><span class="kw">data.frame</span>(
-  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&#39;ID_&#39;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">sep =</span> <span class="st">&#39;&#39;</span>),
-  <span class="dt">value1 =</span> <span class="kw">sample</span>(<span class="dv">50</span><span class="op">:</span><span class="dv">100</span>, <span class="dv">10</span>),
-  <span class="dt">value2 =</span> <span class="kw">sample</span>(<span class="dv">10</span><span class="op">:</span><span class="dv">50</span>, <span class="dv">10</span>),
+  <span class="dt">id =</span> <span class="kw">paste</span>(<span class="st">&#39;ID_&#39;</span>, <span class="dv">1</span>:<span class="dv">10</span>, <span class="dt">sep =</span> <span class="st">&#39;&#39;</span>),
+  <span class="dt">value1 =</span> <span class="kw">sample</span>(<span class="dv">50</span>:<span class="dv">100</span>, <span class="dv">10</span>),
+  <span class="dt">value2 =</span> <span class="kw">sample</span>(<span class="dv">10</span>:<span class="dv">50</span>, <span class="dv">10</span>),
   <span class="dt">stringsAsFactors =</span> F
 )
 num.df</code></pre></div>
@@ -494,7 +495,7 @@ num.df</code></pre></div>
 <span class="math inline">\(\quad\)</span> <span class="math inline">\(\quad\)</span> <code>output scaled:center --&gt; mean</code><br />
 <span class="math inline">\(\quad\)</span> <span class="math inline">\(\quad\)</span> <code>output scaled:scale  --&gt; sd</code></p>
 </blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scale</span>( num.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>] )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scale</span>( num.df[,<span class="dv">2</span>:<span class="dv">3</span>] )</code></pre></div>
 <pre><code>##           value1     value2
 ##  [1,] -1.2399685  0.7216391
 ##  [2,]  0.3025761  0.1410099
@@ -512,7 +513,7 @@ num.df</code></pre></div>
 ## attr(,&quot;scaled:scale&quot;)
 ##   value1   value2 
 ## 16.85527 12.05589</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scale</span>( num.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">scale=</span>F )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scale</span>( num.df[,<span class="dv">2</span>:<span class="dv">3</span>], <span class="dt">scale=</span>F )</code></pre></div>
 <pre><code>##       value1 value2
 ##  [1,]  -20.9    8.7
 ##  [2,]    5.1    1.7
@@ -532,8 +533,8 @@ num.df</code></pre></div>
 <h3><span class="header-section-number">5.9.3</span> Min Max Scaling</h3>
 <p>Min-Max scaling will transform all numbers between 0 and 1.<br />
 Easiest way to perform this transformation is to write a function then <code>apply</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">min_max =<span class="st"> </span><span class="cf">function</span>(x){(x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x)<span class="op">-</span><span class="kw">min</span>(x))}
-<span class="kw">apply</span>( num.df[,<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">MARGIN =</span> <span class="dv">2</span>, <span class="dt">FUN =</span> min_max )  ## 2 means column-wise</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">min_max =<span class="st"> </span>function(x){(x-<span class="kw">min</span>(x))/(<span class="kw">max</span>(x)-<span class="kw">min</span>(x))}
+<span class="kw">apply</span>( num.df[,<span class="dv">2</span>:<span class="dv">3</span>], <span class="dt">MARGIN =</span> <span class="dv">2</span>, <span class="dt">FUN =</span> min_max )  ## 2 means column-wise</code></pre></div>
 <pre><code>##          value1     value2
 ##  [1,] 0.1041667 0.73333333
 ##  [2,] 0.6458333 0.50000000
@@ -577,9 +578,9 @@ Easiest way to perform this transformation is to write a function then <code>app
 </li>
 <li>Base on this transformation <strong>model</strong>, we can apply to any numerical data</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">spl =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(num.df), <span class="kw">nrow</span>(num.df)<span class="op">*</span><span class="fl">0.7</span>, <span class="dt">rep=</span><span class="ot">FALSE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">spl =<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(num.df), <span class="kw">nrow</span>(num.df)*<span class="fl">0.7</span>, <span class="dt">rep=</span><span class="ot">FALSE</span>)
 train =<span class="st"> </span>num.df[spl,]
-test  =<span class="st"> </span>num.df[<span class="op">-</span>spl,]
+test  =<span class="st"> </span>num.df[-spl,]
 fit.preproc =<span class="st"> </span><span class="kw">preProcess</span>(train)
 <span class="kw">str</span>(fit.preproc)</code></pre></div>
 <pre><code>## List of 20

@@ -7,14 +7,15 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 
 This chapter compares various method to plotting using base-R and ggplot.
 
-## Library used
+## Library
 
 - Loading necessary library as below:
 - Base R library already included functions: ** hist, plot, barplot, boxplot**
 
 ```{r}
-library(ggplot2)    ## ggplot, qplot
+library(ggplot2)
 library(dplyr)
+library(ggmap)
 ```
 
 
@@ -33,6 +34,7 @@ my.df = data.frame(
   grp  = paste('G',sample(1:2, 100, replace = T),sep=''),
   value1 = rnorm(1:100, mean = 50, sd = 5),
   value2 = rnorm(1:100, mean = 20, sd = 3),
+  value3 = rnorm(1:100, mean = 5, sd =30),
   stringsAsFactors = F
 )
 head(my.df)
@@ -74,7 +76,7 @@ ggplot(data = my.df, aes(x=value1, fill=grp)) + geom_histogram()
 
 
 ## Scatter Plot
-### Two Dimension Data
+### 2x Numeric
 - Use scatter plot to represent **correlation** between two numeric variables
 - x = number, y = number  
 
@@ -92,7 +94,7 @@ ggplot(data = my.df, aes(x=value1, y=value2)) + geom_point()
 ```
 
 
-### Two + One Dimension Data
+### 2xNum + 1x Cat
 
 #### Base Graphic
 - Base-R uses **col** parameter to represent third dimension
@@ -107,6 +109,8 @@ plot  (my.df$value1, my.df$value2, col=as.factor(my.df$grp))
 par(mfrow=c(1,1))
 ```
 
+
+
 #### ggplot2
 - In **qplot/ggplot**, the third dimension of data can be represented by assigning **color** parameter to the third variable
 - Note that **fill has not effect** on scatter plot. **fill** should only be used for bar like chart eg. **geom_hist** or **gem_bar**
@@ -115,6 +119,21 @@ par(mfrow=c(1,1))
 qplot (data = my.df, x = value1, y = value2, color = grp, geom='point')
 ggplot(data = my.df, aes(x=value1, y=value2, color = grp)) + geom_point()
 ggplot(data = my.df, aes(x=value1, y=value2, fill = grp)) + geom_point()
+```
+
+
+### 2xNum, 1xNum
+```{r}
+ggplot(data=my.df, aes(x=value1,y=value2)) + 
+  geom_point(aes(size=value3, color=value3)) + scale_fill_gradient(low='yellow', high='red')
+```
+
+
+
+### 2xNum, 1xNum + 1xCat
+```{r}
+ggplot(data=my.df, aes(x=value1,y=value2)) + 
+  geom_point(aes(size=value3, color=dept))
 ```
 
 ### Overlay Smooth Line
@@ -204,6 +223,8 @@ my.df[1:20,] %>%
 ```
 
 ### 1x Numeric, 2x Categorical
+- `group` although combine lines in groups, it doesn't provdes legend  
+- `color` will color line according to categorical variable, and provide legends at the same time  
 ```{r}
 my.df[1:20,] %>%
   ggplot (aes(x=dept, y=dept)) + 
@@ -374,6 +395,33 @@ boxplot(data = my.df, value1~grp+dept)
 qplot  (data = my.df, x=interaction(grp,dept) , y=value1, geom='boxplot')
 ggplot (data = my.df, aes(x=interaction(grp,dept) , y=value1)) + geom_boxplot()
 ```
+
+## Heat Maps
+
+### geom_tiles
+
+#### 2x Categorical, 1xNumeric
+Default gradient is blue, dark blue represents low value
+```{r}
+ggplot (my.df, aes(x=grp, y=dept)) +
+  geom_tile(aes(fill=value1))
+```
+
+Customize the gradient and legend title
+```{r}
+ggplot (my.df, aes(x=grp, y=dept)) +
+  geom_tile(aes(fill=value1)) + 
+  scale_fill_gradient(name='Iron man', low = 'white', high='red')
+```
+
+
+## Maps
+
+```{r}
+kl = get_map(location = 'kuala lumpur', zoom = 10)
+ggmap(kl)
+```
+
 
 ## Side By Side Plots
 

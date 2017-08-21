@@ -8,23 +8,28 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 
 ## Library
 
-|   | Package              | Function      | Purpose                                           |
-|---|----------------------|---------------|---------------------------------------------------|
-| 1 | Base R               | as.factor     | Convert a vector to a new factor                  |
-|   |                      | droplevels    | Return a new factor with unused levels removed    |
-|   |                      | relevel       | Return a new factor with new reference level      |
-| 2 | dplyr                | select        | select the columns                                |
-|   |                      | filter        | filter rows based on criteria                     |
-|   |                      | group_by      | create a tiblle table with group columns          |
-|   |                      | ungroup       | remvoe group columns                              |
-|   |                      | summarize     | specify the columns and functions to summarize    |
-|   |                      | summarize_at  | specify the columns to be summarized              |
-|   |                      | summarize_if  | conditionally choose the columns to be summarized |
-|   |                      | summarize_all | summarize all columns, be it numeric or not       |
+|   | Package              | Function      | Purpose                                             |
+|---|----------------------|---------------|-----------------------------------------------------|
+| 1 | Base R               | table         | Generate frequency table                            |
+|   |                      | ftable        | Generate flat table                                 |
+|   |                      | prop.table    | Generate probability table out from table or ftable |
+|   |                      | addmargins    | Add margin to table or ftable                       |
+|   |                      | tapply        | Produce aggregation with one level of grouping      |
+|   |                      | aggregate     |       |
+
+| 2 | dplyr                | select        | select the columns                                 |
+|   |                      | filter        | filter rows based on criteria                      |
+|   |                      | group_by      | create a tiblle table with group columns           |
+|   |                      | ungroup       | remvoe group columns                               |
+|   |                      | summarize     | specify the columns and functions to summarize     |
+|   |                      | summarize_at  | specify the columns to be summarized               |
+|   |                      | summarize_if  | conditionally choose the columns to be summarized  |
+|   |                      | summarize_all | summarize all columns, be it numeric or not        |
 |   |                      | count         | group and count the number of rows within each group |
 |   |                      | arrange       | in-group sorting of rows |
 |   |                      | slice         | in-group row selection   |
 |   |                      | mutate        | create a new column      |
+
 | 3 | tidyr                | gather        | Gather columns into rows |
 |   |                      | spread        | Reverse of gather()      |
 |   |                      | seperate      | Seperate one column into multiple columns |
@@ -200,14 +205,14 @@ This chapter explore multiple methods to group data columns and computes value w
 
 > **`tapply ( X, INDEX, FUN, na.rm = FALSE )`**  
 > $\quad$ ` X = value vector`  
-> $\quad$ ` INDEX = groups data, can be factor, number of string`  
-> $\quad$ ` FUN = function to apply to elements in X according to group specified in INDEX`  
+> $\quad$ ` INDEX = vector of groups data (can be factor, number or string)`  
+> $\quad$ ` FUN = function to apply on X, according to group specified in INDEX`  
 > $\quad$ ` na.rm = ignore <NA> values`  
 
-`tapply` will divide the vector (X) into groups (base on index INDEX), and perform computation (FUN) on each group.  
-
-If there are **`<NA>`** in the vector X, some FUN may fail to return value, such as mean, sum.  So it is essential to specify **`na.rm = TRUE`** in these cases.  
-Group identifier will be used as column name (accessible through **`names()`**).  
+- `X` and `INDEX` must have the same length  
+- `tapply` will divide the value vector (X) into groups (base on INDEX), and perform computation (FUN) on each group  
+- If there are **`<NA>`** in the vector X, some FUN may fail to return value, such as mean, sum.  So it is essential to specify **`na.rm = TRUE`** in these cases  
+- Group identifier will be used as column name (accessible through **`names()`**)  
 
 #### FUN That Returns Vector 
 
@@ -238,30 +243,30 @@ names( t2 )
 #### Basic Syntax (formula method) - data source is data.frame
 The **formula method** use **'data'** parameter and therefore apply for single data source only. The objective is simplicy and without flexibility to customize column names
 
-> **aggregate (data = df, formula, FUN = function)  **  
-Formula in the form: **value~categorical**   
+> **`aggregate (data = df, formula, FUN = function)  `**  
+> $\quad$ Formula in the form: **value~categorical**   
 
-> one value variable ~ one categorical variable
+#### One value variable ~ one categorical variable
 ```{r}
 aggregate (data = my.df, value1 ~ grp, FUN = length)
 ```
 
-> one value variable ~ multiple categorical variables
+#### One value variable ~ multiple categorical variables
 ```{r}
 aggregate (data = my.df, value1 ~ grp + dept, FUN = length)
 ```
 
-> multiple value variables ~ one categorical variable, **use cbind()**
+#### Multiple value variables ~ one categorical variable, use cbind()
 ```{r}
 aggregate (data = my.df, cbind(value1,value2) ~ grp, FUN = length)
 ```
 
-> multiple value variables ~ multiple categorical variable
+#### multiple value variables ~ multiple categorical variable
 ```{r}
 aggregate (data = my.df, cbind(value1,value2) ~ grp + dept, FUN = length)
 ```
 
-> **ALL** value variables ~ multiple categorical variable, **use dot notation**  
+#### ALL value variables ~ multiple categorical variable, use dot notation
 Change from FUN=length to sum results in **error** because sum() cannot be applied to non-numerical variable 'team'
 ```{r}
 aggregate (data = my.df, . ~ grp + dept, FUN = length)
@@ -292,7 +297,7 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 # aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above
 ```
 
-## dplyr::Grouping and Summarizing
+## dplyr
 
 ### Grouping
 - Gourping returns all rows, with **internal grouping structure**  
@@ -354,7 +359,7 @@ my.df %>%
 
 ### In-Group Summarization
 
-####S ummarize Specific Columns, Mix Functions
+#### Summarize Specific Columns, Mix Functions
 Many functions can be applied that returns a single value, to be assigned as new column.
 ```{r}
 d.df = my.df %>%

@@ -123,12 +123,12 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4.1" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#tapply"><i class="fa fa-check"></i><b>4.4.1</b> tapply</a></li>
 <li class="chapter" data-level="4.4.2" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.4.2</b> aggretate - base R</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html"><i class="fa fa-check"></i><b>4.5</b> dplyr::Grouping and Summarizing</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#grouping"><i class="fa fa-check"></i><b>4.5.1</b> Grouping</a></li>
-<li class="chapter" data-level="4.5.2" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#counting"><i class="fa fa-check"></i><b>4.5.2</b> Counting</a></li>
-<li class="chapter" data-level="4.5.3" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#in-group-row-numbering"><i class="fa fa-check"></i><b>4.5.3</b> In-Group Row Numbering</a></li>
-<li class="chapter" data-level="4.5.4" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#in-group-row-selection"><i class="fa fa-check"></i><b>4.5.4</b> In-Group Row Selection</a></li>
-<li class="chapter" data-level="4.5.5" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#in-group-summarization"><i class="fa fa-check"></i><b>4.5.5</b> In-Group Summarization</a></li>
+<li class="chapter" data-level="4.5" data-path="4-5-dplyr.html"><a href="4-5-dplyr.html"><i class="fa fa-check"></i><b>4.5</b> dplyr</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="4-5-dplyr.html"><a href="4-5-dplyr.html#grouping"><i class="fa fa-check"></i><b>4.5.1</b> Grouping</a></li>
+<li class="chapter" data-level="4.5.2" data-path="4-5-dplyr.html"><a href="4-5-dplyr.html#counting"><i class="fa fa-check"></i><b>4.5.2</b> Counting</a></li>
+<li class="chapter" data-level="4.5.3" data-path="4-5-dplyr.html"><a href="4-5-dplyr.html#in-group-row-numbering"><i class="fa fa-check"></i><b>4.5.3</b> In-Group Row Numbering</a></li>
+<li class="chapter" data-level="4.5.4" data-path="4-5-dplyr.html"><a href="4-5-dplyr.html#in-group-row-selection"><i class="fa fa-check"></i><b>4.5.4</b> In-Group Row Selection</a></li>
+<li class="chapter" data-level="4.5.5" data-path="4-5-dplyr.html"><a href="4-5-dplyr.html#in-group-summarization"><i class="fa fa-check"></i><b>4.5.5</b> In-Group Summarization</a></li>
 </ul></li>
 <li class="chapter" data-level="4.6" data-path="4-6-r-with-sql-emulation.html"><a href="4-6-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.6</b> R with SQL Emulation</a><ul>
 <li class="chapter" data-level="4.6.1" data-path="4-6-r-with-sql-emulation.html"><a href="4-6-r-with-sql-emulation.html#library-1"><i class="fa fa-check"></i><b>4.6.1</b> Library</a></li>
@@ -177,119 +177,57 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <tr class="odd">
 <td>1</td>
 <td>Base R</td>
-<td>as.factor</td>
-<td>Convert a vector to a new factor</td>
+<td>table</td>
+<td>Generate frequency table</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
-<td>droplevels</td>
-<td>Return a new factor with unused levels removed</td>
+<td>ftable</td>
+<td>Generate flat table</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
-<td>relevel</td>
-<td>Return a new factor with new reference level</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>dplyr</td>
-<td>select</td>
-<td>select the columns</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>filter</td>
-<td>filter rows based on criteria</td>
+<td>prop.table</td>
+<td>Generate probability table out from table or ftable</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
-<td>group_by</td>
-<td>create a tiblle table with group columns</td>
+<td>addmargins</td>
+<td>Add margin to table or ftable</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
-<td>ungroup</td>
-<td>remvoe group columns</td>
+<td>tapply</td>
+<td>Produce aggregation with one level of grouping</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
-<td>summarize</td>
-<td>specify the columns and functions to summarize</td>
-</tr>
-<tr class="odd">
+<td>aggregate</td>
 <td></td>
-<td></td>
-<td>summarize_at</td>
-<td>specify the columns to be summarized</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>summarize_if</td>
-<td>conditionally choose the columns to be summarized</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>summarize_all</td>
-<td>summarize all columns, be it numeric or not</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>count</td>
-<td>group and count the number of rows within each group</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>arrange</td>
-<td>in-group sorting of rows</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>slice</td>
-<td>in-group row selection</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>mutate</td>
-<td>create a new column</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>tidyr</td>
-<td>gather</td>
-<td>Gather columns into rows</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>spread</td>
-<td>Reverse of gather()</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>seperate</td>
-<td>Seperate one column into multiple columns</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>unite</td>
-<td>Reverse of seperate()</td>
 </tr>
 </tbody>
 </table>
+<div style="white-space: pre-line;">2 | dplyr | select | select the columns |
+  | | filter | filter rows based on criteria |
+  | | group_by | create a tiblle table with group columns |
+  | | ungroup | remvoe group columns |
+  | | summarize | specify the columns and functions to summarize |
+  | | summarize_at | specify the columns to be summarized |
+  | | summarize_if | conditionally choose the columns to be summarized |
+  | | summarize_all | summarize all columns, be it numeric or not |
+  | | count | group and count the number of rows within each group |
+  | | arrange | in-group sorting of rows |
+  | | slice | in-group row selection |
+  | | mutate | create a new column |</div>
+<div style="white-space: pre-line;">3 | tidyr | gather | Gather columns into rows |
+  | | spread | Reverse of gather() |
+  | | seperate | Seperate one column into multiple columns |
+  | | unite | Reverse of seperate() |</div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(tidyr)</code></pre></div>
 </div>

@@ -181,11 +181,17 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.4" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html"><i class="fa fa-check"></i><b>4.4</b> Data Aggregation</a><ul>
 <li class="chapter" data-level="4.4.1" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#tapply"><i class="fa fa-check"></i><b>4.4.1</b> tapply</a></li>
 <li class="chapter" data-level="4.4.2" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#aggretate---base-r"><i class="fa fa-check"></i><b>4.4.2</b> aggretate - base R</a></li>
-<li class="chapter" data-level="4.4.3" data-path="4-4-data-aggregation.html"><a href="4-4-data-aggregation.html#dplyrgrouping-and-summarizing"><i class="fa fa-check"></i><b>4.4.3</b> dplyr::Grouping and Summarizing</a></li>
 </ul></li>
-<li class="chapter" data-level="4.5" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.5</b> R with SQL Emulation</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html#library-3"><i class="fa fa-check"></i><b>4.5.1</b> Library</a></li>
-<li class="chapter" data-level="4.5.2" data-path="4-5-r-with-sql-emulation.html"><a href="4-5-r-with-sql-emulation.html#run-the-code"><i class="fa fa-check"></i><b>4.5.2</b> Run The Code</a></li>
+<li class="chapter" data-level="4.5" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html"><i class="fa fa-check"></i><b>4.5</b> dplyr::Grouping and Summarizing</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#grouping"><i class="fa fa-check"></i><b>4.5.1</b> Grouping</a></li>
+<li class="chapter" data-level="4.5.2" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#counting"><i class="fa fa-check"></i><b>4.5.2</b> Counting</a></li>
+<li class="chapter" data-level="4.5.3" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#in-group-row-numbering"><i class="fa fa-check"></i><b>4.5.3</b> In-Group Row Numbering</a></li>
+<li class="chapter" data-level="4.5.4" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#in-group-row-selection"><i class="fa fa-check"></i><b>4.5.4</b> In-Group Row Selection</a></li>
+<li class="chapter" data-level="4.5.5" data-path="4-5-dplyrgrouping-and-summarizing.html"><a href="4-5-dplyrgrouping-and-summarizing.html#in-group-summarization"><i class="fa fa-check"></i><b>4.5.5</b> In-Group Summarization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="4-6-r-with-sql-emulation.html"><a href="4-6-r-with-sql-emulation.html"><i class="fa fa-check"></i><b>4.6</b> R with SQL Emulation</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="4-6-r-with-sql-emulation.html"><a href="4-6-r-with-sql-emulation.html#library-3"><i class="fa fa-check"></i><b>4.6.1</b> Library</a></li>
+<li class="chapter" data-level="4.6.2" data-path="4-6-r-with-sql-emulation.html"><a href="4-6-r-with-sql-emulation.html#run-the-code"><i class="fa fa-check"></i><b>4.6.2</b> Run The Code</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="5-data-preprocessing.html"><a href="5-data-preprocessing.html"><i class="fa fa-check"></i><b>5</b> Data Preprocessing</a><ul>
@@ -506,99 +512,93 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <td>2</td>
 <td>dplyr</td>
 <td>select</td>
-<td></td>
+<td>select the columns</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
 <td>filter</td>
-<td></td>
+<td>filter rows based on criteria</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
-<td>groub_by</td>
-<td></td>
+<td>group_by</td>
+<td>create a tiblle table with group columns</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
 <td>ungroup</td>
-<td></td>
+<td>remvoe group columns</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
 <td>summarize</td>
-<td></td>
+<td>specify the columns and functions to summarize</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
 <td>summarize_at</td>
-<td></td>
+<td>specify the columns to be summarized</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
 <td>summarize_if</td>
-<td></td>
+<td>conditionally choose the columns to be summarized</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
 <td>summarize_all</td>
-<td></td>
+<td>summarize all columns, be it numeric or not</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
 <td>count</td>
-<td></td>
+<td>group and count the number of rows within each group</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
 <td>arrange</td>
-<td></td>
+<td>in-group sorting of rows</td>
 </tr>
 <tr class="even">
-<td></td>
-<td></td>
-<td>summarize_at</td>
-<td></td>
-</tr>
-<tr class="odd">
 <td></td>
 <td></td>
 <td>slice</td>
-<td></td>
+<td>in-group row selection</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td></td>
 <td>mutate</td>
-<td></td>
+<td>create a new column</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>3</td>
 <td>tidyr</td>
 <td>gather</td>
 <td>Gather columns into rows</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td></td>
 <td>spread</td>
 <td>Reverse of gather()</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td></td>
 <td>seperate</td>
 <td>Seperate one column into multiple columns</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td></td>
 <td></td>
 <td>unite</td>

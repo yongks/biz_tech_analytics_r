@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-22">
+<meta name="date" content="2017-08-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -267,9 +267,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#x-numeric"><i class="fa fa-check"></i><b>7.4.1</b> 2x Numeric</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1x-cat"><i class="fa fa-check"></i><b>7.4.2</b> 2xNum + 1x Cat</a></li>
-<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum + 1xCat</a></li>
-<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.4</b> Overlay Smooth Line</a></li>
-<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.5</b> Other Cosmetic</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.4</b> 2xNum, 1xNum + 1xCat</a></li>
+<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.5</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.6" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.6</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html"><i class="fa fa-check"></i><b>7.5</b> Line Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-data"><i class="fa fa-check"></i><b>7.5.1</b> 2x Numeric Data</a></li>
@@ -796,7 +797,7 @@ Notice that the graph has the below characteristics:</p>
 <li>All leaf nodes adds up to 100% probability</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prp</span>(fit.dtree1, <span class="dt">type =</span> <span class="dv">2</span>, <span class="dt">extra =</span> <span class="dv">104</span>, <span class="dt">fallen.leaves =</span> <span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Decision Tree&quot;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-297-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-304-1.png" width="864" /></p>
 </div>
 <div id="cross-validation-analysis" class="section level4">
 <h4><span class="header-section-number">11.5.6.5</span> Cross Validation Analysis</h4>
@@ -840,7 +841,7 @@ Notice that the graph has the below characteristics:</p>
 <li>Optimum tree size for pruning is <strong>below the horizontal line</strong>, use this chart to determine the <strong>optimum tree size, and its cp value</strong>, prune with this cp value</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree1)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-299-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-306-1.png" width="864" /></p>
 </div>
 <div id="pruning-tree-1" class="section level4">
 <h4><span class="header-section-number">11.5.6.6</span> Pruning Tree</h4>
@@ -890,7 +891,7 @@ Notice that the graph has the below characteristics:</p>
 ## 7 0.0072359      9   0.12518 0.13025 0.0096034
 ## 8 0.0050000     11   0.11071 0.12518 0.0094188</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plotcp</span>(fit.dtree.prune)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-300-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-307-1.png" width="864" /></p>
 </div>
 <div id="prediction-3" class="section level4">
 <h4><span class="header-section-number">11.5.6.7</span> Prediction</h4>

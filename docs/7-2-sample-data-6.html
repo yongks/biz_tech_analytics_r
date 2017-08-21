@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-22">
+<meta name="date" content="2017-08-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -267,9 +267,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#x-numeric"><i class="fa fa-check"></i><b>7.4.1</b> 2x Numeric</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1x-cat"><i class="fa fa-check"></i><b>7.4.2</b> 2xNum + 1x Cat</a></li>
-<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum + 1xCat</a></li>
-<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.4</b> Overlay Smooth Line</a></li>
-<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.5</b> Other Cosmetic</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.4</b> 2xNum, 1xNum + 1xCat</a></li>
+<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.5</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.6" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.6</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html"><i class="fa fa-check"></i><b>7.5</b> Line Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-data"><i class="fa fa-check"></i><b>7.5.1</b> 2x Numeric Data</a></li>
@@ -489,17 +490,17 @@ my.df =<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">grp  =</span> <span class="kw">paste</span>(<span class="st">&#39;G&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),
   <span class="dt">value1 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">50</span>, <span class="dt">sd =</span> <span class="dv">5</span>),
   <span class="dt">value2 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">20</span>, <span class="dt">sd =</span> <span class="dv">3</span>),
-  <span class="dt">value3 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span><span class="dv">10</span>),
+  <span class="dt">value3 =</span> <span class="kw">rnorm</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span><span class="dv">30</span>),
   <span class="dt">stringsAsFactors =</span> F
 )
 <span class="kw">head</span>(my.df)</code></pre></div>
-<pre><code>##   dept grp   value1   value2     value3
-## 1   D1  G1 52.07262 21.45568 -0.7995699
-## 2   D4  G2 47.62641 22.09031 -4.5327870
-## 3   D4  G1 50.32997 20.55654  3.2057141
-## 4   D4  G1 47.48761 22.10220 15.0980821
-## 5   D5  G1 45.87001 20.93504  5.2362661
-## 6   D4  G1 50.83495 22.28139 -1.4902822</code></pre>
+<pre><code>##   dept grp   value1   value2      value3
+## 1   D1  G1 52.07262 21.45568 -12.3987097
+## 2   D4  G2 47.62641 22.09031 -23.5983611
+## 3   D4  G1 50.32997 20.55654  -0.3828576
+## 4   D4  G1 47.48761 22.10220  35.2942464
+## 5   D5  G1 45.87001 20.93504   5.7087984
+## 6   D4  G1 50.83495 22.28139 -14.4708466</code></pre>
 </div>
             </section>
 

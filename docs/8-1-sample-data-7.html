@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-22">
+<meta name="date" content="2017-08-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -267,9 +267,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#x-numeric"><i class="fa fa-check"></i><b>7.4.1</b> 2x Numeric</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1x-cat"><i class="fa fa-check"></i><b>7.4.2</b> 2xNum + 1x Cat</a></li>
-<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum + 1xCat</a></li>
-<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.4</b> Overlay Smooth Line</a></li>
-<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.5</b> Other Cosmetic</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.4</b> 2xNum, 1xNum + 1xCat</a></li>
+<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.5</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.6" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.6</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html"><i class="fa fa-check"></i><b>7.5</b> Line Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-data"><i class="fa fa-check"></i><b>7.5.1</b> 2x Numeric Data</a></li>
@@ -512,13 +513,20 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ## [1] &quot;Population&quot; &quot;Income&quot;     &quot;Illiteracy&quot; &quot;Life Exp&quot;   &quot;Murder&quot;    
 ## [6] &quot;HS Grad&quot;    &quot;Frost&quot;      &quot;Area&quot;      
 ## 
-##            Population Income Illiteracy Life Exp Murder HS Grad Frost   Area
-## Alabama          3615   3624        2.1    69.05   15.1    41.3    20  50708
-## Alaska            365   6315        1.5    69.31   11.3    66.7   152 566432
-## Arizona          2212   4530        1.8    70.55    7.8    58.1    15 113417
-## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65  51945
-## California      21198   5114        1.1    71.71   10.3    62.6    20 156361
-## Colorado         2541   4884        0.7    72.06    6.8    63.9   166 103766</code></pre>
+##            Population Income Illiteracy Life Exp Murder HS Grad Frost
+## Alabama          3615   3624        2.1    69.05   15.1    41.3    20
+## Alaska            365   6315        1.5    69.31   11.3    66.7   152
+## Arizona          2212   4530        1.8    70.55    7.8    58.1    15
+## Arkansas         2110   3378        1.9    70.66   10.1    39.9    65
+## California      21198   5114        1.1    71.71   10.3    62.6    20
+## Colorado         2541   4884        0.7    72.06    6.8    63.9   166
+##              Area
+## Alabama     50708
+## Alaska     566432
+## Arizona    113417
+## Arkansas    51945
+## California 156361
+## Colorado   103766</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
 my.df =<span class="st"> </span><span class="kw">data.frame</span>(
   <span class="dt">dept =</span> <span class="kw">paste</span>(<span class="st">&#39;D&#39;</span>,<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">100</span>, <span class="dt">replace =</span> T),<span class="dt">sep=</span><span class="st">&#39;&#39;</span>),

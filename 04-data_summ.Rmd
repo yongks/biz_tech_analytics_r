@@ -6,11 +6,33 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 
 # Data Summarization
 
-
 ## Library
+
+|   | Package              | Function      | Purpose                                           |
+|---|----------------------|---------------|---------------------------------------------------|
+| 1 | Base R               | as.factor     | Convert a vector to a new factor                  |
+|   |                      | droplevels    | Return a new factor with unused levels removed    |
+|   |                      | relevel       | Return a new factor with new reference level      |
+| 2 | dplyr                | select        | select the columns                                |
+|   |                      | filter        | filter rows based on criteria                     |
+|   |                      | group_by      | create a tiblle table with group columns          |
+|   |                      | ungroup       | remvoe group columns                              |
+|   |                      | summarize     | specify the columns and functions to summarize    |
+|   |                      | summarize_at  | specify the columns to be summarized              |
+|   |                      | summarize_if  | conditionally choose the columns to be summarized |
+|   |                      | summarize_all | summarize all columns, be it numeric or not       |
+|   |                      | count         | group and count the number of rows within each group |
+|   |                      | arrange       | in-group sorting of rows |
+|   |                      | slice         | in-group row selection   |
+|   |                      | mutate        | create a new column      |
+| 3 | tidyr                | gather        | Gather columns into rows |
+|   |                      | spread        | Reverse of gather()      |
+|   |                      | seperate      | Seperate one column into multiple columns |
+|   |                      | unite         | Reverse of seperate()    |
 
 ```{r}
 library(dplyr)
+library(tidyr)
 ```
 
 ## Sample Data
@@ -170,16 +192,17 @@ This chapter explore multiple methods to group data columns and computes value w
 
 1. tapply
 2. aggregate (10x slower than apply)
+3. dplyr and tidyr, a much intuitive tools
 
 ### tapply
 
 `tapply` is quick and fast way to produce aggregation with **ONE level of grouping**.   
 
 > **`tapply ( X, INDEX, FUN, na.rm = FALSE )`**  
-> \$quad$ ` X = value vector`  
-> \$quad$ ` INDEX = groups data, can be factor, number of string`  
-> \$quad$ ` FUN = function to apply to elements in X according to group specified in INDEX`  
-> \$quad$ ` na.rm = ignore <NA> values`  
+> $\quad$ ` X = value vector`  
+> $\quad$ ` INDEX = groups data, can be factor, number of string`  
+> $\quad$ ` FUN = function to apply to elements in X according to group specified in INDEX`  
+> $\quad$ ` na.rm = ignore <NA> values`  
 
 `tapply` will divide the vector (X) into groups (base on index INDEX), and perform computation (FUN) on each group.  
 
@@ -269,9 +292,9 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 # aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above
 ```
 
-### dplyr::Grouping and Summarizing
+## dplyr::Grouping and Summarizing
 
-#### Grouping
+### Grouping
 - Gourping returns all rows, with **internal grouping structure**  
 - Display of tibble rows **truncates automatically** if too many rows. Use `print(tbl_df(my.tbl), n=40)` to display more rows (quite troublesome, but look at all the other benefits)  
 - The internal grouping structure can be used for many types of summarization (discussed below)  
@@ -284,12 +307,13 @@ d.df = my.df %>%
 
 print(tbl_df(d.df),n=18)
 ```
-Verify the number of group levels in `attr(*, "vars")`
+Verify group levels in `attr(*, "vars")`
 ```{r}
-str(d.df)
+attr(d.df, 'vars')
 ```
-#### Counting
-Group and provide additional column n, which counts the number of rows within the group.  
+
+### Counting
+**`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group.  
 ```{r}
 d.df = my.df %>%
   count(com, dept, prd)
@@ -301,13 +325,14 @@ d.df
 #   group_by(com, dept, prd) %>%
 #   summarize(count = n())
 ```
-Counting reduce grouping by one level.  
-```{r}
-### result in grouping of (com, dept), 'prd' removed
-str(d.df)
+Similar to **`summarize`**, counting reduce grouping level by one.  
+```{r, collapse=T}
+### count() reduce group level by one, 'prd' is removed from grouping
+attr(d.df, 'vars')
+
 ```
 
-#### In-Group Row Numbering
+### In-Group Row Numbering
 - Summarize reduce group level by one, hence n() will return the rows within the new group.  
 - Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.  
 ```{r}
@@ -319,7 +344,7 @@ d.df = my.df %>%
 d.df
 ```
 
-#### In-Group Row Selection
+### In-Group Row Selection
 Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group.  
 ```{r}
 my.df %>%
@@ -327,24 +352,73 @@ my.df %>%
   slice(which.max(n))
 ```
 
-#### In-Group Summarization
+### In-Group Summarization
+
+####S ummarize Specific Columns, Mix Functions
 Many functions can be applied that returns a single value, to be assigned as new column.
 ```{r}
 d.df = my.df %>%
   group_by(com, dept, prd) %>%
   summarise( avg_value1 = mean(value1),
-             min_value1 = min(value1),
-             max_value1 = max(value1),
+             min_value2 = min(value2),
+             max_value3 = max(value3),
              n.team = n_distinct(team),
              count = n())
 
 d.df
 ```
-Summarize **reduce the grouping level by one**.  
+
+#### Summarize Specific Columns, with Single Function  
 ```{r}
-### result in grouping of (com, dept), 'prd' removed
-str(d.df)
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_at(c('value2', 'value3'), mean)
 ```
+
+#### Summarize All Columns, with Single Function  
+Notice that each column whin the group will be summarized with one more functions. This includes columns which are NOT numeric, resulting warnings and NA.  
+```{r, warning=F}
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_all(mean)
+```
+
+#### Summarize Specified Columns, with Single Function
+```{r}
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_at(c('value2','value3'),mean)
+```
+
+#### Summarize Series of Columns, with Single Function
+Use **`vars()`** to select the sequence of variable names in colon **`:`**  
+```{r}
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_at(vars(value1:value3),mean)
+```
+
+#### Summarize Numeric Columns, with Single Function
+```{r}
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_if(is.numeric,mean)
+```
+
+#### Summarize with Multiple Functions
+Any of the above summarize can combine with  **`funs()`** to specify multiple functions.  
+```{r}
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_if(is.numeric, funs(mean,sd))
+```
+
+#### Summarize Reduce The Grouping Level by One
+```{r}
+### result in grouping of (com, dept), 'prd' has been removed from grouping
+attr(d.df, 'vars')
+```
+
 
 ## R with SQL Emulation
 

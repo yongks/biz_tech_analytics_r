@@ -25,7 +25,7 @@
 <meta name="author" content="Yong Keh Soon">
 
 
-<meta name="date" content="2017-07-22">
+<meta name="date" content="2017-08-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -267,9 +267,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="7.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html"><i class="fa fa-check"></i><b>7.4</b> Scatter Plot</a><ul>
 <li class="chapter" data-level="7.4.1" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#x-numeric"><i class="fa fa-check"></i><b>7.4.1</b> 2x Numeric</a></li>
 <li class="chapter" data-level="7.4.2" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1x-cat"><i class="fa fa-check"></i><b>7.4.2</b> 2xNum + 1x Cat</a></li>
-<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum + 1xCat</a></li>
-<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.4</b> Overlay Smooth Line</a></li>
-<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.5</b> Other Cosmetic</a></li>
+<li class="chapter" data-level="7.4.3" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum"><i class="fa fa-check"></i><b>7.4.3</b> 2xNum, 1xNum</a></li>
+<li class="chapter" data-level="7.4.4" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#xnum-1xnum-1xcat"><i class="fa fa-check"></i><b>7.4.4</b> 2xNum, 1xNum + 1xCat</a></li>
+<li class="chapter" data-level="7.4.5" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#overlay-smooth-line"><i class="fa fa-check"></i><b>7.4.5</b> Overlay Smooth Line</a></li>
+<li class="chapter" data-level="7.4.6" data-path="7-4-scatter-plot.html"><a href="7-4-scatter-plot.html#other-cosmetic"><i class="fa fa-check"></i><b>7.4.6</b> Other Cosmetic</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html"><i class="fa fa-check"></i><b>7.5</b> Line Chart</a><ul>
 <li class="chapter" data-level="7.5.1" data-path="7-5-line-chart.html"><a href="7-5-line-chart.html#x-numeric-data"><i class="fa fa-check"></i><b>7.5.1</b> 2x Numeric Data</a></li>
@@ -473,7 +474,140 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="library-2" class="section level2">
 <h2><span class="header-section-number">4.1</span> Library</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Package</th>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Base R</td>
+<td>as.factor</td>
+<td>Convert a vector to a new factor</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>droplevels</td>
+<td>Return a new factor with unused levels removed</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>relevel</td>
+<td>Return a new factor with new reference level</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>dplyr</td>
+<td>select</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>filter</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>groub_by</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>ungroup</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>summarize</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>summarize_at</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>summarize_if</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>summarize_all</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>count</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>arrange</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>summarize_at</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>slice</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>mutate</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>tidyr</td>
+<td>gather</td>
+<td>Gather columns into rows</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>spread</td>
+<td>Reverse of gather()</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>seperate</td>
+<td>Seperate one column into multiple columns</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>unite</td>
+<td>Reverse of seperate()</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)</code></pre></div>
 </div>
             </section>
 

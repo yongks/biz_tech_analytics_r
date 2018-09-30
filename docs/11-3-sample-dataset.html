@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -542,13 +544,20 @@ test  =<span class="st"> </span>raw[<span class="op">-</span>train.rows,]</code>
 <h3><span class="header-section-number">11.3.2</span> Explore The Data</h3>
 <p>Check the <strong>structure and samples</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(raw)</code></pre></div>
-<pre><code>##        S               LPE               NP             ANH             TIC           Newborn       left     
-##  Min.   :0.0900   Min.   :0.3600   Min.   :2.000   Min.   : 96.0   Min.   :2.000   Min.   :0.0000   0:10000  
-##  1st Qu.:0.4800   1st Qu.:0.5700   1st Qu.:3.000   1st Qu.:157.0   1st Qu.:2.000   1st Qu.:0.0000   1: 2000  
-##  Median :0.6600   Median :0.7200   Median :4.000   Median :199.5   Median :3.000   Median :0.0000            
-##  Mean   :0.6295   Mean   :0.7166   Mean   :3.802   Mean   :200.4   Mean   :3.229   Mean   :0.1542            
-##  3rd Qu.:0.8200   3rd Qu.:0.8600   3rd Qu.:5.000   3rd Qu.:243.0   3rd Qu.:4.000   3rd Qu.:0.0000            
-##  Max.   :1.0000   Max.   :1.0000   Max.   :7.000   Max.   :310.0   Max.   :6.000   Max.   :1.0000</code></pre>
+<pre><code>##        S               LPE               NP             ANH             TIC           Newborn      
+##  Min.   :0.0900   Min.   :0.3600   Min.   :2.000   Min.   : 96.0   Min.   :2.000   Min.   :0.0000  
+##  1st Qu.:0.4800   1st Qu.:0.5700   1st Qu.:3.000   1st Qu.:157.0   1st Qu.:2.000   1st Qu.:0.0000  
+##  Median :0.6600   Median :0.7200   Median :4.000   Median :199.5   Median :3.000   Median :0.0000  
+##  Mean   :0.6295   Mean   :0.7166   Mean   :3.802   Mean   :200.4   Mean   :3.229   Mean   :0.1542  
+##  3rd Qu.:0.8200   3rd Qu.:0.8600   3rd Qu.:5.000   3rd Qu.:243.0   3rd Qu.:4.000   3rd Qu.:0.0000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :7.000   Max.   :310.0   Max.   :6.000   Max.   :1.0000  
+##  left     
+##  0:10000  
+##  1: 2000  
+##           
+##           
+##           
+## </code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(raw)</code></pre></div>
 <pre><code>##      S  LPE NP ANH TIC Newborn left
 ## 1 0.38 0.53  2 157   3       0    1
@@ -559,7 +568,7 @@ test  =<span class="st"> </span>raw[<span class="op">-</span>train.rows,]</code>
 ## 6 0.41 0.50  2 153   3       0    1</code></pre>
 <p>Check any <strong>class bias</strong> (skewness)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">table</span>(raw<span class="op">$</span>left), <span class="dt">ylab=</span><span class="st">&#39;left&#39;</span>, <span class="dt">xlab=</span><span class="st">&#39;1=Yes, 0=No&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-472-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-513-1.png" width="864" /></p>
 <p>Calculate the <strong>Accuracy baseline</strong> - that is, probability of True(1) or False(0). Use whichever is higher.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>( <span class="kw">table</span>(raw<span class="op">$</span>left) )</code></pre></div>
 <pre><code>## 

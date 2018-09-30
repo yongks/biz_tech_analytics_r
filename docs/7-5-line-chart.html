@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -497,7 +499,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h4><span class="header-section-number">7.5.1.1</span> ggplot</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-384-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-425-1.png" width="256.6656" /></p>
 </div>
 </div>
 <div id="x-numeric-1x-categorical" class="section level3">
@@ -510,7 +512,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span><span class="dv">1</span>))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-385-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-385-2.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-426-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-426-2.png" width="256.6656" /></p>
 </div>
 <div id="x-numeric-2x-categorical" class="section level3">
 <h3><span class="header-section-number">7.5.3</span> 1x Numeric, 2x Categorical</h3>
@@ -522,7 +524,7 @@ my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span>dept, <span class="dt">y=</span>dept)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>grp,<span class="dt">col=</span>grp))</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-386-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-427-1.png" width="256.6656" /></p>
 </div>
 <div id="x-numeric-1x-categorical-1" class="section level3">
 <h3><span class="header-section-number">7.5.4</span> 2x Numeric, 1x Categorical</h3>
@@ -536,7 +538,7 @@ my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>grp, <span class="dt">color=</span>grp), <span class="dt">size=</span><span class="dv">4</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-387-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-428-1.png" width="256.6656" /></p>
 </div>
 <div id="x-numeric-2x-categorical-1" class="section level3">
 <h3><span class="header-section-number">7.5.5</span> 2x Numeric, 2x Categorical</h3>
@@ -544,7 +546,7 @@ my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,] <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">ggplot</span> (<span class="kw">aes</span>(<span class="dt">x=</span>value1, <span class="dt">y=</span>value2)) <span class="op">+</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>grp, <span class="dt">color=</span>dept), <span class="dt">size=</span><span class="dv">4</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-388-1.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-429-1.png" width="256.6656" /></p>
 </div>
 </div>
             </section>

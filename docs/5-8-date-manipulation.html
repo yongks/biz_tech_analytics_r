@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -528,10 +530,10 @@ my.df<span class="op">$</span>date_first =<span class="st"> </span><span class="
 ##  $ gender     : chr  &quot;Male&quot; &quot;Female&quot; &quot;Female&quot; &quot;Male&quot; ...
 ##  $ weight     : num  35 37.1 43.1 38.1 54.1 ...
 ##  $ height     : int  173 164 178 182 159 166 153 159 166 163
-##  $ date_birth : Date, format: &quot;1973-07-01&quot; &quot;1980-02-28&quot; &quot;1978-12-31&quot; &quot;1997-01-12&quot; ...
+##  $ date_birth : Date, format: &quot;1973-07-01&quot; &quot;1980-02-28&quot; &quot;1978-12-31&quot; ...
 ##  $ amount     : int  100 121 152 133 143 155 117 143 155 117
-##  $ date_last  : Date, format: &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; ...
-##  $ date_first : Date, format: NA NA NA NA ...
+##  $ date_last  : Date, format: &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; ...
+##  $ date_first : Date, format: NA NA NA ...
 ##  $ birth_month: num  7 2 12 1 1 7 8 1 7 8
 ##  $ birth_year : num  1 28 31 12 2 26 21 2 13 24
 ##  - attr(*, &quot;na.action&quot;)= &#39;omit&#39; Named int  11 12 13
@@ -564,8 +566,8 @@ lubridate<span class="op">::</span><span class="kw">day</span>(d1)</code></pre><
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
 my.df<span class="op">$</span>date_first
 my.df<span class="op">$</span>date_last <span class="op">-</span><span class="st"> </span>my.df<span class="op">$</span>date_first</code></pre></div>
-<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;
+<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;
 ##  [1] NA NA NA NA NA NA NA NA NA NA
 ## Time differences in days
 ##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
@@ -586,8 +588,8 @@ my.df<span class="op">$</span>date_last <span class="op">-</span><span class="st
 my.df<span class="op">$</span>date_last
 <span class="kw">interval</span>( my.df<span class="op">$</span>date_first, my.df<span class="op">$</span>date_last ) <span class="op">%/%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>) </code></pre></div>
 <pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA
-##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;
+##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;
 ##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
 </div>
 <div id="years-difference" class="section level4">
@@ -605,8 +607,8 @@ my.df<span class="op">$</span>date_last
 my.df<span class="op">$</span>date_last
 <span class="kw">interval</span>( my.df<span class="op">$</span>date_first, my.df<span class="op">$</span>date_last ) <span class="op">%/%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>) </code></pre></div>
 <pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA
-##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;
+##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;
 ##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
 </div>
 </div>
@@ -618,8 +620,8 @@ However, adding months and years is tricky, because certain months are shorter. 
 <h4><span class="header-section-number">5.8.4.1</span> Days Later</h4>
 <p><strong>Adding days</strong> is as simple as <strong>add number of days</strong> to the date variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last</code></pre></div>
-<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;</code></pre>
+<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;</code></pre>
 </div>
 <div id="months-later" class="section level4">
 <h4><span class="header-section-number">5.8.4.2</span> Months Later</h4>
@@ -627,12 +629,12 @@ However, adding months and years is tricky, because certain months are shorter. 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
 my.df<span class="op">$</span>date_last   <span class="op">+</span><span class="st">  </span><span class="kw">months</span>(<span class="dv">1</span>)   <span class="co"># 1 month later, bad solution, can result in &lt;NA&gt;</span>
 my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class="st"> </span><span class="kw">months</span>(<span class="dv">1</span>)   <span class="co"># 1 month later, good solution</span></code></pre></div>
-<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;
-##  [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; NA           &quot;2016-12-01&quot; &quot;2016-10-30&quot; &quot;2015-12-27&quot; NA           &quot;2016-10-30&quot; &quot;2017-12-01&quot;
-## [10] &quot;2016-04-12&quot;
-##  [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; &quot;2015-11-30&quot; &quot;2016-12-01&quot; &quot;2016-10-30&quot; &quot;2015-12-27&quot; &quot;2017-04-30&quot; &quot;2016-10-30&quot; &quot;2017-12-01&quot;
-## [10] &quot;2016-04-12&quot;</code></pre>
+<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;
+##  [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; NA           &quot;2016-12-01&quot; &quot;2016-10-30&quot; &quot;2015-12-27&quot; NA           &quot;2016-10-30&quot;
+##  [9] &quot;2017-12-01&quot; &quot;2016-04-12&quot;
+##  [1] &quot;2016-03-29&quot; &quot;2017-05-01&quot; &quot;2015-11-30&quot; &quot;2016-12-01&quot; &quot;2016-10-30&quot; &quot;2015-12-27&quot; &quot;2017-04-30&quot; &quot;2016-10-30&quot;
+##  [9] &quot;2017-12-01&quot; &quot;2016-04-12&quot;</code></pre>
 </div>
 <div id="years-later" class="section level4">
 <h4><span class="header-section-number">5.8.4.3</span> Years Later</h4>
@@ -640,12 +642,12 @@ my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
 my.df<span class="op">$</span>date_last   <span class="op">+</span><span class="st">  </span><span class="kw">years</span>(<span class="dv">1</span>)   <span class="co"># 1 year later, bad solution</span>
 my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>)   <span class="co"># 1 year later, good solution</span></code></pre></div>
-<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;
-##  [1] NA           &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot; &quot;2016-11-27&quot; &quot;2018-03-31&quot; &quot;2017-09-30&quot; &quot;2018-11-01&quot;
-## [10] &quot;2017-03-12&quot;
-##  [1] &quot;2017-02-28&quot; &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot; &quot;2016-11-27&quot; &quot;2018-03-31&quot; &quot;2017-09-30&quot; &quot;2018-11-01&quot;
-## [10] &quot;2017-03-12&quot;</code></pre>
+<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;
+##  [1] NA           &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot; &quot;2016-11-27&quot; &quot;2018-03-31&quot; &quot;2017-09-30&quot;
+##  [9] &quot;2018-11-01&quot; &quot;2017-03-12&quot;
+##  [1] &quot;2017-02-28&quot; &quot;2018-04-01&quot; &quot;2016-10-31&quot; &quot;2017-11-01&quot; &quot;2017-09-30&quot; &quot;2016-11-27&quot; &quot;2018-03-31&quot; &quot;2017-09-30&quot;
+##  [9] &quot;2018-11-01&quot; &quot;2017-03-12&quot;</code></pre>
 </div>
 </div>
 <div id="last-day-of-month" class="section level3">
@@ -654,14 +656,14 @@ my.df<span class="op">$</span>date_last <span class="op">%m+%</span><span class=
 <p>When rounding up a date to the **next nearest month*, it results the <strong>first day of next month</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df<span class="op">$</span>date_last
 <span class="kw">ceiling_date</span>(my.df<span class="op">$</span>date_last, <span class="st">&quot;month&quot;</span>)</code></pre></div>
-<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-01&quot;
-## [10] &quot;2016-03-12&quot;
-##  [1] &quot;2016-03-01&quot; &quot;2017-05-01&quot; &quot;2015-11-01&quot; &quot;2016-12-01&quot; &quot;2016-10-01&quot; &quot;2015-12-01&quot; &quot;2017-04-01&quot; &quot;2016-10-01&quot; &quot;2017-12-01&quot;
-## [10] &quot;2016-04-01&quot;</code></pre>
+<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-01&quot; &quot;2015-10-31&quot; &quot;2016-11-01&quot; &quot;2016-09-30&quot; &quot;2015-11-27&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-01&quot; &quot;2016-03-12&quot;
+##  [1] &quot;2016-03-01&quot; &quot;2017-05-01&quot; &quot;2015-11-01&quot; &quot;2016-12-01&quot; &quot;2016-10-01&quot; &quot;2015-12-01&quot; &quot;2017-04-01&quot; &quot;2016-10-01&quot;
+##  [9] &quot;2017-12-01&quot; &quot;2016-04-01&quot;</code></pre>
 <p><strong>Substracting this date by one</strong> will return last day of the month.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ceiling_date</span>(my.df<span class="op">$</span>date_last, <span class="st">&quot;month&quot;</span>) <span class="op">-</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">1</span>)</code></pre></div>
-<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-30&quot; &quot;2015-10-31&quot; &quot;2016-11-30&quot; &quot;2016-09-30&quot; &quot;2015-11-30&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot; &quot;2017-11-30&quot;
-## [10] &quot;2016-03-31&quot;</code></pre>
+<pre><code>##  [1] &quot;2016-02-29&quot; &quot;2017-04-30&quot; &quot;2015-10-31&quot; &quot;2016-11-30&quot; &quot;2016-09-30&quot; &quot;2015-11-30&quot; &quot;2017-03-31&quot; &quot;2016-09-30&quot;
+##  [9] &quot;2017-11-30&quot; &quot;2016-03-31&quot;</code></pre>
 </div>
 </div>
             </section>

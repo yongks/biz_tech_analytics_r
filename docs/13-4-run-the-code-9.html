@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -523,7 +525,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 ##   ..$ content: chr &quot;I have to say, Apple has by far the best customer care service I have ever received! @Apple @AppStore&quot;
 ##   ..$ meta   :List of 7
 ##   .. ..$ author       : chr(0) 
-##   .. ..$ datetimestamp: POSIXlt[1:1], format: &quot;2018-09-30 06:07:35&quot;
+##   .. ..$ datetimestamp: POSIXlt[1:1], format: &quot;2018-09-30 15:20:20&quot;
 ##   .. ..$ description  : chr(0) 
 ##   .. ..$ heading      : chr(0) 
 ##   .. ..$ id           : chr &quot;1&quot;
@@ -581,26 +583,28 @@ corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></
 <h4><span class="header-section-number">13.4.2.3</span> Remove Stopwords</h4>
 <p><strong><code>tm::stopwords contain 174</code></strong> pre-defined stop words. Default is english.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stopwords</span>()</code></pre></div>
-<pre><code>##   [1] &quot;i&quot;          &quot;me&quot;         &quot;my&quot;         &quot;myself&quot;     &quot;we&quot;         &quot;our&quot;        &quot;ours&quot;       &quot;ourselves&quot;  &quot;you&quot;       
-##  [10] &quot;your&quot;       &quot;yours&quot;      &quot;yourself&quot;   &quot;yourselves&quot; &quot;he&quot;         &quot;him&quot;        &quot;his&quot;        &quot;himself&quot;    &quot;she&quot;       
-##  [19] &quot;her&quot;        &quot;hers&quot;       &quot;herself&quot;    &quot;it&quot;         &quot;its&quot;        &quot;itself&quot;     &quot;they&quot;       &quot;them&quot;       &quot;their&quot;     
-##  [28] &quot;theirs&quot;     &quot;themselves&quot; &quot;what&quot;       &quot;which&quot;      &quot;who&quot;        &quot;whom&quot;       &quot;this&quot;       &quot;that&quot;       &quot;these&quot;     
-##  [37] &quot;those&quot;      &quot;am&quot;         &quot;is&quot;         &quot;are&quot;        &quot;was&quot;        &quot;were&quot;       &quot;be&quot;         &quot;been&quot;       &quot;being&quot;     
-##  [46] &quot;have&quot;       &quot;has&quot;        &quot;had&quot;        &quot;having&quot;     &quot;do&quot;         &quot;does&quot;       &quot;did&quot;        &quot;doing&quot;      &quot;would&quot;     
-##  [55] &quot;should&quot;     &quot;could&quot;      &quot;ought&quot;      &quot;i&#39;m&quot;        &quot;you&#39;re&quot;     &quot;he&#39;s&quot;       &quot;she&#39;s&quot;      &quot;it&#39;s&quot;       &quot;we&#39;re&quot;     
-##  [64] &quot;they&#39;re&quot;    &quot;i&#39;ve&quot;       &quot;you&#39;ve&quot;     &quot;we&#39;ve&quot;      &quot;they&#39;ve&quot;    &quot;i&#39;d&quot;        &quot;you&#39;d&quot;      &quot;he&#39;d&quot;       &quot;she&#39;d&quot;     
-##  [73] &quot;we&#39;d&quot;       &quot;they&#39;d&quot;     &quot;i&#39;ll&quot;       &quot;you&#39;ll&quot;     &quot;he&#39;ll&quot;      &quot;she&#39;ll&quot;     &quot;we&#39;ll&quot;      &quot;they&#39;ll&quot;    &quot;isn&#39;t&quot;     
-##  [82] &quot;aren&#39;t&quot;     &quot;wasn&#39;t&quot;     &quot;weren&#39;t&quot;    &quot;hasn&#39;t&quot;     &quot;haven&#39;t&quot;    &quot;hadn&#39;t&quot;     &quot;doesn&#39;t&quot;    &quot;don&#39;t&quot;      &quot;didn&#39;t&quot;    
-##  [91] &quot;won&#39;t&quot;      &quot;wouldn&#39;t&quot;   &quot;shan&#39;t&quot;     &quot;shouldn&#39;t&quot;  &quot;can&#39;t&quot;      &quot;cannot&quot;     &quot;couldn&#39;t&quot;   &quot;mustn&#39;t&quot;    &quot;let&#39;s&quot;     
-## [100] &quot;that&#39;s&quot;     &quot;who&#39;s&quot;      &quot;what&#39;s&quot;     &quot;here&#39;s&quot;     &quot;there&#39;s&quot;    &quot;when&#39;s&quot;     &quot;where&#39;s&quot;    &quot;why&#39;s&quot;      &quot;how&#39;s&quot;     
-## [109] &quot;a&quot;          &quot;an&quot;         &quot;the&quot;        &quot;and&quot;        &quot;but&quot;        &quot;if&quot;         &quot;or&quot;         &quot;because&quot;    &quot;as&quot;        
-## [118] &quot;until&quot;      &quot;while&quot;      &quot;of&quot;         &quot;at&quot;         &quot;by&quot;         &quot;for&quot;        &quot;with&quot;       &quot;about&quot;      &quot;against&quot;   
-## [127] &quot;between&quot;    &quot;into&quot;       &quot;through&quot;    &quot;during&quot;     &quot;before&quot;     &quot;after&quot;      &quot;above&quot;      &quot;below&quot;      &quot;to&quot;        
-## [136] &quot;from&quot;       &quot;up&quot;         &quot;down&quot;       &quot;in&quot;         &quot;out&quot;        &quot;on&quot;         &quot;off&quot;        &quot;over&quot;       &quot;under&quot;     
-## [145] &quot;again&quot;      &quot;further&quot;    &quot;then&quot;       &quot;once&quot;       &quot;here&quot;       &quot;there&quot;      &quot;when&quot;       &quot;where&quot;      &quot;why&quot;       
-## [154] &quot;how&quot;        &quot;all&quot;        &quot;any&quot;        &quot;both&quot;       &quot;each&quot;       &quot;few&quot;        &quot;more&quot;       &quot;most&quot;       &quot;other&quot;     
-## [163] &quot;some&quot;       &quot;such&quot;       &quot;no&quot;         &quot;nor&quot;        &quot;not&quot;        &quot;only&quot;       &quot;own&quot;        &quot;same&quot;       &quot;so&quot;        
-## [172] &quot;than&quot;       &quot;too&quot;        &quot;very&quot;</code></pre>
+<pre><code>##   [1] &quot;i&quot;          &quot;me&quot;         &quot;my&quot;         &quot;myself&quot;     &quot;we&quot;         &quot;our&quot;        &quot;ours&quot;       &quot;ourselves&quot; 
+##   [9] &quot;you&quot;        &quot;your&quot;       &quot;yours&quot;      &quot;yourself&quot;   &quot;yourselves&quot; &quot;he&quot;         &quot;him&quot;        &quot;his&quot;       
+##  [17] &quot;himself&quot;    &quot;she&quot;        &quot;her&quot;        &quot;hers&quot;       &quot;herself&quot;    &quot;it&quot;         &quot;its&quot;        &quot;itself&quot;    
+##  [25] &quot;they&quot;       &quot;them&quot;       &quot;their&quot;      &quot;theirs&quot;     &quot;themselves&quot; &quot;what&quot;       &quot;which&quot;      &quot;who&quot;       
+##  [33] &quot;whom&quot;       &quot;this&quot;       &quot;that&quot;       &quot;these&quot;      &quot;those&quot;      &quot;am&quot;         &quot;is&quot;         &quot;are&quot;       
+##  [41] &quot;was&quot;        &quot;were&quot;       &quot;be&quot;         &quot;been&quot;       &quot;being&quot;      &quot;have&quot;       &quot;has&quot;        &quot;had&quot;       
+##  [49] &quot;having&quot;     &quot;do&quot;         &quot;does&quot;       &quot;did&quot;        &quot;doing&quot;      &quot;would&quot;      &quot;should&quot;     &quot;could&quot;     
+##  [57] &quot;ought&quot;      &quot;i&#39;m&quot;        &quot;you&#39;re&quot;     &quot;he&#39;s&quot;       &quot;she&#39;s&quot;      &quot;it&#39;s&quot;       &quot;we&#39;re&quot;      &quot;they&#39;re&quot;   
+##  [65] &quot;i&#39;ve&quot;       &quot;you&#39;ve&quot;     &quot;we&#39;ve&quot;      &quot;they&#39;ve&quot;    &quot;i&#39;d&quot;        &quot;you&#39;d&quot;      &quot;he&#39;d&quot;       &quot;she&#39;d&quot;     
+##  [73] &quot;we&#39;d&quot;       &quot;they&#39;d&quot;     &quot;i&#39;ll&quot;       &quot;you&#39;ll&quot;     &quot;he&#39;ll&quot;      &quot;she&#39;ll&quot;     &quot;we&#39;ll&quot;      &quot;they&#39;ll&quot;   
+##  [81] &quot;isn&#39;t&quot;      &quot;aren&#39;t&quot;     &quot;wasn&#39;t&quot;     &quot;weren&#39;t&quot;    &quot;hasn&#39;t&quot;     &quot;haven&#39;t&quot;    &quot;hadn&#39;t&quot;     &quot;doesn&#39;t&quot;   
+##  [89] &quot;don&#39;t&quot;      &quot;didn&#39;t&quot;     &quot;won&#39;t&quot;      &quot;wouldn&#39;t&quot;   &quot;shan&#39;t&quot;     &quot;shouldn&#39;t&quot;  &quot;can&#39;t&quot;      &quot;cannot&quot;    
+##  [97] &quot;couldn&#39;t&quot;   &quot;mustn&#39;t&quot;    &quot;let&#39;s&quot;      &quot;that&#39;s&quot;     &quot;who&#39;s&quot;      &quot;what&#39;s&quot;     &quot;here&#39;s&quot;     &quot;there&#39;s&quot;   
+## [105] &quot;when&#39;s&quot;     &quot;where&#39;s&quot;    &quot;why&#39;s&quot;      &quot;how&#39;s&quot;      &quot;a&quot;          &quot;an&quot;         &quot;the&quot;        &quot;and&quot;       
+## [113] &quot;but&quot;        &quot;if&quot;         &quot;or&quot;         &quot;because&quot;    &quot;as&quot;         &quot;until&quot;      &quot;while&quot;      &quot;of&quot;        
+## [121] &quot;at&quot;         &quot;by&quot;         &quot;for&quot;        &quot;with&quot;       &quot;about&quot;      &quot;against&quot;    &quot;between&quot;    &quot;into&quot;      
+## [129] &quot;through&quot;    &quot;during&quot;     &quot;before&quot;     &quot;after&quot;      &quot;above&quot;      &quot;below&quot;      &quot;to&quot;         &quot;from&quot;      
+## [137] &quot;up&quot;         &quot;down&quot;       &quot;in&quot;         &quot;out&quot;        &quot;on&quot;         &quot;off&quot;        &quot;over&quot;       &quot;under&quot;     
+## [145] &quot;again&quot;      &quot;further&quot;    &quot;then&quot;       &quot;once&quot;       &quot;here&quot;       &quot;there&quot;      &quot;when&quot;       &quot;where&quot;     
+## [153] &quot;why&quot;        &quot;how&quot;        &quot;all&quot;        &quot;any&quot;        &quot;both&quot;       &quot;each&quot;       &quot;few&quot;        &quot;more&quot;      
+## [161] &quot;most&quot;       &quot;other&quot;      &quot;some&quot;       &quot;such&quot;       &quot;no&quot;         &quot;nor&quot;        &quot;not&quot;        &quot;only&quot;      
+## [169] &quot;own&quot;        &quot;same&quot;       &quot;so&quot;         &quot;than&quot;       &quot;too&quot;        &quot;very&quot;</code></pre>
 <p>Remove all stopwords from the entire corpus, <strong>replace with empty spaces</strong>. Additional stopwrods can be added.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">corpus =<span class="st"> </span><span class="kw">tm_map</span>(corpus, removeWords, <span class="kw">c</span>(<span class="st">&#39;apple&#39;</span>, <span class="kw">stopwords</span>()))
 corpus[<span class="dv">1</span>]<span class="op">$</span>content</code></pre></div>
@@ -670,10 +674,11 @@ freq</code></pre></div>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq.sparse =<span class="st"> </span><span class="kw">removeSparseTerms</span>(freq, <span class="dt">sparse=</span><span class="fl">0.97</span>)
 <span class="kw">colnames</span>(freq.sparse)</code></pre></div>
-<pre><code>##  [1] &quot;iphon&quot;                &quot;iphone5&quot;              &quot;new&quot;                  &quot;phone&quot;                &quot;can&quot;                 
-##  [6] &quot;make&quot;                 &quot;will&quot;                 &quot;get&quot;                  &quot;just&quot;                 &quot;store&quot;               
-## [11] &quot;now&quot;                  &quot;use&quot;                  &quot;app&quot;                  &quot;ipad&quot;                 &quot;freak&quot;               
-## [16] &quot;dont&quot;                 &quot;like&quot;                 &quot;itun&quot;                 &quot;need&quot;                 &quot;ipod&quot;                
+<pre><code>##  [1] &quot;iphon&quot;                &quot;iphone5&quot;              &quot;new&quot;                  &quot;phone&quot;               
+##  [5] &quot;can&quot;                  &quot;make&quot;                 &quot;will&quot;                 &quot;get&quot;                 
+##  [9] &quot;just&quot;                 &quot;store&quot;                &quot;now&quot;                  &quot;use&quot;                 
+## [13] &quot;app&quot;                  &quot;ipad&quot;                 &quot;freak&quot;                &quot;dont&quot;                
+## [17] &quot;like&quot;                 &quot;itun&quot;                 &quot;need&quot;                 &quot;ipod&quot;                
 ## [21] &quot;ipodplayerpromo&quot;      &quot;promoipodplayerpromo&quot;</code></pre>
 <ul>
 <li>Since too may terms make up the columns, <code>str</code> is not suitable to check the variable names<br />
@@ -682,10 +687,11 @@ freq</code></pre></div>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">freq.sparse =<span class="st"> </span><span class="kw">removeSparseTerms</span>(freq, <span class="dt">sparse=</span><span class="fl">0.97</span>)
 <span class="kw">colnames</span>(freq.sparse)</code></pre></div>
-<pre><code>##  [1] &quot;iphon&quot;                &quot;iphone5&quot;              &quot;new&quot;                  &quot;phone&quot;                &quot;can&quot;                 
-##  [6] &quot;make&quot;                 &quot;will&quot;                 &quot;get&quot;                  &quot;just&quot;                 &quot;store&quot;               
-## [11] &quot;now&quot;                  &quot;use&quot;                  &quot;app&quot;                  &quot;ipad&quot;                 &quot;freak&quot;               
-## [16] &quot;dont&quot;                 &quot;like&quot;                 &quot;itun&quot;                 &quot;need&quot;                 &quot;ipod&quot;                
+<pre><code>##  [1] &quot;iphon&quot;                &quot;iphone5&quot;              &quot;new&quot;                  &quot;phone&quot;               
+##  [5] &quot;can&quot;                  &quot;make&quot;                 &quot;will&quot;                 &quot;get&quot;                 
+##  [9] &quot;just&quot;                 &quot;store&quot;                &quot;now&quot;                  &quot;use&quot;                 
+## [13] &quot;app&quot;                  &quot;ipad&quot;                 &quot;freak&quot;                &quot;dont&quot;                
+## [17] &quot;like&quot;                 &quot;itun&quot;                 &quot;need&quot;                 &quot;ipod&quot;                
 ## [21] &quot;ipodplayerpromo&quot;      &quot;promoipodplayerpromo&quot;</code></pre>
 </div>
 <div id="merge-term-matrix-to-dataframe" class="section level4">

@@ -77,7 +77,25 @@ The solution is to:
 
 
 ## Data Types
-Four of basic data types
+### Four Basic Data Types
+
+#### Basic Data Types Comparison
+|              | 1L      | 1.2     | TRUE    | 'c'       |
+|--------------|---------|---------|---------|-----------|
+| class()      | numeric | numeric | logical | character |
+| typeof()     | integer | double  | logical | character |
+| is.numeric   | true    | true    | false   | false     |
+| is.logical   | false   | false   | true    | false     |
+| is.character | false   | false   | false   | true      |
+##### class
+```{r results='hold'}
+class(1.2)   # numeric
+class(2L)    # numeric
+class('c')   # character
+class(TRUE)  # logic
+class(F)     # logic
+```
+##### typeof
 ```{r results='hold'}
 typeof(1.2)   # double
 typeof(2L)    # integer
@@ -85,6 +103,7 @@ typeof('c')   # character
 typeof(TRUE)  # logic
 typeof(F)     # logic
 ```
+
 ### Data Operation
 #### Numeric Operation
 #### Logic Operation
@@ -96,16 +115,26 @@ typeof(F)     # logic
 
 ### Introduction
 
-- **scalar** - no such thing, they are considered one element vector
+#### Basic Data Structure
 - **vector** - basic data structure in R, ordered container for primitive elements, homogeneous data type
 - **matrices** - are actually vector with additional attributes
 - **array** - are actually vector with additional attributes
 - **list** - non-atomic vector, because it can hold data with different types
-- **dataframe**
+- **dataframe** - are subset of list
 
-**Atomic**
-Variable is considered if the underlying data is basic element with the same type.
+Note: 
+- There is no **scalar** data type. You can consider one element vector as scalar  
+- **Atomic** means all underlying elements of the data structure  is the same type (homogeneous)  
 
+#### Data Structure Characteristic
+
+| Data Structure | is.atomic() | is.vector() | is.list() |  class()                   | is.data.frame() | typeof()                   | Default Attributes      |
+|----------------|-------------|-------------|-----------|----------------------------|-----------------|----------------------------|-------------------------|
+| vector         | true        | true        | false     | underlying basic data type | false           | underlying basic data type | none                    |
+| matrix         | true        | false       | false     | matrix                     | false           | underlying basic data type | dim                     |
+| factor         | true        | false       | false     | factor                     | false           | integer                    | class, levels           |
+| list           | false       | false       | true      | list                       | false           | list                       | none                    |
+| data.frame     | false       | false       | true      | data.frame                 | true            | list                       | class, names, row.names |
 ### Vector
 
 #### Declaration
@@ -137,7 +166,7 @@ v8
 ```
 
 #### Characteristic
-#### is.vector
+##### is.vector
 ```{r results='hold'}
 is.vector (vv1)
 ```
@@ -498,7 +527,7 @@ Similar to vector, length() return total number of elements
 ```{r results='hold'}
 length(fac)
 ```
-#### Leveling
+#### Factor Leveling
 Levels (category) of a factor can be changed after creation
 ```{r results='hold'}
 fac = as.factor(c('Aaa','Bbb','Ccc','Aaa','Aaa','Ccc','Bbb','Bbb','Aaa','Ccc'))
@@ -507,7 +536,7 @@ levels(fac) = c('AAA','BBB','CCC')  # change levels
 levels(fac)   # updated levels
 fac
 ```
-#### Naming
+#### Factor Naming
 ##### Naming During Creation
 - Notice incomplete label assignment during factor declaration with be given "" as label
 - However, incomplete label assignment using names() will be given NA
@@ -525,7 +554,7 @@ names(fac) = c('lb1','lb2','lb3','lb4','lb5')
 names(fac)
 ```
 
-#### Filtering (return Factor)
+#### Factor Filtering (return Factor)
 Filtering a factor always return a new factor
 
 ##### Filter by Indices
@@ -554,8 +583,7 @@ speed_fac[speed_fac=='Slow']
 - List is the base object to create other R objects
 
 
-#### Declaration
-
+#### List Declaration
 ##### Create Unnamed List 
 List can contain vector and lists
 ```{r results='hold'}
@@ -572,21 +600,24 @@ lst1
 ##### Create Named List 
 It is recommended to give names to all elements within a list for better manageability
 ```{r results='hold'}
-e1 = 10L
-e2 = c(20.3,30.4,50.5)
-e3 = 'Yong'
-e4 = c(TRUE,TRUE,FALSE,TRUE)
+e1 = c(20.3,30.4,50.5)
+e2 = 'Yong'
+e3 = c(TRUE,TRUE,FALSE,TRUE)
+speed = factor(c('Slow','Slow','Fast','Fast','Moderate','Fast'),ordered=T,levels=c('Slow','Moderate','Fast')) 
 sublist1 = list(20L,c('KK','SAL','WP'),c(T,T,F))
-lst2 = list(e1=e1,e2=e2,e2=e3,e4=e4,sub=sublist1)
+lst2 = list(e1=e1,e2=e2,e3=e3,speed,subls=sublist1)
 lst2
 ```
 
 #### List Characteristic
 ##### str
+Notice the difference between unnamed list and named list
 ```{r results='hold'}
+str(lst1)
 str(lst2)
 ```
 ##### summary
+Notice the difference between unnamed and named list
 ```{r results='hold'}
 summary(lst1)  # unnamed list summary
 summary(lst2)  # named list summary
@@ -604,10 +635,237 @@ is.vector(lst2)   # true, because it is based on vector, and it has no  attribut
 is.list(lst2)     # true, because it is a list (except names attribute)
 is.matrix(lst2)   # false, because it is not a matrix
 ```
+
+#### List Naming
+- Just like vector, names of each element can be given during creation
+- Just like vector, each element in the list can be named after creation
+- Just like vector, incomplete names given after creation will be given NA
+```{r results='hold'}
+names(lst1)
+names(lst1) = c('e1','e2','e3')
+names(lst1)
+lst1
+```
+
+#### List Add/Delete Elements
+
+##### Add Single Element
+```{r results='hold'}
+lst3 = lst2
+lst3$e10 = 1:5         # new element
+lst3[['e11']]  = 7:10  # new element
+lst3
+```
+
+##### Remove Element(s)
+Setting element to NULL removed the element
+```{r results='hold'}
+lst3 = lst2
+lst3[1] = NULL  # remove single element by indices
+lst3$e2 = NULL  # remove single element by name
+lst3[c('e10','e11')] = NULL # remove multiple elements by names
+lst3
+```
+
+#### List Selection
+```{r results='hold'}
+lst2
+```
+##### Select Single Element -> return list
+Use **[]** notation
+```{r results='hold'}
+lst2[2]           # reference by indices
+lst2['e4']        # reference by name
+typeof(lst2[2])   # it is a list
+```
+
+##### Select Single Element -> return element original data structure
+Using [[]] or $ Notation
+```{r results='hold'}
+lst2$e1               # reference by $
+lst2[[1]]             # reference by indices
+lst2[['e1']]          # reference by name
+is.vector(lst2[[1]])  # it is a vector
+```
+
+##### Select Multiple Elements -> return list
+Use **[]** notation
+```{r results='hold'}
+lst2[c(2,4)]           # reference by indices
+lst2[c('e2','e4')]     # reference by name
+```
+
+##### Select Single Item
+Below are methods to select single item in the underslying elements. It is a two stages process. First stage return the underlying data structure of the selected element, second stage select the underlying structure of the returned element
+```{r results='hold'}
+lst2[[c(2,1)]]        # reference with c(x,y)
+
+lst2[[2]]     [1]     # reference with [[]] [] by indice
+lst2[[2]]     [[1]]   # reference with [[]] [[]] by indice
+
+lst2[['e2']]  [1]     # reference with [[]] [] by name
+lst2[['e2']]  [[1]]   # reference with [[]] [[]] by name
+```
+
+Notice that if the underlying element in the list is a **factor**, there are some different behaviour:
+- reference by name is not valid
+- reference by indices return factor
+- reference by [[c(x,y)]] **returns integer**
+```{r results='hold'}
+lst2[[c(4,1)]]           # reference with c(x,y) -> return integer
+
+lst2[[4]]        [1]     # reference with [[]] [] by indice   -> return factor
+lst2[[4]]        [[1]]   # reference with [[]] [[]] by indice -> return factor
+
+lst2[['speed']]  [1]     # reference with [[]] [] by name    -> invalid
+lst2[['speed']]  [[1]]   # reference with [[]] [[]] by name  -> invalid
+```
+
+### Data Frame
+
+- Data Frame is in fact a subset of list:
+    - 2-Dimension
+	  - Equal length for all columns
+	  - Every column is a **LIST**
+    - Every row is a **Data Frame**
+
+#### Creation
+
+###### Default Creation
+- By default, strings are converted to **factor**
+- By default, column nams **follow variable name** used to construct the data frame
+```{r}
+col1 = c(2, 3, 5) 
+col2 = c("aa", "bb", "cc") 
+col3 = c(TRUE, FALSE, TRUE) 
+df = data.frame(col1, col2, col3)
+str(df)
+```
+###### Creation with Parameters
+Explicitly speicfy stringAsFactors = FALSE to turn off auto conversion to factor
+```{r}
+df = data.frame(col1, col2, col3, stringsAsFactors = FALSE)
+str(df)
+```
+
+#### Characteristic
+
+##### class, typeof, attributes
+```{r results='hold'}
+class(df)       # data structure
+typeof(df)      # underlying data types
+attributes(df)  # dataframe has names, class and row.names attribute
+```
+##### is.<atomic/vector/list/matrix > 
+```{r results='hold'}
+is.atomic(df)     # false because it is a list, and complex objects
+is.vector(df)     # false, because it is not a vector
+is.list(df)       # true, because dataframe is actually a list
+is.matrix(df)     # false, because it is not a matrix
+is.data.frame(df) # true
+```
+
+##### Dimensions
+**Number of columns**
+length() return the number of columns (not rows)
+```{r results='hold'}
+length(df)
+ncol(df)
+```
+
+**Number of rows**
+```{r results='hold'}
+nrow(df)
+```
+
+
 #### Naming
 
+##### Column Names
+Both **names()** and **colnames()** return vector of column names. To avoid confusion, recommended to use **colnames()**
+```{r results='hold'}
+names(df)
+colnames(df)
+```
+Use **colnames()** to set the column names. Unsupplied column name will be assigned to NA
+```{r results='hold'}
+colnames(df) = c('col_1','col_2')
+colnames(df)
+```
 
-#### Filtering
+
+##### Row Names
+```{r results='hold'}
+rownames(df)
+```
+By default, row names are equivalent to row number. Unsupplied row names will result in **error**
+```{r results='hold'}
+rownames(df) = c('row1','row2','row3')
+df
+attributes(df)
+```
+
+##### Names and Attributes
+Column and row names are stored in attributes: names, row.names
+```{r results='hold'}
+attributes(df)
+```
+
+#### Column Selection
+
+##### Single Column Selection
+
+Using **$** notation -> return vector
+```{r results='hold'}
+v = mtcars$cyl
+is.vector(v)   # return vector
+head(v)
+```
+
+Using **[ , ]** notation -> return vector
+```{r results='hold'}
+v = mtcars[,'cyl']
+is.vector(v)   # return vector
+head(v)
+```
+
+Using **[]** notation -> return data.frame
+```{r results='hold'}
+df = mtcars['cyl']
+head(df)
+is.data.frame(df)  # return data.frame
+```
+
+##### Multi Columns Selection
+- Select columns through string vector
+- Returns a new data.frame
+```{r results='hold'}
+selected_cols = c('cyl','disp','hp')
+df = mtcars[, selected_cols]
+head(df)
+```
+
+#### Row Filtering
+
+##### Logical Subseting
+```{r results='hold'}
+df = mtcars[mtcars$cyl >5, c('cyl','disp','hp')]
+head(df)
+```
+
+##### subset()
+** Default subseting, return all columns of matching rows**
+```{r results='hold'}
+df = subset(mtcars, cyl>5, select=c('cyl','disp','hp'))
+head(df)
+```
+** Parameterized subseting, return selected columns of matching rows**
+```{r results='hold'}
+df = subset(mtcars, cyl>5, select=c('cyl','disp','hp'))
+head(df)
+```
+
+
 
 ## String
 

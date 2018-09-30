@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -500,7 +502,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(my.df<span class="op">$</span>value1)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> <span class="st">&#39;&#39;</span> ,  <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>( <span class="dt">x=</span> <span class="st">&#39;&#39;</span>, <span class="dt">y=</span>value1 )) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-400-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-400-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-400-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-441-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-441-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-441-3.png" width="256.6656" /></p>
 </div>
 <div id="two-dimension-data-2" class="section level3">
 <h3><span class="header-section-number">7.8.2</span> Two Dimension Data</h3>
@@ -510,7 +512,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp)
 <span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x =</span> grp , <span class="dt">y =</span> value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span>grp, <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-401-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-401-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-401-3.png" width="256.6656" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-442-1.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-442-2.png" width="256.6656" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-442-3.png" width="256.6656" /></p>
 </div>
 <div id="two-one-dimension-data" class="section level3">
 <h3><span class="header-section-number">7.8.3</span> Two + One Dimension Data</h3>
@@ -520,10 +522,10 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li>In <strong>qplot/ggplot</strong>, use <strong>interaction</strong> to specify extra dimension</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(<span class="dt">data =</span> my.df, value1<span class="op">~</span>grp<span class="op">+</span>dept)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-402-1.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-443-1.png" width="772.8" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qplot</span>  (<span class="dt">data =</span> my.df, <span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1, <span class="dt">geom=</span><span class="st">&#39;boxplot&#39;</span>)
 <span class="kw">ggplot</span> (<span class="dt">data =</span> my.df, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">interaction</span>(grp,dept) , <span class="dt">y=</span>value1)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>()</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-403-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-403-2.png" width="772.8" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-444-1.png" width="772.8" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-444-2.png" width="772.8" /></p>
 </div>
 </div>
             </section>

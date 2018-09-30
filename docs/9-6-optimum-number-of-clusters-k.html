@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -538,7 +540,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wssplot</span>(train.scaled, <span class="dt">nc=</span><span class="dv">6</span>)
 <span class="kw">abline</span>(<span class="dt">v=</span><span class="dv">3</span>, <span class="dt">lty=</span><span class="dv">2</span>)     <span class="co"># mark the optimum K after facts </span>
 ## [1] 22.0000000  8.1321413  1.4236421  1.0985026  0.4785128  0.4206385</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-433-1.png" width="864" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-474-1.png" width="864" /></p>
 <p>The wssplot above indicates that there is a <strong>distinct drop</strong> in the within-groups sum of squares when moving <strong>from 1 to 3 clusters</strong>. After three clusters, this <strong>decrease drops off</strong>, suggestign that a three-cluster solution may be a good fit to the data.</p>
 </div>
 <div id="elbow-codes---using-factoextrafviz_nbclusthcut" class="section level4">
@@ -556,7 +558,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <span class="kw">fviz_nbclust</span>(train.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
 <span class="kw">fviz_nbclust</span>(train.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">3</span>, <span class="dt">linetype =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-435-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-435-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-435-3.png" width="254.4" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-476-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-476-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-476-3.png" width="254.4" /></p>
 </div>
 </div>
 <div id="average-silhoutte-method" class="section level3">
@@ -594,7 +596,7 @@ wssplot =<span class="st"> </span><span class="cf">function</span>(data, <span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fviz_nbclust</span>(train.scaled, kmeans, <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;kmeans&#39;</span>)
 <span class="kw">fviz_nbclust</span>(train.scaled, pam,    <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;pam&#39;</span>)
 <span class="kw">fviz_nbclust</span>(train.scaled, hcut,   <span class="dt">method =</span> <span class="st">&quot;silhouette&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;hcut&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-437-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-437-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-437-3.png" width="254.4" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-478-1.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-478-2.png" width="254.4" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-478-3.png" width="254.4" /></p>
 </div>
 </div>
 <div id="nbclust-package-with-30-indices" class="section level3">
@@ -660,12 +662,12 @@ nbc.kmeans =<span class="st"> </span><span class="kw">NbClust</span>(train.scale
 ## 
 ##  0  1  2  3  6  7  8 
 ##  2  1  2 14  2  1  4</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-440-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-440-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-481-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-481-2.png" width="384" /></p>
 <p><strong>Visualize using <code>factoextra::fviz_nbclust()</code></strong></p>
 <p>Single function <code>fviz_nbclust()</code> from <code>factoextra</code> library will use value in <strong>NbClust</strong> object to visualize the optimal cluster number. <code>fviz_nbclus</code> output <code>ggplot</code> object, hence can be easily customized.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fviz_nbclust</span>(nbc.hclust) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;H-Cluster&#39;</span>)
 <span class="kw">fviz_nbclust</span>(nbc.kmeans) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">subtitle=</span><span class="st">&#39;K-Means&#39;</span>)</code></pre></div>
-<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-441-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-441-2.png" width="384" /></p>
+<p><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-482-1.png" width="384" /><img src="biz_tech_analytics_r_files/figure-html/unnamed-chunk-482-2.png" width="384" /></p>
 </div>
 </div>
 </div>

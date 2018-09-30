@@ -113,8 +113,9 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.1.5" data-path="1-1-package-management.html"><a href="1-1-package-management.html#package-corruption"><i class="fa fa-check"></i><b>1.1.5</b> Package Corruption</a></li>
 </ul></li>
 <li class="chapter" data-level="1.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Data Types</a><ul>
-<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.1</b> Data Operation</a></li>
-<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.2</b> Special Data Types</a></li>
+<li class="chapter" data-level="1.2.1" data-path="1-2-data-types.html"><a href="1-2-data-types.html#four-basic-data-types"><i class="fa fa-check"></i><b>1.2.1</b> Four Basic Data Types</a></li>
+<li class="chapter" data-level="1.2.2" data-path="1-2-data-types.html"><a href="1-2-data-types.html#data-operation"><i class="fa fa-check"></i><b>1.2.2</b> Data Operation</a></li>
+<li class="chapter" data-level="1.2.3" data-path="1-2-data-types.html"><a href="1-2-data-types.html#special-data-types"><i class="fa fa-check"></i><b>1.2.3</b> Special Data Types</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html"><i class="fa fa-check"></i><b>1.3</b> Data Structure</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#introduction"><i class="fa fa-check"></i><b>1.3.1</b> Introduction</a></li>
@@ -122,6 +123,7 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="1.3.3" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#matrices"><i class="fa fa-check"></i><b>1.3.3</b> Matrices</a></li>
 <li class="chapter" data-level="1.3.4" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#factor"><i class="fa fa-check"></i><b>1.3.4</b> Factor</a></li>
 <li class="chapter" data-level="1.3.5" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#list"><i class="fa fa-check"></i><b>1.3.5</b> List</a></li>
+<li class="chapter" data-level="1.3.6" data-path="1-3-data-structure.html"><a href="1-3-data-structure.html#data-frame"><i class="fa fa-check"></i><b>1.3.6</b> Data Frame</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="1-4-string.html"><a href="1-4-string.html"><i class="fa fa-check"></i><b>1.4</b> String</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="1-4-string.html"><a href="1-4-string.html#library"><i class="fa fa-check"></i><b>1.4.1</b> Library</a></li>
@@ -493,15 +495,97 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">1.3</span> Data Structure</h2>
 <div id="introduction" class="section level3">
 <h3><span class="header-section-number">1.3.1</span> Introduction</h3>
+<div id="basic-data-structure" class="section level4">
+<h4><span class="header-section-number">1.3.1.1</span> Basic Data Structure</h4>
 <ul>
-<li><strong>scalar</strong> - no such thing, they are considered one element vector</li>
 <li><strong>vector</strong> - basic data structure in R, ordered container for primitive elements, homogeneous data type</li>
 <li><strong>matrices</strong> - are actually vector with additional attributes</li>
 <li><strong>array</strong> - are actually vector with additional attributes</li>
 <li><strong>list</strong> - non-atomic vector, because it can hold data with different types</li>
-<li><strong>dataframe</strong></li>
+<li><strong>dataframe</strong> - are subset of list</li>
 </ul>
-<p><strong>Atomic</strong> Variable is considered if the underlying data is basic element with the same type.</p>
+<p>Note: - There is no <strong>scalar</strong> data type. You can consider one element vector as scalar<br />
+- <strong>Atomic</strong> means all underlying elements of the data structure is the same type (homogeneous)</p>
+</div>
+<div id="data-structure-characteristic" class="section level4">
+<h4><span class="header-section-number">1.3.1.2</span> Data Structure Characteristic</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="10%" />
+<col width="8%" />
+<col width="8%" />
+<col width="7%" />
+<col width="18%" />
+<col width="11%" />
+<col width="18%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data Structure</th>
+<th>is.atomic()</th>
+<th>is.vector()</th>
+<th>is.list()</th>
+<th>class()</th>
+<th>is.data.frame()</th>
+<th>typeof()</th>
+<th>Default Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>vector</td>
+<td>true</td>
+<td>true</td>
+<td>false</td>
+<td>underlying basic data type</td>
+<td>false</td>
+<td>underlying basic data type</td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>matrix</td>
+<td>true</td>
+<td>false</td>
+<td>false</td>
+<td>matrix</td>
+<td>false</td>
+<td>underlying basic data type</td>
+<td>dim</td>
+</tr>
+<tr class="odd">
+<td>factor</td>
+<td>true</td>
+<td>false</td>
+<td>false</td>
+<td>factor</td>
+<td>false</td>
+<td>integer</td>
+<td>class, levels</td>
+</tr>
+<tr class="even">
+<td>list</td>
+<td>false</td>
+<td>false</td>
+<td>true</td>
+<td>list</td>
+<td>false</td>
+<td>list</td>
+<td>none</td>
+</tr>
+<tr class="odd">
+<td>data.frame</td>
+<td>false</td>
+<td>false</td>
+<td>true</td>
+<td>data.frame</td>
+<td>true</td>
+<td>list</td>
+<td>class, names, row.names</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="vector" class="section level3">
 <h3><span class="header-section-number">1.3.2</span> Vector</h3>
@@ -534,13 +618,13 @@ v8</code></pre></div>
 </div>
 <div id="characteristic" class="section level4">
 <h4><span class="header-section-number">1.3.2.2</span> Characteristic</h4>
-</div>
-<div id="is.vector" class="section level4">
-<h4><span class="header-section-number">1.3.2.3</span> is.vector</h4>
+<div id="is.vector" class="section level5">
+<h5><span class="header-section-number">1.3.2.2.1</span> is.vector</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.vector</span> (vv1)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div id="class" class="section level5">
-<h5><span class="header-section-number">1.3.2.3.1</span> class</h5>
+</div>
+<div id="class-1" class="section level5">
+<h5><span class="header-section-number">1.3.2.2.2</span> class</h5>
 <p>Find out the underlying data types of the vector</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span> (vv1)
 <span class="kw">class</span> (vv2)
@@ -551,8 +635,8 @@ v8</code></pre></div>
 ## [1] &quot;character&quot;
 ## [1] &quot;logical&quot;</code></pre>
 </div>
-<div id="typeof" class="section level5">
-<h5><span class="header-section-number">1.3.2.3.2</span> typeof</h5>
+<div id="typeof-1" class="section level5">
+<h5><span class="header-section-number">1.3.2.2.3</span> typeof</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">typeof</span>(vv1)
 <span class="kw">typeof</span>(vv2)
 <span class="kw">typeof</span>(vv3)
@@ -563,13 +647,13 @@ v8</code></pre></div>
 ## [1] &quot;logical&quot;</code></pre>
 </div>
 <div id="is.atomic" class="section level5">
-<h5><span class="header-section-number">1.3.2.3.3</span> is.atomic</h5>
+<h5><span class="header-section-number">1.3.2.2.4</span> is.atomic</h5>
 <p>Atomic for vector is TRUE becasue it holds data with same type</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.atomic</span>(v1)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="length" class="section level5">
-<h5><span class="header-section-number">1.3.2.3.4</span> length</h5>
+<h5><span class="header-section-number">1.3.2.2.5</span> length</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(v1)
 <span class="kw">length</span>(vv1)</code></pre></div>
 <pre><code>## [1] 1
@@ -577,10 +661,10 @@ v8</code></pre></div>
 </div>
 </div>
 <div id="naming" class="section level4">
-<h4><span class="header-section-number">1.3.2.4</span> Naming</h4>
+<h4><span class="header-section-number">1.3.2.3</span> Naming</h4>
 <p>Every element(s) in a vector can have names</p>
 <div id="naming-existing-vector" class="section level5">
-<h5><span class="header-section-number">1.3.2.4.1</span> Naming Existing Vector</h5>
+<h5><span class="header-section-number">1.3.2.3.1</span> Naming Existing Vector</h5>
 <p>Spacing is allowed in names</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(vv1) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;one&#39;</span>,<span class="st">&#39;two&#39;</span>,<span class="st">&#39;three&#39;</span>,<span class="st">&#39;f o u r&#39;</span>)
 <span class="kw">names</span>(vv1)
@@ -590,7 +674,7 @@ vv1</code></pre></div>
 ##       1       2       3       4</code></pre>
 </div>
 <div id="naming-a-new-vector-during-declaration" class="section level5">
-<h5><span class="header-section-number">1.3.2.4.2</span> Naming A New Vector (during declaration)</h5>
+<h5><span class="header-section-number">1.3.2.3.2</span> Naming A New Vector (during declaration)</h5>
 <p>Spacing is not allowed in naming during declaration</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vv5 =<span class="st"> </span><span class="kw">c</span>(<span class="dt">one=</span><span class="dv">1</span>, <span class="dt">two=</span><span class="dv">2</span>, <span class="dt">three=</span><span class="dv">3</span>, <span class="dt">four=</span><span class="dv">4</span>)
 vv5</code></pre></div>
@@ -598,7 +682,7 @@ vv5</code></pre></div>
 ##     1     2     3     4</code></pre>
 </div>
 <div id="duplicate-naming-allowed" class="section level5">
-<h5><span class="header-section-number">1.3.2.4.3</span> Duplicate Naming Allowed ?</h5>
+<h5><span class="header-section-number">1.3.2.3.3</span> Duplicate Naming Allowed ?</h5>
 <p>Duplicate names <strong>is allowed</strong> !!! But when refered, only the <strong>first match</strong> will be returned</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(vv1) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;one&#39;</span>,<span class="st">&#39;one&#39;</span>,<span class="st">&#39;one&#39;</span>,<span class="st">&#39;one&#39;</span>)
 <span class="kw">names</span>(vv1)</code></pre></div>
@@ -612,9 +696,9 @@ vv5</code></pre></div>
 </div>
 </div>
 <div id="adding-and-removing-elements" class="section level4">
-<h4><span class="header-section-number">1.3.2.5</span> Adding and Removing Elements</h4>
+<h4><span class="header-section-number">1.3.2.4</span> Adding and Removing Elements</h4>
 <div id="appending-and-inserting" class="section level5">
-<h5><span class="header-section-number">1.3.2.5.1</span> Appending and Inserting</h5>
+<h5><span class="header-section-number">1.3.2.4.1</span> Appending and Inserting</h5>
 <ul>
 <li><strong>append()</strong> return new vector.</li>
 <li>If no position specified, it will add the new elements at the end, which is similar of using <strong>c()</strong></li>
@@ -631,7 +715,7 @@ to_append =<span class="st"> </span><span class="kw">c</span>(<span class="st">&
 ## [1] &quot;a&quot; &quot;b&quot; &quot;f&quot; &quot;g&quot; &quot;c&quot; &quot;d&quot;</code></pre>
 </div>
 <div id="deleting" class="section level5">
-<h5><span class="header-section-number">1.3.2.5.2</span> Deleting</h5>
+<h5><span class="header-section-number">1.3.2.4.2</span> Deleting</h5>
 <ul>
 <li>There is no deleting function available in R</li>
 <li>Instead, use selection features to pick the elements needed and save it to new vector</li>
@@ -639,10 +723,10 @@ to_append =<span class="st"> </span><span class="kw">c</span>(<span class="st">&
 </div>
 </div>
 <div id="filtering" class="section level4">
-<h4><span class="header-section-number">1.3.2.6</span> Filtering</h4>
+<h4><span class="header-section-number">1.3.2.5</span> Filtering</h4>
 <p>Note: Features in this section return <strong>new vector</strong></p>
 <div id="filter-by-indices" class="section level5">
-<h5><span class="header-section-number">1.3.2.6.1</span> Filter by Indices</h5>
+<h5><span class="header-section-number">1.3.2.5.1</span> Filter by Indices</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v8[<span class="dv">1</span>]           <span class="co"># single element</span>
 v8[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]         <span class="co"># multi continuous elements</span>
 v8[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">9</span>)]    <span class="co"># multi non-continuos elements</span>
@@ -653,7 +737,7 @@ v8[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,
 ## [1]  2  3  4  5  6  9 11</code></pre>
 </div>
 <div id="filter-by-names" class="section level5">
-<h5><span class="header-section-number">1.3.2.6.2</span> Filter by Names</h5>
+<h5><span class="header-section-number">1.3.2.5.2</span> Filter by Names</h5>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vv5[<span class="st">&#39;one&#39;</span>]               <span class="co"># single element selection</span>
 vv5[<span class="kw">c</span>(<span class="st">&#39;one&#39;</span>,<span class="st">&#39;three&#39;</span>)]    <span class="co"># multi elements selection</span>
 <span class="co">#vv5[-c(&#39;one&#39;,&#39;three&#39;)]  # exception doesn&#39;t work here !!!</span></code></pre></div>
@@ -663,7 +747,7 @@ vv5[<span class="kw">c</span>(<span class="st">&#39;one&#39;</span>,<span class=
 ##     1     3</code></pre>
 </div>
 <div id="filter-by-logic" class="section level5">
-<h5><span class="header-section-number">1.3.2.6.3</span> Filter by Logic</h5>
+<h5><span class="header-section-number">1.3.2.5.3</span> Filter by Logic</h5>
 <p>Only elements that match TRUE will be returned</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v8<span class="op">&gt;</span><span class="dv">5</span>
 v8[v8<span class="op">&gt;</span><span class="dv">5</span>]
@@ -675,9 +759,9 @@ v8[v8<span class="op">&gt;</span><span class="dv">5</span>]
 </div>
 </div>
 <div id="sorting-and-order" class="section level4">
-<h4><span class="header-section-number">1.3.2.7</span> Sorting and Order</h4>
+<h4><span class="header-section-number">1.3.2.6</span> Sorting and Order</h4>
 <div id="sorting" class="section level5">
-<h5><span class="header-section-number">1.3.2.7.1</span> Sorting</h5>
+<h5><span class="header-section-number">1.3.2.6.1</span> Sorting</h5>
 <p>Return a new vector with sorted elements</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v9 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">17</span>,<span class="dv">18</span>,<span class="dv">24</span>,<span class="dv">29</span>,<span class="dv">11</span>,<span class="dv">23</span>,<span class="dv">25</span>)
 <span class="kw">sort</span>(v9)                     <span class="co"># default ascending</span>
@@ -686,7 +770,7 @@ v8[v8<span class="op">&gt;</span><span class="dv">5</span>]
 ## [1] 29 25 24 23 18 17 11</code></pre>
 </div>
 <div id="ordering" class="section level5">
-<h5><span class="header-section-number">1.3.2.7.2</span> Ordering</h5>
+<h5><span class="header-section-number">1.3.2.6.2</span> Ordering</h5>
 <p>Ordering is different from sorting, as it return rank elements and not the actual values</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rank =<span class="st"> </span><span class="kw">order</span>(v9)
 rank  <span class="co"># rank is the order of v9</span>
@@ -1040,8 +1124,8 @@ speed_fac[<span class="dv">2</span>] <span class="op">&lt;</span><span class="st
 <pre><code>## [1] 10</code></pre>
 </div>
 </div>
-<div id="leveling" class="section level4">
-<h4><span class="header-section-number">1.3.4.3</span> Leveling</h4>
+<div id="factor-leveling" class="section level4">
+<h4><span class="header-section-number">1.3.4.3</span> Factor Leveling</h4>
 <p>Levels (category) of a factor can be changed after creation</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fac =<span class="st"> </span><span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="st">&#39;Aaa&#39;</span>,<span class="st">&#39;Bbb&#39;</span>,<span class="st">&#39;Ccc&#39;</span>,<span class="st">&#39;Aaa&#39;</span>,<span class="st">&#39;Aaa&#39;</span>,<span class="st">&#39;Ccc&#39;</span>,<span class="st">&#39;Bbb&#39;</span>,<span class="st">&#39;Bbb&#39;</span>,<span class="st">&#39;Aaa&#39;</span>,<span class="st">&#39;Ccc&#39;</span>))
 <span class="kw">levels</span>(fac)   <span class="co"># existing levels</span>
@@ -1053,8 +1137,8 @@ fac</code></pre></div>
 ##  [1] AAA BBB CCC AAA AAA CCC BBB BBB AAA CCC
 ## Levels: AAA BBB CCC</code></pre>
 </div>
-<div id="naming-1" class="section level4">
-<h4><span class="header-section-number">1.3.4.4</span> Naming</h4>
+<div id="factor-naming" class="section level4">
+<h4><span class="header-section-number">1.3.4.4</span> Factor Naming</h4>
 <div id="naming-during-creation" class="section level5">
 <h5><span class="header-section-number">1.3.4.4.1</span> Naming During Creation</h5>
 <ul>
@@ -1079,8 +1163,8 @@ fac</code></pre></div>
 ##  [1] &quot;lb1&quot; &quot;lb2&quot; &quot;lb3&quot; &quot;lb4&quot; &quot;lb5&quot; NA    NA    NA    NA    NA</code></pre>
 </div>
 </div>
-<div id="filtering-return-factor" class="section level4">
-<h4><span class="header-section-number">1.3.4.5</span> Filtering (return Factor)</h4>
+<div id="factor-filtering-return-factor" class="section level4">
+<h4><span class="header-section-number">1.3.4.5</span> Factor Filtering (return Factor)</h4>
 <p>Filtering a factor always return a new factor</p>
 <div id="filter-by-indices-1" class="section level5">
 <h5><span class="header-section-number">1.3.4.5.1</span> Filter by Indices</h5>
@@ -1129,8 +1213,8 @@ speed_fac[speed_fac<span class="op">==</span><span class="st">&#39;Slow&#39;</sp
 <li>A list can contain vectors, lists, data.frame</li>
 <li>List is the base object to create other R objects</li>
 </ul>
-<div id="declaration-2" class="section level4">
-<h4><span class="header-section-number">1.3.5.1</span> Declaration</h4>
+<div id="list-declaration" class="section level4">
+<h4><span class="header-section-number">1.3.5.1</span> List Declaration</h4>
 <div id="create-unnamed-list" class="section level5">
 <h5><span class="header-section-number">1.3.5.1.1</span> Create Unnamed List</h5>
 <p>List can contain vector and lists</p>
@@ -1167,33 +1251,34 @@ lst1</code></pre></div>
 <div id="create-named-list" class="section level5">
 <h5><span class="header-section-number">1.3.5.1.2</span> Create Named List</h5>
 <p>It is recommended to give names to all elements within a list for better manageability</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e1 =<span class="st"> </span>10L
-e2 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">20.3</span>,<span class="fl">30.4</span>,<span class="fl">50.5</span>)
-e3 =<span class="st"> &#39;Yong&#39;</span>
-e4 =<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">e1 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">20.3</span>,<span class="fl">30.4</span>,<span class="fl">50.5</span>)
+e2 =<span class="st"> &#39;Yong&#39;</span>
+e3 =<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>)
+speed =<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&#39;Slow&#39;</span>,<span class="st">&#39;Slow&#39;</span>,<span class="st">&#39;Fast&#39;</span>,<span class="st">&#39;Fast&#39;</span>,<span class="st">&#39;Moderate&#39;</span>,<span class="st">&#39;Fast&#39;</span>),<span class="dt">ordered=</span>T,<span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&#39;Slow&#39;</span>,<span class="st">&#39;Moderate&#39;</span>,<span class="st">&#39;Fast&#39;</span>)) 
 sublist1 =<span class="st"> </span><span class="kw">list</span>(20L,<span class="kw">c</span>(<span class="st">&#39;KK&#39;</span>,<span class="st">&#39;SAL&#39;</span>,<span class="st">&#39;WP&#39;</span>),<span class="kw">c</span>(T,T,F))
-lst2 =<span class="st"> </span><span class="kw">list</span>(<span class="dt">e1=</span>e1,<span class="dt">e2=</span>e2,<span class="dt">e2=</span>e3,<span class="dt">e4=</span>e4,<span class="dt">sub=</span>sublist1)
+lst2 =<span class="st"> </span><span class="kw">list</span>(<span class="dt">e1=</span>e1,<span class="dt">e2=</span>e2,<span class="dt">e3=</span>e3,speed,<span class="dt">subls=</span>sublist1)
 lst2</code></pre></div>
 <pre><code>## $e1
-## [1] 10
-## 
-## $e2
 ## [1] 20.3 30.4 50.5
 ## 
 ## $e2
 ## [1] &quot;Yong&quot;
 ## 
-## $e4
+## $e3
 ## [1]  TRUE  TRUE FALSE  TRUE
 ## 
-## $sub
-## $sub[[1]]
+## [[4]]
+## [1] Slow     Slow     Fast     Fast     Moderate Fast    
+## Levels: Slow &lt; Moderate &lt; Fast
+## 
+## $subls
+## $subls[[1]]
 ## [1] 20
 ## 
-## $sub[[2]]
+## $subls[[2]]
 ## [1] &quot;KK&quot;  &quot;SAL&quot; &quot;WP&quot; 
 ## 
-## $sub[[3]]
+## $subls[[3]]
 ## [1]  TRUE  TRUE FALSE</code></pre>
 </div>
 </div>
@@ -1201,19 +1286,31 @@ lst2</code></pre></div>
 <h4><span class="header-section-number">1.3.5.2</span> List Characteristic</h4>
 <div id="str-2" class="section level5">
 <h5><span class="header-section-number">1.3.5.2.1</span> str</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(lst2)</code></pre></div>
+<p>Notice the difference between unnamed list and named list</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(lst1)
+<span class="kw">str</span>(lst2)</code></pre></div>
 <pre><code>## List of 5
-##  $ e1 : int 10
-##  $ e2 : num [1:3] 20.3 30.4 50.5
-##  $ e2 : chr &quot;Yong&quot;
-##  $ e4 : logi [1:4] TRUE TRUE FALSE TRUE
-##  $ sub:List of 3
+##  $ : int 10
+##  $ : num [1:3] 20.3 30.4 50.5
+##  $ : chr &quot;Yong&quot;
+##  $ : logi [1:4] TRUE TRUE FALSE TRUE
+##  $ :List of 3
+##   ..$ : int 20
+##   ..$ : chr [1:3] &quot;KK&quot; &quot;SAL&quot; &quot;WP&quot;
+##   ..$ : logi [1:3] TRUE TRUE FALSE
+## List of 5
+##  $ e1   : num [1:3] 20.3 30.4 50.5
+##  $ e2   : chr &quot;Yong&quot;
+##  $ e3   : logi [1:4] TRUE TRUE FALSE TRUE
+##  $      : Ord.factor w/ 3 levels &quot;Slow&quot;&lt;&quot;Moderate&quot;&lt;..: 1 1 3 3 2 3
+##  $ subls:List of 3
 ##   ..$ : int 20
 ##   ..$ : chr [1:3] &quot;KK&quot; &quot;SAL&quot; &quot;WP&quot;
 ##   ..$ : logi [1:3] TRUE TRUE FALSE</code></pre>
 </div>
 <div id="summary-1" class="section level5">
 <h5><span class="header-section-number">1.3.5.2.2</span> summary</h5>
+<p>Notice the difference between unnamed and named list</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(lst1)  <span class="co"># unnamed list summary</span>
 <span class="kw">summary</span>(lst2)  <span class="co"># named list summary</span></code></pre></div>
 <pre><code>##      Length Class  Mode     
@@ -1222,12 +1319,12 @@ lst2</code></pre></div>
 ## [3,] 1      -none- character
 ## [4,] 4      -none- logical  
 ## [5,] 3      -none- list     
-##     Length Class  Mode     
-## e1  1      -none- numeric  
-## e2  3      -none- numeric  
-## e2  1      -none- character
-## e4  4      -none- logical  
-## sub 3      -none- list</code></pre>
+##       Length Class   Mode     
+## e1    3      -none-  numeric  
+## e2    1      -none-  character
+## e3    4      -none-  logical  
+##       6      ordered numeric  
+## subls 3      -none-  list</code></pre>
 </div>
 <div id="class-typeof-attributes-2" class="section level5">
 <h5><span class="header-section-number">1.3.5.2.3</span> class, typeof, attributes</h5>
@@ -1237,7 +1334,7 @@ lst2</code></pre></div>
 <pre><code>## [1] &quot;list&quot;
 ## [1] &quot;list&quot;
 ## $names
-## [1] &quot;e1&quot;  &quot;e2&quot;  &quot;e2&quot;  &quot;e4&quot;  &quot;sub&quot;</code></pre>
+## [1] &quot;e1&quot;    &quot;e2&quot;    &quot;e3&quot;    &quot;&quot;      &quot;subls&quot;</code></pre>
 </div>
 <div id="is.-2" class="section level5">
 <h5><span class="header-section-number">1.3.5.2.4</span> is.<atomic/vector/list/matrix></h5>
@@ -1251,11 +1348,423 @@ lst2</code></pre></div>
 ## [1] FALSE</code></pre>
 </div>
 </div>
-<div id="naming-2" class="section level4">
-<h4><span class="header-section-number">1.3.5.3</span> Naming</h4>
+<div id="list-naming" class="section level4">
+<h4><span class="header-section-number">1.3.5.3</span> List Naming</h4>
+<ul>
+<li>Just like vector, names of each element can be given during creation</li>
+<li>Just like vector, each element in the list can be named after creation</li>
+<li>Just like vector, incomplete names given after creation will be given NA</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(lst1)
+<span class="kw">names</span>(lst1) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;e1&#39;</span>,<span class="st">&#39;e2&#39;</span>,<span class="st">&#39;e3&#39;</span>)
+<span class="kw">names</span>(lst1)
+lst1</code></pre></div>
+<pre><code>## NULL
+## [1] &quot;e1&quot; &quot;e2&quot; &quot;e3&quot; NA   NA  
+## $e1
+## [1] 10
+## 
+## $e2
+## [1] 20.3 30.4 50.5
+## 
+## $e3
+## [1] &quot;Yong&quot;
+## 
+## $&lt;NA&gt;
+## [1]  TRUE  TRUE FALSE  TRUE
+## 
+## $&lt;NA&gt;
+## $&lt;NA&gt;[[1]]
+## [1] 20
+## 
+## $&lt;NA&gt;[[2]]
+## [1] &quot;KK&quot;  &quot;SAL&quot; &quot;WP&quot; 
+## 
+## $&lt;NA&gt;[[3]]
+## [1]  TRUE  TRUE FALSE</code></pre>
 </div>
-<div id="filtering-1" class="section level4">
-<h4><span class="header-section-number">1.3.5.4</span> Filtering</h4>
+<div id="list-adddelete-elements" class="section level4">
+<h4><span class="header-section-number">1.3.5.4</span> List Add/Delete Elements</h4>
+<div id="add-single-element" class="section level5">
+<h5><span class="header-section-number">1.3.5.4.1</span> Add Single Element</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst3 =<span class="st"> </span>lst2
+lst3<span class="op">$</span>e10 =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>         <span class="co"># new element</span>
+lst3[[<span class="st">&#39;e11&#39;</span>]]  =<span class="st"> </span><span class="dv">7</span><span class="op">:</span><span class="dv">10</span>  <span class="co"># new element</span>
+lst3</code></pre></div>
+<pre><code>## $e1
+## [1] 20.3 30.4 50.5
+## 
+## $e2
+## [1] &quot;Yong&quot;
+## 
+## $e3
+## [1]  TRUE  TRUE FALSE  TRUE
+## 
+## [[4]]
+## [1] Slow     Slow     Fast     Fast     Moderate Fast    
+## Levels: Slow &lt; Moderate &lt; Fast
+## 
+## $subls
+## $subls[[1]]
+## [1] 20
+## 
+## $subls[[2]]
+## [1] &quot;KK&quot;  &quot;SAL&quot; &quot;WP&quot; 
+## 
+## $subls[[3]]
+## [1]  TRUE  TRUE FALSE
+## 
+## 
+## $e10
+## [1] 1 2 3 4 5
+## 
+## $e11
+## [1]  7  8  9 10</code></pre>
+</div>
+<div id="remove-elements" class="section level5">
+<h5><span class="header-section-number">1.3.5.4.2</span> Remove Element(s)</h5>
+<p>Setting element to NULL removed the element</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst3 =<span class="st"> </span>lst2
+lst3[<span class="dv">1</span>] =<span class="st"> </span><span class="ot">NULL</span>  <span class="co"># remove single element by indices</span>
+lst3<span class="op">$</span>e2 =<span class="st"> </span><span class="ot">NULL</span>  <span class="co"># remove single element by name</span>
+lst3[<span class="kw">c</span>(<span class="st">&#39;e10&#39;</span>,<span class="st">&#39;e11&#39;</span>)] =<span class="st"> </span><span class="ot">NULL</span> <span class="co"># remove multiple elements by names</span>
+lst3</code></pre></div>
+<pre><code>## $e3
+## [1]  TRUE  TRUE FALSE  TRUE
+## 
+## [[2]]
+## [1] Slow     Slow     Fast     Fast     Moderate Fast    
+## Levels: Slow &lt; Moderate &lt; Fast
+## 
+## $subls
+## $subls[[1]]
+## [1] 20
+## 
+## $subls[[2]]
+## [1] &quot;KK&quot;  &quot;SAL&quot; &quot;WP&quot; 
+## 
+## $subls[[3]]
+## [1]  TRUE  TRUE FALSE</code></pre>
+</div>
+</div>
+<div id="list-selection" class="section level4">
+<h4><span class="header-section-number">1.3.5.5</span> List Selection</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst2</code></pre></div>
+<pre><code>## $e1
+## [1] 20.3 30.4 50.5
+## 
+## $e2
+## [1] &quot;Yong&quot;
+## 
+## $e3
+## [1]  TRUE  TRUE FALSE  TRUE
+## 
+## [[4]]
+## [1] Slow     Slow     Fast     Fast     Moderate Fast    
+## Levels: Slow &lt; Moderate &lt; Fast
+## 
+## $subls
+## $subls[[1]]
+## [1] 20
+## 
+## $subls[[2]]
+## [1] &quot;KK&quot;  &quot;SAL&quot; &quot;WP&quot; 
+## 
+## $subls[[3]]
+## [1]  TRUE  TRUE FALSE</code></pre>
+<div id="select-single-element---return-list" class="section level5">
+<h5><span class="header-section-number">1.3.5.5.1</span> Select Single Element -&gt; return list</h5>
+<p>Use <strong>[]</strong> notation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst2[<span class="dv">2</span>]           <span class="co"># reference by indices</span>
+lst2[<span class="st">&#39;e4&#39;</span>]        <span class="co"># reference by name</span>
+<span class="kw">typeof</span>(lst2[<span class="dv">2</span>])   <span class="co"># it is a list</span></code></pre></div>
+<pre><code>## $e2
+## [1] &quot;Yong&quot;
+## 
+## $&lt;NA&gt;
+## NULL
+## 
+## [1] &quot;list&quot;</code></pre>
+</div>
+<div id="select-single-element---return-element-original-data-structure" class="section level5">
+<h5><span class="header-section-number">1.3.5.5.2</span> Select Single Element -&gt; return element original data structure</h5>
+<p>Using [[]] or $ Notation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst2<span class="op">$</span>e1               <span class="co"># reference by $</span>
+lst2[[<span class="dv">1</span>]]             <span class="co"># reference by indices</span>
+lst2[[<span class="st">&#39;e1&#39;</span>]]          <span class="co"># reference by name</span>
+<span class="kw">is.vector</span>(lst2[[<span class="dv">1</span>]])  <span class="co"># it is a vector</span></code></pre></div>
+<pre><code>## [1] 20.3 30.4 50.5
+## [1] 20.3 30.4 50.5
+## [1] 20.3 30.4 50.5
+## [1] TRUE</code></pre>
+</div>
+<div id="select-multiple-elements---return-list" class="section level5">
+<h5><span class="header-section-number">1.3.5.5.3</span> Select Multiple Elements -&gt; return list</h5>
+<p>Use <strong>[]</strong> notation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst2[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>)]           <span class="co"># reference by indices</span>
+lst2[<span class="kw">c</span>(<span class="st">&#39;e2&#39;</span>,<span class="st">&#39;e4&#39;</span>)]     <span class="co"># reference by name</span></code></pre></div>
+<pre><code>## $e2
+## [1] &quot;Yong&quot;
+## 
+## [[2]]
+## [1] Slow     Slow     Fast     Fast     Moderate Fast    
+## Levels: Slow &lt; Moderate &lt; Fast
+## 
+## $e2
+## [1] &quot;Yong&quot;
+## 
+## $&lt;NA&gt;
+## NULL</code></pre>
+</div>
+<div id="select-single-item" class="section level5">
+<h5><span class="header-section-number">1.3.5.5.4</span> Select Single Item</h5>
+<p>Below are methods to select single item in the underslying elements. It is a two stages process. First stage return the underlying data structure of the selected element, second stage select the underlying structure of the returned element</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst2[[<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)]]        <span class="co"># reference with c(x,y)</span>
+
+lst2[[<span class="dv">2</span>]]     [<span class="dv">1</span>]     <span class="co"># reference with [[]] [] by indice</span>
+lst2[[<span class="dv">2</span>]]     [[<span class="dv">1</span>]]   <span class="co"># reference with [[]] [[]] by indice</span>
+
+lst2[[<span class="st">&#39;e2&#39;</span>]]  [<span class="dv">1</span>]     <span class="co"># reference with [[]] [] by name</span>
+lst2[[<span class="st">&#39;e2&#39;</span>]]  [[<span class="dv">1</span>]]   <span class="co"># reference with [[]] [[]] by name</span></code></pre></div>
+<pre><code>## [1] &quot;Yong&quot;
+## [1] &quot;Yong&quot;
+## [1] &quot;Yong&quot;
+## [1] &quot;Yong&quot;
+## [1] &quot;Yong&quot;</code></pre>
+<p>Notice that if the underlying element in the list is a <strong>factor</strong>, there are some different behaviour: - reference by name is not valid - reference by indices return factor - reference by [[c(x,y)]] <strong>returns integer</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lst2[[<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">1</span>)]]           <span class="co"># reference with c(x,y) -&gt; return integer</span>
+
+lst2[[<span class="dv">4</span>]]        [<span class="dv">1</span>]     <span class="co"># reference with [[]] [] by indice   -&gt; return factor</span>
+lst2[[<span class="dv">4</span>]]        [[<span class="dv">1</span>]]   <span class="co"># reference with [[]] [[]] by indice -&gt; return factor</span>
+
+lst2[[<span class="st">&#39;speed&#39;</span>]]  [<span class="dv">1</span>]     <span class="co"># reference with [[]] [] by name    -&gt; invalid</span>
+lst2[[<span class="st">&#39;speed&#39;</span>]]  [[<span class="dv">1</span>]]   <span class="co"># reference with [[]] [[]] by name  -&gt; invalid</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] Slow
+## Levels: Slow &lt; Moderate &lt; Fast
+## [1] Slow
+## Levels: Slow &lt; Moderate &lt; Fast
+## NULL
+## NULL</code></pre>
+</div>
+</div>
+</div>
+<div id="data-frame" class="section level3">
+<h3><span class="header-section-number">1.3.6</span> Data Frame</h3>
+<ul>
+<li>Data Frame is in fact a subset of list:
+<ul>
+<li>2-Dimension</li>
+<li>Equal length for all columns</li>
+<li>Every column is a <strong>LIST</strong></li>
+<li>Every row is a <strong>Data Frame</strong></li>
+</ul></li>
+</ul>
+<div id="creation" class="section level4">
+<h4><span class="header-section-number">1.3.6.1</span> Creation</h4>
+<div id="default-creation" class="section level6">
+<h6><span class="header-section-number">1.3.6.1.0.1</span> Default Creation</h6>
+<ul>
+<li>By default, strings are converted to <strong>factor</strong></li>
+<li>By default, column nams <strong>follow variable name</strong> used to construct the data frame</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">col1 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>) 
+col2 =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;aa&quot;</span>, <span class="st">&quot;bb&quot;</span>, <span class="st">&quot;cc&quot;</span>) 
+col3 =<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>) 
+df =<span class="st"> </span><span class="kw">data.frame</span>(col1, col2, col3)
+<span class="kw">str</span>(df)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  3 variables:
+##  $ col1: num  2 3 5
+##  $ col2: Factor w/ 3 levels &quot;aa&quot;,&quot;bb&quot;,&quot;cc&quot;: 1 2 3
+##  $ col3: logi  TRUE FALSE TRUE</code></pre>
+</div>
+<div id="creation-with-parameters" class="section level6">
+<h6><span class="header-section-number">1.3.6.1.0.2</span> Creation with Parameters</h6>
+<p>Explicitly speicfy stringAsFactors = FALSE to turn off auto conversion to factor</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">data.frame</span>(col1, col2, col3, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="kw">str</span>(df)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  3 variables:
+##  $ col1: num  2 3 5
+##  $ col2: chr  &quot;aa&quot; &quot;bb&quot; &quot;cc&quot;
+##  $ col3: logi  TRUE FALSE TRUE</code></pre>
+</div>
+</div>
+<div id="characteristic-2" class="section level4">
+<h4><span class="header-section-number">1.3.6.2</span> Characteristic</h4>
+<div id="class-typeof-attributes-3" class="section level5">
+<h5><span class="header-section-number">1.3.6.2.1</span> class, typeof, attributes</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(df)       <span class="co"># data structure</span>
+<span class="kw">typeof</span>(df)      <span class="co"># underlying data types</span>
+<span class="kw">attributes</span>(df)  <span class="co"># dataframe has names, class and row.names attribute</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;
+## [1] &quot;list&quot;
+## $names
+## [1] &quot;col1&quot; &quot;col2&quot; &quot;col3&quot;
+## 
+## $class
+## [1] &quot;data.frame&quot;
+## 
+## $row.names
+## [1] 1 2 3</code></pre>
+</div>
+<div id="is.-3" class="section level5">
+<h5><span class="header-section-number">1.3.6.2.2</span> is.<atomic/vector/list/matrix ></h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.atomic</span>(df)     <span class="co"># false because it is a list, and complex objects</span>
+<span class="kw">is.vector</span>(df)     <span class="co"># false, because it is not a vector</span>
+<span class="kw">is.list</span>(df)       <span class="co"># true, because dataframe is actually a list</span>
+<span class="kw">is.matrix</span>(df)     <span class="co"># false, because it is not a matrix</span>
+<span class="kw">is.data.frame</span>(df) <span class="co"># true</span></code></pre></div>
+<pre><code>## [1] FALSE
+## [1] FALSE
+## [1] TRUE
+## [1] FALSE
+## [1] TRUE</code></pre>
+</div>
+<div id="dimensions-1" class="section level5">
+<h5><span class="header-section-number">1.3.6.2.3</span> Dimensions</h5>
+<p><strong>Number of columns</strong> length() return the number of columns (not rows)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(df)
+<span class="kw">ncol</span>(df)</code></pre></div>
+<pre><code>## [1] 3
+## [1] 3</code></pre>
+<p><strong>Number of rows</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(df)</code></pre></div>
+<pre><code>## [1] 3</code></pre>
+</div>
+</div>
+<div id="naming-1" class="section level4">
+<h4><span class="header-section-number">1.3.6.3</span> Naming</h4>
+<div id="column-names" class="section level5">
+<h5><span class="header-section-number">1.3.6.3.1</span> Column Names</h5>
+<p>Both <strong>names()</strong> and <strong>colnames()</strong> return vector of column names. To avoid confusion, recommended to use <strong>colnames()</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(df)
+<span class="kw">colnames</span>(df)</code></pre></div>
+<pre><code>## [1] &quot;col1&quot; &quot;col2&quot; &quot;col3&quot;
+## [1] &quot;col1&quot; &quot;col2&quot; &quot;col3&quot;</code></pre>
+<p>Use <strong>colnames()</strong> to set the column names. Unsupplied column name will be assigned to NA</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;col_1&#39;</span>,<span class="st">&#39;col_2&#39;</span>)
+<span class="kw">colnames</span>(df)</code></pre></div>
+<pre><code>## [1] &quot;col_1&quot; &quot;col_2&quot; NA</code></pre>
+</div>
+<div id="row-names" class="section level5">
+<h5><span class="header-section-number">1.3.6.3.2</span> Row Names</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(df)</code></pre></div>
+<pre><code>## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot;</code></pre>
+<p>By default, row names are equivalent to row number. Unsupplied row names will result in <strong>error</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;row1&#39;</span>,<span class="st">&#39;row2&#39;</span>,<span class="st">&#39;row3&#39;</span>)
+df
+<span class="kw">attributes</span>(df)</code></pre></div>
+<pre><code>##      col_1 col_2    NA
+## row1     2    aa  TRUE
+## row2     3    bb FALSE
+## row3     5    cc  TRUE
+## $names
+## [1] &quot;col_1&quot; &quot;col_2&quot; NA     
+## 
+## $class
+## [1] &quot;data.frame&quot;
+## 
+## $row.names
+## [1] &quot;row1&quot; &quot;row2&quot; &quot;row3&quot;</code></pre>
+</div>
+<div id="names-and-attributes" class="section level5">
+<h5><span class="header-section-number">1.3.6.3.3</span> Names and Attributes</h5>
+<p>Column and row names are stored in attributes: names, row.names</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attributes</span>(df)</code></pre></div>
+<pre><code>## $names
+## [1] &quot;col_1&quot; &quot;col_2&quot; NA     
+## 
+## $class
+## [1] &quot;data.frame&quot;
+## 
+## $row.names
+## [1] &quot;row1&quot; &quot;row2&quot; &quot;row3&quot;</code></pre>
+</div>
+</div>
+<div id="column-selection" class="section level4">
+<h4><span class="header-section-number">1.3.6.4</span> Column Selection</h4>
+<div id="single-column-selection" class="section level5">
+<h5><span class="header-section-number">1.3.6.4.1</span> Single Column Selection</h5>
+<p>Using <strong>$</strong> notation -&gt; return vector</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v =<span class="st"> </span>mtcars<span class="op">$</span>cyl
+<span class="kw">is.vector</span>(v)   <span class="co"># return vector</span>
+<span class="kw">head</span>(v)</code></pre></div>
+<pre><code>## [1] TRUE
+## [1] 6 6 4 6 8 6</code></pre>
+<p>Using <strong>[ , ]</strong> notation -&gt; return vector</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">v =<span class="st"> </span>mtcars[,<span class="st">&#39;cyl&#39;</span>]
+<span class="kw">is.vector</span>(v)   <span class="co"># return vector</span>
+<span class="kw">head</span>(v)</code></pre></div>
+<pre><code>## [1] TRUE
+## [1] 6 6 4 6 8 6</code></pre>
+<p>Using <strong>[]</strong> notation -&gt; return data.frame</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span>mtcars[<span class="st">&#39;cyl&#39;</span>]
+<span class="kw">head</span>(df)
+<span class="kw">is.data.frame</span>(df)  <span class="co"># return data.frame</span></code></pre></div>
+<pre><code>##                   cyl
+## Mazda RX4           6
+## Mazda RX4 Wag       6
+## Datsun 710          4
+## Hornet 4 Drive      6
+## Hornet Sportabout   8
+## Valiant             6
+## [1] TRUE</code></pre>
+</div>
+<div id="multi-columns-selection" class="section level5">
+<h5><span class="header-section-number">1.3.6.4.2</span> Multi Columns Selection</h5>
+<ul>
+<li>Select columns through string vector</li>
+<li>Returns a new data.frame</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">selected_cols =<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;cyl&#39;</span>,<span class="st">&#39;disp&#39;</span>,<span class="st">&#39;hp&#39;</span>)
+df =<span class="st"> </span>mtcars[, selected_cols]
+<span class="kw">head</span>(df)</code></pre></div>
+<pre><code>##                   cyl disp  hp
+## Mazda RX4           6  160 110
+## Mazda RX4 Wag       6  160 110
+## Datsun 710          4  108  93
+## Hornet 4 Drive      6  258 110
+## Hornet Sportabout   8  360 175
+## Valiant             6  225 105</code></pre>
+</div>
+</div>
+<div id="row-filtering" class="section level4">
+<h4><span class="header-section-number">1.3.6.5</span> Row Filtering</h4>
+<div id="logical-subseting" class="section level5">
+<h5><span class="header-section-number">1.3.6.5.1</span> Logical Subseting</h5>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span>mtcars[mtcars<span class="op">$</span>cyl <span class="op">&gt;</span><span class="dv">5</span>, <span class="kw">c</span>(<span class="st">&#39;cyl&#39;</span>,<span class="st">&#39;disp&#39;</span>,<span class="st">&#39;hp&#39;</span>)]
+<span class="kw">head</span>(df)</code></pre></div>
+<pre><code>##                   cyl disp  hp
+## Mazda RX4           6  160 110
+## Mazda RX4 Wag       6  160 110
+## Hornet 4 Drive      6  258 110
+## Hornet Sportabout   8  360 175
+## Valiant             6  225 105
+## Duster 360          8  360 245</code></pre>
+</div>
+<div id="subset" class="section level5">
+<h5><span class="header-section-number">1.3.6.5.2</span> subset()</h5>
+<p>** Default subseting, return all columns of matching rows**</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">subset</span>(mtcars, cyl<span class="op">&gt;</span><span class="dv">5</span>, <span class="dt">select=</span><span class="kw">c</span>(<span class="st">&#39;cyl&#39;</span>,<span class="st">&#39;disp&#39;</span>,<span class="st">&#39;hp&#39;</span>))
+<span class="kw">head</span>(df)</code></pre></div>
+<pre><code>##                   cyl disp  hp
+## Mazda RX4           6  160 110
+## Mazda RX4 Wag       6  160 110
+## Hornet 4 Drive      6  258 110
+## Hornet Sportabout   8  360 175
+## Valiant             6  225 105
+## Duster 360          8  360 245</code></pre>
+<p>** Parameterized subseting, return selected columns of matching rows**</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">subset</span>(mtcars, cyl<span class="op">&gt;</span><span class="dv">5</span>, <span class="dt">select=</span><span class="kw">c</span>(<span class="st">&#39;cyl&#39;</span>,<span class="st">&#39;disp&#39;</span>,<span class="st">&#39;hp&#39;</span>))
+<span class="kw">head</span>(df)</code></pre></div>
+<pre><code>##                   cyl disp  hp
+## Mazda RX4           6  160 110
+## Mazda RX4 Wag       6  160 110
+## Hornet 4 Drive      6  258 110
+## Hornet Sportabout   8  360 175
+## Valiant             6  225 105
+## Duster 360          8  360 245</code></pre>
+</div>
 </div>
 </div>
 </div>

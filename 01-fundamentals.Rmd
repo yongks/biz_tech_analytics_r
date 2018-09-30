@@ -2,6 +2,10 @@
 library(knitr)
 ## global chunk option ##
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results='markup') 
+
+
+#install.packages('data.table')
+#install.packages(c('readr','ggplot2','dplyr','caret','lubridate','caTools'))
 ```
 
 # R Fundamentals {#fundamentals}
@@ -70,6 +74,540 @@ The solution is to:
 
 - Remove the problematic package folder (see where they are stored using **.libPaths()** )  
 - Reinstall the package  
+
+
+## Data Types
+Four of basic data types
+```{r results='hold'}
+typeof(1.2)   # double
+typeof(2L)    # integer
+typeof('c')   # character
+typeof(TRUE)  # logic
+typeof(F)     # logic
+```
+### Data Operation
+#### Numeric Operation
+#### Logic Operation
+
+### Special Data Types
+#### NA,NULL
+
+## Data Structure
+
+### Introduction
+
+- **scalar** - no such thing, they are considered one element vector
+- **vector** - basic data structure in R, ordered container for primitive elements, homogeneous data type
+- **matrices** - are actually vector with additional attributes
+- **array** - are actually vector with additional attributes
+- **list** - non-atomic vector, because it can hold data with different types
+- **dataframe**
+
+**Atomic**
+Variable is considered if the underlying data is basic element with the same type.
+
+### Vector
+
+#### Declaration
+
+##### Single Element Vector
+```{r results='hold'}
+v1 = 1    # double
+v2 = 1L   # integer
+v3 = 'a'
+v4 = TRUE
+```
+
+##### Multi Elements Vector
+Construct multiple element vector using **c()**
+```{r results='hold'}
+vv1 = c(1,2,3,4)
+vv2 = c(1L,2L,3L,4L) 
+vv3 = c('a','b','c')
+vv4 = c(T,T,F,F)
+```
+
+##### Combining Vector(s)
+Use **c()** to combine vectors to form a new vector
+```{r results='hold'}
+v6 = 1:3
+v7 = 4:6
+v8 = c( v6, v7, 8,9,10,11)
+v8
+```
+
+#### Characteristic
+#### is.vector
+```{r results='hold'}
+is.vector (vv1)
+```
+##### class
+Find out the underlying data types of the vector
+```{r results='hold'}
+class (vv1)
+class (vv2)
+class (vv3)
+class (vv4)
+```
+
+##### typeof
+```{r results='hold'}
+typeof(vv1)
+typeof(vv2)
+typeof(vv3)
+typeof(vv4)
+```
+
+##### is.atomic
+Atomic for vector is TRUE becasue it holds data with same type
+```{r}
+is.atomic(v1)
+```
+
+##### length
+```{r results='hold'}
+length(v1)
+length(vv1)
+```
+
+
+#### Naming
+Every element(s) in a vector can have names
+
+
+##### Naming Existing Vector
+Spacing is allowed in names
+```{r results='hold'}
+names(vv1) = c('one','two','three','f o u r')
+names(vv1)
+vv1
+```
+##### Naming A New Vector (during declaration)
+Spacing is not allowed in naming during declaration
+```{r results='hold'}
+vv5 = c(one=1, two=2, three=3, four=4)
+vv5
+```
+##### Duplicate Naming Allowed ?
+Duplicate names **is allowed** !!! But when refered, only the **first match** will be returned
+```{r}
+names(vv1) = c('one','one','one','one')
+names(vv1)
+vv1
+print(vv1['one'])
+```
+
+#### Adding and Removing Elements
+
+##### Appending and Inserting
+- **append()** return new vector. 
+- If no position specified, it will add the new elements at the end, which is similar of using **c()**
+```{r results='hold'}
+ori_vector = c('a','b','c','d')
+to_append = c('f','g')
+
+append(ori_vector, to_append)     # default append at the end
+c(ori_vector, to_append)          # has the same effect
+
+append(ori_vector, to_append, 2) # append after second element
+```
+
+##### Deleting
+- There is no deleting function available in R
+- Instead, use selection features to pick the elements needed and save it to new vector
+
+
+#### Filtering
+
+Note: Features in this section return **new vector**
+
+##### Filter by Indices
+```{r results='hold'}
+v8[1]           # single element
+v8[1:3]         # multi continuous elements
+v8[c(1,7,9)]    # multi non-continuos elements
+v8[-c(1,7,9)]   # choose all elements except 1,3,5
+```
+
+##### Filter by Names
+```{r results='hold'}
+vv5['one']               # single element selection
+vv5[c('one','three')]    # multi elements selection
+#vv5[-c('one','three')]  # exception doesn't work here !!!
+```
+
+##### Filter by Logic
+Only elements that match TRUE will be returned
+```{r results='hold'}
+v8>5
+v8[v8>5]
+
+subset(v8, v8>5) # achieve the same result as above
+```
+
+#### Sorting and Order
+
+##### Sorting
+Return a new vector with sorted elements
+```{r results='hold'}
+v9 = c(17,18,24,29,11,23,25)
+sort(v9)                     # default ascending
+sort(v9,decreasing = TRUE)   # descending
+```
+
+##### Ordering
+Ordering is different from sorting, as it return rank elements and not the actual values
+
+```{r results='hold'}
+rank = order(v9)
+rank  # rank is the order of v9
+
+v9[rank]
+```
+
+
+### Matrices
+- Matrix is rectangular collection of elements
+- Matrix can be regarded as vector with **special dimension attribute**
+- Matrix is a 2-D representation of vector
+- As with vector, all data must be homogeneous
+
+#### Matrix Declaration
+##### Convert a Vector Into Matrix
+This method reuse the variable name. It didn't return a new variable.
+```{r results='hold'}
+x = 1:8           # declare a vector variable
+dim(x) = c(2,4)   # add dimension attribute to vector
+x
+```
+##### Create Matrix From Scratch
+This method return a brand new matrix
+```{r results='hold'}
+x1 = matrix(1:8, 2, 4)               # 2 rows, 4 columns, default fill by column
+x2 = matrix(1:8, 2, 4, byrow=TRUE)   # fill by row
+x1
+x2
+```
+##### Create Matrix by Binding Two Vectors
+```{r results='hold'}
+cbind(c(1, 2, 3), c(4, 5, 6)) # column binding
+rbind(c(1, 2, 3), c(4, 5, 6)) # row binding
+```
+
+#### Characteristic
+##### str
+Matrix structure contains a hidden **'dim'** attribute.
+```{r results='hold'}
+m1 = matrix(1:8, 2, 4) 
+str(m1)
+```
+##### class, typeof, attributes
+```{r results='hold'}
+class(m1)       # data structure
+typeof(m1)      # underlying data types
+attributes(m1)  # matrix has 'dim' attributes
+```
+##### is.<atomic/vector/list/matrix>
+- Realize that matrix is vector with additional **'dim' attributes**. 
+- Although its base is vector, is.vector will return FALSE because attribute(s) exist
+```{r results='hold'}
+is.atomic(m1)   # true because homogeneous
+is.vector(m1)   # false, because it has attributes
+is.list(m1)     # false, because it is not a list
+is.matrix(m1)   # true, because it is not a matrix
+```
+##### length
+- length() returns the total elements in the matrix
+- nrow() and ncol() returns number of rows and cols of the matrix
+```{r results='hold'}
+m1 = matrix(1:8, 2, 4) 
+length(m1)   # total number of elements
+```
+##### Dimensions
+There are multiple ways to get the dimensions of matrix
+```{r results='hold'}
+m1 = matrix(1:8, 2, 4) 
+nrow(m1)     # number of rows
+ncol(m1)     # number of columns
+```
+```{r results='hold'}
+dim(m1)
+dim(m1)[1]  # rows
+dim(m1)[2]  # cols
+```
+
+#### Naming Matrix
+Matrix can have names by having **'dimnames'** attribute.
+
+##### Naming Existing Matrix
+Number of names given to the columns and rows must match. Otherwise error will be thrown
+```{r results='hold'}
+m1 = matrix(1:8, 2, 4) 
+colnames(m1) = c('col1','col2','col3','col4')
+rownames(m1) = c('row1','row2')
+m1
+str(m1)
+```
+##### Naming New Matrix
+Number of names given to the columns and rows must match. Otherwise error will be thrown
+```{r results='hold'}
+m1 = matrix(1:8, 2, 4,
+  dimnames = list(
+    c('row1','row2'),                # define row names first
+    c('col1','col2','col3','col4')   # then define col names
+  )            
+)
+m1
+str(m1)
+```
+
+
+
+#### Manipulating Matrix
+
+
+##### Combining Matrix
+##### Adding Elements
+##### Removing Elements
+##### Sorting and Ordering
+
+
+#### Filtering Matrix
+```{r results='hold'}
+m1 = matrix(1:12, 3, 4,
+  dimnames = list(
+    c('row1','row2','row3'),                # define row names first
+    c('col1','col2','col3','col4')   # then define col names
+  )            
+)
+m1
+```
+
+##### Return vector
+
+**Elements Picking**
+- Treat matrix as VECTOR !!!! Below procedure fimilar to vector
+- Element-number-x returned is counted **top-down**
+```{r results='hold'}
+m1[10]        # single element
+m1[2:5]       # continuous range of elemnts
+m1[c(1,3,7)]  # custom rnage of elements
+m1[m1<8]      # logic selection of elements
+m1[2,4]       # element at row-2, col-4
+m1['row2','col4']   # single element refered by name
+```
+
+**Single Row/Column Picking**
+Return single row as vector, notice names of columns are returned in the vector
+```{r results='hold'}
+m1[2,]       # selection by row number
+m1['row2',]  # selection by row name
+```
+
+Return single column as vector, notice names of rows are returned in the vector
+```{r results='hold'}
+m1[,4]        # selection by column number
+m1[,'col4']   # selection by column name
+```
+##### Return sub-Matrix
+```{r results='hold'}
+m1[1:2, c(2,3,4)]        # selection by number vector
+m1[c('row1','row2'),2:4] # selection by names and number vector
+```
+
+**Select Columns for All Rows**  
+Leave **row parameter empty** to include all rows
+```{r results='hold'}
+m1[, c(2,4)]            # columns selection by number vector
+m1[, c('col2','col4')]  # columns selection by name vector
+```
+Leave **col parameter empty** to include all columns
+```{r results='hold'}
+m1[2:3, ]              # rows selection by number vector
+m1[c('row2','row3'),]  # rows selection by name vector
+```
+
+##### Filter by Logic
+Applying logic expression on matrix returns **logic matrix** with inherited col and row names 
+```{r results='hold'}
+m1<=4              # rows selection by number vector
+```
+Apply logic matrix to matrix on same size, return vector for elements that matches TRUE. If logic matrix size is smaller than data matrix, then logic matrix will be **recycled**
+```{r results='hold'}
+m1[m1<=8]
+```
+
+##### Replacing Values
+Select the elements need to be modified, and assign them to new value
+```{r results='hold'}
+m2=m1              # rows selection by number vector
+m2[m2<8] = -1
+m2
+```
+
+### Factor
+- Factor is built on top of integer vector, with additional two attributes:
+    - class()
+    - levels()
+- Factor is used for categorical data
+
+#### Declaration
+Factor is created created from vector
+
+##### Create Factor from Vector
+Levels can be considered **categories**
+```{r results='hold'}
+vec = c('Aaa','Bbb','Ccc','Aaa','Aaa','Ccc','Bbb','Bbb','Aaa','Ccc')
+fac = as.factor(vec)
+fac
+```
+
+##### Create Factor with Order
+Factor can be ordered. Elements of ordered factor can be compared using numeric comparitor
+```{r results='hold'}
+speed = c(lb1="OK", lb2="Slow", lb3="Slow", lb4="OK", lb5="Fast")
+speed_fac = factor( speed, ordered=TRUE,levels=c('Slow','OK','Fast') )
+speed_fac
+speed_fac[2] < speed_fac[5]
+```
+#### Factor Characteristic
+##### str
+```{r results='hold'}
+str(fac)
+```
+##### summary
+```{r results='hold'}
+summary(fac)        # non ordered factor, output frequency table 
+summary(speed_fac)  # ordered factor are arranged from small->big, output freq table
+```
+##### class, typeof, attributes
+```{r results='hold'}
+class(fac)       # data structure
+typeof(fac)      # underlying data types
+attributes(fac)  # factor has 'level' and 'class' attributes
+```
+##### is.<atomic/vector/list/matrix>
+```{r results='hold'}
+is.atomic(fac)   # true because homogeneous
+is.vector(fac)   # false, because it has attributes
+is.list(fac)     # false, because it is not a list
+is.matrix(fac)   # false, because it is not a matrix
+```
+##### length
+Similar to vector, length() return total number of elements
+```{r results='hold'}
+length(fac)
+```
+#### Leveling
+Levels (category) of a factor can be changed after creation
+```{r results='hold'}
+fac = as.factor(c('Aaa','Bbb','Ccc','Aaa','Aaa','Ccc','Bbb','Bbb','Aaa','Ccc'))
+levels(fac)   # existing levels
+levels(fac) = c('AAA','BBB','CCC')  # change levels
+levels(fac)   # updated levels
+fac
+```
+#### Naming
+##### Naming During Creation
+- Notice incomplete label assignment during factor declaration with be given "" as label
+- However, incomplete label assignment using names() will be given NA
+```{r results='hold'}
+fac = as.factor(c(lb1='Aaa',lb2='Bbb',lb3='Ccc','Aaa','Aaa','Ccc','Bbb','Bbb','Aaa','Ccc'))
+names(fac)
+```
+##### Naming Existing Factor
+- Notice incomplete label assignment during factor declaration with be given "" as label
+- However, incomplete label assignment using names() will be given NA
+```{r results='hold'}
+fac = as.factor(c(lb1='Aaa',lb2='Bbb',lb3='Ccc','Aaa','Aaa','Ccc','Bbb','Bbb','Aaa','Ccc'))
+names(fac)
+names(fac) = c('lb1','lb2','lb3','lb4','lb5')
+names(fac)
+```
+
+#### Filtering (return Factor)
+Filtering a factor always return a new factor
+
+##### Filter by Indices
+```{r results='hold'}
+speed = c(lb1="OK", lb2="Slow", lb3="Slow", lb4="OK", lb5="Fast")
+speed_fac = factor( speed, ordered=TRUE,levels=c('Slow','OK','Fast') )
+speed_fac[2]
+speed_fac[c(2,4)]
+```
+##### Filter by Names
+```{r results='hold'}
+speed_fac['lb2']
+speed_fac[c('lb2','lb4')]
+```
+
+##### Filter by Logic
+```{r results='hold'}
+speed_fac
+speed_fac=='Slow'
+speed_fac[speed_fac=='Slow']
+```
+### List
+- List is built on top of vector, and it has no attributes (therefore is.vector is true)
+- List can contain elements different data structure (different data types as well) (therefore is.atomic is false)
+- A list can contain vectors, lists, data.frame
+- List is the base object to create other R objects
+
+
+#### Declaration
+
+##### Create Unnamed List 
+List can contain vector and lists
+```{r results='hold'}
+e1 = 10L
+e2 = c(20.3,30.4,50.5)
+e3 = 'Yong'
+e4 = c(TRUE,TRUE,FALSE,TRUE)
+sublist1 = list(20L,c('KK','SAL','WP'),c(T,T,F))
+
+lst1 = list(e1,e2,e3,e4,sublist1)
+lst1
+```
+
+##### Create Named List 
+It is recommended to give names to all elements within a list for better manageability
+```{r results='hold'}
+e1 = 10L
+e2 = c(20.3,30.4,50.5)
+e3 = 'Yong'
+e4 = c(TRUE,TRUE,FALSE,TRUE)
+sublist1 = list(20L,c('KK','SAL','WP'),c(T,T,F))
+lst2 = list(e1=e1,e2=e2,e2=e3,e4=e4,sub=sublist1)
+lst2
+```
+
+#### List Characteristic
+##### str
+```{r results='hold'}
+str(lst2)
+```
+##### summary
+```{r results='hold'}
+summary(lst1)  # unnamed list summary
+summary(lst2)  # named list summary
+```
+##### class, typeof, attributes
+```{r results='hold'}
+class(lst2)       # data structure
+typeof(lst2)      # underlying data types
+attributes(lst2)  # list has no attributes by default
+```
+##### is.<atomic/vector/list/matrix>
+```{r results='hold'}
+is.atomic(lst2)   # false, becasue list are not homogeneous
+is.vector(lst2)   # true, because it is based on vector, and it has no  attributes
+is.list(lst2)     # true, because it is a list (except names attribute)
+is.matrix(lst2)   # false, because it is not a matrix
+```
+#### Naming
+
+
+#### Filtering
 
 ## String
 

@@ -418,8 +418,8 @@ ggplot (my.df, aes(x=grp, y=dept)) +
 ## Maps
 
 ```{r}
-kl = get_map(location = 'kuala lumpur', zoom = 10)
-ggmap(kl)
+#kl = get_map(location = 'kuala lumpur', zoom = 10)
+#ggmap(kl)
 ```
 
 

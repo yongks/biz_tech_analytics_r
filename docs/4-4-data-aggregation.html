@@ -788,18 +788,18 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 <div id="grouping" class="section level4">
 <h4><span class="header-section-number">4.4.5.1</span> Grouping</h4>
 <ul>
-<li>Gourping returns all rows, with <strong>internal grouping structure</strong><br />
+<li>Grouping returns all rows, with <strong>internal grouping structure</strong><br />
 </li>
 <li>Display of tibble rows <strong>truncates automatically</strong> if too many rows. Use <code>print(tbl_df(my.tbl), n=40)</code> to display more rows (quite troublesome, but look at all the other benefits)<br />
 </li>
-<li>The internal grouping structure can be used for many types of summarization (discussed below)<br />
+<li>The internal grouping structure can be used for <strong>subsequent summarization</strong><br />
 </li>
 <li>To get the row numbers for each group, add additional column with <strong>mutate</strong> of <strong>row_number()</strong></li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d.df =<span class="st"> </span>my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com,dept, grp) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">idx =</span> <span class="kw">row_number</span>()) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">arrange</span>(com,dept,grp)
+<span class="st">  </span><span class="kw">arrange</span>(com,dept,grp) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">idx =</span> <span class="kw">row_number</span>())
 
 <span class="kw">print</span>(<span class="kw">tbl_df</span>(d.df),<span class="dt">n=</span><span class="dv">18</span>)</code></pre></div>
 <pre><code>## # A tibble: 100 x 9
@@ -865,95 +865,17 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## # ... with 19 more rows</code></pre>
 <p><strong><code>summarize()</code> reduce grouping level by one</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
-## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot;</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
-## [1] &quot;com&quot;  &quot;dept&quot;</code></pre></div>
+my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
+<pre><code>## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot; 
+## [1] &quot;com&quot;  &quot;dept&quot;</code></pre>
 <p><strong>BUT</strong> <code>count()</code> reset grouping entirely (no grouping) !!!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
 <pre><code>## NULL</code></pre>
 </div>
-<div id="in-group-row-numbering" class="section level4">
-<h4><span class="header-section-number">4.4.5.3</span> In-Group Row Numbering</h4>
-<ul>
-<li>Summarize reduce group level by one, hence n() will return the rows within the new group.<br />
-</li>
-<li>Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.<br />
-</li>
-<li><strong><code>row_number()</code></strong> dynamically assign <strong>sequential row number within the group</strong></li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="kw">row_number</span>())</code></pre></div>
-<pre><code>## # A tibble: 6 x 4
-## # Groups:   com [2]
-##   com   dept  avg.value1  rnum
-##   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;
-## 1 C1    D1          49.5     1
-## 2 C1    D2          51.1     2
-## 3 C1    D3          49.5     3
-## 4 C2    D1          49.2     1
-## 5 C2    D2          51.7     2
-## 6 C2    D3          50.6     3</code></pre>
-<p>Alternatively, <strong>mutate with <code>1:n()</code></strong> will return the same result as above. <code>n()</code> is the total number of rows within group, <code>1:n()</code> will return a sequential integer number</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>())</code></pre></div>
-<pre><code>## # A tibble: 6 x 4
-## # Groups:   com [2]
-##   com   dept  avg.value1  rnum
-##   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;
-## 1 C1    D1          49.5     1
-## 2 C1    D2          51.1     2
-## 3 C1    D3          49.5     3
-## 4 C2    D1          49.2     1
-## 5 C2    D2          51.7     2
-## 6 C2    D3          50.6     3</code></pre>
-</div>
-<div id="in-group-row-selection" class="section level4">
-<h4><span class="header-section-number">4.4.5.4</span> In-Group Row Selection</h4>
-<div id="top-n-selection" class="section level5">
-<h5><span class="header-section-number">4.4.5.4.1</span> Top-N Selection</h5>
-<p>Example below select highest occurance of <strong>prd</strong> within the group of (com,dept). It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group</p>
-<blockquote>
-<p><strong><code>top_n (n,wt)</code></strong><br />
-<span class="math inline">\(\quad\)</span> <code>n : number of rows to return</code><br />
-<span class="math inline">\(\quad\)</span> <code>wt: column to use, default order using last column</code></p>
-</blockquote>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">t1=</span><span class="kw">sum</span>(value1), <span class="dt">t2=</span><span class="kw">sum</span>(value2))</code></pre></div>
-<pre><code>## # A tibble: 29 x 5
-## # Groups:   com, dept [?]
-##    com   dept  prd      t1    t2
-##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 C1    D1    P1    143.   56.4
-##  2 C1    D1    P2     51.6  19.0
-##  3 C1    D1    P3     96.3  31.8
-##  4 C1    D1    P4    395.  151. 
-##  5 C1    D1    P5    106.   39.0
-##  6 C1    D2    P2    193.   80.6
-##  7 C1    D2    P3    302.  123. 
-##  8 C1    D2    P4    206.   73.4
-##  9 C1    D2    P5    220.   79.2
-## 10 C1    D3    P1    241.   92.8
-## # ... with 19 more rows</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">t1=</span><span class="kw">sum</span>(value1), <span class="dt">t2=</span><span class="kw">sum</span>(value2)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dt">wt=</span>t2)</code></pre></div>
-<pre><code>## # A tibble: 6 x 5
-## # Groups:   com, dept [6]
-##   com   dept  prd      t1    t2
-##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 C1    D1    P4     395. 151. 
-## 2 C1    D2    P3     302. 123. 
-## 3 C1    D3    P4     385. 157. 
-## 4 C2    D1    P1     240. 108. 
-## 5 C2    D2    P3     315. 128. 
-## 6 C2    D3    P4     211.  79.5</code></pre>
-</div>
-</div>
-<div id="in-group-summarization" class="section level4">
-<h4><span class="header-section-number">4.4.5.5</span> In-Group Summarization</h4>
+<div id="summarization" class="section level4">
+<h4><span class="header-section-number">4.4.5.3</span> Summarization</h4>
 <div id="summarize-apply-multiple-functions-to-multiple-columns" class="section level5">
-<h5><span class="header-section-number">4.4.5.5.1</span> summarize: Apply Multiple Functions to Multiple Columns</h5>
+<h5><span class="header-section-number">4.4.5.3.1</span> summarize: Apply Multiple Functions to Multiple Columns</h5>
 <p>Different functions can be applied to different variables, each return a new column</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span>
@@ -979,7 +901,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## # ... with 19 more rows</code></pre>
 </div>
 <div id="summarize_at-apply-functions-to-multiple-columns" class="section level5">
-<h5><span class="header-section-number">4.4.5.5.2</span> summarize_at: Apply Function(s) To Multiple Columns</h5>
+<h5><span class="header-section-number">4.4.5.3.2</span> summarize_at: Apply Function(s) To Multiple Columns</h5>
 <blockquote>
 <p><strong><code>summarize_at ( vars(...), funs(...) ), ...</code></strong></p>
 </blockquote>
@@ -1028,7 +950,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## # ... with 19 more rows</code></pre>
 <p>PIck <strong>range</strong> of variables by <strong>column name range</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(value2<span class="op">:</span>value3),mean) <span class="co"># col value2, value3</span></code></pre></div>
+<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(value2<span class="op">:</span>value3),mean) </code></pre></div>
 <pre><code>## # A tibble: 29 x 5
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   value2 value3
@@ -1046,7 +968,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## # ... with 19 more rows</code></pre>
 <p>Pick <strong>range</strong> of variables by <strong>column index range</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">8</span>),mean) <span class="co"># col value2, value3</span></code></pre></div>
+<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">8</span>),mean) </code></pre></div>
 <pre><code>## # A tibble: 29 x 5
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   value2 value3
@@ -1082,7 +1004,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## # ... with 19 more rows</code></pre>
 </div>
 <div id="summarize_all-apply-functions-to-all-columns" class="section level5">
-<h5><span class="header-section-number">4.4.5.5.3</span> summarize_all: Apply Function(s) to ALL Columns</h5>
+<h5><span class="header-section-number">4.4.5.3.3</span> summarize_all: Apply Function(s) to ALL Columns</h5>
 <p>This apply function(s) to all non-grouped variables</p>
 <blockquote>
 <p><strong><code>summarize_all (  funs(...) ), ...</code></strong><br />
@@ -1205,7 +1127,7 @@ Use <code>funs()</code> to supply multiple functions</p>
 ## #   value2_sd &lt;dbl&gt;, value3_sd &lt;dbl&gt;</code></pre>
 </div>
 <div id="summarize_if-apply-functions-to-all-matching-columns" class="section level5">
-<h5><span class="header-section-number">4.4.5.5.4</span> summarize_if: Apply Function(s) to All Matching Columns</h5>
+<h5><span class="header-section-number">4.4.5.3.4</span> summarize_if: Apply Function(s) to All Matching Columns</h5>
 <p><strong>Single Function To All Matching Columns</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com, dept) <span class="op">%&gt;%</span>
@@ -1242,17 +1164,95 @@ Use <code>funs()</code> to supply multiple functions</p>
 ## #   value3_sd &lt;dbl&gt;</code></pre>
 </div>
 <div id="summarize-reduce-the-grouping-level-by-one" class="section level5">
-<h5><span class="header-section-number">4.4.5.5.5</span> Summarize Reduce The Grouping Level by One</h5>
+<h5><span class="header-section-number">4.4.5.3.5</span> Summarize Reduce The Grouping Level by One</h5>
 <ul>
 <li>Each call to <code>group_by()</code> will reset group level</li>
-<li>Notice after grouping (com, dept), ‘prd’ has been removed from grouping</li>
+<li>Each call to <code>summarize()</code> will reduce group level by one</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>) <span class="co"># before summarize()</span>
-my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>) <span class="co"># first summarize()</span>
-my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>) <span class="co"># second summarize()</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>) 
+my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>) 
+my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>) </code></pre></div>
 <pre><code>## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot; 
 ## [1] &quot;com&quot;  &quot;dept&quot;
 ## [1] &quot;com&quot;</code></pre>
+</div>
+</div>
+<div id="in-group-row-numbering" class="section level4">
+<h4><span class="header-section-number">4.4.5.4</span> In-Group Row Numbering</h4>
+<ul>
+<li>Summarize reduce group level by one, hence n() will return the rows within the new group.<br />
+</li>
+<li>Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.<br />
+</li>
+<li><strong><code>row_number()</code></strong> dynamically assign <strong>sequential row number within the group</strong></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="kw">row_number</span>())</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+## # Groups:   com [2]
+##   com   dept  avg.value1  rnum
+##   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;
+## 1 C1    D1          49.5     1
+## 2 C1    D2          51.1     2
+## 3 C1    D3          49.5     3
+## 4 C2    D1          49.2     1
+## 5 C2    D2          51.7     2
+## 6 C2    D3          50.6     3</code></pre>
+<p>Alternatively, <strong>mutate with <code>1:n()</code></strong> will return the same result as above. <code>n()</code> is the total number of rows within group, <code>1:n()</code> will return a sequential integer number</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+## # Groups:   com [2]
+##   com   dept  avg.value1  rnum
+##   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;
+## 1 C1    D1          49.5     1
+## 2 C1    D2          51.1     2
+## 3 C1    D3          49.5     3
+## 4 C2    D1          49.2     1
+## 5 C2    D2          51.7     2
+## 6 C2    D3          50.6     3</code></pre>
+</div>
+<div id="in-group-row-selection" class="section level4">
+<h4><span class="header-section-number">4.4.5.5</span> In-Group Row Selection</h4>
+<div id="top-n-selection" class="section level5">
+<h5><span class="header-section-number">4.4.5.5.1</span> Top-N Selection</h5>
+<p>Example below select highest occurance of <strong>prd</strong> within the group of (com,dept). It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group</p>
+<blockquote>
+<p><strong><code>top_n (n,wt)</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>n : number of rows to return</code><br />
+<span class="math inline">\(\quad\)</span> <code>wt: column to use, default order using last column</code></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">t1=</span><span class="kw">sum</span>(value1), <span class="dt">t2=</span><span class="kw">sum</span>(value2))</code></pre></div>
+<pre><code>## # A tibble: 29 x 5
+## # Groups:   com, dept [?]
+##    com   dept  prd      t1    t2
+##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 C1    D1    P1    143.   56.4
+##  2 C1    D1    P2     51.6  19.0
+##  3 C1    D1    P3     96.3  31.8
+##  4 C1    D1    P4    395.  151. 
+##  5 C1    D1    P5    106.   39.0
+##  6 C1    D2    P2    193.   80.6
+##  7 C1    D2    P3    302.  123. 
+##  8 C1    D2    P4    206.   73.4
+##  9 C1    D2    P5    220.   79.2
+## 10 C1    D3    P1    241.   92.8
+## # ... with 19 more rows</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">t1=</span><span class="kw">sum</span>(value1), <span class="dt">t2=</span><span class="kw">sum</span>(value2)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">top_n</span>(<span class="dt">n=</span><span class="dv">1</span>, <span class="dt">wt=</span>t2)</code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+## # Groups:   com, dept [6]
+##   com   dept  prd      t1    t2
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 C1    D1    P4     395. 151. 
+## 2 C1    D2    P3     302. 123. 
+## 3 C1    D3    P4     385. 157. 
+## 4 C2    D1    P1     240. 108. 
+## 5 C2    D2    P3     315. 128. 
+## 6 C2    D3    P4     211.  79.5</code></pre>
 </div>
 </div>
 </div>

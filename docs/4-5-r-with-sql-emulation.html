@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="4-data-summarization.html">
-<link rel="next" href="4-2-sample-data-2.html">
+<link rel="prev" href="4-4-data-aggregation.html">
+<link rel="next" href="5-data-preprocessing.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -505,162 +505,41 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="library-2" class="section level2">
-<h2><span class="header-section-number">4.1</span> Library</h2>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>Package</th>
-<th>Function</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>Base R</td>
-<td>table</td>
-<td>Generate frequency table</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>ftable</td>
-<td>Generate flat table</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>prop.table</td>
-<td>Generate probability table out from table or ftable</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>addmargins</td>
-<td>Add margin to table or ftable</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>tapply</td>
-<td>Produce aggregation with one level of grouping</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>aggregate</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>dplyr</td>
-<td>select</td>
-<td>select the columns</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>filter</td>
-<td>filter rows based on criteria</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>group_by</td>
-<td>create a tiblle table with group columns</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>ungroup</td>
-<td>remvoe group columns</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>summarize</td>
-<td>specify the columns and functions to summarize</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>summarize_at</td>
-<td>specify the columns to be summarized</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>summarize_if</td>
-<td>conditionally choose the columns to be summarized</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>summarize_all</td>
-<td>summarize all columns, be it numeric or not</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>count</td>
-<td>group and count the number of rows within each group</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>arrange</td>
-<td>in-group sorting of rows</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>slice</td>
-<td>in-group row selection</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>mutate</td>
-<td>create a new column</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>tidyr</td>
-<td>gather</td>
-<td>Gather columns into rows</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>spread</td>
-<td>Reverse of gather()</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>seperate</td>
-<td>Seperate one column into multiple columns</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>unite</td>
-<td>Reverse of seperate()</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(tidyr)</code></pre></div>
+<div id="r-with-sql-emulation" class="section level2">
+<h2><span class="header-section-number">4.5</span> R with SQL Emulation</h2>
+<p>Running SQL statement on existing data.frame are useful to derive summarization and aggregation for someone who are familiar with SQL.</p>
+<div id="library-3" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> Library</h3>
+<p><strong>sqldf</strong> library is required. It has dependency on gsubfn, proto and RSQLite packages.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sqldf)</code></pre></div>
 </div>
+<div id="run-the-code" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Run The Code</h3>
+<p>R data.frame variable is specified in <strong>‘FROM’</strong> clause.<br />
+Note that <code>.</code> is a SQL operator, any variable with ‘.’ must be contained within <strong>single quote</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqldf</span>(<span class="st">&quot;</span>
+<span class="st">  SELECT com, dept, count(*) AS qty, AVG(value1) AS v1_mean, SUM(value2) AS v2_sum</span>
+<span class="st">  FROM &#39;my.df&#39;  </span>
+<span class="st">  GROUP BY com, dept</span>
+<span class="st">&quot;</span>)</code></pre></div>
+<pre><code>##   com dept qty  v1_mean   v2_sum
+## 1  C1   D1  16 49.52605 297.2627
+## 2  C1   D2  18 51.11388 355.7833
+## 3  C1   D3  21 49.47453 411.6937
+## 4  C2   D1  15 49.18417 306.7140
+## 5  C2   D2  18 51.68186 370.1092
+## 6  C2   D3  12 50.57559 237.5263</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="4-data-summarization.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="4-2-sample-data-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="4-4-data-aggregation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="5-data-preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

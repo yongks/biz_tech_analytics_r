@@ -16,7 +16,6 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 |   |                      | addmargins    | Add margin to table or ftable                       |
 |   |                      | tapply        | Produce aggregation with one level of grouping      |
 |   |                      | aggregate     |       |
-
 | 2 | dplyr                | select        | select the columns                                 |
 |   |                      | filter        | filter rows based on criteria                      |
 |   |                      | group_by      | create a tiblle table with group columns           |
@@ -29,7 +28,6 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 |   |                      | arrange       | in-group sorting of rows |
 |   |                      | slice         | in-group row selection   |
 |   |                      | mutate        | create a new column      |
-
 | 3 | tidyr                | gather        | Gather columns into rows |
 |   |                      | spread        | Reverse of gather()      |
 |   |                      | seperate      | Seperate one column into multiple columns |
@@ -73,10 +71,10 @@ str(my.df)
 
 | Dimension | is.atomic | is.vector | is.matrix | is.array | is.table |
 |:---------:|:---------:|:---------:|:---------:|:--------:|:--------:|
-| t1        |     T     |     F     |     F     |     T    |     T    |
-| t2        |     T     |     F     |     T     |     T    |     T    |
-| t3        |     T     |     F     |     F     |     T    |     T    |
-| t4        |     T     |     F     |     F     |     T    |     T    |
+| 1         |     T     |     F     |     F     |     T    |     T    |
+| 2         |     T     |     F     |     T     |     T    |     T    |
+| 3         |     T     |     F     |     F     |     T    |     T    |
+| 4         |     T     |     F     |     F     |     T    |     T    |
 
 `ftable` is technically a **matrix** with two dimensional data (it flatten multiple dimension data). It has below data type characteristic.
 
@@ -88,41 +86,83 @@ str(my.df)
 | 4         |     T     |     F     |     T     |     T    |     F    |
 
 ### Single Dimension Data
+
+#### Base R
+Supply `table(x)` where `x` is a factor. If `x` is not factor, it will be coerce to factor  
+The result is 1-D  with frequency count as number, and each category as names
 ```{r results='markup'}
 t1 = table( my.df$com )
 t1
-str(t1)
+names(t1)
+is.array(t1)
+```
+#### dplyr
+
+```{r results='hold'}
+my.df %>% group_by(com) %>% summarize(n())
+my.df %>% group_by(com) %>% tally # tally is wrapper for summarize(n())
+my.df %>% count(com)  # count is a wrapper for group_by and tally
 ```
 
 ### Two Dimension Data
-```{r results='markup'}
+
+#### Base R
+Supply `table(x,y)` where `x,y` are factors. If `x,y` is not factor, it will be coerce to factor  
+Frequency table for two dimensional variables is a  **2-D matrix/array**
+```{r results='hold'}
 t2 = table( my.df$com, my.df$dept )
 t2
-str(t2)
+is.matrix(t2)
+dim(t2)
+colnames(t2)
+rownames(t2)
+```
+
+#### dplyr with tidyr
+Supply `dplyr::group_by` with two dimensional variables. Note that `count()` is a short form for `group_by()` and `summarize()`. However, it is **not possibel to rename column n** using `count()`
+```{r results='markup'}
+my.df %>% group_by(com,dept) %>% tally
+my.df %>% count(com,dept) # count is wrapper for group_by and tally
+my.df %>% count(com,dept) %>% spread(dept,n) # spread com into column
 ```
 
 ### Three Dimension Data
-When table contain three or more dimension, use `ftable (flat table)` to put multi dimension table into one flat output
+#### Base R
+3-D frequency table is a 3-D array.
+For3-D table, 2-D table is presented for each 3rd dimension data
 ```{r results='markup'}
-t3 = table( my.df$com, my.df$dept, my.df$grp )
+t3 = table( my.df$com, my.df$dept, my.df$grp )  #last dimension is grp
+dim(t3)
 t3
-str(t3)
+rownames(t3)
+colnames(t3)
+```
+
+Alternatively, use `ftable()` to flatten 3-D table above. **Last dimension** is always presented at column
+```{r results='markup'}
 f3 = ftable( t3 )
 f3
 str(f3)
 ```
-
-### Four Dimension Data
-When table contain three or more dimension, use `ftable (flat table)` to put multi dimension table into one flat output
-```{r results='markup', class.source='bg-success', class.output='bg-info'}
-t4 = table( my.df$com, my.df$dept, my.df$grp, my.df$team )
-t4
-str(t4)
-f4 = ftable( t4 )
-f4
-str(f4)
+#### dplyr
+The result of dplyr on multi-level of grouping is similar to flatten table using `ftable()`
+```{r results='markup'}
+my.df %>% group_by(com, dept, grp ) %>% tally
+my.df %>% group_by(com, dept, grp ) %>% tally %>% spread(grp,n)
 ```
 
+### Four Dimension Data
+When table contain three or more dimension, use `ftable (flat table)` to put multi dimension table into one flat output. **Last dimension** is always presented at column
+```{r results='markup', class.source='bg-success', class.output='bg-info'}
+t4 = table( my.df$com, my.df$dept, my.df$grp, my.df$team )  # last dimension is team
+f4 = ftable( t4 )
+f4
+```
+#### dplyr
+The result of dplyr on multi-level of grouping is similar to flatten table using ftable()
+```{r results='markup'}
+my.df %>% group_by(com, dept, grp, team ) %>% summarize(freq=n())
+```
 ### Making Table Proportion
 
 `prop.table` **converts** `table` or `ftable` object into proportion. It can calculate table-wise, column-wise or row-wise proportion.  
@@ -193,15 +233,17 @@ addmargins( prop.table( f4 ))
 
 ## Data Aggregation
 
-This chapter explore multiple methods to group data columns and computes value within groups:  
+This chapter explore multiple methods to group data and computes value within groups:  
 
 1. tapply
 2. aggregate (10x slower than apply)
 3. dplyr and tidyr, a much intuitive tools
 
-### tapply
+### Single Dimension
 
-`tapply` is quick and fast way to produce aggregation with **ONE level of grouping**.   
+#### Base R
+
+##### tapply
 
 > **`tapply ( X, INDEX, FUN, na.rm = FALSE )`**  
 > $\quad$ ` X = value vector`  
@@ -214,21 +256,62 @@ This chapter explore multiple methods to group data columns and computes value w
 - If there are **`<NA>`** in the vector X, some FUN may fail to return value, such as mean, sum.  So it is essential to specify **`na.rm = TRUE`** in these cases  
 - Group identifier will be used as column name (accessible through **`names()`**)  
 
-#### FUN That Returns Vector 
-
-```{r results='markup'}
-t1 = tapply(my.df$value1, my.df$com, FUN=mean)
+```{r results='hold'}
+t1 = tapply(my.df$value1, my.df$com, mean)
 t1
 names( t1 )
 ```
 
-#### FUN That Returns Non-Vector -  output is list
+**FUN That Returns Non-Vector -  output is list**
 
 ```{r results='markup'}
 t2 = tapply(my.df$value1, my.df$com, FUN=summary)
 t2
 names( t2 )
 ```
+
+#### dplyr
+
+```{r results='markup'}
+my.df %>% group_by(com) %>% summarize(v1_avg=mean(value1))
+```
+### Two Dimension
+
+#### Base R
+##### tapply
+Wrap multiple categorical alike variables in a list for multi level grouping
+```{r results='hold'}
+t3 = tapply(my.df$value1, list(my.df$com, my.df$dept), mean)
+t3
+rownames(t3)
+colnames(t3)
+dim(t3)
+is.matrix(t3)
+```
+##### dplyr
+```{r results='hold'}
+my.df %>% group_by(com,dept) %>% summarize(v1_avg=mean(value1))
+my.df %>% group_by(com,dept) %>% summarize(v1_avg=mean(value1)) %>% spread(dept,v1_avg)
+```
+
+### Three Dimension
+
+#### Base R
+##### tapply
+```{r results='hold'}
+t4 = tapply(my.df$value1, list(my.df$com, my.df$dept, my.df$grp), mean)
+t4
+rownames(t4)
+colnames(t4)
+dim(t4)
+is.matrix(t4)
+```
+#### dplyr
+```{r results='hold'}
+my.df %>% group_by(com,dept,grp) %>% summarize(v1_avg=mean(value1))
+my.df %>% group_by(com,dept,grp) %>% summarize(v1_avg=mean(value1)) %>% spread(dept,v1_avg)
+```
+
 
 
 ### aggretate - base R
@@ -297,9 +380,9 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 # aggregate(x = my.df[, 4:5], by = my.df[, 1:2], FUN = mean) # produce similar result as above
 ```
 
-## dplyr
+### dplyr
 
-### Grouping
+#### Grouping
 - Gourping returns all rows, with **internal grouping structure**  
 - Display of tibble rows **truncates automatically** if too many rows. Use `print(tbl_df(my.tbl), n=40)` to display more rows (quite troublesome, but look at all the other benefits)  
 - The internal grouping structure can be used for many types of summarization (discussed below)  
@@ -317,7 +400,7 @@ Verify group levels in `attr(*, "vars")`
 attr(d.df, 'vars')
 ```
 
-### Counting
+#### Frequency Counting
 **`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group.  
 ```{r}
 d.df = my.df %>%
@@ -337,7 +420,7 @@ attr(d.df, 'vars')
 
 ```
 
-### In-Group Row Numbering
+#### In-Group Row Numbering
 - Summarize reduce group level by one, hence n() will return the rows within the new group.  
 - Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.  
 ```{r}
@@ -345,11 +428,10 @@ d.df = my.df %>%
   group_by(com,dept,prd) %>%
   summarize(avg.value1=mean(value1)) %>%
   mutate (c = 1:n())
-
 d.df
 ```
 
-### In-Group Row Selection
+#### In-Group Row Selection
 Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group.  
 ```{r}
 my.df %>%
@@ -357,10 +439,10 @@ my.df %>%
   slice(which.max(n))
 ```
 
-### In-Group Summarization
+#### In-Group Summarization
 
-#### Summarize Specific Columns, Mix Functions
-Many functions can be applied that returns a single value, to be assigned as new column.
+##### summarize: Apply Multiple Functions to Multiple Columns
+Different functions can be applied to different variables, each return a new column
 ```{r}
 d.df = my.df %>%
   group_by(com, dept, prd) %>%
@@ -373,55 +455,86 @@ d.df = my.df %>%
 d.df
 ```
 
-#### Summarize Specific Columns, with Single Function  
+##### summarize_at: Apply Function(s) To Multiple Columns
+
+> **`summarize_at ( vars(...), funs(...) ), ...`**  
+> $\quad$ ` Use vars() to specify multiple variables: vars(7:9), vars(7,8,9), vars('col1','col3','col5'), vars(col1:col3)`
+> $\quad$ ` Use funs() to specify multiple functions: funs(func1,func2,func3)`  
+> $\quad$ ` ... : additional parameters to be supplied to funs`  
+
+Pick variables by their **names**
 ```{r}
 my.df %>%
   group_by(com, dept, prd) %>%
-  summarise_at(c('value2', 'value3'), mean)
+  summarise_at(vars('value2', 'value3'), mean, na.rm=T)
+```
+Pick variables by their **index** number
+```{r}
+my.df %>%
+  group_by(com, dept, prd) %>%
+  summarise_at(vars(7,8), mean)
+```
+PIck **range** of variables by **column name range**
+```{r results='hold'}
+my.df %>% group_by(com, dept, prd) %>% summarise_at(vars(value2:value3),mean) # col value2, value3
+```
+Pick **range** of variables by **column index range**
+```{r results='hold'}
+my.df %>% group_by(com, dept, prd) %>% summarise_at(vars(7:8),mean) # col value2, value3
+```
+**Multiple Functions to Multiple Columns**
+```{r results='hold'}
+my.df %>% group_by(com, dept, prd) %>% summarise_at(vars('value1','value2'),funs(mean,sd), na.rm=T)
 ```
 
-#### Summarize All Columns, with Single Function  
+##### summarize_all: Apply Function(s) to ALL Columns
+This apply function(s) to all non-grouped variables
+> **`summarize_all (  funs(...) ), ...`**  
+> $\quad$ ` Use funs() to specify multiple functions: funs(func1,func2,func3)`  
+> $\quad$ ` ... : additional parameters to be supplied to funs`  
+
 Notice that each column whin the group will be summarized with one more functions. This includes columns which are NOT numeric, resulting warnings and NA.  
-```{r, warning=F}
+
+**Single Function to All Variables**  
+If only one function, `funs()` is not required.  
+Notice below non-grouped variable **prd** has been 'mean' but produced NA since it is non-numeric
+```{r,results='hold' }
 my.df %>%
-  group_by(com, dept, prd) %>%
-  summarise_all(mean)
+  group_by(com, dept, grp, team) %>%
+  summarise_all(mean, na.rm=T)
 ```
 
-#### Summarize Specified Columns, with Single Function
-```{r}
+**Multiple Functions to All Variables**  
+Use `funs()` to supply multiple functions
+```{r,results='hold' }
 my.df %>%
-  group_by(com, dept, prd) %>%
-  summarise_at(c('value2','value3'),mean)
+  group_by(com, dept) %>%
+  summarise_all(funs(mean,sd), na.rm=T)
 ```
 
-#### Summarize Series of Columns, with Single Function
-Use **`vars()`** to select the sequence of variable names in colon **`:`**  
-```{r}
+##### summarize_if: Apply Function(s) to All Matching Columns
+**Single Function To All Matching Columns**
+```{r,results='hold' }
 my.df %>%
-  group_by(com, dept, prd) %>%
-  summarise_at(vars(value1:value3),mean)
+  group_by(com, dept) %>%
+  summarise_if(is.numeric, mean, na.rm=T)
 ```
 
-#### Summarize Numeric Columns, with Single Function
-```{r}
-my.df %>%
-  group_by(com, dept, prd) %>%
-  summarise_if(is.numeric,mean)
-```
-
-#### Summarize with Multiple Functions
+**Multiple Functions To All Matching Columns**
 Any of the above summarize can combine with  **`funs()`** to specify multiple functions.  
-```{r}
+```{r,results='hold' }
 my.df %>%
   group_by(com, dept, prd) %>%
   summarise_if(is.numeric, funs(mean,sd))
 ```
 
-#### Summarize Reduce The Grouping Level by One
-```{r}
-### result in grouping of (com, dept), 'prd' has been removed from grouping
-attr(d.df, 'vars')
+##### Summarize Reduce The Grouping Level by One
+- Each call to `group_by()` will reset group level
+- Notice after grouping (com, dept), 'prd' has been removed from grouping
+```{r,results='hold' }
+my.df %>% group_by(com,dept,grp) %>% attr('vars') # before summarize()
+my.df %>% group_by(com,dept,grp) %>% summarize(n()) %>% attr('vars') # first summarize()
+my.df %>% group_by(com,dept,grp) %>% summarize(n()) %>% summarize(n()) %>% attr('vars') # second summarize()
 ```
 
 

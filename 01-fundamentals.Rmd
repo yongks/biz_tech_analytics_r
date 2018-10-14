@@ -845,6 +845,12 @@ df = mtcars[, selected_cols]
 head(df)
 ```
 
+#### Row Sorting and Ordering
+
+```{r}
+df = sort()
+```
+
 #### Row Filtering
 
 ##### Logical Subseting

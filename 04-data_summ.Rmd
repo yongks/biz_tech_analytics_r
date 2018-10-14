@@ -405,21 +405,20 @@ attr(d.df, 'vars')
 
 #### Frequency Counting
 
-**`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group. 
+**`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group 
 ```{r, collapse=T}
 my.df %>% count(com, dept, prd)
 ```
 
-`count()` is shorthand for group_by and summarize
+**`count()` is shorthand for group_by and summarize**
 ```{r, collapse=T}
 my.df %>% group_by(com, dept, prd) %>% summarize(count = n())
 ```
 
-`summarize()` reduce grouping level by one
-```{r, collapse=T}
+**`summarize()` reduce grouping level by one**
+```{r, result='hold'}
 my.df %>% group_by(com, dept, grp)%>% attr('vars')
 my.df %>% group_by(com, dept, grp) %>% summarize(n()) %>% attr('vars')
-my.df %>% count(com, dept, grp) %>% attr('vars')
 ```
 
 **BUT** `count()` reset grouping entirely (no grouping) !!!

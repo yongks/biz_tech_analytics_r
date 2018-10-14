@@ -830,7 +830,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 </div>
 <div id="frequency-counting" class="section level4">
 <h4><span class="header-section-number">4.4.5.2</span> Frequency Counting</h4>
-<p><strong><code>count()</code></strong> groups and provide additional column <strong><code>n</code></strong>, which counts the number of rows within the group.</p>
+<p><strong><code>count()</code></strong> groups and provide additional column <strong><code>n</code></strong>, which counts the number of rows within the group</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, prd)
 ## # A tibble: 29 x 4
 ##    com   dept  prd       n
@@ -846,7 +846,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ##  9 C1    D2    P5        4
 ## 10 C1    D3    P1        5
 ## # ... with 19 more rows</code></pre></div>
-<p><code>count()</code> is shorthand for group_by and summarize</p>
+<p><strong><code>count()</code> is shorthand for group_by and summarize</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())
 ## # A tibble: 29 x 4
 ## # Groups:   com, dept [?]
@@ -863,13 +863,11 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ##  9 C1    D2    P5        4
 ## 10 C1    D3    P1        5
 ## # ... with 19 more rows</code></pre></div>
-<p><code>summarize()</code> reduce grouping level by one</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
-## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot;
-my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
-## [1] &quot;com&quot;  &quot;dept&quot;
-my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
-## NULL</code></pre></div>
+<p><strong><code>summarize()</code> reduce grouping level by one</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
+<pre><code>## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
+<pre><code>## [1] &quot;com&quot;  &quot;dept&quot;</code></pre>
 <p><strong>BUT</strong> <code>count()</code> reset grouping entirely (no grouping) !!!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
 ## NULL</code></pre></div>

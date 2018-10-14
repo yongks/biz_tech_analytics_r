@@ -864,10 +864,10 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## 10 C1    D3    P1        5
 ## # ... with 19 more rows</code></pre>
 <p><strong><code>summarize()</code> reduce grouping level by one</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
-<pre><code>## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
-<pre><code>## [1] &quot;com&quot;  &quot;dept&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
+## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot;</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
+## [1] &quot;com&quot;  &quot;dept&quot;</code></pre></div>
 <p><strong>BUT</strong> <code>count()</code> reset grouping entirely (no grouping) !!!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
 <pre><code>## NULL</code></pre>
@@ -895,7 +895,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## 4 C2    D1          49.2     1
 ## 5 C2    D2          51.7     2
 ## 6 C2    D3          50.6     3</code></pre>
-<p>Alternatively, mutate with 1:n() will return the same result as above. <code>n()</code> is the total number of rows within group, <code>1:n()</code> will return a sequential integer number</p>
+<p>Alternatively, <strong>mutate with <code>1:n()</code></strong> will return the same result as above. <code>n()</code> is the total number of rows within group, <code>1:n()</code> will return a sequential integer number</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
@@ -915,8 +915,12 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 <h4><span class="header-section-number">4.4.5.4</span> In-Group Row Selection</h4>
 <div id="top-n-selection" class="section level5">
 <h5><span class="header-section-number">4.4.5.4.1</span> Top-N Selection</h5>
-<p>Example below select highest occurance of <strong>prd</strong> within the group of (com,dept). It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group. &gt; <strong><code>top_n (n,wt)</code></strong><br />
-&gt; <span class="math inline">\(\quad\)</span> <code>n : number of rows to return</code> &gt; <span class="math inline">\(\quad\)</span> <code>wt: column to use, default order using last column</code></p>
+<p>Example below select highest occurance of <strong>prd</strong> within the group of (com,dept). It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group</p>
+<blockquote>
+<p><strong><code>top_n (n,wt)</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>n : number of rows to return</code><br />
+<span class="math inline">\(\quad\)</span> <code>wt: column to use, default order using last column</code></p>
+</blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com,dept,prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">t1=</span><span class="kw">sum</span>(value1), <span class="dt">t2=</span><span class="kw">sum</span>(value2))</code></pre></div>
 <pre><code>## # A tibble: 29 x 5
 ## # Groups:   com, dept [?]
@@ -951,15 +955,13 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 <div id="summarize-apply-multiple-functions-to-multiple-columns" class="section level5">
 <h5><span class="header-section-number">4.4.5.5.1</span> summarize: Apply Multiple Functions to Multiple Columns</h5>
 <p>Different functions can be applied to different variables, each return a new column</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d.df =<span class="st"> </span>my.df <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise</span>( <span class="dt">avg_value1 =</span> <span class="kw">mean</span>(value1),
              <span class="dt">min_value2 =</span> <span class="kw">min</span>(value2),
              <span class="dt">max_value3 =</span> <span class="kw">max</span>(value3),
              <span class="dt">n.team =</span> <span class="kw">n_distinct</span>(team),
-             <span class="dt">count =</span> <span class="kw">n</span>())
-
-d.df</code></pre></div>
+             <span class="dt">count =</span> <span class="kw">n</span>())</code></pre></div>
 <pre><code>## # A tibble: 29 x 8
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   avg_value1 min_value2 max_value3 n.team count
@@ -979,8 +981,11 @@ d.df</code></pre></div>
 <div id="summarize_at-apply-functions-to-multiple-columns" class="section level5">
 <h5><span class="header-section-number">4.4.5.5.2</span> summarize_at: Apply Function(s) To Multiple Columns</h5>
 <blockquote>
-<p><strong><code>summarize_at ( vars(...), funs(...) ), ...</code></strong><br />
-<span class="math inline">\(\quad\)</span> <code>Use vars() to specify multiple variables: vars(7:9), vars(7,8,9), vars('col1','col3','col5'), vars(col1:col3)</code> <span class="math inline">\(\quad\)</span> <code>Use funs() to specify multiple functions: funs(func1,func2,func3)</code><br />
+<p><strong><code>summarize_at ( vars(...), funs(...) ), ...</code></strong></p>
+</blockquote>
+<blockquote>
+<p><span class="math inline">\(\quad\)</span> <code>Use vars() to specify multiple variables: vars(7:9), vars(7,8,9), vars('col1','col3','col5'), vars(col1:col3)</code><br />
+<span class="math inline">\(\quad\)</span> <code>Use funs() to specify multiple functions: funs(func1,func2,func3)</code><br />
 <span class="math inline">\(\quad\)</span> <code>... : additional parameters to be supplied to funs</code></p>
 </blockquote>
 <p>Pick variables by their <strong>names</strong></p>
@@ -1022,7 +1027,8 @@ d.df</code></pre></div>
 ## 10 C1    D3    P1      18.6   5.57
 ## # ... with 19 more rows</code></pre>
 <p>PIck <strong>range</strong> of variables by <strong>column name range</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(value2<span class="op">:</span>value3),mean) <span class="co"># col value2, value3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(value2<span class="op">:</span>value3),mean) <span class="co"># col value2, value3</span></code></pre></div>
 <pre><code>## # A tibble: 29 x 5
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   value2 value3
@@ -1039,7 +1045,8 @@ d.df</code></pre></div>
 ## 10 C1    D3    P1      18.6   5.57
 ## # ... with 19 more rows</code></pre>
 <p>Pick <strong>range</strong> of variables by <strong>column index range</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">8</span>),mean) <span class="co"># col value2, value3</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="dv">7</span><span class="op">:</span><span class="dv">8</span>),mean) <span class="co"># col value2, value3</span></code></pre></div>
 <pre><code>## # A tibble: 29 x 5
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   value2 value3
@@ -1056,7 +1063,8 @@ d.df</code></pre></div>
 ## 10 C1    D3    P1      18.6   5.57
 ## # ... with 19 more rows</code></pre>
 <p><strong>Multiple Functions to Multiple Columns</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="st">&#39;value1&#39;</span>,<span class="st">&#39;value2&#39;</span>),<span class="kw">funs</span>(mean,sd), <span class="dt">na.rm=</span>T)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise_at</span>(<span class="kw">vars</span>(<span class="st">&#39;value1&#39;</span>,<span class="st">&#39;value2&#39;</span>),<span class="kw">funs</span>(mean,sd), <span class="dt">na.rm=</span>T)</code></pre></div>
 <pre><code>## # A tibble: 29 x 7
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   value1_mean value2_mean value1_sd value2_sd
@@ -1075,9 +1083,12 @@ d.df</code></pre></div>
 </div>
 <div id="summarize_all-apply-functions-to-all-columns" class="section level5">
 <h5><span class="header-section-number">4.4.5.5.3</span> summarize_all: Apply Function(s) to ALL Columns</h5>
-<p>This apply function(s) to all non-grouped variables &gt; <strong><code>summarize_all (  funs(...) ), ...</code></strong><br />
-&gt; <span class="math inline">\(\quad\)</span> <code>Use funs() to specify multiple functions: funs(func1,func2,func3)</code><br />
-&gt; <span class="math inline">\(\quad\)</span> <code>... : additional parameters to be supplied to funs</code></p>
+<p>This apply function(s) to all non-grouped variables</p>
+<blockquote>
+<p><strong><code>summarize_all (  funs(...) ), ...</code></strong><br />
+<span class="math inline">\(\quad\)</span> <code>Use funs() to specify multiple functions: funs(func1,func2,func3)</code><br />
+<span class="math inline">\(\quad\)</span> <code>... : additional parameters to be supplied to funs</code></p>
+</blockquote>
 <p>Notice that each column whin the group will be summarized with one more functions. This includes columns which are NOT numeric, resulting warnings and NA.</p>
 <p><strong>Single Function to All Variables</strong><br />
 If only one function, <code>funs()</code> is not required.<br />
@@ -1174,125 +1185,24 @@ Notice below non-grouped variable <strong>prd</strong> has been ‘mean’ but p
 <p><strong>Multiple Functions to All Variables</strong><br />
 Use <code>funs()</code> to supply multiple functions</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(com, dept) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(com, dept, grp,team, prd) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarise_all</span>(<span class="kw">funs</span>(mean,sd), <span class="dt">na.rm=</span>T)</code></pre></div>
-<pre><code>## Warning in mean.default(grp, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(grp, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(grp, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(grp, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(grp, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(grp, na.rm = TRUE): argument is not numeric or
-## logical: returning NA</code></pre>
-<pre><code>## Warning in mean.default(team, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(team, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(team, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(team, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(team, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(team, na.rm = TRUE): argument is not numeric or
-## logical: returning NA</code></pre>
-<pre><code>## Warning in mean.default(prd, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(prd, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(prd, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(prd, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(prd, na.rm = TRUE): argument is not numeric or
-## logical: returning NA
-
-## Warning in mean.default(prd, na.rm = TRUE): argument is not numeric or
-## logical: returning NA</code></pre>
-<pre><code>## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion
-
-## Warning in var(if (is.vector(x) || is.factor(x)) x else as.double(x), na.rm
-## = na.rm): NAs introduced by coercion</code></pre>
-<pre><code>## # A tibble: 6 x 14
-## # Groups:   com [?]
-##   com   dept  grp_mean team_mean prd_mean value1_mean value2_mean
-##   &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-## 1 C1    D1          NA        NA       NA        49.5        18.6
-## 2 C1    D2          NA        NA       NA        51.1        19.8
-## 3 C1    D3          NA        NA       NA        49.5        19.6
-## 4 C2    D1          NA        NA       NA        49.2        20.4
-## 5 C2    D2          NA        NA       NA        51.7        20.6
-## 6 C2    D3          NA        NA       NA        50.6        19.8
-## # ... with 7 more variables: value3_mean &lt;dbl&gt;, grp_sd &lt;dbl&gt;,
-## #   team_sd &lt;dbl&gt;, prd_sd &lt;dbl&gt;, value1_sd &lt;dbl&gt;, value2_sd &lt;dbl&gt;,
-## #   value3_sd &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 66 x 11
+## # Groups:   com, dept, grp, team [?]
+##    com   dept  grp   team  prd   value1_mean value2_mean value3_mean
+##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+##  1 C1    D1    G1    T1    P1           51.9        19.9        4.11
+##  2 C1    D1    G1    T1    P3           49.8        13.6        6.04
+##  3 C1    D1    G1    T1    P4           56.5        21.0        4.25
+##  4 C1    D1    G1    T2    P1           45.7        18.3        4.22
+##  5 C1    D1    G1    T2    P2           51.6        19.0        3.83
+##  6 C1    D1    G1    T2    P3           46.5        18.3        3.31
+##  7 C1    D1    G1    T2    P4           45.6        19.5        7.01
+##  8 C1    D1    G2    T1    P4           48.1        17.0        4.55
+##  9 C1    D1    G2    T1    P5           51.7        18.5        3.70
+## 10 C1    D1    G2    T2    P4           47.1        18.1        4.18
+## # ... with 56 more rows, and 3 more variables: value1_sd &lt;dbl&gt;,
+## #   value2_sd &lt;dbl&gt;, value3_sd &lt;dbl&gt;</code></pre>
 </div>
 <div id="summarize_if-apply-functions-to-all-matching-columns" class="section level5">
 <h5><span class="header-section-number">4.4.5.5.4</span> summarize_if: Apply Function(s) to All Matching Columns</h5>

@@ -416,8 +416,10 @@ my.df %>% group_by(com, dept, prd) %>% summarize(count = n())
 ```
 
 **`summarize()` reduce grouping level by one**
-```{r, result='hold'}
+```{r, collapse=T}
 my.df %>% group_by(com, dept, grp)%>% attr('vars')
+```
+```{r, collapse=T}
 my.df %>% group_by(com, dept, grp) %>% summarize(n()) %>% attr('vars')
 ```
 
@@ -437,7 +439,7 @@ my.df %>%
   mutate (rnum = row_number())
 ```
 
-Alternatively, mutate with 1:n() will return the same result as above. `n()` is the total number of rows within group, `1:n()` will return a sequential integer number
+Alternatively, **mutate with `1:n()`** will return the same result as above. `n()` is the total number of rows within group, `1:n()` will return a sequential integer number
 ```{r, result='hold'}
 my.df %>%
   group_by(com,dept) %>%
@@ -448,9 +450,10 @@ my.df %>%
 #### In-Group Row Selection
 
 ##### Top-N Selection
-Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group. 
+Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group  
+
 > **`top_n (n,wt)`**  
-> $\quad$ ` n : number of rows to return`
+> $\quad$ ` n : number of rows to return`  
 > $\quad$ ` wt: column to use, default order using last column`  
 
 ```{r}
@@ -463,21 +466,20 @@ my.df %>% group_by(com,dept,prd) %>% summarize(t1=sum(value1), t2=sum(value2)) %
 ##### summarize: Apply Multiple Functions to Multiple Columns
 Different functions can be applied to different variables, each return a new column
 ```{r}
-d.df = my.df %>%
+my.df %>%
   group_by(com, dept, prd) %>%
   summarise( avg_value1 = mean(value1),
              min_value2 = min(value2),
              max_value3 = max(value3),
              n.team = n_distinct(team),
              count = n())
-
-d.df
 ```
 
 ##### summarize_at: Apply Function(s) To Multiple Columns
 
-> **`summarize_at ( vars(...), funs(...) ), ...`**  
-> $\quad$ ` Use vars() to specify multiple variables: vars(7:9), vars(7,8,9), vars('col1','col3','col5'), vars(col1:col3)`
+> **`summarize_at ( vars(...), funs(...) ), ...`**   
+
+> $\quad$ ` Use vars() to specify multiple variables: vars(7:9), vars(7,8,9), vars('col1','col3','col5'), vars(col1:col3)`  
 > $\quad$ ` Use funs() to specify multiple functions: funs(func1,func2,func3)`  
 > $\quad$ ` ... : additional parameters to be supplied to funs`  
 
@@ -495,19 +497,23 @@ my.df %>%
 ```
 PIck **range** of variables by **column name range**
 ```{r results='hold'}
-my.df %>% group_by(com, dept, prd) %>% summarise_at(vars(value2:value3),mean) # col value2, value3
+my.df %>% group_by(com, dept, prd) %>% 
+  summarise_at(vars(value2:value3),mean) # col value2, value3
 ```
 Pick **range** of variables by **column index range**
 ```{r results='hold'}
-my.df %>% group_by(com, dept, prd) %>% summarise_at(vars(7:8),mean) # col value2, value3
+my.df %>% group_by(com, dept, prd) %>% 
+  summarise_at(vars(7:8),mean) # col value2, value3
 ```
 **Multiple Functions to Multiple Columns**
 ```{r results='hold'}
-my.df %>% group_by(com, dept, prd) %>% summarise_at(vars('value1','value2'),funs(mean,sd), na.rm=T)
+my.df %>% group_by(com, dept, prd) %>% 
+  summarise_at(vars('value1','value2'),funs(mean,sd), na.rm=T)
 ```
 
 ##### summarize_all: Apply Function(s) to ALL Columns
-This apply function(s) to all non-grouped variables
+This apply function(s) to all non-grouped variables  
+
 > **`summarize_all (  funs(...) ), ...`**  
 > $\quad$ ` Use funs() to specify multiple functions: funs(func1,func2,func3)`  
 > $\quad$ ` ... : additional parameters to be supplied to funs`  
@@ -527,7 +533,7 @@ my.df %>%
 Use `funs()` to supply multiple functions
 ```{r,results='hold' }
 my.df %>%
-  group_by(com, dept) %>%
+  group_by(com, dept, grp,team, prd) %>%
   summarise_all(funs(mean,sd), na.rm=T)
 ```
 
@@ -555,7 +561,6 @@ my.df %>% group_by(com,dept,grp) %>% attr('vars') # before summarize()
 my.df %>% group_by(com,dept,grp) %>% summarize(n()) %>% attr('vars') # first summarize()
 my.df %>% group_by(com,dept,grp) %>% summarize(n()) %>% summarize(n()) %>% attr('vars') # second summarize()
 ```
-
 
 ## R with SQL Emulation
 

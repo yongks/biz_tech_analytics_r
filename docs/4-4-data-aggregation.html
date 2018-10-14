@@ -831,8 +831,8 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 <div id="frequency-counting" class="section level4">
 <h4><span class="header-section-number">4.4.5.2</span> Frequency Counting</h4>
 <p><strong><code>count()</code></strong> groups and provide additional column <strong><code>n</code></strong>, which counts the number of rows within the group</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, prd)
-## # A tibble: 29 x 4
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, prd)</code></pre></div>
+<pre><code>## # A tibble: 29 x 4
 ##    com   dept  prd       n
 ##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
 ##  1 C1    D1    P1        3
@@ -845,10 +845,10 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ##  8 C1    D2    P4        4
 ##  9 C1    D2    P5        4
 ## 10 C1    D3    P1        5
-## # ... with 19 more rows</code></pre></div>
+## # ... with 19 more rows</code></pre>
 <p><strong><code>count()</code> is shorthand for group_by and summarize</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())
-## # A tibble: 29 x 4
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, prd) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 29 x 4
 ## # Groups:   com, dept [?]
 ##    com   dept  prd   count
 ##    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt;
@@ -862,15 +862,15 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ##  8 C1    D2    P4        4
 ##  9 C1    D2    P5        4
 ## 10 C1    D3    P1        5
-## # ... with 19 more rows</code></pre></div>
+## # ... with 19 more rows</code></pre>
 <p><strong><code>summarize()</code> reduce grouping level by one</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
 <pre><code>## [1] &quot;com&quot;  &quot;dept&quot; &quot;grp&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
 <pre><code>## [1] &quot;com&quot;  &quot;dept&quot;</code></pre>
 <p><strong>BUT</strong> <code>count()</code> reset grouping entirely (no grouping) !!!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)
-## NULL</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(com, dept, grp) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">attr</span>(<span class="st">&#39;vars&#39;</span>)</code></pre></div>
+<pre><code>## NULL</code></pre>
 </div>
 <div id="in-group-row-numbering" class="section level4">
 <h4><span class="header-section-number">4.4.5.3</span> In-Group Row Numbering</h4>
@@ -884,8 +884,8 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="kw">row_number</span>())
-## # A tibble: 6 x 4
+<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="kw">row_number</span>())</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
 ## # Groups:   com [2]
 ##   com   dept  avg.value1  rnum
 ##   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;
@@ -894,13 +894,13 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## 3 C1    D3          49.5     3
 ## 4 C2    D1          49.2     1
 ## 5 C2    D2          51.7     2
-## 6 C2    D3          50.6     3</code></pre></div>
+## 6 C2    D3          50.6     3</code></pre>
 <p>Alternatively, mutate with 1:n() will return the same result as above. <code>n()</code> is the total number of rows within group, <code>1:n()</code> will return a sequential integer number</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(com,dept) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">avg.value1=</span><span class="kw">mean</span>(value1)) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>())
-## # A tibble: 6 x 4
+<span class="st">  </span><span class="kw">mutate</span> (<span class="dt">rnum =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">n</span>())</code></pre></div>
+<pre><code>## # A tibble: 6 x 4
 ## # Groups:   com [2]
 ##   com   dept  avg.value1  rnum
 ##   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;
@@ -909,7 +909,7 @@ my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gr
 ## 3 C1    D3          49.5     3
 ## 4 C2    D1          49.2     1
 ## 5 C2    D2          51.7     2
-## 6 C2    D3          50.6     3</code></pre></div>
+## 6 C2    D3          50.6     3</code></pre>
 </div>
 <div id="in-group-row-selection" class="section level4">
 <h4><span class="header-section-number">4.4.5.4</span> In-Group Row Selection</h4>

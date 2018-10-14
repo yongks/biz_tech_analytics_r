@@ -406,12 +406,12 @@ attr(d.df, 'vars')
 #### Frequency Counting
 
 **`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group 
-```{r, collapse=T}
+```{r, result='hold'}
 my.df %>% count(com, dept, prd)
 ```
 
 **`count()` is shorthand for group_by and summarize**
-```{r, collapse=T}
+```{r, result='hold'}
 my.df %>% group_by(com, dept, prd) %>% summarize(count = n())
 ```
 
@@ -422,7 +422,7 @@ my.df %>% group_by(com, dept, grp) %>% summarize(n()) %>% attr('vars')
 ```
 
 **BUT** `count()` reset grouping entirely (no grouping) !!!
-```{r, collapse=T}
+```{r, result='hold'}
 my.df %>% count(com, dept, grp) %>% attr('vars')
 ```
 
@@ -430,7 +430,7 @@ my.df %>% count(com, dept, grp) %>% attr('vars')
 - Summarize reduce group level by one, hence n() will return the rows within the new group.  
 - Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.  
 - **`row_number()`** dynamically assign **sequential row number within the group**
-```{r, collapse=T}
+```{r, result='hold'}
 my.df %>%
   group_by(com,dept) %>%
   summarize(avg.value1=mean(value1)) %>%
@@ -438,7 +438,7 @@ my.df %>%
 ```
 
 Alternatively, mutate with 1:n() will return the same result as above. `n()` is the total number of rows within group, `1:n()` will return a sequential integer number
-```{r, collapse=T}
+```{r, result='hold'}
 my.df %>%
   group_by(com,dept) %>%
   summarize(avg.value1=mean(value1)) %>%

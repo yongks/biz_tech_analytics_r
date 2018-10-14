@@ -568,62 +568,86 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 <tr class="odd">
 <td></td>
 <td></td>
-<td>group_by</td>
-<td>create a tiblle table with group columns</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>ungroup</td>
-<td>remvoe group columns</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>summarize</td>
-<td>specify the columns and functions to summarize</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>summarize_at</td>
-<td>specify the columns to be summarized</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>summarize_if</td>
-<td>conditionally choose the columns to be summarized</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td>summarize_all</td>
-<td>summarize all columns, be it numeric or not</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td>count</td>
-<td>group and count the number of rows within each group</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
 <td>arrange</td>
-<td>in-group sorting of rows</td>
+<td>sorting of rows</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>distinct</td>
+<td>unique rows only</td>
 </tr>
 <tr class="odd">
 <td></td>
 <td></td>
 <td>slice</td>
-<td>in-group row selection</td>
+<td>row selection</td>
 </tr>
 <tr class="even">
 <td></td>
 <td></td>
-<td>mutate</td>
-<td>create a new column</td>
+<td>group_by</td>
+<td>create a tiblle table with group columns</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>ungroup</td>
+<td>remvoe group columns</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>summarize</td>
+<td>in-group: specify the columns and functions to summarize</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>summarize_at</td>
+<td>in-group: specify the columns to be summarized</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>summarize_if</td>
+<td>in-group: conditionally choose the columns to be summarized</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>summarize_all</td>
+<td>in-group: summarize all columns, be it numeric or not</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>top_n</td>
+<td>in-group: highest n rows</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>row_number</td>
+<td>in-group: automatic row numbering</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>n</td>
+<td>in-group: total number of rows</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>tally</td>
+<td>short hand for summarize(n())</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>count</td>
+<td>short hand for group_by and tally</td>
 </tr>
 <tr class="odd">
 <td>3</td>
@@ -651,8 +675,6 @@ code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Inf
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(tidyr)</code></pre></div>
 </div>
             </section>
 

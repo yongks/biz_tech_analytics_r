@@ -3,7 +3,6 @@
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5, fig.show='hold', results='markup') 
 ```
 
-
 # Data Summarization
 
 ## Library
@@ -16,24 +15,28 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, fig.width=2.6736, fig.height=2.5
 |   |                      | addmargins    | Add margin to table or ftable                       |
 |   |                      | tapply        | Produce aggregation with one level of grouping      |
 |   |                      | aggregate     |       |
-| 2 | dplyr                | select        | select the columns                                 |
-|   |                      | filter        | filter rows based on criteria                      |
+| 2 | dplyr                | select        | select the columns             |
+|   |                      | filter        | filter rows based on criteria  |
+|   |                      | arrange       | sorting of rows  |
+|   |                      | distinct      | unique rows only |
+|   |                      | slice         | row selection    |
 |   |                      | group_by      | create a tiblle table with group columns           |
 |   |                      | ungroup       | remvoe group columns                               |
-|   |                      | summarize     | specify the columns and functions to summarize     |
-|   |                      | summarize_at  | specify the columns to be summarized               |
-|   |                      | summarize_if  | conditionally choose the columns to be summarized  |
-|   |                      | summarize_all | summarize all columns, be it numeric or not        |
-|   |                      | count         | group and count the number of rows within each group |
-|   |                      | arrange       | in-group sorting of rows |
-|   |                      | slice         | in-group row selection   |
-|   |                      | mutate        | create a new column      |
+|   |                      | summarize     | in-group: specify the columns and functions to summarize     |
+|   |                      | summarize_at  | in-group: specify the columns to be summarized               |
+|   |                      | summarize_if  | in-group: conditionally choose the columns to be summarized  |
+|   |                      | summarize_all | in-group: summarize all columns, be it numeric or not        |
+|   |                      | top_n         | in-group: highest n rows              |
+|   |                      | row_number    | in-group: automatic row numbering     |
+|   |                      | n             | in-group: total number of rows        |
+|   |                      | tally         | short hand for summarize(n())         |
+|   |                      | count         | short hand for group_by and tally     |
 | 3 | tidyr                | gather        | Gather columns into rows |
 |   |                      | spread        | Reverse of gather()      |
 |   |                      | seperate      | Seperate one column into multiple columns |
 |   |                      | unite         | Reverse of seperate()    |
 
-```{r}
+```{r,echo=FALSE}
 library(dplyr)
 library(tidyr)
 ```
@@ -390,8 +393,8 @@ aggregate(x=my.df[, c(v1_mean='value1', 'value2')], by=my.df[,c(GRP='grp', 'dept
 ```{r}
 d.df = my.df %>%
   group_by(com,dept, grp) %>%
-  mutate( idx = row_number()) %>% 
-  arrange( com,dept,grp)
+  mutate(idx = row_number()) %>% 
+  arrange(com,dept,grp)
 
 print(tbl_df(d.df),n=18)
 ```
@@ -401,42 +404,59 @@ attr(d.df, 'vars')
 ```
 
 #### Frequency Counting
-**`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group.  
-```{r}
-d.df = my.df %>%
-  count(com, dept, prd)
 
-d.df
-
-# alternative long methods for similar result
-# my.df %>%
-#   group_by(com, dept, prd) %>%
-#   summarize(count = n())
-```
-Similar to **`summarize`**, counting reduce grouping level by one.  
+**`count()`** groups and provide additional column **`n`**, which counts the number of rows within the group. 
 ```{r, collapse=T}
-### count() reduce group level by one, 'prd' is removed from grouping
-attr(d.df, 'vars')
+my.df %>% count(com, dept, prd)
+```
 
+`count()` is shorthand for group_by and summarize
+```{r, collapse=T}
+my.df %>% group_by(com, dept, prd) %>% summarize(count = n())
+```
+
+`summarize()` reduce grouping level by one
+```{r, collapse=T}
+my.df %>% group_by(com, dept, grp)%>% attr('vars')
+my.df %>% group_by(com, dept, grp) %>% summarize(n()) %>% attr('vars')
+my.df %>% count(com, dept, grp) %>% attr('vars')
+```
+
+**BUT** `count()` reset grouping entirely (no grouping) !!!
+```{r, collapse=T}
+my.df %>% count(com, dept, grp) %>% attr('vars')
 ```
 
 #### In-Group Row Numbering
 - Summarize reduce group level by one, hence n() will return the rows within the new group.  
 - Example below group with three levels (com, dept,prd), however, after summarize, n() returns the number of rows within (com,dept) group.  
-```{r}
-d.df = my.df %>%
-  group_by(com,dept,prd) %>%
+- **`row_number()`** dynamically assign **sequential row number within the group**
+```{r, collapse=T}
+my.df %>%
+  group_by(com,dept) %>%
   summarize(avg.value1=mean(value1)) %>%
-  mutate (c = 1:n())
-d.df
+  mutate (rnum = row_number())
+```
+
+Alternatively, mutate with 1:n() will return the same result as above. `n()` is the total number of rows within group, `1:n()` will return a sequential integer number
+```{r, collapse=T}
+my.df %>%
+  group_by(com,dept) %>%
+  summarize(avg.value1=mean(value1)) %>%
+  mutate (rnum = 1:n())
 ```
 
 #### In-Group Row Selection
-Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group.  
+
+##### Top-N Selection
+Example below select highest occurance of  **prd** within the group of (com,dept).  It is based on the principe that count reduce group levels by one, then selection is based on rows within the new group. 
+> **`top_n (n,wt)`**  
+> $\quad$ ` n : number of rows to return`
+> $\quad$ ` wt: column to use, default order using last column`  
+
 ```{r}
-my.df %>%
-  count(com, dept, prd) %>% 
-  slice(which.max(n))
+my.df %>% group_by(com,dept,prd) %>% summarize(t1=sum(value1), t2=sum(value2))
+my.df %>% group_by(com,dept,prd) %>% summarize(t1=sum(value1), t2=sum(value2)) %>% top_n(n=1, wt=t2)
 ```
 
 #### In-Group Summarization
